@@ -44760,4 +44760,4 @@ moduleOptionsScreen.showWindow = function() {
 	originalShowWindow.call(this);
 }
                         
-console.log("Loaded custom resource from local.");
+console.log("Loaded custom client-bundle.js (merged with official resource modfied at Mon, 20 Jul 2026 17:36:18 GMT)");
