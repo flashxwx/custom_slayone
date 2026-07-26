@@ -34,6 +34,7 @@ Find the custom resource urls you want to use in below.
 
 Redirect https://slay.one/dist/client-bundle.js to
 - https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/main/dist/client-bundle.js
+  - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
   - Brings back slayTV.
   - Can trigger out social UI using Ctrl+/ in game.
   - The invite link will be clean, will not be like `https://slay.one/?server=0&room=123?server=0&room=321` or longer, and still works well.
@@ -63,6 +64,8 @@ Please follow the file structure of this repo, every folder in `/resource` got d
 And the structure of folders in `/resource` normally follow the official one.
 
 Besides, please make sure there's an info.txt file in every folders in `/resource`, for specifying the essential info, you can refer to the existing ones.
+
+Recommended Tools: Override Feature in Chrome Dev Tools, Git, Github, and Visual Studio Code.
 
 # Contacts
 For any support of this project, please contact @**flashqwq** on Discord.
