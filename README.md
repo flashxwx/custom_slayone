@@ -38,7 +38,6 @@ Redirect https://slay.one/dist/client-bundle.js to
   - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
   - Can trigger out social UI using Ctrl+/ in game.
   - The invite link will be clean, will not be like `https://slay.one/?server=0&room=123?server=0&room=321` or longer, and still works well.
-  - Auto change server when a specific server in invite link
   - (For dev) Remove the anonymous function wrapping of all js resource, you can visit `__webpack_module_cache__` in console.
   - (For dev) Remove the feature that keeps making `mainUI.style.display = "none"` when in game.
 
