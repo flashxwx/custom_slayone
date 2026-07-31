@@ -36,7 +36,7 @@ Find the custom resource urls you want to use in below.
 
 ## Bug Fixs & Features
 Redirect https://slay.one/dist/client-bundle.js to
-- https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/main/dist/client-bundle.js
+- https://flashxwx.github.io/custom_slayone_resource/resource/main/dist/client-bundle.js
   - Made message in global chat selecable.
   - Fixed some issues that are very very small, but making the user experience smoother.
   - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
@@ -48,7 +48,7 @@ Redirect https://slay.one/dist/client-bundle.js to
 ## Skins
 
 Redirect https://slay.one/imgs/tileSheet.png to
-- https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/skins/imgs/tileSheet-beach.png
+- https://flashxwx.github.io/custom_slayone_resource/resource/skins/imgs/tileSheet-beach.png
   - Provided by ARK77.
 
 # How can I contribute to this project?
