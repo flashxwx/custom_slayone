@@ -1,6 +1,7 @@
 /*! For license information please see client-bundle.js.LICENSE.txt */
 var c_homeUIElement = document.getElementById("homeUI");
 var c_homeMainWindowElement = document.getElementById("homeMainWindow");
+var c_slayTVElement = document.getElementById("slayTV");
 var c_friendsButtonElement = null;
 var c_socialChatInputElement = document.getElementById("globalChatInput");
 var c_hasSocialUICoveredInGame = false;
@@ -6193,7 +6194,7 @@ var c_hasPressedCtrlRKey = false;
                 o = t.keyCodes[e],
                 r = t.Input.keys[e];
               if (
-                ((t.Input.keys[key] = !0),
+                ((t.Input.keys[e] = !0),
                 ("inline" !== S.style.display || e === _.ENTER) && !c_hasSocialUICoveredInGame)
               ) {
                 if (e === _.F7)
@@ -38308,8 +38309,9 @@ var c_hasPressedCtrlRKey = false;
             ((R = !!e), (H = !1), (T.style.display = "none"));
           },
           showWindow: function () {
-            E.style.display = "block";
+            c_homeUIElement.style.display = "block";
             c_homeMainWindowElement.style.display = "block";
+            c_slayTVElement.style.display = "block";
             c_hasSocialUICoveredInGame = false;
             //_showHomeWindow = !_hideHomeWindowForever;
           },
@@ -38783,16 +38785,7 @@ var c_hasPressedCtrlRKey = false;
             L.scrollTop > 50 ||
               ("global" !== t.homeScreen.activeChatChannel && "clan" !== t.homeScreen.activeChatChannel) ||
               t.homeScreen.requestOlderChatMessages(t.homeScreen.activeChatChannel);
-          }),
-          setInterval(function () {
-            !H || (null !== m.root.game && m.root.game.map !== l.map1)
-              ? null !== T &&
-                "block" === T.style.display &&
-                (T.style.display = "none")
-              : null === T ||
-                ("none" !== T.style.display && T.style.display) ||
-                (T.style.display = "block");
-          }, 50));
+          }));
       },
       9288: (e, t, i) => {
         "use strict";
@@ -41357,6 +41350,8 @@ var moduleHomeScreen = __webpack_require__(9216).homeScreen;
 
 var c_friendsButtonElement = document.getElementById("btnFriends");
 
+c_homeUIElement.style.display = "block";
+
 document.addEventListener("keydown", function(event) {
   if (event.code === "ControlRight") {
     c_hasPressedCtrlRKey = true;
@@ -41371,6 +41366,7 @@ document.addEventListener("keydown", function(event) {
     if (c_hasSocialUICoveredInGame) {
       c_homeUIElement.style.display = "block";
       c_homeMainWindowElement.style.display = "none";
+      c_slayTVElement.style.display = "none";
       c_friendsButtonElement.style.display = "block";
     } else {
       c_homeUIElement.style.display = "none";
