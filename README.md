@@ -15,6 +15,7 @@ As such, users assume full responsibility for any consequences resulting from th
 2. [List of Custom Resource URLs](#list-of-custom-resource-urls)
 3. [How can I contribute to this project?](#how-can-i-contribute-to-this-project)
 4. [Contacts](#contacts)
+5. [Contributors](#contributors)
 
 # How to use the resources here?
 First, you will need to install a browser extension for override the original resource to custom resource.
@@ -35,6 +36,7 @@ Find the custom resource urls you want to use in below.
 
 Redirect https://slay.one/dist/client-bundle.js to
 - https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/main/dist/client-bundle.js
+  - Fixed some issues that are very very small, but making the user experience smoother.
   - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
   - Can trigger out social UI using Ctrl+/ in game.
   - The invite link will be clean, will not be like `https://slay.one/?server=0&room=123?server=0&room=321` or longer, and still works well.
@@ -65,3 +67,7 @@ Recommended Tools: Override Feature in Chrome Dev Tools, Git, Github, and Visual
 For any support of this project, please contact @**flashqwq** on Discord.
 
 Or, you can just open issue/request of this repo on github, but it might not be found in a short time.
+
+# Contributors
+- Goldberg
+- Flash

@@ -5720,8 +5720,8 @@ var c_hasPressedCtrlRKey = false;
                       setTimeout(function () {
                         window.location.reload();
                       }, 250));
-                  } else if ("cancel" === btnName){
-                    _serverDD.value = Network_1.Network.connectedServerIndex.toString();
+                  } else if ("cancel" === t){
+                    y.value = r.Network.connectedServerIndex.toString();
                   }
                   e.close();
                 },
@@ -23326,7 +23326,7 @@ var c_hasPressedCtrlRKey = false;
             isNaN(id) || (_forcedGameID = id);
           } else
             "server" === vals[0] &&
-              (_forcedServerIndexInt = parseServerIndex(vals[1]));
+              (_forcedServerIndexInt = parseServerIndex(vals[1]), console.log("1"));
         }
         var _chosenServerIndex = window.localStorage.getItem(
           "chooseServerOnStart",
@@ -23878,7 +23878,7 @@ var c_hasPressedCtrlRKey = false;
           i.parentNode.removeChild(i);
         }
         (window.localStorage.setItem("chooseServerOnStart", "-1"),
-          -1 === _forcedServerIndexInt &&
+          "-1" !== _chosenServerIndex &&
             (_forcedServerIndexInt = parseServerIndex(_chosenServerIndex)),
           (exports.networkInit = networkInit),
           (exports.Network = {
@@ -41344,6 +41344,8 @@ var c_hasPressedCtrlRKey = false;
   var __webpack_exports__ = __webpack_require__(9994);
 //# sourceMappingURL=client-bundle.js.map
 
+// Social UI in Game Feature
+
 var moduleRoot = __webpack_require__(5572).root;
 var map1 = __webpack_require__(6409).map1;
 var moduleHomeScreen = __webpack_require__(9216).homeScreen;
@@ -41406,8 +41408,12 @@ c_socialChatInputElement.addEventListener("keypress", function (e) {
   }
 });
 
+// Account Changing Feature
+
 var moduleOptionsScreen = __webpack_require__(1337).optionsScreen;
 var moduleNetwork = __webpack_require__(7028).Network;
+var logOutFunction = __webpack_require__(2399).logout;
+
 
 var originalShowWindow = moduleOptionsScreen.showWindow;
 var originalOnLoginSuccess = moduleNetwork.onLoginSuccess;
@@ -41464,8 +41470,8 @@ function renderAccountSwitch() {
 accountDD.onchange = function() {
 	var account = accounts[accountDD.value];
 	
-	moduleNetwork.send("logout");
-	moduleNetwork.send(["login", account.name, account.password].join('$'));
+	logOutFunction();
+	moduleNetwork.login(account.name, account.password);
 	
 	//moduleOptionsScreen.hideWindow();
 }
@@ -41497,6 +41503,8 @@ moduleNetwork.onLoginSuccess = function() {
 	if (prevAccStr !== accStr)
 		localStorage.setItem("accounts", JSON.stringify(accounts));
 	
+  localStorage.setItem("autologin", `${account.name}$${account.password}`)
+
 	originalOnLoginSuccess.call(this);
 }
 
