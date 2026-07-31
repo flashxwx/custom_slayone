@@ -4,6 +4,7 @@ you can use the resources here to improve your gaming experience for free,
 and I welcome who wants to contribute to this repository in any forms.
 
 # Disclamer
+All copyright here remains to the developer of Slay.one - JBS.
 All custom resources included in this project have been manually reviewed by us.
 Should any issues arise specifically from the content of these custom resources, we take responsibility.
 However, users must understand that the use of any third-party custom resources may violate the official Terms of Service or End User License Agreement of Slay.one.
@@ -35,17 +36,11 @@ Find the custom resource urls you want to use in below.
 Redirect https://slay.one/dist/client-bundle.js to
 - https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/main/dist/client-bundle.js
   - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
-  - Brings back slayTV.
   - Can trigger out social UI using Ctrl+/ in game.
   - The invite link will be clean, will not be like `https://slay.one/?server=0&room=123?server=0&room=321` or longer, and still works well.
   - Auto change server when a specific server in invite link
   - (For dev) Remove the anonymous function wrapping of all js resource, you can visit `__webpack_module_cache__` in console.
   - (For dev) Remove the feature that keeps making `mainUI.style.display = "none"` when in game.
-
-Redirect https://slay.one/css/homeUI.css to
-- https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/main/css/homeUI.css
-  - Brings back slayTV.
-
 
 # How can I contribute to this project?
 

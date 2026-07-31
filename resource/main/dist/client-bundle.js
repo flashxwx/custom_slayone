@@ -44591,8 +44591,6 @@ var moduleHomeScreen = __webpack_require__(9216).homeScreen;
 
 var c_friendsButtonElement = document.getElementById("btnFriends");
 
-document.getElementById("slayTV").style.cssText = "display: block !important;";
-
 document.addEventListener("keydown", function(event) {
   if (event.code === "ControlRight") {
     c_hasPressedCtrlRKey = true;
