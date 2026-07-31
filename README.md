@@ -4,7 +4,7 @@ you can use the resources here to improve your gaming experience for free,
 and I welcome who wants to contribute to this repository in any forms.
 
 # Disclamer
-All copyright here remains to the developer of Slay.one - JBS.
+All copyright here remains to the developer of Slay.one - JBS, except some works that is marked that those are provided by others.
 All custom resources included in this project have been manually reviewed by us.
 Should any issues arise specifically from the content of these custom resources, we take responsibility.
 However, users must understand that the use of any third-party custom resources may violate the official Terms of Service or End User License Agreement of Slay.one.
@@ -49,7 +49,7 @@ Redirect https://slay.one/dist/client-bundle.js to
 
 Redirect https://slay.one/imgs/tileSheet.png to
 - https://flashxwx.github.io/custom_slayone_resource/resource/skins/imgs/tileSheet-beach.png
-  - Provided by ARK77.
+  - Partially provided by ARK77.
 
 # How can I contribute to this project?
 
