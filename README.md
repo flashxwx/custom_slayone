@@ -34,6 +34,7 @@ Find the custom resource urls you want to use in below.
 
 # List of Custom Resource URLs
 
+## Bug Fixs & Features
 Redirect https://slay.one/dist/client-bundle.js to
 - https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/main/dist/client-bundle.js
   - Made message in global chat selecable.
@@ -43,6 +44,12 @@ Redirect https://slay.one/dist/client-bundle.js to
   - The invite link will be clean, will not be like `https://slay.one/?server=0&room=123?server=0&room=321` or longer, and still works well.
   - (For dev) Remove the anonymous function wrapping of all js resource, you can visit `__webpack_module_cache__` in console.
   - (For dev) Remove the feature that keeps making `mainUI.style.display = "none"` when in game.
+
+## Skins
+
+Redirect https://slay.one/imgs/tileSheet.png to
+- https://flashxwx.github.io/custom_slayone_client_resource_for_everyone/resource/skins/imgs/tileSheet-beach.png
+  - Provided by ARK77.
 
 # How can I contribute to this project?
 
