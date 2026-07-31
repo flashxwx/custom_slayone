@@ -49,7 +49,7 @@ Redirect https://slay.one/dist/client-bundle.js to
 
 Redirect https://slay.one/imgs/tileSheet.png to
 - https://flashxwx.github.io/custom_slayone_resource/resource/skins/imgs/tileSheet-beach.png
-  - Partially provided by ARK77.
+  - Let the map has beach theme. Partially provided by ARK77.
 
 # How can I contribute to this project?
 
@@ -77,5 +77,7 @@ For any support of this project, please contact @**flashqwq** on Discord.
 Or, you can just open issue/request of this repo on github, but it might not be found in a short time.
 
 # Contributors
-- Goldberg
+- ARK77
 - Flash
+- Goldberg
+- Mazlista
