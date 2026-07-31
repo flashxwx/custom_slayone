@@ -41351,6 +41351,7 @@ var map1 = __webpack_require__(6409).map1;
 var moduleHomeScreen = __webpack_require__(9216).homeScreen;
 
 var c_friendsButtonElement = document.getElementById("btnFriends");
+var c_originalMouseDownFunc = null
 
 c_homeUIElement.style.display = "block";
 
@@ -41370,9 +41371,13 @@ document.addEventListener("keydown", function(event) {
       c_homeMainWindowElement.style.display = "none";
       c_slayTVElement.style.display = "none";
       c_friendsButtonElement.style.display = "block";
+  
+      c_originalMouseDownFunc = document.documentElement.onmousedown;
+      document.documentElement.onmousedown = (e) => {};
     } else {
       c_homeUIElement.style.display = "none";
       c_friendsButtonElement.style.display = "none";
+      document.documentElement.onmousedown = c_originalMouseDownFunc;
     }
   }
 });
@@ -41527,5 +41532,17 @@ moduleOptionsScreen.showWindow = function() {
 	renderAccountSwitch();
 	originalShowWindow.call(this);
 }
+
+// Selecable Texts
+
+const styleElementOfSelecableTexts = document.createElement("style");
+
+styleElementOfSelecableTexts.textContent = `
+.globalChatMessageBody {
+  user-select: text;
+}
+`
+
+document.head.appendChild(styleElementOfSelecableTexts);
                         
 console.log("Loaded custom client-bundle.js (merged with official resource modfied at Fri, 31 Jul 2026 09:01:36 GMT)");
