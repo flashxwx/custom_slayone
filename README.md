@@ -49,7 +49,7 @@ Redirect https://slay.one/dist/client-bundle.js (client codes) to
 ## Skins
 
 Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-beach.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-oasis.png
   - Let the map has oasis theme. Partially provided by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-saturation100.png
   - Let the map has saturation100 theme. Partially provided by ARK77.
