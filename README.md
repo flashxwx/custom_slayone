@@ -95,31 +95,31 @@ Redirect https://slay.one/imgs/cursor.cur (default cursor) to
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/text.cur.png (cursor for text) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/text.cur-baguette.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/c0.cur (default cursor in-game) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/c0-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/c6.cur (left-click cursor in game) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/c6-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/crosshair.png (red rocket cursor, light) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/crosshair-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/crosshair2.png (red rocket cursor, dark) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/crosshair2-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/cx.cur (cursor for disabling of ability use) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cx-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 Redirect https://slay.one/imgs/cb.cur (cursor for teleportation) to
-- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cb-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 # How can I contribute to this project?
