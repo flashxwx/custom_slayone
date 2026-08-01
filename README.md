@@ -46,7 +46,7 @@ Redirect https://slay.one/dist/client-bundle.js (client codes) to
   - (For dev) Remove the anonymous function wrapping of all js resource, you can visit `__webpack_module_cache__` in console.
   - (For dev) Remove the feature that keeps making `mainUI.style.display = "none"` when in game.
 
-## Skins
+## Themes
 
 Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-oasis.png
@@ -60,8 +60,35 @@ Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-low_quality.png
   - Let the map has low quality theme. Partially provided by Mazlista.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-green_screen.png
-  - Let the map has green screen theme. Partially provided by Mazlista.
+  - Let the map has green screen theme. Partially provided by ARK77.
   - very fun, better make minimap bigger, so you won't hit the walls.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-blackout.png
+  - Let the map has blackout theme. Partially provided by ARK77.
+  - can't see anything, try to use slow field grenade to light up the surrounding space.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-inverted.png
+  - Let the map has inverted color theme. Partially provided by Mazlista.
+
+Redirect https://slay.one/imgs/miscSheet.png (objects in-game) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
+  - Inverted color theme. Partially provided by Mazlista.
+
+Redirect https://slay.one/imgs/weaponsPlus.png (animation frames of weapons) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/weaponsPlus-inverted.png
+  - Inverted color theme. Partially provided by Mazlista.
+
+Redirect https://slay.one/imgs/heads.png (character heads) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/heads-inverted.png
+  - Inverted color theme. Partially provided by Mazlista.
+
+Redirect https://slay.one/imgs/legs.png (character legs) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/legs-inverted.png
+  - Inverted color theme. Partially provided by Mazlista.
+
+Redirect https://slay.one/imgs/hands.png (character hands) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/hands-inverted.png
+  - Inverted color theme. Partially provided by Mazlista.
+
+## Cursor Skins
 
 Redirect https://slay.one/imgs/cursor.cur (default cursor) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
