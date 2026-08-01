@@ -57,6 +57,11 @@ Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
   - Let the map has exoplanet theme. Partially provided by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-retro.png
   - Let the map has retro theme. Partially provided by ARK77.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-low_quality.png
+  - Let the map has low quality theme. Partially provided by Mazlista.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-green_screen.png
+  - Let the map has green screen theme. Partially provided by Mazlista.
+  - very fun, better make minimap bigger, so you won't hit the walls.
 
 Redirect https://slay.one/imgs/cursor.cur (default cursor) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
