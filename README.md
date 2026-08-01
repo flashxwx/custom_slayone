@@ -50,23 +50,23 @@ Redirect https://slay.one/dist/client-bundle.js (client codes) to
 
 Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-oasis.png
-  - Let the map has oasis theme. Partially provided by ARK77.
+  - Oasis theme. Partially provided by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-saturation100.png
-  - Let the map has saturation100 theme. Partially provided by ARK77.
+  - Saturation100 theme. Partially provided by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-exoplanet.png
-  - Let the map has exoplanet theme. Partially provided by ARK77.
+  - Exoplanet theme. Partially provided by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-retro.png
-  - Let the map has retro theme. Partially provided by ARK77.
+  - Retro theme. Partially provided by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-low_quality.png
-  - Let the map has low quality theme. Partially provided by Mazlista.
+  - Low Quality theme. Partially provided by Mazlista.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-green_screen.png
-  - Let the map has green screen theme. Partially provided by ARK77.
+  - Green Screen theme. Partially provided by ARK77.
   - very fun, better make minimap bigger, so you won't hit the walls.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-blackout.png
-  - Let the map has blackout theme. Partially provided by ARK77.
+  - Blackout theme. Partially provided by ARK77.
   - can't see anything, try to use slow field grenade to light up the surrounding space.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-inverted.png
-  - Let the map has inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Partially provided by Mazlista.
 
 Redirect https://slay.one/imgs/miscSheet.png (objects in-game) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
