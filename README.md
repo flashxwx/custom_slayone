@@ -50,43 +50,43 @@ Redirect https://slay.one/dist/client-bundle.js (client codes) to
 
 Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-oasis.png
-  - Oasis theme. Partially provided by ARK77.
+  - Oasis theme. Secondary creation by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-saturation100.png
-  - Saturation100 theme. Partially provided by ARK77.
+  - Saturation100 theme. Secondary creation by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-exoplanet.png
-  - Exoplanet theme. Partially provided by ARK77.
+  - Exoplanet theme. Secondary creation by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-retro.png
-  - Retro theme. Partially provided by ARK77.
+  - Retro theme. Secondary creation by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-low_quality.png
-  - Low Quality theme. Partially provided by Mazlista.
+  - Low Quality theme. Secondary creation by Mazlista.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-green_screen.png
-  - Green Screen theme. Partially provided by ARK77.
+  - Green Screen theme. Secondary creation by ARK77.
   - very fun, better make minimap bigger, so you won't hit the walls.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-blackout.png
-  - Blackout theme. Partially provided by ARK77.
+  - Blackout theme. Secondary creation by ARK77.
   - can't see anything, try to use slow field grenade to light up the surrounding space.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-inverted.png
-  - Inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Secondary creation by Mazlista.
 
 Redirect https://slay.one/imgs/miscSheet.png (objects in-game) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
-  - Inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Secondary creation by Mazlista.
 
 Redirect https://slay.one/imgs/weaponsPlus.png (animation frames of weapons) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/weaponsPlus-inverted.png
-  - Inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Secondary creation by Mazlista.
 
 Redirect https://slay.one/imgs/heads.png (character heads) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/heads-inverted.png
-  - Inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Secondary creation by Mazlista.
 
 Redirect https://slay.one/imgs/legs.png (character legs) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/legs-inverted.png
-  - Inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Secondary creation by Mazlista.
 
 Redirect https://slay.one/imgs/hands.png (character hands) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/hands-inverted.png
-  - Inverted color theme. Partially provided by Mazlista.
+  - Inverted color theme. Secondary creation by Mazlista.
 
 ## Cursor Skins
 
