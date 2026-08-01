@@ -28,6 +28,7 @@ First, you will need to install a browser extension for override the original re
 5. Find "Resource Override" in there, and click the icon of 3-dots.
 6. Click on "Options"
 7. Now you can add the redirect/override rules depends on your need.
+  - Example: ![Example Of Redirect Extension Configuration](https://flashxwx.github.io/custom_slayone/example_of_redirect_extension_configuration)
 8. Click on "Save Changes", after adding redirect/override rules.
 
 Find the custom resource urls you want to use in below.
@@ -35,8 +36,8 @@ Find the custom resource urls you want to use in below.
 # List of Custom Resource URLs
 
 ## Bug Fixs & Features
-Redirect https://slay.one/dist/client-bundle.js to
-- https://flashxwx.github.io/custom_slayone_resource/resource/main/dist/client-bundle.js
+Redirect https://slay.one/dist/client-bundle.js (client codes) to
+- https://flashxwx.github.io/custom_slayone/resource/main/dist/client-bundle.js
   - Made message in global chat selecable.
   - Fixed some issues that are very very small, but making the user experience smoother.
   - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
@@ -47,9 +48,41 @@ Redirect https://slay.one/dist/client-bundle.js to
 
 ## Skins
 
-Redirect https://slay.one/imgs/tileSheet.png to
-- https://flashxwx.github.io/custom_slayone_resource/resource/skins/imgs/tileSheet-beach.png
+Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-beach.png
   - Let the map has beach theme. Partially provided by ARK77.
+
+Redirect https://slay.one/imgs/cursor.png (default cursor) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/text.cur.png (cursor for text) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/c0.png (default cursor in-game) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/c6.png (left-click cursor in game) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/crosshair.png (red rocket cursor, light) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/crosshair2.png (red rocket cursor, dark) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/cx.png (cursor for disabling of ability use) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
+
+Redirect https://slay.one/imgs/cb.png (cursor for teleportation) to
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
+  - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
 # How can I contribute to this project?
 
