@@ -50,9 +50,15 @@ Redirect https://slay.one/dist/client-bundle.js (client codes) to
 
 Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-beach.png
-  - Let the map has beach theme. Partially provided by ARK77.
+  - Let the map has oasis theme. Partially provided by ARK77.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-saturation100.png
+  - Let the map has saturation100 theme. Partially provided by ARK77.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-exoplanet.png
+  - Let the map has exoplanet theme. Partially provided by ARK77.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-retro.png
+  - Let the map has retro theme. Partially provided by ARK77.
 
-Redirect https://slay.one/imgs/cursor.png (default cursor) to
+Redirect https://slay.one/imgs/cursor.cur (default cursor) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
@@ -60,11 +66,11 @@ Redirect https://slay.one/imgs/text.cur.png (cursor for text) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/c0.png (default cursor in-game) to
+Redirect https://slay.one/imgs/c0.cur (default cursor in-game) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/c6.png (left-click cursor in game) to
+Redirect https://slay.one/imgs/c6.cur (left-click cursor in game) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
@@ -76,11 +82,11 @@ Redirect https://slay.one/imgs/crosshair2.png (red rocket cursor, dark) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/cx.png (cursor for disabling of ability use) to
+Redirect https://slay.one/imgs/cx.cur (cursor for disabling of ability use) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/cb.png (cursor for teleportation) to
+Redirect https://slay.one/imgs/cb.cur (cursor for teleportation) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
