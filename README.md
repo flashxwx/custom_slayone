@@ -28,7 +28,7 @@ First, you will need to install a browser extension for override the original re
 5. Find "Resource Override" in there, and click the icon of 3-dots.
 6. Click on "Options"
 7. Now you can add the redirect/override rules depends on your need.
-  - Example: ![Example Of Redirect Extension Configuration](https://flashxwx.github.io/custom_slayone/example_of_redirect_extension_configuration)
+  - Example: ![Example Of Redirect Extension Configuration](https://flashxwx.github.io/custom_slayone/example_of_redirect_extension_configuration.png)
 8. Click on "Save Changes", after adding redirect/override rules.
 
 Find the custom resource urls you want to use in below.
