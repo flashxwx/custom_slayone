@@ -72,7 +72,7 @@ Redirect https://slay.one/imgs/miscSheet.png (objects in-game) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 
-Redirect https://slay.one/imgs/weaponsPlus.png (animation frames of weapons) to
+Redirect https://slay.one/imgs/weaponsPlus.png (weapons on-hands) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/weaponsPlus-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 
