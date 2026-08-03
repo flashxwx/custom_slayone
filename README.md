@@ -67,10 +67,14 @@ Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
   - can't see anything, try to use slow field grenade to light up the surrounding space.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-night.png
+  - Nigth theme. Secondary creation by Flash.
 
 Redirect https://slay.one/imgs/miscSheet.png (objects in-game) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-night.png
+  - Nigth theme. Secondary creation by Flash.
 
 Redirect https://slay.one/imgs/weaponsPlus.png (weapons on-hands) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/weaponsPlus-inverted.png
