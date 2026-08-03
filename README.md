@@ -47,8 +47,7 @@ Redirect https://slay.one/dist/client-bundle.js (client codes) to
   - (For dev) Remove the feature that keeps making `mainUI.style.display = "none"` when in game.
 
 ## Themes
-
-Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
+Redirect https://slay.one/imgs/tileSheet.png **(pixel arts for maps)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-oasis.png
   - Oasis theme. Secondary creation by ARK77.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-saturation100.png
@@ -70,59 +69,59 @@ Redirect https://slay.one/imgs/tileSheet.png (pixel arts for maps) to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-night.png
   - Nigth theme. Secondary creation by Flash.
 
-Redirect https://slay.one/imgs/miscSheet.png (objects in-game) to
+Redirect https://slay.one/imgs/miscSheet.png **(objects in-game)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-night.png
   - Nigth theme. Secondary creation by Flash.
 
-Redirect https://slay.one/imgs/weaponsPlus.png (weapons on-hands) to
+Redirect https://slay.one/imgs/weaponsPlus.png **(weapons on-hands)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/weaponsPlus-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 
-Redirect https://slay.one/imgs/heads.png (character heads) to
+Redirect https://slay.one/imgs/heads.png **(character heads)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/heads-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 
-Redirect https://slay.one/imgs/legs.png (character legs) to
+Redirect https://slay.one/imgs/legs.png **(character legs)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/legs-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 
-Redirect https://slay.one/imgs/hands.png (character hands) to
+Redirect https://slay.one/imgs/hands.png **(character hands)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/hands-inverted.png
   - Inverted color theme. Secondary creation by Mazlista.
 
 ## Cursor Skins
 
-Redirect https://slay.one/imgs/cursor.cur (default cursor) to
+Redirect https://slay.one/imgs/cursor.cur **(default cursor)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cursor-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/text.cur.png (cursor for text) to
+Redirect https://slay.one/imgs/text.cur.png **(cursor for text)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/text.cur-baguette.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/c0.cur (default cursor in-game) to
+Redirect https://slay.one/imgs/c0.cur **(default cursor in-game)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/c0-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/c6.cur (left-click cursor in game) to
+Redirect https://slay.one/imgs/c6.cur **(left-click cursor in game)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/c6-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/crosshair.png (red rocket cursor, light) to
+Redirect https://slay.one/imgs/crosshair.png **(red rocket cursor, light)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/crosshair-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/crosshair2.png (red rocket cursor, dark) to
+Redirect https://slay.one/imgs/crosshair2.png **(red rocket cursor, dark)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/crosshair2-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/cx.cur (cursor for disabling of ability use) to
+Redirect https://slay.one/imgs/cx.cur **(cursor for disabling of ability use)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cx-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
-Redirect https://slay.one/imgs/cb.cur (cursor for teleportation) to
+Redirect https://slay.one/imgs/cb.cur **(cursor for teleportation)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/cb-teto.png
   - Teto cursor. Shared by Mazlista. Drawn by wobbuuu on twitter.
 
