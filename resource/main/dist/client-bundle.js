@@ -23326,7 +23326,7 @@ var c_hasPressedCtrlRKey = false;
             isNaN(id) || (_forcedGameID = id);
           } else
             "server" === vals[0] &&
-              (_forcedServerIndexInt = parseServerIndex(vals[1]), console.log("1"));
+              (_forcedServerIndexInt = parseServerIndex(vals[1]));
         }
         var _chosenServerIndex = window.localStorage.getItem(
           "chooseServerOnStart",
@@ -23878,7 +23878,7 @@ var c_hasPressedCtrlRKey = false;
           i.parentNode.removeChild(i);
         }
         (window.localStorage.setItem("chooseServerOnStart", "-1"),
-          "-1" !== _chosenServerIndex &&
+          -1 === _forcedServerIndexInt &&
             (_forcedServerIndexInt = parseServerIndex(_chosenServerIndex)),
           (exports.networkInit = networkInit),
           (exports.Network = {
