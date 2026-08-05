@@ -5718,7 +5718,7 @@ var c_hasPressedCtrlRKey = false;
                     var i = document.getElementById("serverDropdown").value;
                     (window.localStorage.setItem("chooseServerOnStart", i),
                       setTimeout(function () {
-                        window.location.reload();
+                        (0, r.reloadWithoutInviteLink)();
                       }, 250));
                   } else if ("cancel" === t){
                     y.value = r.Network.connectedServerIndex.toString();
@@ -23271,6 +23271,7 @@ var c_hasPressedCtrlRKey = false;
           (exports.handleNetworkMsg =
             exports.Network =
             exports.networkInit =
+            exports.reloadWithoutInviteLink =
               void 0));
         var _1 = __webpack_require__(9994),
           servers_1 = __webpack_require__(6530),
@@ -23328,9 +23329,29 @@ var c_hasPressedCtrlRKey = false;
             "server" === vals[0] &&
               (_forcedServerIndexInt = parseServerIndex(vals[1]));
         }
-        var _chosenServerIndex = window.localStorage.getItem(
-          "chooseServerOnStart",
+        var _chosenServerIndex = parseServerIndex(
+          window.localStorage.getItem("chooseServerOnStart"),
         );
+        function reloadWithoutInviteLink() {
+          var e = window.location.search
+              .substr(1)
+              .split("&")
+              .filter(function (e) {
+                return (
+                  e.length > 0 &&
+                  "game" !== e.split("=")[0] &&
+                  "server" !== e.split("=")[0]
+                );
+              }),
+            t =
+              window.location.origin +
+              window.location.pathname +
+              (e.length > 0 ? "?" + e.join("&") : "") +
+              window.location.hash;
+          t === window.location.href
+            ? window.location.reload()
+            : window.location.replace(t);
+        }
         function networkInit() {
           for (var e = 0; e < servers_1.SERVERS.length; e++)
             if (-1 === _forcedServerIndexInt || _forcedServerIndexInt === e)
@@ -23878,8 +23899,11 @@ var c_hasPressedCtrlRKey = false;
           i.parentNode.removeChild(i);
         }
         (window.localStorage.setItem("chooseServerOnStart", "-1"),
-          -1 === _forcedServerIndexInt &&
-            (_forcedServerIndexInt = parseServerIndex(_chosenServerIndex)),
+          -1 !== _chosenServerIndex &&
+            (_chosenServerIndex !== _forcedServerIndexInt &&
+              (_forcedGameID = -1),
+            (_forcedServerIndexInt = _chosenServerIndex)),
+          (exports.reloadWithoutInviteLink = reloadWithoutInviteLink),
           (exports.networkInit = networkInit),
           (exports.Network = {
             lastPing: 0,
