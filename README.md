@@ -27,11 +27,13 @@ First, you will need to install a browser extension for override the original re
 4. Click on the icon of extensions on top right.
 5. Find "Resource Override" in there, and click the icon of 3-dots.
 6. Click on "Options"
-7. Now you can add the redirect/override rules depends on your need.
-  - Example: ![Example Of Redirect Extension Configuration](https://flashxwx.github.io/custom_slayone/example_of_redirect_extension_configuration.png)
-8. Click on "Save Changes", after adding redirect/override rules.
+7. Click on "Add Redirect"
+8. Input "https://slay.one/imgs/tileSheet.png" in "Source URL Pattern".
+9. Input "https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-oasis.png" in "Destination URL".
+10. Click on "Save Changes".
+11. Go to Slay.one, refresh the page, and join a game to see the change.
 
-Find the custom resource urls you want to use in below.
+Find more the custom resource urls you want to use in below.
 
 # List of Custom Resource URLs
 
@@ -154,4 +156,4 @@ Or, you can just open issue/request of this repo on github, but it might not be 
 - ARK77
 - Flash
 - Goldberg
-- Mazlista
+- Mázlista
