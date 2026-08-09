@@ -38,7 +38,7 @@ Find more the custom resource urls you want to use in below.
 # List of Custom Resource URLs
 
 ## Bug Fixs & Features
-Redirect https://slay.one/dist/client-bundle.js (client codes) to
+Redirect https://slay.one/dist/client-bundle.js (**client codes**) to
 - https://flashxwx.github.io/custom_slayone/resource/main/dist/client-bundle.js
   - Made message in global chat selecable.
   - Fixed some issues that are very very small, but making the user experience smoother.
@@ -70,6 +70,10 @@ Redirect https://slay.one/imgs/tileSheet.png **(pixel arts for maps)** to
   - Inverted color theme. Secondary creation by Mazlista.
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-night.png
   - Nigth theme. Secondary creation by Flash.
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-saturation000.png
+  - Saturation000 theme, set colour saturation to 0. Secondary creation by ARK77
+- https://flashxwx.github.io/custom_slayone/resource/skins/imgs/tileSheet-culled.png
+  - Culled theme, removed uneccessary tiles. Secondary creation by ARK77
 
 Redirect https://slay.one/imgs/miscSheet.png **(objects in-game)** to
 - https://flashxwx.github.io/custom_slayone/resource/skins/imgs/miscSheet-inverted.png
