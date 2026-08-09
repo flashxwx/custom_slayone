@@ -8451,8 +8451,12 @@ var c_hasPressedCtrlRKey = false;
             t.humanizeSeconds =
             t.ticks2TimeStr =
             t.logout =
+            t.openReplay =
+            t.onReplayMap =
+            t.requestReplayMap =
             t.startReplay =
             t.startReplay0 =
+            t.serializeReplay =
             t.loadReplay =
             t.toggleIgnore =
             t.playerIsBeeingIgnored =
@@ -8487,29 +8491,30 @@ var c_hasPressedCtrlRKey = false;
         var a = i(9994),
           n = i(710),
           o = i(8890),
-          r = (i(4425), i(4902)),
-          s = i(7602),
-          l = i(5273),
-          h = i(2054),
-          d = i(262),
-          m = i(8166),
-          c = i(1626),
-          g = i(6409),
-          u = i(7028),
-          p = i(1799),
-          y = i(5572),
-          f = i(9085),
-          x = i(9178),
-          w = i(7982),
-          v = i(1337),
-          S = i(2978),
-          b = i(8117),
-          _ = i(6214),
-          C = document.getElementById("canvas"),
-          I = C.getContext("2d"),
-          M = document.getElementById("chatDisplayDiv"),
-          T = document.getElementById("optionsWindow");
-        function E(e, t, i, a) {
+          r = (i(4425), i(7602)),
+          s = i(5273),
+          l = i(2054),
+          h = i(262),
+          d = i(4902),
+          m = i(3440),
+          c = i(8166),
+          g = i(1626),
+          u = i(6409),
+          p = i(7028),
+          y = i(1799),
+          f = i(5572),
+          x = i(9085),
+          w = i(9178),
+          v = i(7982),
+          S = i(1337),
+          b = i(2978),
+          _ = i(8117),
+          C = i(6214),
+          I = document.getElementById("canvas"),
+          M = I.getContext("2d"),
+          T = document.getElementById("chatDisplayDiv"),
+          E = document.getElementById("optionsWindow");
+        function k(e, t, i, a) {
           var n = Math.atan((a - t) / (i - e));
           return (
             (n -= i - e < 0 ? Math.PI : 0),
@@ -8518,7 +8523,7 @@ var c_hasPressedCtrlRKey = false;
           );
         }
         ((t.isInGame = function () {
-          return null !== y.root.game && y.root.game.map !== g.map1;
+          return null !== f.root.game && f.root.game.map !== u.map1;
         }),
           (t.escapeHtml = function (e) {
             return e
@@ -8549,24 +8554,24 @@ var c_hasPressedCtrlRKey = false;
             -Math.SQRT1_2,
           ]),
           (t.getMouseGamePlayX = function () {
-            return null !== y.root.game
-              ? c.Input.x / y.root.game.FIELD_SIZE + y.root.game.cameraX
+            return null !== f.root.game
+              ? g.Input.x / f.root.game.FIELD_SIZE + f.root.game.cameraX
               : 0;
           }),
           (t.getMouseGamePlayY = function () {
-            return null !== y.root.game
-              ? c.Input.y / y.root.game.FIELD_SIZE +
-                  y.root.game.cameraY +
-                  (y.root.game.playingPlayer &&
-                  y.root.game.playingPlayer.weapon &&
-                  y.root.game.playingPlayer.weapon.addHeight
-                    ? y.root.game.SHOT_HEIGHT
+            return null !== f.root.game
+              ? g.Input.y / f.root.game.FIELD_SIZE +
+                  f.root.game.cameraY +
+                  (f.root.game.playingPlayer &&
+                  f.root.game.playingPlayer.weapon &&
+                  f.root.game.playingPlayer.weapon.addHeight
+                    ? f.root.game.SHOT_HEIGHT
                     : 0)
               : 0;
           }),
-          (t.getAngle = E),
+          (t.getAngle = k),
           (t.getDirectionFromAgle = function (e, t, i, a) {
-            var n = E(e, t, i, a);
+            var n = k(e, t, i, a);
             return n >= (3 * Math.PI) / 8 && n <= (5 * Math.PI) / 8
               ? 0
               : n <= (3 * -Math.PI) / 8 && n >= (5 * -Math.PI) / 8
@@ -8585,7 +8590,7 @@ var c_hasPressedCtrlRKey = false;
                           : 5;
           }),
           (t.getDirectionFromAgle16 = function (e, t, i, a) {
-            var n = E(e, t, i, a),
+            var n = k(e, t, i, a),
               o = 0;
             return (
               n <= (7 * -Math.PI) / 16 && n >= (9 * -Math.PI) / 16
@@ -8634,7 +8639,7 @@ var c_hasPressedCtrlRKey = false;
           (t.drawCircle = function (e, t, i, a, n, o, r, s) {
             var l = r || 1;
             (e.scale(1, l),
-              (e.lineWidth = y.root.game.SCALE_FACTOR * (s || 1)),
+              (e.lineWidth = f.root.game.SCALE_FACTOR * (s || 1)),
               e.beginPath(),
               e.arc(t, i / l, a, 0, 2 * Math.PI, !1),
               n && ((e.strokeStyle = n), e.stroke()),
@@ -8716,15 +8721,15 @@ var c_hasPressedCtrlRKey = false;
               i.send());
           }),
           (t.exitGame = function () {
-            (f.Sound.playSound("click"),
-              (T.style.display = "none"),
-              d.playerData.authLevel >= o.AUTH_LEVEL.PLAYER &&
-                S.resourceBar.show(),
-              (y.root.game = new m.Game(g.map1)),
-              K(),
-              p.rankInGame.hide(),
-              x.UI.refreshMenuButtons(),
-              x.UI.showMainScene());
+            (x.Sound.playSound("click"),
+              (E.style.display = "none"),
+              h.playerData.authLevel >= o.AUTH_LEVEL.PLAYER &&
+                b.resourceBar.show(),
+              (f.root.game = new c.Game(u.map1)),
+              V(),
+              y.rankInGame.hide(),
+              w.UI.refreshMenuButtons(),
+              w.UI.showMainScene());
           }),
           (t.parseChests = function (e) {
             for (var t = {}, i = e.split(";"), a = 0; a < i.length; a++)
@@ -8738,32 +8743,32 @@ var c_hasPressedCtrlRKey = false;
             return t;
           }),
           (t.getChestName = function (e) {
-            return _.lang.get("chest.name." + e);
+            return C.lang.get("chest.name." + e);
           }),
           (t.lpd = function (e) {
             var t = e.currentTarget.getAttribute("data-playerId");
-            y.root.game
-              ? (y.root.game.interface_.addMsg("request sent", "yellow"),
-                u.Network.send(r.NetworkCmd.ClientReqSS + "$" + t))
-              : (0, b.floatTip)("error", "Only works ingame", 2e3);
+            f.root.game
+              ? (f.root.game.interface_.addMsg("request sent", "yellow"),
+                p.Network.send(d.NetworkCmd.ClientReqSS + "$" + t))
+              : (0, _.floatTip)("error", "Only works ingame", 2e3);
           }),
           (t.lpd2 = function (e) {
             var t = e.currentTarget.getAttribute("data-playerId"),
               i = e.currentTarget.getAttribute("data-playerName"),
               a = "1" === e.currentTarget.getAttribute("data-isGuest");
-            y.root.game &&
-              (y.root.game.interface_.addMsg("request sent", "yellow"),
+            f.root.game &&
+              (f.root.game.interface_.addMsg("request sent", "yellow"),
               a
-                ? u.Network.send(r.NetworkCmd.ClientReqSSGuest + i)
-                : u.Network.send(r.NetworkCmd.ClientReqSS + "$" + t));
+                ? p.Network.send(d.NetworkCmd.ClientReqSSGuest + i)
+                : p.Network.send(d.NetworkCmd.ClientReqSS + "$" + t));
           }),
           (t.modPlInfo = function (e) {
             var t = e.currentTarget.getAttribute("data-playerId");
-            y.root.game &&
-              (y.root.game.interface_.addMsg("request sent", "yellow"),
-              y.root.game.map !== g.map1
-                ? u.Network.send("chat/plinfo " + t)
-                : u.Network.send("chat/plinfo$ " + t));
+            f.root.game &&
+              (f.root.game.interface_.addMsg("request sent", "yellow"),
+              f.root.game.map !== u.map1
+                ? p.Network.send("chat/plinfo " + t)
+                : p.Network.send("chat/plinfo$ " + t));
           }));
         t.initBan = function (e) {
           var t,
@@ -8772,7 +8777,7 @@ var c_hasPressedCtrlRKey = false;
               void 0 !== t
                 ? t
                 : "";
-          k(i, "ban");
+          L(i, "ban");
         };
         t.initShadowBan = function (e) {
           var t,
@@ -8781,10 +8786,10 @@ var c_hasPressedCtrlRKey = false;
               void 0 !== t
                 ? t
                 : "";
-          k(i, "sban");
+          L(i, "sban");
         };
-        var k = function (e, t) {
-          if (y.root.game && y.root.game.map !== g.map1) {
+        var L = function (e, t) {
+          if (f.root.game && f.root.game.map !== u.map1) {
             var i = document.getElementById("chatInputDiv"),
               a = document.getElementById("chatInput"),
               n = document.getElementById("chatlog"),
@@ -8800,22 +8805,22 @@ var c_hasPressedCtrlRKey = false;
             if (null === r) return;
             var s = parseInt(r.trim(), 10);
             if (isNaN(s) || s <= 0)
-              return void (0, b.floatTip)("error", "Invalid duration", 2e3);
+              return void (0, _.floatTip)("error", "Invalid duration", 2e3);
             var l = prompt("Reason? (optional)");
             if (null === l) return;
             var h = l.trim().replace(/\s+/g, "_"),
               d = h.length > 0 ? " " + h : "";
-            u.Network.send("chat/" + t + " " + e + " " + s + d);
+            p.Network.send("chat/" + t + " " + e + " " + s + d);
           }
         };
         ((t.watchLaddergame = function (e) {
           var t = e.currentTarget;
-          u.Network.send("wlg$" + t.getAttribute("data-laddergameId"));
+          p.Network.send("wlg$" + t.getAttribute("data-laddergameId"));
         }),
           (t.getFavGun = function (e) {
-            for (var t = l.weapons[0], i = 0, a = 0; a < e.length; a++) {
+            for (var t = s.weapons[0], i = 0, a = 0; a < e.length; a++) {
               var n = e[a];
-              "number" == typeof n && n > i && ((i = n), (t = l.weapons[a]));
+              "number" == typeof n && n > i && ((i = n), (t = s.weapons[a]));
             }
             return t;
           }),
@@ -8836,77 +8841,73 @@ var c_hasPressedCtrlRKey = false;
                     (document.webkitIsFullScreen
                       ? document.webkitCancelFullScreen()
                       : e.webkitRequestFullScreen(e.ALLOW_KEYBOARD_INPUT)),
-              K());
+              V());
           }),
           (t.acceptAGB = function () {
-            (u.Network.send("i-accept-agb"), f.Sound.playSound("click"));
+            (p.Network.send("i-accept-agb"), x.Sound.playSound("click"));
           }));
         t.showPlayerInfo0 = function (e) {
-          return h.api.getPlayerProfile(
+          return l.api.getPlayerProfile(
             parseInt(e.target.getAttribute("data-playerId")),
           );
         };
-        var L = document.getElementById("homeUI"),
-          A = document.getElementById("resourceBar"),
-          F = document.getElementById("unlockDivInner"),
-          P = document.getElementById("menuButtonContainer"),
-          N = document.getElementById("friendsContainer"),
-          B = document.getElementById("levelUp"),
-          D = document.getElementById("openChest"),
-          O = document.getElementById("ladderDiv"),
-          R = document.getElementById("result"),
-          H = document.getElementById("respawn"),
-          U = document.getElementById("ingameEmotesDiv"),
-          G = document.getElementById("rankInGame"),
-          W = document.getElementById("newGame"),
-          z = document.getElementById("clanMainCreate"),
-          Y = document.getElementById("clanMain"),
-          q = document.getElementById("emotes"),
-          j = document.getElementById("buyEmote"),
-          Z = document.getElementById("accDivInner"),
-          X = document.getElementById("realOptionsDiv");
-        function K() {
+        var A = document.getElementById("homeUI"),
+          F = document.getElementById("resourceBar"),
+          P = document.getElementById("unlockDivInner"),
+          N = document.getElementById("menuButtonContainer"),
+          B = document.getElementById("friendsContainer"),
+          D = document.getElementById("levelUp"),
+          O = document.getElementById("openChest"),
+          R = document.getElementById("ladderDiv"),
+          H = document.getElementById("result"),
+          U = document.getElementById("respawn"),
+          G = document.getElementById("ingameEmotesDiv"),
+          W = document.getElementById("rankInGame"),
+          z = document.getElementById("newGame"),
+          Y = document.getElementById("clanMainCreate"),
+          q = document.getElementById("clanMain"),
+          j = document.getElementById("emotes"),
+          Z = document.getElementById("buyEmote"),
+          X = document.getElementById("accDivInner"),
+          K = document.getElementById("realOptionsDiv");
+        function V() {
           var e = window.innerWidth,
             t = window.innerHeight;
-          ((C.width = e),
-            (C.height = t),
-            L.style.setProperty(
+          ((I.width = e),
+            (I.height = t),
+            A.style.setProperty(
               "--uiScale",
               (Math.min(t, 0.8 * e) / 900).toString(),
             ),
-            (A.style.transform = "scale(".concat(t / 700, ")")),
-            (T.style.transform = "scale(".concat(t / 800, ")")),
-            (F.style.transform = "scale(".concat(t / 600, ")")),
-            (P.style.transform = "scale(".concat(t / 1e3, ")")),
-            (N.style.transform = "scale(".concat(t / 700, ")")),
-            (D.style.transform = "scale(".concat(t / 600, ")")),
-            (B.style.transform = "translate(-50%, -50%) scale(".concat(
+            (F.style.transform = "scale(".concat(t / 700, ")")),
+            (E.style.transform = "scale(".concat(t / 800, ")")),
+            (P.style.transform = "scale(".concat(t / 600, ")")),
+            (N.style.transform = "scale(".concat(t / 1e3, ")")),
+            (B.style.transform = "scale(".concat(t / 700, ")")),
+            (O.style.transform = "scale(".concat(t / 600, ")")),
+            (D.style.transform = "translate(-50%, -50%) scale(".concat(
               t / 600,
               ")",
             )),
-            (D.style.transform = "scale(".concat(t / 600, ")")),
-            (O.style.transform = "scale(".concat(t / 800, ")")),
-            (O.style.top = P.getBoundingClientRect().bottom + 10 + "px"),
-            (R.style.transform = "translate(-50%, 0%) scale(".concat(
+            (O.style.transform = "scale(".concat(t / 600, ")")),
+            (R.style.transform = "scale(".concat(t / 800, ")")),
+            (R.style.top = N.getBoundingClientRect().bottom + 10 + "px"),
+            (H.style.transform = "translate(-50%, 0%) scale(".concat(
               t / 700,
               ")",
             )),
-            (H.style.transform = "translate(-50%, -50%) scale(".concat(
+            (U.style.transform = "translate(-50%, -50%) scale(".concat(
               t / 700,
               ")",
             )),
-            (U.style.transform = "scale(".concat(t / 700, ")")),
-            (U.style.top = P.getBoundingClientRect().bottom + 10 + "px"),
-            (G.style.transform = "translate(-50%, 0) scale(".concat(
+            (G.style.transform = "scale(".concat(t / 700, ")")),
+            (G.style.top = N.getBoundingClientRect().bottom + 10 + "px"),
+            (W.style.transform = "translate(-50%, 0) scale(".concat(
               t / 800,
-              ")",
-            )),
-            (W.style.transform = "translate(-50%, -50%) scale(".concat(
-              Math.min(t, 0.8 * e) / 800,
               ")",
             )),
             (z.style.transform = "translate(-50%, -50%) scale(".concat(
-              t / 800,
+              Math.min(t, 0.8 * e) / 800,
               ")",
             )),
             (Y.style.transform = "translate(-50%, -50%) scale(".concat(
@@ -8922,10 +8923,14 @@ var c_hasPressedCtrlRKey = false;
               ")",
             )),
             (Z.style.transform = "translate(-50%, -50%) scale(".concat(
-              Math.min(t, 0.7 * e) / 700,
+              t / 800,
               ")",
             )),
             (X.style.transform = "translate(-50%, -50%) scale(".concat(
+              Math.min(t, 0.7 * e) / 700,
+              ")",
+            )),
+            (K.style.transform = "translate(-50%, -50%) scale(".concat(
               t / 800,
               ")",
             )));
@@ -8938,147 +8943,111 @@ var c_hasPressedCtrlRKey = false;
               Math.min(t, 0.7 * e) / 800,
               ")",
             )),
-            null !== y.root.game &&
-              ((y.root.game.FIELD_SIZE =
+            null !== f.root.game &&
+              ((f.root.game.FIELD_SIZE =
                 Math.sqrt(window.innerWidth * window.innerHeight) *
-                y.root.game.SCALE_CONST),
-              (y.root.game.FIELD_SIZE_BASE =
+                f.root.game.SCALE_CONST),
+              (f.root.game.FIELD_SIZE_BASE =
                 Math.sqrt(window.innerWidth * window.innerHeight) *
-                y.root.game.SCALE_CONST_BASE),
-              (y.root.game.SCALE_FACTOR = y.root.game.FIELD_SIZE / 16),
-              (y.root.game.SCALE_FACTOR_BASE =
-                y.root.game.FIELD_SIZE_BASE / 16),
-              (I.mozImageSmoothingEnabled = !1),
-              (I.msImageSmoothingEnabled = !1),
-              (I.imageSmoothingEnabled = !1),
-              (M.style.left = (y.root.game.FIELD_SIZE / 16) * 87 + "px"),
-              (M.style.right = (y.root.game.FIELD_SIZE / 16) * 70 + "px"),
-              (M.style.bottom = (y.root.game.FIELD_SIZE / 16) * 2 + "px")));
+                f.root.game.SCALE_CONST_BASE),
+              (f.root.game.SCALE_FACTOR = f.root.game.FIELD_SIZE / 16),
+              (f.root.game.SCALE_FACTOR_BASE =
+                f.root.game.FIELD_SIZE_BASE / 16),
+              (M.mozImageSmoothingEnabled = !1),
+              (M.msImageSmoothingEnabled = !1),
+              (M.imageSmoothingEnabled = !1),
+              (T.style.left = (f.root.game.FIELD_SIZE / 16) * 87 + "px"),
+              (T.style.right = (f.root.game.FIELD_SIZE / 16) * 70 + "px"),
+              (T.style.bottom = (f.root.game.FIELD_SIZE / 16) * 2 + "px")));
         }
-        function V(e) {
-          (e[0] && e[0].split && "replay-version" === e[0].split("=")[0]
-            ? (e.splice(0, 1),
-              (y.root.game.playingReplay = e),
-              (y.root.game.playingReplayVersion = parseInt(e[0].split("=")[1])))
-            : ((y.root.game.playingReplay = e),
-              (y.root.game.playingReplayVersion = 1)),
-            $());
-        }
-        function $() {
-          for (var e = 0, t = y.root.game.playingReplay; e < t.length; e++) {
-            var i = t[e],
-              a = i.split("$"),
-              n = null;
-            try {
-              n = JSON.parse(a[3]);
-            } catch (e) {
-              n = null;
-            }
-            if (n && "object" == typeof n) {
-              Q();
-              var o = y.root.game.playingReplay,
-                r = y.root.game.playingReplayVersion;
-              return (
-                (y.root.game = new m.Game(n)),
-                (y.root.game.playingReplay = o),
-                (y.root.game.playingReplayVersion = r),
-                K(),
-                (y.root.game.replayMode = !0),
-                (y.root.game.iAmSpec = !0),
-                y.root.game.init(a, i),
-                y.root.game.interface_.analyzeReplay(y.root.game.playingReplay),
-                x.UI.refreshMenuButtons(),
-                void w.socialService.hideChatWindowAndFriendList()
-              );
-            }
-            if ("init" === a[0]) {
-              Q();
-              o = y.root.game.playingReplay;
-              var s = y.root.game.playingReplayVersion;
-              return (
-                (y.root.game = new m.Game(JSON.parse(a[1]))),
-                (y.root.game.playingReplay = o),
-                (y.root.game.playingReplayVersion = s),
-                K(),
-                (y.root.game.replayMode = !0),
-                (y.root.game.iAmSpec = !0),
-                y.root.game.init(a, i),
-                y.root.game.interface_.analyzeReplay(y.root.game.playingReplay),
-                x.UI.refreshMenuButtons(),
-                void w.socialService.hideChatWindowAndFriendList()
-              );
-            }
-          }
+        function $(e) {
+          if (
+            "string" != typeof e ||
+            e.substr(0, d.REPLAY_BINARY_PREFIX.length) !==
+              d.REPLAY_BINARY_PREFIX
+          )
+            return e;
+          for (
+            var t = atob(e.substr(d.REPLAY_BINARY_PREFIX.length)),
+              i = new Uint8Array(t.length),
+              a = 0;
+            a < t.length;
+            a++
+          )
+            i[a] = t.charCodeAt(a);
+          return i;
         }
         function J(e) {
-          if (e >= 0) {
-            var t = Math.floor(e / 3600),
-              i = Math.floor(e / 60) % 60,
-              a = e % 60,
-              n = "";
-            if (t > 0) n = (t < 10 ? "0" + t : t) + ":";
-            return n + (i < 10 ? "0" + i : i) + ":" + (a < 10 ? "0" + a : a);
-          }
-          return "--:--";
+          var t = (0, m.readReplayVersion)(e),
+            i = t.version,
+            a = t.body;
+          if (
+            ((f.root.game.playingReplay = a),
+            (f.root.game.playingReplayVersion = i),
+            f.root.game.playingReplayVersion >= 5)
+          )
+            for (var n = 0; n < f.root.game.playingReplay.length; n++)
+              f.root.game.playingReplay[n] = $(f.root.game.playingReplay[n]);
+          Q();
         }
         function Q() {
-          (y.root.searchingLadder &&
-            (f.Sound.playSound("click"), u.Network.send("cancelLadder")),
-            ee());
+          var e = f.root.game.playingReplay,
+            t = (0, m.detectReplayFormat)(e, f.root.game.playingReplayVersion);
+          null !== t
+            ? null !== t.map
+              ? ie(t, t.map)
+              : te(t.mapId, t)
+            : (0, _.floatTip)("error", "This replay could not be read.");
         }
-        function ee() {
-          ((y.root.searchingLadder = !1),
-            (document.getElementById("ladderDiv").style.display = "none"));
-        }
-        ((t.resize = K),
-          K(),
-          (window.onresize = K),
+        ((t.resize = V),
+          V(),
+          (window.onresize = V),
           (t.ban = function (e) {
-            u.Network.send("ban$" + e);
+            p.Network.send("ban$" + e);
           }),
           (t.playerIsBeeingIgnored = function (e) {
             return (
               (e = e.toLowerCase()),
-              d.options.ignoreList.indexOf(e) >= 0 ||
-                d.options.ignoreListTemp.indexOf(e) >= 0
+              h.options.ignoreList.indexOf(e) >= 0 ||
+                h.options.ignoreListTemp.indexOf(e) >= 0
             );
           }),
           (t.toggleIgnore = function (e, t, i) {
             var a = document.getElementById("button_ignore_" + t);
             t = t.toLowerCase();
-            for (var n = 0; n < d.options.ignoreList.length; n++)
-              if (d.options.ignoreList[n] === t)
+            for (var n = 0; n < h.options.ignoreList.length; n++)
+              if (h.options.ignoreList[n] === t)
                 return (
-                  d.options.ignoreList.splice(n, 1),
-                  (localStorage.ignoreList = d.options.ignoreList.join(";")),
-                  a && (a.innerHTML = _.lang.get("game.btn.ignore.on")),
+                  h.options.ignoreList.splice(n, 1),
+                  (localStorage.ignoreList = h.options.ignoreList.join(";")),
+                  a && (a.innerHTML = C.lang.get("game.btn.ignore.on")),
                   void (
-                    null !== y.root.game &&
-                    y.root.game.interface_.addMsg(
-                      _.lang.get("game.msg.ignore.off", { playerName: t }),
+                    null !== f.root.game &&
+                    f.root.game.interface_.addMsg(
+                      C.lang.get("game.msg.ignore.off", { playerName: t }),
                       "white",
                     )
                   )
                 );
-            for (n = 0; n < d.options.ignoreListTemp.length; n++)
-              if (d.options.ignoreListTemp[n] === t)
+            for (n = 0; n < h.options.ignoreListTemp.length; n++)
+              if (h.options.ignoreListTemp[n] === t)
                 return (
-                  d.options.ignoreListTemp.splice(n, 1),
-                  a && (a.innerHTML = _.lang.get("game.btn.ignore.on")),
+                  h.options.ignoreListTemp.splice(n, 1),
+                  a && (a.innerHTML = C.lang.get("game.btn.ignore.on")),
                   void (
-                    null !== y.root.game &&
-                    y.root.game.interface_.addMsg(
-                      _.lang.get("game.msg.ignore.off", { playerName: t }),
+                    null !== f.root.game &&
+                    f.root.game.interface_.addMsg(
+                      C.lang.get("game.msg.ignore.off", { playerName: t }),
                       "white",
                     )
                   )
                 );
-            ((i ? d.options.ignoreListTemp : d.options.ignoreList).push(t),
-              (localStorage.ignoreList = d.options.ignoreList.join(";")),
-              a && (a.innerHTML = _.lang.get("game.btn.ignore.off")),
-              null !== y.root.game &&
-                y.root.game.interface_.addMsg(
-                  _.lang.get("game.msg.ignore.on", { playerName: t }),
+            ((i ? h.options.ignoreListTemp : h.options.ignoreList).push(t),
+              (localStorage.ignoreList = h.options.ignoreList.join(";")),
+              a && (a.innerHTML = C.lang.get("game.btn.ignore.off")),
+              null !== f.root.game &&
+                f.root.game.interface_.addMsg(
+                  C.lang.get("game.msg.ignore.on", { playerName: t }),
                   "white",
                 ));
           }),
@@ -9089,56 +9058,149 @@ var c_hasPressedCtrlRKey = false;
               (e.onchange = function () {
                 var t = e.files[0];
                 if (t) {
-                  v.optionsScreen.hideWindow();
+                  S.optionsScreen.hideWindow();
                   var i = new FileReader();
                   (i.readAsText(t),
                     (i.onload = function (e) {
                       setTimeout(function () {
-                        V(JSON.parse(e.target.result));
+                        J(JSON.parse(e.target.result));
                       }, 50);
                     }));
                 }
               }),
-              f.Sound.playSound("click"));
+              x.Sound.playSound("click"));
           }),
-          (t.startReplay0 = V),
-          (t.startReplay = $),
+          (t.serializeReplay = function (e) {
+            for (var t = [], i = 0, a = e; i < a.length; i++) {
+              var n = a[i];
+              if ("string" != typeof n) {
+                for (var o = "", r = 0; r < n.length; r += 4096)
+                  o += String.fromCharCode.apply(null, n.subarray(r, r + 4096));
+                t.push(d.REPLAY_BINARY_PREFIX + btoa(o));
+              } else t.push(n);
+            }
+            return t;
+          }),
+          (t.startReplay0 = J),
+          (t.startReplay = Q));
+        var ee = null;
+        function te(e, t) {
+          ((ee = t), p.Network.send(d.NetworkCmd.ReplayMap + "$" + e));
+        }
+        function ie(e, t) {
+          var i = f.root.game.playingReplay,
+            a = e.initRow;
+          ne();
+          var n = f.root.game.playingReplayVersion;
+          ((f.root.game = new c.Game(t)),
+            (f.root.game.playingReplay = i),
+            (f.root.game.playingReplayVersion = n),
+            (f.root.game.replayFormat = e),
+            (f.root.game.replayIndex = e.initIndex + 1),
+            V(),
+            (f.root.game.replayMode = !0),
+            (f.root.game.iAmSpec = !0),
+            f.root.game.init(a.split("$"), a),
+            f.root.game.interface_.analyzeReplay(f.root.game.playingReplay),
+            w.UI.refreshMenuButtons(),
+            v.socialService.hideChatWindowAndFriendList());
+        }
+        function ae(e) {
+          if (e >= 0) {
+            var t = Math.floor(e / 3600),
+              i = Math.floor(e / 60) % 60,
+              a = e % 60,
+              n = "";
+            if (t > 0) n = (t < 10 ? "0" + t : t) + ":";
+            return n + (i < 10 ? "0" + i : i) + ":" + (a < 10 ? "0" + a : a);
+          }
+          return "--:--";
+        }
+        function ne() {
+          (f.root.searchingLadder &&
+            (x.Sound.playSound("click"), p.Network.send("cancelLadder")),
+            oe());
+        }
+        function oe() {
+          ((f.root.searchingLadder = !1),
+            (document.getElementById("ladderDiv").style.display = "none"));
+        }
+        ((t.requestReplayMap = te),
+          (t.onReplayMap = function (e) {
+            var t = ee;
+            if (((ee = null), null !== t)) {
+              var i = null;
+              try {
+                i = JSON.parse(e);
+              } catch (e) {
+                i = null;
+              }
+              if (i && "object" == typeof i) {
+                var a = (0, m.replayCoordExtent)(
+                  f.root.game.playingReplay,
+                  o.CONST.TRANSMUL,
+                );
+                (null !== a &&
+                  (i.x < a.x || i.y < a.y) &&
+                  (0, _.floatTip)(
+                    "error",
+                    "This replay was recorded on a " +
+                      Math.ceil(a.x) +
+                      "x" +
+                      Math.ceil(a.y) +
+                      " map, but map " +
+                      t.mapId +
+                      " is " +
+                      i.x +
+                      "x" +
+                      i.y +
+                      " now. It has been changed since, so this will not look right.",
+                  ),
+                  ie(t, i));
+              } else
+                (0, _.floatTip)(
+                  "error",
+                  "This replay's map is no longer on the server, so it cannot be opened.",
+                );
+            }
+          }),
+          (t.openReplay = ie),
           (t.logout = function () {
-            (f.Sound.playSound("click"),
-              u.Network.send("logout"),
-              S.resourceBar.hide(),
-              (d.playerData.name = ""),
-              (d.playerData.authLevel = o.AUTH_LEVEL.GUEST),
-              (d.playerData.lvl = 1),
-              (d.playerData.xp = 0),
-              (d.playerData.gold = 0),
-              (d.playerData.gems = 0),
-              (d.playerData.skinsUnlocked = ""),
-              (d.playerData.clanTag = ""),
-              (d.playerData.clanRole = o.AUTH_LEVEL.NONE),
-              (d.playerData.skin = s.hats[0]),
-              (d.playerData.chests = {}),
-              (d.playerData.abilities = (0, n.getDefaultAbilityObj)(
+            (x.Sound.playSound("click"),
+              p.Network.send("logout"),
+              b.resourceBar.hide(),
+              (h.playerData.name = ""),
+              (h.playerData.authLevel = o.AUTH_LEVEL.GUEST),
+              (h.playerData.lvl = 1),
+              (h.playerData.xp = 0),
+              (h.playerData.gold = 0),
+              (h.playerData.gems = 0),
+              (h.playerData.skinsUnlocked = ""),
+              (h.playerData.clanTag = ""),
+              (h.playerData.clanRole = o.AUTH_LEVEL.NONE),
+              (h.playerData.skin = r.hats[0]),
+              (h.playerData.chests = {}),
+              (h.playerData.abilities = (0, n.getDefaultAbilityObj)(
                 n.abilities,
               )),
-              (d.playerData.multiBuild = (0, n.getDefaultMultiBuild)()),
-              (d.playerData.db_id = -1),
-              (d.playerData.isAdmin = !1),
-              (d.playerData.isMod = !1),
-              (d.playerData.isMod2 = !1),
-              (d.playerData.name_color = []),
-              (d.playerData.name_color_select = 0),
-              (d.playerData.favGun = l.weapons[0]),
+              (h.playerData.multiBuild = (0, n.getDefaultMultiBuild)()),
+              (h.playerData.db_id = -1),
+              (h.playerData.isAdmin = !1),
+              (h.playerData.isMod = !1),
+              (h.playerData.isMod2 = !1),
+              (h.playerData.name_color = []),
+              (h.playerData.name_color_select = 0),
+              (h.playerData.favGun = s.weapons[0]),
               localStorage.setItem("autologin", ""),
-              x.UI.showMainScene(),
-              x.UI.refreshMenuButtons(),
-              w.socialService.reset(),
-              w.socialService.hideChatWindowAndFriendList());
+              w.UI.showMainScene(),
+              w.UI.refreshMenuButtons(),
+              v.socialService.reset(),
+              v.socialService.hideChatWindowAndFriendList());
           }),
           (t.ticks2TimeStr = function (e) {
-            return J(Math.floor(e / 20));
+            return ae(Math.floor(e / 20));
           }),
-          (t.humanizeSeconds = J),
+          (t.humanizeSeconds = ae),
           (t.replayOptions = [
             { tickTime: 200, loops: 0, display: 0 },
             { tickTime: 200, loops: 1, display: 0.25 },
@@ -9160,13 +9222,13 @@ var c_hasPressedCtrlRKey = false;
           }),
           (t.changeReplaySpeed = function (e) {
             if (
-              null !== y.root.game &&
-              (y.root.game.fastForward ||
-                y.root.game.interface_.fastForwardTo >= 0)
+              null !== f.root.game &&
+              (f.root.game.fastForward ||
+                f.root.game.interface_.fastForwardTo >= 0)
             )
               return (
-                (y.root.game.fastForward = !1),
-                (y.root.game.interface_.fastForwardTo = -1),
+                (f.root.game.fastForward = !1),
+                (f.root.game.interface_.fastForwardTo = -1),
                 (t.replaySettings.oldReplayOptionsIndex =
                   t.replaySettings.replayOptionsIndex),
                 (t.replaySettings.replayOptionsIndex =
@@ -9186,69 +9248,72 @@ var c_hasPressedCtrlRKey = false;
               (t.replaySettings.lastReplaySpeedChange = Date.now()));
           }),
           (function e() {
-            if (null !== y.root.game && y.root.game.replayMode)
+            if (null !== f.root.game && f.root.game.replayMode)
               for (var i = 0; i < t.replaySettings.replayOption.loops; i++)
                 for (
-                  var a = y.root.game.replayIndex;
-                  a < y.root.game.playingReplay.length;
+                  var a = f.root.game.replayIndex;
+                  a < f.root.game.playingReplay.length;
                   a++
                 ) {
-                  (y.root.game.fastForward &&
-                    y.root.game.interface_.fastForwardTo - 200 <=
-                      y.root.game.interface_.replayTimer &&
-                    ((y.root.game.fastForward = !1),
+                  (f.root.game.fastForward &&
+                    f.root.game.interface_.fastForwardTo - 200 <=
+                      f.root.game.interface_.replayTimer &&
+                    ((f.root.game.fastForward = !1),
                     (t.replaySettings.replayOptionsIndex =
                       t.replayOptions.length - 3),
                     (t.replaySettings.replayOption =
                       t.replayOptions[t.replaySettings.replayOptionsIndex])),
-                    y.root.game.interface_.fastForwardTo ===
-                      y.root.game.interface_.replayTimer &&
-                      ((y.root.game.interface_.fastForwardTo = -1),
+                    f.root.game.interface_.fastForwardTo ===
+                      f.root.game.interface_.replayTimer &&
+                      ((f.root.game.interface_.fastForwardTo = -1),
                       (t.replaySettings.replayOptionsIndex =
                         t.replaySettings.oldReplayOptionsIndex),
                       (t.replaySettings.replayOption =
                         t.replayOptions[t.replaySettings.replayOptionsIndex])));
-                  var n = y.root.game.playingReplay[a].split("$");
-                  ((0, u.handleNetworkMsg)(y.root.game.playingReplay[a]),
-                    (y.root.game.replayIndex = a + 1),
-                    "upd" === n[0] &&
-                      (y.root.game.interface_.replayTimer++,
-                      (a = y.root.game.playingReplay.length)));
+                  var n = f.root.game.playingReplay[a],
+                    o =
+                      "string" == typeof n
+                        ? "upd" === n.split("$")[0]
+                        : (0, d.isBinaryUpd)(n);
+                  ((0, p.handleNetworkMsg)(n),
+                    (f.root.game.replayIndex = a + 1),
+                    o &&
+                      (f.root.game.interface_.replayTimer++,
+                      (a = f.root.game.playingReplay.length)));
                 }
             setTimeout(e, t.replaySettings.replayOption.tickTime);
           })(),
-          (document.getElementById("ladderDiv").onclick = Q),
-          (t.hideLadderButton = ee),
+          (document.getElementById("ladderDiv").onclick = ne),
+          (t.hideLadderButton = oe),
           (t.copyInput = function (e) {
             e.select();
             try {
               document.execCommand("copy")
-                ? (0, b.floatTip)("success", _.lang.get("msg.copy_ok"), 2e3)
-                : (0, b.floatTip)("error", _.lang.get("msg.copy_fail"));
+                ? (0, _.floatTip)("success", C.lang.get("msg.copy_ok"), 2e3)
+                : (0, _.floatTip)("error", C.lang.get("msg.copy_fail"));
             } catch (e) {
-              (0, b.floatTip)(
+              (0, _.floatTip)(
                 "error",
-                _.lang.get("msg.copy_fail_with_reason", e.toString()),
+                C.lang.get("msg.copy_fail_with_reason", e.toString()),
               );
             }
           }),
           (t.getCurrentGameLink = function () {
-            return null !== y.root.game &&
-              y.root.game.map !== g.map1
+            return null !== f.root.game && f.root.game.map !== u.map1
               ? "https://slay.one/" +
                   "?server=" +
-                  u.Network.connectedServerIndex +
+                  p.Network.connectedServerIndex +
                   "&game=" +
-                  y.root.game.id
+                  f.root.game.id
               : "";
           }));
         ((t.containsMouse = function (e) {
           var t = e.getBoundingClientRect();
           return (
-            t.left <= c.Input.x &&
-            t.right >= c.Input.x &&
-            t.top <= c.Input.y &&
-            t.bottom >= c.Input.y
+            t.left <= g.Input.x &&
+            t.right >= g.Input.x &&
+            t.top <= g.Input.y &&
+            t.bottom >= g.Input.y
           );
         }),
           (t.drawHat = function (e, t, i, n, o, r) {
@@ -10994,6 +11059,225 @@ var c_hasPressedCtrlRKey = false;
             fireballMedium: { x: 416, y: 339, w: 9, h: 11 },
             fireballSmall: { x: 427, y: 342, w: 5, h: 5 },
           }));
+      },
+      3440: (e, t) => {
+        "use strict";
+        var i;
+        function a(e, t) {
+          if (t <= 0 || 0 === e.length || e.length % t != 0)
+            return Number.MAX_SAFE_INTEGER;
+          for (var i = 0, a = 0; a < e.length; a += t) {
+            var n = parseInt(e[a]),
+              o = parseFloat(e[a + 1]),
+              r = parseFloat(e[a + 2]),
+              s = e[a + 3],
+              l = parseFloat(e[a + 4]),
+              h = parseInt(e[a + 12]),
+              d = parseFloat(e[a + 14]);
+            ((n > 0 && n < 1e5) || i++,
+              (o >= 0 && o < 2e4) || i++,
+              (r >= 0 && r < 2e4) || i++,
+              (void 0 === s || /^-?[\d.]*$/.test(s)) && i++,
+              (l >= 0 && l <= 1e3) || i++,
+              (h >= 0 && h <= 2) || i++,
+              (d > 0 && d <= 1e3) || i++);
+          }
+          return i;
+        }
+        function n(e, t, n) {
+          for (
+            var o = (function (e, t) {
+                return e === i.MapInline
+                  ? 28
+                  : e === i.MapIdOnly
+                    ? t >= 4
+                      ? 27
+                      : 24
+                    : t <= 1
+                      ? 22
+                      : 2 === t
+                        ? 23
+                        : 24;
+              })(t, n),
+              r = e.split("$");
+            r.length > 0 && "" === r[0];
+          )
+            r.shift();
+          for (; r.length > 0 && "" === r[r.length - 1]; ) r.pop();
+          if (0 === r.length) return o;
+          if (0 === a(r, o)) return o;
+          for (var s = o, l = a(r, o), h = 20; h <= 32; h++) {
+            var d = a(r, h);
+            d < l && ((l = d), (s = h));
+          }
+          return s;
+        }
+        function o(e, t) {
+          var i;
+          try {
+            i = JSON.parse(t.substr(t.indexOf("$") + 1));
+          } catch (t) {
+            return e;
+          }
+          if (!i || "object" != typeof i) return e;
+          var a = e.split("%split%");
+          if (a.length < 3) return e;
+          var n = function (e) {
+            return Array.isArray(e)
+              ? e
+                  .map(function (e) {
+                    return e.join("$") + "$";
+                  })
+                  .join("")
+              : "";
+          };
+          return (
+            Array.isArray(i.player) &&
+              i.player.length > 0 &&
+              (a[1] = n(i.player)),
+            Array.isArray(i.zombie) &&
+              i.zombie.length > 0 &&
+              (a[2] = n(i.zombie)),
+            a.join("%split%")
+          );
+        }
+        (Object.defineProperty(t, "__esModule", { value: !0 }),
+          (t.foldInitPreload =
+            t.replayCoordExtent =
+            t.detectReplayFormat =
+            t.readReplayVersion =
+            t.detectPlayerStride =
+            t.initFieldOffset =
+            t.initSegments =
+            t.ReplayLayout =
+              void 0),
+          (function (e) {
+            ((e[(e.MapAtThree = 0)] = "MapAtThree"),
+              (e[(e.MapIdOnly = 1)] = "MapIdOnly"),
+              (e[(e.MapInline = 2)] = "MapInline"));
+          })((i = t.ReplayLayout || (t.ReplayLayout = {}))),
+          (t.initSegments = function (e) {
+            return e === i.MapInline
+              ? {
+                  players: 1,
+                  zombies: 2,
+                  items: 3,
+                  objects: 4,
+                  movable: 5,
+                  corpses: 6,
+                }
+              : {
+                  players: 1,
+                  zombies: -1,
+                  items: 2,
+                  objects: 3,
+                  movable: 5,
+                  corpses: 6,
+                };
+          }),
+          (t.initFieldOffset = function (e) {
+            return e === i.MapIdOnly ? 2 : 0;
+          }),
+          (t.detectPlayerStride = n),
+          (t.readReplayVersion = function (e) {
+            return e[0] &&
+              "string" == typeof e[0] &&
+              "replay-version" === e[0].split("=")[0]
+              ? { version: parseInt(e[0].split("=")[1]), body: e.slice(1) }
+              : { version: 1, body: e };
+          }),
+          (t.detectReplayFormat = function (e, t) {
+            for (
+              var a = e.find(function (e) {
+                  return (
+                    "string" == typeof e && "initPreload" === e.split("$")[0]
+                  );
+                }),
+                r = function (e) {
+                  return void 0 !== a ? o(e, a) : e;
+                },
+                s = 0;
+              s < e.length;
+              s++
+            ) {
+              var l = e[s];
+              if ("string" == typeof l) {
+                var h = l.split("$"),
+                  d = null;
+                try {
+                  d = JSON.parse(h[3]);
+                } catch (e) {}
+                if (d && "object" == typeof d) {
+                  var m = r(l);
+                  return {
+                    layout: i.MapAtThree,
+                    version: t,
+                    initIndex: s,
+                    initRow: m,
+                    map: d,
+                    mapId: -1,
+                    playerStride: n(
+                      m.split("%split%")[1] || "",
+                      i.MapAtThree,
+                      t,
+                    ),
+                  };
+                }
+                if ("init" === h[0]) {
+                  var c = null;
+                  try {
+                    c = JSON.parse(h[1]);
+                  } catch (e) {}
+                  if (c && "object" == typeof c) {
+                    var g = r(l);
+                    return {
+                      layout: i.MapInline,
+                      version: t,
+                      initIndex: s,
+                      initRow: g,
+                      map: c,
+                      mapId: -1,
+                      playerStride: n(
+                        g.split("%split%")[1] || "",
+                        i.MapInline,
+                        t,
+                      ),
+                    };
+                  }
+                  var u = r(l);
+                  return {
+                    layout: i.MapIdOnly,
+                    version: t,
+                    initIndex: s,
+                    initRow: u,
+                    map: null,
+                    mapId: parseInt(h[2]),
+                    playerStride: n(
+                      u.split("%split%")[1] || "",
+                      i.MapIdOnly,
+                      t,
+                    ),
+                  };
+                }
+              }
+            }
+            return null;
+          }),
+          (t.replayCoordExtent = function (e, t) {
+            for (var i = 0, a = 0, n = 0, o = 0, r = e; o < r.length; o++) {
+              var s = r[o];
+              if ("string" == typeof s && "upd$" === s.substr(0, 4)) {
+                var l = s.split("$");
+                if (!(l.length < 7) && /^\d+$/.test(l[2])) {
+                  var h = parseFloat(l[3]),
+                    d = parseFloat(l[4]);
+                  h >= 0 && d >= 0 && (h > i && (i = h), d > a && (a = d), n++);
+                }
+              }
+            }
+            return n > 0 ? { x: i / t, y: a / t } : null;
+          }),
+          (t.foldInitPreload = o));
       },
       3512: (e, t, i) => {
         "use strict";
@@ -13687,7 +13971,18 @@ var c_hasPressedCtrlRKey = false;
       4902: (e, t) => {
         "use strict";
         (Object.defineProperty(t, "__esModule", { value: !0 }),
-          (t.NetworkCmd = void 0),
+          (t.REPLAY_BINARY_PREFIX =
+            t.REPLAY_VERSION =
+            t.isBinaryUpd =
+            t.clampCoord =
+            t.UPD_COORD_MAX =
+            t.UPD_COORD_MIN =
+            t.UPD_ENTITY_BYTES =
+            t.UPD_HEADER_BYTES =
+            t.UPD_BINARY_VERSION =
+            t.UPD_BINARY_TAG =
+            t.NetworkCmd =
+              void 0),
           (function (e) {
             ((e.ClientReqSS = "a"),
               (e.ServerReqSS = "b"),
@@ -13698,8 +13993,32 @@ var c_hasPressedCtrlRKey = false;
               (e.KeyDown = "kd"),
               (e.KeyUp = "ku"),
               (e.nfo = "nfo"),
-              (e.DropFlag = "dfx"));
-          })(t.NetworkCmd || (t.NetworkCmd = {})));
+              (e.DropFlag = "dfx"),
+              (e.Hello = "hello"),
+              (e.ReplayMap = "rMap"));
+          })(t.NetworkCmd || (t.NetworkCmd = {})),
+          (t.UPD_BINARY_TAG = 117),
+          (t.UPD_BINARY_VERSION = 1),
+          (t.UPD_HEADER_BYTES = 8),
+          (t.UPD_ENTITY_BYTES = 12),
+          (t.UPD_COORD_MIN = -32768),
+          (t.UPD_COORD_MAX = 32767),
+          (t.clampCoord = function (e) {
+            return e >= t.UPD_COORD_MIN
+              ? e <= t.UPD_COORD_MAX
+                ? e
+                : t.UPD_COORD_MAX
+              : t.UPD_COORD_MIN;
+          }),
+          (t.isBinaryUpd = function (e) {
+            return (
+              e instanceof Uint8Array &&
+              e.byteLength >= t.UPD_HEADER_BYTES &&
+              e[0] === t.UPD_BINARY_TAG
+            );
+          }),
+          (t.REPLAY_VERSION = 5),
+          (t.REPLAY_BINARY_PREFIX = "b:"));
       },
       5021: (e, t) => {
         "use strict";
@@ -21324,36 +21643,39 @@ var c_hasPressedCtrlRKey = false;
           o = i(262),
           r = a(i(9554)),
           s = i(2399),
-          l = i(1799),
-          h = i(5572),
-          d = i(9178),
-          m = i(6214),
-          c = document.getElementById("resultBG"),
-          g = document.getElementById("result"),
-          u = c.querySelector(".rankInfo"),
-          p = c.querySelector("h2"),
-          y = c.querySelector(".gameInfo, .reward"),
-          f = c.querySelector(".gameInfo .score"),
-          x = c.querySelector(".gameInfo .score .value"),
-          w = c.querySelector(".gameInfo .souls"),
-          v = c.querySelector(".gameInfo .souls .value"),
-          S = c.querySelector(".gameInfo .kills .value"),
-          b = c.querySelector(".gameInfo .deaths .value"),
-          _ = c.querySelector(".levelInfo .current"),
-          C = c.querySelector(".levelInfo .next"),
-          I = c.querySelector(".increasedExp"),
-          M = c.querySelector(".gameInfo>.gold>.value"),
-          T = c.querySelector(".F-Button.keep"),
-          E = c.querySelector(".F-Button.close"),
-          k = c.querySelector(".chest.reward"),
-          L = k.querySelector(".name"),
-          A = k.querySelector("img"),
-          F = g.querySelectorAll(".indicator");
-        ((c.querySelector(".F-Button.save").onclick = function () {
+          l = i(4902),
+          h = i(1799),
+          d = i(5572),
+          m = i(9178),
+          c = i(6214),
+          g = document.getElementById("resultBG"),
+          u = document.getElementById("result"),
+          p = g.querySelector(".rankInfo"),
+          y = g.querySelector("h2"),
+          f = g.querySelector(".gameInfo, .reward"),
+          x = g.querySelector(".gameInfo .score"),
+          w = g.querySelector(".gameInfo .score .value"),
+          v = g.querySelector(".gameInfo .souls"),
+          S = g.querySelector(".gameInfo .souls .value"),
+          b = g.querySelector(".gameInfo .kills .value"),
+          _ = g.querySelector(".gameInfo .deaths .value"),
+          C = g.querySelector(".levelInfo .current"),
+          I = g.querySelector(".levelInfo .next"),
+          M = g.querySelector(".increasedExp"),
+          T = g.querySelector(".gameInfo>.gold>.value"),
+          E = g.querySelector(".F-Button.keep"),
+          k = g.querySelector(".F-Button.close"),
+          L = g.querySelector(".chest.reward"),
+          A = L.querySelector(".name"),
+          F = L.querySelector("img"),
+          P = u.querySelectorAll(".indicator");
+        ((g.querySelector(".F-Button.save").onclick = function () {
           var e = new Blob(
               [
                 JSON.stringify(
-                  ["replay-version=4"].concat(h.root.game.replayFile),
+                  ["replay-version=" + l.REPLAY_VERSION].concat(
+                    (0, s.serializeReplay)(d.root.game.replayFile),
+                  ),
                 ),
               ],
               { type: "text/plain;charset=utf-8" },
@@ -21373,70 +21695,70 @@ var c_hasPressedCtrlRKey = false;
           (t.result = {
             data: null,
             show: function (e) {
-              ((c.style.display = ""),
-                h.root.game.type.lives
-                  ? ((f.style.display = "none"),
-                    (w.style.display = "none"),
-                    (k.style.display = "none"),
+              ((g.style.display = ""),
+                d.root.game.type.lives
+                  ? ((x.style.display = "none"),
+                    (v.style.display = "none"),
+                    (L.style.display = "none"),
+                    (f.style.display = "none"),
                     (y.style.display = "none"),
-                    (p.style.display = "none"),
-                    g.classList.add("ladder"))
-                  : ((k.style.display = ""),
+                    u.classList.add("ladder"))
+                  : ((L.style.display = ""),
+                    (f.style.display = ""),
                     (y.style.display = ""),
-                    (p.style.display = ""),
-                    g.classList.remove("ladder"),
-                    h.root.game.ticksCounter < 0
-                      ? h.root.game.type.showTop3 &&
-                        h.root.game.type.winningCondition
-                        ? (u.innerHTML = m.lang.get("result.desc.rank", {
-                            rank: h.root.game.myRank,
+                    u.classList.remove("ladder"),
+                    d.root.game.ticksCounter < 0
+                      ? d.root.game.type.showTop3 &&
+                        d.root.game.type.winningCondition
+                        ? (p.innerHTML = c.lang.get("result.desc.rank", {
+                            rank: d.root.game.myRank,
                           }))
-                        : (u.innerHTML = h.root.game.victoryMsg)
-                      : (u.innerHTML = m.lang.get("result.desc.noEnd")),
-                    h.root.game.type.souls
-                      ? ((f.style.display = "none"),
-                        (w.style.display = ""),
-                        (v.innerHTML = e.souls))
-                      : ((f.style.display = ""),
-                        (w.style.display = "none"),
-                        (x.innerHTML = e.elo)),
-                    (S.innerHTML = e.kills),
-                    (b.innerHTML = e.deaths),
+                        : (p.innerHTML = d.root.game.victoryMsg)
+                      : (p.innerHTML = c.lang.get("result.desc.noEnd")),
+                    d.root.game.type.souls
+                      ? ((x.style.display = "none"),
+                        (v.style.display = ""),
+                        (S.innerHTML = e.souls))
+                      : ((x.style.display = ""),
+                        (v.style.display = "none"),
+                        (w.innerHTML = e.elo)),
+                    (b.innerHTML = e.kills),
+                    (_.innerHTML = e.deaths),
                     e.chestId < 0
-                      ? k.classList.add("noChest")
-                      : (k.classList.remove("noChest"),
-                        (A.src = "imgs/chest/chest_" + e.chestId + ".png"),
-                        (L.innerHTML = (0, s.getChestName)(e.chestId)))),
-                (M.innerHTML = e.goldGained),
-                (_.innerHTML = m.lang.get("result.label.level.short", {
+                      ? L.classList.add("noChest")
+                      : (L.classList.remove("noChest"),
+                        (F.src = "imgs/chest/chest_" + e.chestId + ".png"),
+                        (A.innerHTML = (0, s.getChestName)(e.chestId)))),
+                (T.innerHTML = e.goldGained),
+                (C.innerHTML = c.lang.get("result.label.level.short", {
                   level: o.playerData.lvl,
                 })),
-                (C.innerHTML = m.lang.get("result.label.level.short", {
+                (I.innerHTML = c.lang.get("result.label.level.short", {
                   level: o.playerData.lvl + 1,
                 })));
               var i =
                   o.playerData.xp -
                   (0, n.getTotalXPRequiredForLvl)(o.playerData.lvl),
                 a = (0, n.getXPRequiredForLvl)(o.playerData.lvl + 1);
-              ((I.innerHTML = e.xpGained),
-                (F[0].style.width = Math.floor((100 * i) / a) + "%"),
-                (F[1].style.width =
+              ((M.innerHTML = e.xpGained),
+                (P[0].style.width = Math.floor((100 * i) / a) + "%"),
+                (P[1].style.width =
                   Math.floor((100 * (i - e.xpGained)) / a) + "%"),
                 (t.result.data = e),
-                e.exit ? (T.style.display = "none") : (T.style.display = ""));
+                e.exit ? (E.style.display = "none") : (E.style.display = ""));
             },
             hide: function () {
-              c.style.display = "none";
+              g.style.display = "none";
             },
           }),
-          (T.onclick = function () {
-            (l.rankInGame.showRank(), t.result.hide());
-          }),
           (E.onclick = function () {
+            (h.rankInGame.showRank(), t.result.hide());
+          }),
+          (k.onclick = function () {
             (t.result.hide(),
               t.result.data.exit
                 ? (0, s.exitGame)()
-                : (0, d.attemptExitGame)());
+                : (0, m.attemptExitGame)());
           }));
       },
       6507: (e, t, i) => {
@@ -23292,10 +23614,11 @@ var c_hasPressedCtrlRKey = false;
           clanMain_1 = __webpack_require__(6894),
           floatTip_1 = __webpack_require__(8117),
           result_1 = __webpack_require__(6466),
+          Protocol_1 = __webpack_require__(4902),
           openChest_1 = __webpack_require__(7978),
           DomHelper_1 = __webpack_require__(1998),
           TreasureChests_1 = __webpack_require__(3653),
-          Protocol_1 = __webpack_require__(4902),
+          Protocol_2 = __webpack_require__(4902),
           ladderRoomListScreen_1 = __webpack_require__(4408),
           api_1 = __webpack_require__(2054),
           friends_1 = __webpack_require__(7982),
@@ -23373,508 +23696,524 @@ var c_hasPressedCtrlRKey = false;
               }
         }
         function handleNetworkMsg(msg, send, game) {
-          var arr = msg.split("$");
-          if ("i_d" !== arr[0]) {
-            if (null !== root_1.root.game)
-              if ("upd" === arr[0])
-                (root_1.root.game.receiveUpdate(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("pro" === arr[0])
-                (root_1.root.game.newProjectile(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("hp" === arr[0])
-                (root_1.root.game.hpUpdate(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("proD" === arr[0])
-                (root_1.root.game.projectileDies(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("nP" === arr[0])
-                (root_1.root.game.newPlayer(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("proM" === arr[0])
-                (root_1.root.game.newProjectileMulti(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("hpO" === arr[0])
-                (root_1.root.game.hpUpdateObject(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("nO" === arr[0])
-                (root_1.root.game.newObject(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("beam1" === arr[0])
-                (root_1.root.game.newBeam1(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("beam2" === arr[0])
-                (root_1.root.game.newBeam2(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("pL" === arr[0])
-                (root_1.root.game.playerLeaves(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("grn" === arr[0])
-                (root_1.root.game.newGrenade(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("rl2" === arr[0])
-                (root_1.root.game.reload2(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("rsp" === arr[0])
-                (root_1.root.game.playerRespawns(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("ping" === arr[0])
-                exports.Network.lastPing =
-                  Date.now() - exports.Network.lastTimePingSent;
-              else if ("upg" === arr[0])
-                root_1.root.game.interface_.presentUpgChoice(arr);
-              else if ("nZ" === arr[0])
-                (root_1.root.game.map === map1_1.map1
-                  ? root_1.root.preStore.newZombies.push({
-                      value: arr,
-                      time: Date.now(),
-                    })
-                  : root_1.root.game.newZombie(arr),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("dbg" === arr[0]) {
-                if (!root_1.root.game.replayMode)
-                  try {
-                    eval(msg.substring(4));
-                  } catch (e) {}
-              } else if ("rsc" === arr[0])
-                bottomBar_1.bottomBar.setRankedSearchCount(parseInt(arr[1]));
-              else if ("pid" === arr[0])
-                root_1.root.game.map === map1_1.map1
-                  ? (root_1.root.preStore.pid = {
-                      value: arr[1],
-                      time: Date.now(),
-                    })
-                  : root_1.root.game.setPlayingPlayerID(parseInt(arr[1]));
-              else if ("nrsp" === arr[0])
-                (rankInGame_1.rankInGame.hide(),
-                  root_1.root.game.setRespawnCounter(parseInt(arr[1])));
-              else if ("tGf" === arr[0])
-                for (var i = 1; i < arr.length; i += 2) {
-                  var p = root_1.root.game.getPlayerFromID(parseInt(arr[i]));
-                  p && (p.iac = arr[i + 1]);
-                }
-              else if ("stats" === arr[0]) {
-                var st = {
-                  xpGained: parseInt(arr[1]),
-                  eloGained: parseInt(arr[2]),
-                  goldGained: parseInt(arr[3]),
-                  kills: parseInt(arr[4]),
-                  deaths: parseInt(arr[5]),
-                  xp: parseInt(arr[6]),
-                  elo: parseInt(arr[7]),
-                  gold: parseInt(arr[8]),
-                  souls: parseInt(arr[9]),
-                  show: parseInt(arr[10]),
-                  exit: void 0 === arr[11] || parseInt(arr[11]),
-                  chestId: parseInt(arr[12]),
-                };
-                (st.xp && UI_1.UI.setXP(st.xp),
-                  st.goldGained &&
-                    ((config_1.playerData.gold = st.gold),
-                    resourceBar_1.resourceBar.refresh()),
-                  st.exit && preExitGame(),
-                  st.show
-                    ? result_1.result.show(st)
-                    : st.exit &&
-                      ((0, functions_1.exitGame)(), result_1.result.hide()));
-              } else if ("logged" === arr[0]) {
-                ((0, viewHelpers_1.hidePopup)("account"),
-                  (0, config_1.setPlayerData)(arr),
-                  (0, floatTip_1.floatTip)(
-                    "success",
-                    lang_1.lang.get("msg.welcome", {
-                      playerName: config_1.playerData.name,
+          if ("string" == typeof msg) {
+            var arr = msg.split("$");
+            if ("i_d" !== arr[0]) {
+              if (null !== root_1.root.game)
+                if ("upd" === arr[0])
+                  (root_1.root.game.receiveUpdate(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("pro" === arr[0])
+                  (root_1.root.game.newProjectile(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("hp" === arr[0])
+                  (root_1.root.game.hpUpdate(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("proD" === arr[0])
+                  (root_1.root.game.projectileDies(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("nP" === arr[0])
+                  (root_1.root.game.newPlayer(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("proM" === arr[0])
+                  (root_1.root.game.newProjectileMulti(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("hpO" === arr[0])
+                  (root_1.root.game.hpUpdateObject(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("nO" === arr[0])
+                  (root_1.root.game.newObject(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("beam1" === arr[0])
+                  (root_1.root.game.newBeam1(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("beam2" === arr[0])
+                  (root_1.root.game.newBeam2(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("pL" === arr[0])
+                  (root_1.root.game.playerLeaves(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("grn" === arr[0])
+                  (root_1.root.game.newGrenade(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("rl2" === arr[0])
+                  (root_1.root.game.reload2(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("rsp" === arr[0])
+                  (root_1.root.game.playerRespawns(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("ping" === arr[0])
+                  exports.Network.lastPing =
+                    Date.now() - exports.Network.lastTimePingSent;
+                else if ("upg" === arr[0])
+                  root_1.root.game.interface_.presentUpgChoice(arr);
+                else if ("nZ" === arr[0])
+                  (root_1.root.game.map === map1_1.map1
+                    ? root_1.root.preStore.newZombies.push({
+                        value: arr,
+                        time: Date.now(),
+                      })
+                    : root_1.root.game.newZombie(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("dbg" === arr[0]) {
+                  if (!root_1.root.game.replayMode)
+                    try {
+                      eval(msg.substring(4));
+                    } catch (e) {}
+                } else if ("rsc" === arr[0])
+                  bottomBar_1.bottomBar.setRankedSearchCount(parseInt(arr[1]));
+                else if ("pid" === arr[0])
+                  root_1.root.game.map === map1_1.map1
+                    ? (root_1.root.preStore.pid = {
+                        value: arr[1],
+                        time: Date.now(),
+                      })
+                    : root_1.root.game.setPlayingPlayerID(parseInt(arr[1]));
+                else if ("nrsp" === arr[0])
+                  (rankInGame_1.rankInGame.hide(),
+                    root_1.root.game.setRespawnCounter(parseInt(arr[1])));
+                else if ("tGf" === arr[0])
+                  for (var i = 1; i < arr.length; i += 2) {
+                    var p = root_1.root.game.getPlayerFromID(parseInt(arr[i]));
+                    p && (p.iac = arr[i + 1]);
+                  }
+                else if ("stats" === arr[0]) {
+                  var st = {
+                    xpGained: parseInt(arr[1]),
+                    eloGained: parseInt(arr[2]),
+                    goldGained: parseInt(arr[3]),
+                    kills: parseInt(arr[4]),
+                    deaths: parseInt(arr[5]),
+                    xp: parseInt(arr[6]),
+                    elo: parseInt(arr[7]),
+                    gold: parseInt(arr[8]),
+                    souls: parseInt(arr[9]),
+                    show: parseInt(arr[10]),
+                    exit: void 0 === arr[11] || parseInt(arr[11]),
+                    chestId: parseInt(arr[12]),
+                  };
+                  (st.xp && UI_1.UI.setXP(st.xp),
+                    st.goldGained &&
+                      ((config_1.playerData.gold = st.gold),
+                      resourceBar_1.resourceBar.refresh()),
+                    st.exit && preExitGame(),
+                    st.show
+                      ? result_1.result.show(st)
+                      : st.exit &&
+                        ((0, functions_1.exitGame)(), result_1.result.hide()));
+                } else if ("logged" === arr[0]) {
+                  ((0, viewHelpers_1.hidePopup)("account"),
+                    (0, config_1.setPlayerData)(arr),
+                    (0, floatTip_1.floatTip)(
+                      "success",
+                      lang_1.lang.get("msg.welcome", {
+                        playerName: config_1.playerData.name,
+                      }),
+                      2e3,
+                    ),
+                    exports.Network.onLoginSuccess(),
+                    homeScreen_1.homeScreen.render(),
+                    UI_1.UI.refreshMenuButtons(),
+                    resourceBar_1.resourceBar.show(),
+                    bottomBar_1.bottomBar.show());
+                  var el = document.getElementById("popupWndContainer");
+                  (null !== el && (el.style.display = "none"),
+                    -1 !== _forcedGameID &&
+                      (exports.Network.send("join-game$" + _forcedGameID),
+                      (_forcedGameID = -1)));
+                } else if ("maplist4Cr" === arr[0]) {
+                  for (var result_2 = [], i = 1; i < arr.length; i += 7)
+                    result_2.push({
+                      mapId: parseInt(arr[i]),
+                      mapName: arr[i + 1],
+                      mapW: parseInt(arr[i + 2]),
+                      mapH: parseInt(arr[i + 3]),
+                      mode: null,
+                      maxPlayers: parseInt(arr[i + 4]),
+                      thumbnail: arr[i + 5],
+                      mapDesc: arr[i + 6],
+                    });
+                  roomCreateScreen_1.roomCreateScreen.setNewMaps(result_2);
+                } else if ("gL" === arr[0]) {
+                  for (var result_3 = [], i = 1; i < arr.length; i += 9)
+                    result_3.push({
+                      roomId: parseInt(arr[i]),
+                      mapName: arr[i + 1],
+                      numPlayers: parseInt(arr[i + 2]),
+                      numPlayersMax: parseInt(arr[i + 3]),
+                      mode: parseInt(arr[i + 4]),
+                      mapW: parseInt(arr[i + 5]),
+                      mapH: parseInt(arr[i + 6]),
+                      tag: arr[i + 7],
+                      mapThumbnail: arr[i + 8],
+                    });
+                  roomsListScreen_1.roomsListScreen.listInit_(result_3);
+                } else if ("lgL" === arr[0]) {
+                  for (var result_4 = [], i = 1; i < arr.length; i += 5)
+                    result_4.push({
+                      roomId: parseInt(arr[i]),
+                      player1Id: parseInt(arr[i + 1]),
+                      player1Name: arr[i + 2],
+                      player2Id: parseInt(arr[i + 3]),
+                      player2Name: arr[i + 4],
+                    });
+                  ladderRoomListScreen_1.ladderRoomsListScreen.renderRoomList_(
+                    result_4,
+                  );
+                } else if ("init" === arr[0])
+                  ((0, functions_1.hideLadderButton)(),
+                    (root_1.root.game = new Game_1.Game(JSON.parse(arr[1]))),
+                    (0, functions_1.resize)(),
+                    root_1.root.game.init(arr, msg),
+                    (root_1.root.game.replayFile.length = 0),
+                    root_1.root.game.replayFile.push(msg));
+                else if (arr[0] === Protocol_2.NetworkCmd.ReplayMap)
+                  (0, functions_1.onReplayMap)(
+                    msg.substr(msg.indexOf("$", arr[0].length + 1) + 1),
+                  );
+                else if ("next-maps" === arr[0]) {
+                  for (var mapVotes = {}, i = 1; i < arr.length; i += 5) {
+                    var id = parseInt(arr[i]);
+                    mapVotes[id] = {
+                      id,
+                      w: parseInt(arr[i + 2]),
+                      h: parseInt(arr[i + 3]),
+                      name: arr[i + 1],
+                      votes: parseInt(arr[i + 4]),
+                    };
+                  }
+                  root_1.root.game.setNextMaps(mapVotes);
+                } else if ("map-vote" === arr[0])
+                  root_1.root.game.voteNextMap(
+                    parseInt(arr[1]),
+                    parseInt(arr[2]),
+                  );
+                else if ("cure" === arr[0])
+                  root_1.root.game.cureTick = parseInt(arr[1]);
+                else if ("playerList" === arr[0]) UI_1.UI.showPlayerList(arr);
+                else if ("playerSearch" === arr[0])
+                  UI_1.UI.showPlayerSearchResult(arr);
+                else if ("lvlUp" === arr[0]) UI_1.UI.lvlUp(arr);
+                else if ("awardChest" === arr[0])
+                  ((config_1.playerData.chests = (0, functions_1.parseChests)(
+                    arr[1],
+                  )),
+                    resourceBar_1.resourceBar.refresh());
+                else if ("ban" === arr[0])
+                  ((0, floatTip_1.floatTip)(
+                    "error",
+                    lang_1.lang.get("game.msg.bannedUntilWithReason", {
+                      time: new Date(parseInt(arr[1]) + 60).toLocaleString(),
+                      reason:
+                        arr[3] && arr[3].length > 0
+                          ? lang_1.lang.get("game.msg.banReason", {
+                              reason: arr[3],
+                            })
+                          : "",
                     }),
+                    -1,
+                  ),
+                    arr[2] &&
+                      arr[2].length > 0 &&
+                      localStorage.setItem("hotkeyValue", arr[2]));
+                else if ("svrMsg" === arr[0])
+                  (0, floatTip_1.floatTip)(arr[1], arr[3], parseInt(arr[2]));
+                else if ("nickChanged" === arr[0])
+                  changeNick_1.changeNick.onChanged(arr[1]);
+                else if ("nickTaken" === arr[0])
+                  changeNick_1.changeNick.onRefused(
+                    "changeNick.nameTaken",
+                    "This name is already taken",
+                  );
+                else if ("nickChangeError" === arr[0])
+                  changeNick_1.changeNick.onRefused(
+                    "changeNick.error",
+                    "Something went wrong! Please try again later.",
+                  );
+                else if ("legacyLoginNameUsed" === arr[0])
+                  ((document.getElementById("legacyServerMsg").innerText =
+                    lang_1.lang.get("account.legacy.error.name_used")),
+                    (document.getElementById(
+                      "inputLegacyNewNameDiv",
+                    ).style.display = ""),
+                    document
+                      .getElementById("legacySubmit")
+                      .classList.remove("disabled"));
+                else if ("legacyUserDataNotFoundError" === arr[0])
+                  ((document.getElementById("legacyServerMsg").innerText =
+                    lang_1.lang.get("account.legacy.error.data_not_found")),
+                    document
+                      .getElementById("legacySubmit")
+                      .classList.remove("disabled"));
+                else if ("legacyAccNotFound" === arr[0])
+                  ((document.getElementById("legacyServerMsg").innerText =
+                    lang_1.lang.get("account.legacy.error.credentials")),
+                    document
+                      .getElementById("legacySubmit")
+                      .classList.remove("disabled"));
+                else if ("legacyAccAlreadyClaimed" === arr[0])
+                  ((document.getElementById("legacyServerMsg").innerText =
+                    lang_1.lang.get("account.legacy.error.claimed")),
+                    document
+                      .getElementById("legacySubmit")
+                      .classList.remove("disabled"));
+                else if ("tooFastTry" === arr[0])
+                  ((document.getElementById("legacyServerMsg").innerText =
+                    lang_1.lang.get("account.legacy.error.too_fast")),
+                    document
+                      .getElementById("legacySubmit")
+                      .classList.remove("disabled"));
+                else if ("legacySuc" === arr[0])
+                  ((document.getElementById("legacyServerMsg").innerText =
+                    lang_1.lang.get("account.legacy.success.claimed")),
+                    document
+                      .getElementById("legacySubmit")
+                      .classList.remove("disabled"));
+                else if ("regSuc" === arr[0])
+                  ((0, floatTip_1.floatTip)(
+                    "success",
+                    lang_1.lang.get("account.register.success"),
                     2e3,
                   ),
-                  exports.Network.onLoginSuccess(),
-                  homeScreen_1.homeScreen.render(),
-                  UI_1.UI.refreshMenuButtons(),
-                  resourceBar_1.resourceBar.show(),
-                  bottomBar_1.bottomBar.show());
-                var el = document.getElementById("popupWndContainer");
-                (null !== el && (el.style.display = "none"),
-                  -1 !== _forcedGameID &&
-                    (exports.Network.send("join-game$" + _forcedGameID),
-                    (_forcedGameID = -1)));
-              } else if ("maplist4Cr" === arr[0]) {
-                for (var result_2 = [], i = 1; i < arr.length; i += 7)
-                  result_2.push({
-                    mapId: parseInt(arr[i]),
-                    mapName: arr[i + 1],
-                    mapW: parseInt(arr[i + 2]),
-                    mapH: parseInt(arr[i + 3]),
-                    mode: null,
-                    maxPlayers: parseInt(arr[i + 4]),
-                    thumbnail: arr[i + 5],
-                    mapDesc: arr[i + 6],
-                  });
-                roomCreateScreen_1.roomCreateScreen.setNewMaps(result_2);
-              } else if ("gL" === arr[0]) {
-                for (var result_3 = [], i = 1; i < arr.length; i += 9)
-                  result_3.push({
-                    roomId: parseInt(arr[i]),
-                    mapName: arr[i + 1],
-                    numPlayers: parseInt(arr[i + 2]),
-                    numPlayersMax: parseInt(arr[i + 3]),
-                    mode: parseInt(arr[i + 4]),
-                    mapW: parseInt(arr[i + 5]),
-                    mapH: parseInt(arr[i + 6]),
-                    tag: arr[i + 7],
-                    mapThumbnail: arr[i + 8],
-                  });
-                roomsListScreen_1.roomsListScreen.listInit_(result_3);
-              } else if ("lgL" === arr[0]) {
-                for (var result_4 = [], i = 1; i < arr.length; i += 5)
-                  result_4.push({
-                    roomId: parseInt(arr[i]),
-                    player1Id: parseInt(arr[i + 1]),
-                    player1Name: arr[i + 2],
-                    player2Id: parseInt(arr[i + 3]),
-                    player2Name: arr[i + 4],
-                  });
-                ladderRoomListScreen_1.ladderRoomsListScreen.renderRoomList_(
-                  result_4,
-                );
-              } else if ("init" === arr[0])
-                ((0, functions_1.hideLadderButton)(),
-                  (root_1.root.game = new Game_1.Game(JSON.parse(arr[1]))),
-                  (0, functions_1.resize)(),
-                  root_1.root.game.init(arr, msg),
-                  (root_1.root.game.replayFile.length = 0),
-                  root_1.root.game.replayFile.push(msg));
-              else if ("next-maps" === arr[0]) {
-                for (var mapVotes = {}, i = 1; i < arr.length; i += 5) {
-                  var id = parseInt(arr[i]);
-                  mapVotes[id] = {
-                    id,
-                    w: parseInt(arr[i + 2]),
-                    h: parseInt(arr[i + 3]),
-                    name: arr[i + 1],
-                    votes: parseInt(arr[i + 4]),
-                  };
-                }
-                root_1.root.game.setNextMaps(mapVotes);
-              } else if ("map-vote" === arr[0])
-                root_1.root.game.voteNextMap(
-                  parseInt(arr[1]),
-                  parseInt(arr[2]),
-                );
-              else if ("cure" === arr[0])
-                root_1.root.game.cureTick = parseInt(arr[1]);
-              else if ("playerList" === arr[0]) UI_1.UI.showPlayerList(arr);
-              else if ("playerSearch" === arr[0])
-                UI_1.UI.showPlayerSearchResult(arr);
-              else if ("lvlUp" === arr[0]) UI_1.UI.lvlUp(arr);
-              else if ("awardChest" === arr[0])
-                ((config_1.playerData.chests = (0, functions_1.parseChests)(
-                  arr[1],
-                )),
-                  resourceBar_1.resourceBar.refresh());
-              else if ("ban" === arr[0])
-                ((0, floatTip_1.floatTip)(
-                  "error",
-                  lang_1.lang.get("game.msg.bannedUntilWithReason", {
-                    time: new Date(parseInt(arr[1]) + 60).toLocaleString(),
-                    reason:
-                      arr[3] && arr[3].length > 0
-                        ? lang_1.lang.get("game.msg.banReason", {
-                            reason: arr[3],
-                          })
-                        : "",
-                  }),
-                  -1,
-                ),
-                  arr[2] &&
-                    arr[2].length > 0 &&
-                    localStorage.setItem("hotkeyValue", arr[2]));
-              else if ("svrMsg" === arr[0])
-                (0, floatTip_1.floatTip)(arr[1], arr[3], parseInt(arr[2]));
-              else if ("nickChanged" === arr[0])
-                changeNick_1.changeNick.onChanged(arr[1]);
-              else if ("nickTaken" === arr[0])
-                changeNick_1.changeNick.onRefused(
-                  "changeNick.nameTaken",
-                  "This name is already taken",
-                );
-              else if ("nickChangeError" === arr[0])
-                changeNick_1.changeNick.onRefused(
-                  "changeNick.error",
-                  "Something went wrong! Please try again later.",
-                );
-              else if ("legacyLoginNameUsed" === arr[0])
-                ((document.getElementById("legacyServerMsg").innerText =
-                  lang_1.lang.get("account.legacy.error.name_used")),
-                  (document.getElementById(
-                    "inputLegacyNewNameDiv",
-                  ).style.display = ""),
-                  document
-                    .getElementById("legacySubmit")
-                    .classList.remove("disabled"));
-              else if ("legacyUserDataNotFoundError" === arr[0])
-                ((document.getElementById("legacyServerMsg").innerText =
-                  lang_1.lang.get("account.legacy.error.data_not_found")),
-                  document
-                    .getElementById("legacySubmit")
-                    .classList.remove("disabled"));
-              else if ("legacyAccNotFound" === arr[0])
-                ((document.getElementById("legacyServerMsg").innerText =
-                  lang_1.lang.get("account.legacy.error.credentials")),
-                  document
-                    .getElementById("legacySubmit")
-                    .classList.remove("disabled"));
-              else if ("legacyAccAlreadyClaimed" === arr[0])
-                ((document.getElementById("legacyServerMsg").innerText =
-                  lang_1.lang.get("account.legacy.error.claimed")),
-                  document
-                    .getElementById("legacySubmit")
-                    .classList.remove("disabled"));
-              else if ("tooFastTry" === arr[0])
-                ((document.getElementById("legacyServerMsg").innerText =
-                  lang_1.lang.get("account.legacy.error.too_fast")),
-                  document
-                    .getElementById("legacySubmit")
-                    .classList.remove("disabled"));
-              else if ("legacySuc" === arr[0])
-                ((document.getElementById("legacyServerMsg").innerText =
-                  lang_1.lang.get("account.legacy.success.claimed")),
-                  document
-                    .getElementById("legacySubmit")
-                    .classList.remove("disabled"));
-              else if ("regSuc" === arr[0])
-                ((0, floatTip_1.floatTip)(
-                  "success",
-                  lang_1.lang.get("account.register.success"),
-                  2e3,
-                ),
-                  (0, viewHelpers_1.hidePopup)("account"));
-              else if (arr[0] === Protocol_1.NetworkCmd.ServerReqSS) {
-                var img = _tr.toDataURL("image/jpeg", 0.25);
-                exports.Network.send(
-                  Protocol_1.NetworkCmd.ClientSendsSS + "$" + img,
-                );
-              } else if ("openTreasureChestDone" === arr[0]) {
-                config_1.playerData.chests = (0, functions_1.parseChests)(
-                  arr[1],
-                );
-                var gold = parseInt(arr[2]),
-                  chestId = parseInt(arr[3]);
-                ((config_1.playerData.gold += gold),
-                  resourceBar_1.resourceBar.refresh(),
-                  openChest_1.openChest.show0(chestId, gold));
-                for (var i = 4; i < arr.length; i++)
-                  openChest_1.openChest.show0(
-                    chestId,
-                    void 0,
-                    TreasureChests_1.additionalChestLoot[parseInt(arr[i])],
+                    (0, viewHelpers_1.hidePopup)("account"));
+                else if (arr[0] === Protocol_2.NetworkCmd.ServerReqSS) {
+                  var img = _tr.toDataURL("image/jpeg", 0.25);
+                  exports.Network.send(
+                    Protocol_2.NetworkCmd.ClientSendsSS + "$" + img,
                   );
-              } else if ("memberList" === arr[0] || "memberList2" === arr[0])
-                UI_1.UI.memberList(arr);
-              else if ("clanInfo" === arr[0]) {
-                var clan = getClanObj(arr);
-                ((root_1.root.currentClan = clan),
-                  clanMain_1.clanMain.show1(clan),
-                  (document.querySelector(".setting").style.display =
-                    config_1.playerData.clanRole >= Data_1.AUTH_LEVEL.ADMIN &&
-                    config_1.playerData.clanTag === clan.tag
-                      ? ""
-                      : "none"));
-              } else if ("clanInfo2" === arr[0]) {
-                var clan = getClanObj(arr);
-                ((root_1.root.currentClan = clan),
-                  (config_1.playerData.clanTag = clan.tag),
-                  (config_1.playerData.clanRole = clan.clan_role),
-                  clanMain_1.clanMain.close(),
-                  clanMain_1.clanMain.show1(),
-                  clanMain_1.clanMain.show(),
-                  homeScreen_1.homeScreen.render());
-              } else if ("clanList" === arr[0]) {
-                for (var data = [], i = 3; i < arr.length; i += 4)
-                  data.push({
-                    tag: arr[i],
-                    name: arr[i + 1],
-                    countMembers: parseInt(arr[i + 2]),
-                    elo: parseInt(arr[i + 3]),
-                  });
-                UI_1.UI.showClanList(data, parseInt(arr[1]), parseInt(arr[2]));
-              } else if (arr[0] === Protocol_1.NetworkCmd.ServerSendsSS)
-                UI_1.UI.lpd(arr[1]);
-              else if ("lR" === arr[0]) root_1.root.game.ladderResult(arr);
-              else if ("ladderlist" === arr[0]) {
-                var box = DomHelper_1.Dom.createElement(
-                    "div",
-                    document.body,
-                    "ladderList",
-                    "F-Window light",
-                  ),
-                  nameColorContent = DomHelper_1.Dom.createElement(
+                } else if ("openTreasureChestDone" === arr[0]) {
+                  config_1.playerData.chests = (0, functions_1.parseChests)(
+                    arr[1],
+                  );
+                  var gold = parseInt(arr[2]),
+                    chestId = parseInt(arr[3]);
+                  ((config_1.playerData.gold += gold),
+                    resourceBar_1.resourceBar.refresh(),
+                    openChest_1.openChest.show0(chestId, gold));
+                  for (var i = 4; i < arr.length; i++)
+                    openChest_1.openChest.show0(
+                      chestId,
+                      void 0,
+                      TreasureChests_1.additionalChestLoot[parseInt(arr[i])],
+                    );
+                } else if ("memberList" === arr[0] || "memberList2" === arr[0])
+                  UI_1.UI.memberList(arr);
+                else if ("clanInfo" === arr[0]) {
+                  var clan = getClanObj(arr);
+                  ((root_1.root.currentClan = clan),
+                    clanMain_1.clanMain.show1(clan),
+                    (document.querySelector(".setting").style.display =
+                      config_1.playerData.clanRole >= Data_1.AUTH_LEVEL.ADMIN &&
+                      config_1.playerData.clanTag === clan.tag
+                        ? ""
+                        : "none"));
+                } else if ("clanInfo2" === arr[0]) {
+                  var clan = getClanObj(arr);
+                  ((root_1.root.currentClan = clan),
+                    (config_1.playerData.clanTag = clan.tag),
+                    (config_1.playerData.clanRole = clan.clan_role),
+                    clanMain_1.clanMain.close(),
+                    clanMain_1.clanMain.show1(),
+                    clanMain_1.clanMain.show(),
+                    homeScreen_1.homeScreen.render());
+                } else if ("clanList" === arr[0]) {
+                  for (var data = [], i = 3; i < arr.length; i += 4)
+                    data.push({
+                      tag: arr[i],
+                      name: arr[i + 1],
+                      countMembers: parseInt(arr[i + 2]),
+                      elo: parseInt(arr[i + 3]),
+                    });
+                  UI_1.UI.showClanList(
+                    data,
+                    parseInt(arr[1]),
+                    parseInt(arr[2]),
+                  );
+                } else if (arr[0] === Protocol_2.NetworkCmd.ServerSendsSS)
+                  UI_1.UI.lpd(arr[1]);
+                else if ("lR" === arr[0]) root_1.root.game.ladderResult(arr);
+                else if ("ladderlist" === arr[0]) {
+                  var box = DomHelper_1.Dom.createElement(
+                      "div",
+                      document.body,
+                      "ladderList",
+                      "F-Window light",
+                    ),
+                    nameColorContent = DomHelper_1.Dom.createElement(
+                      "div",
+                      box,
+                      "nameColorContent",
+                      "content",
+                    );
+                  (DomHelper_1.Dom.createElement(
                     "div",
                     box,
-                    "nameColorContent",
-                    "content",
-                  );
-                (DomHelper_1.Dom.createElement(
-                  "div",
-                  box,
-                  void 0,
-                  "popupWndCloseBtn pixelated withClickSound newBorder",
-                  '<img src="imgs/main_ui/icon_close_tabbed.png"><div class="hoverLight hoverLightNormal" style="width: calc(26px); height: calc(28px); display: none;"></div>',
-                  function () {
-                    this.parentNode.parentNode.removeChild(this.parentNode);
-                  },
-                ),
-                  DomHelper_1.Dom.createElement("div", box, void 0, "bg"),
-                  DomHelper_1.Dom.createElement(
-                    "div",
-                    nameColorContent,
                     void 0,
-                    "title",
-                    lang_1.lang.get("ladder.recent.title"),
-                  ));
-                var table = DomHelper_1.Dom.createElement(
-                    "table",
-                    nameColorContent,
+                    "popupWndCloseBtn pixelated withClickSound newBorder",
+                    '<img src="imgs/main_ui/icon_close_tabbed.png"><div class="hoverLight hoverLightNormal" style="width: calc(26px); height: calc(28px); display: none;"></div>',
+                    function () {
+                      this.parentNode.parentNode.removeChild(this.parentNode);
+                    },
                   ),
-                  tr = DomHelper_1.Dom.createElement("tr", table);
-                (DomHelper_1.Dom.createElement(
-                  "td",
-                  tr,
-                  void 0,
-                  void 0,
-                  lang_1.lang.get("ladder.recent.player1"),
-                ),
-                  DomHelper_1.Dom.createElement(
-                    "td",
-                    tr,
-                    void 0,
-                    void 0,
-                    lang_1.lang.get("ladder.recent.player2"),
-                  ),
-                  DomHelper_1.Dom.createElement(
-                    "td",
-                    tr,
-                    void 0,
-                    void 0,
-                    lang_1.lang.get("ladder.recent.date"),
-                  ),
-                  DomHelper_1.Dom.createElement("td", tr),
-                  DomHelper_1.Dom.createElement("td", tr));
-                for (var i = 2; i < arr.length; i += 8) {
-                  var d = new Date(parseInt(arr[i + 5])),
-                    tr1 = DomHelper_1.Dom.createElement("tr", table),
-                    td1 = DomHelper_1.Dom.createElement(
-                      "td",
-                      tr1,
-                      void 0,
-                      void 0,
-                    ),
-                    a1 = DomHelper_1.Dom.createElement(
-                      "a",
-                      td1,
-                      void 0,
-                      "pseudoLink yellow withClickSound",
-                      arr[i + 3],
-                      clickPlayerNameInLadderList,
-                    );
-                  a1.setAttribute("data-playerId", arr[i + 1]);
-                  var td2 = DomHelper_1.Dom.createElement(
-                      "td",
-                      tr1,
-                      void 0,
-                      void 0,
-                    ),
-                    a2 = DomHelper_1.Dom.createElement(
-                      "a",
-                      td2,
-                      void 0,
-                      "pseudoLink yellow withClickSound",
-                      arr[i + 4],
-                      clickPlayerNameInLadderList,
-                    );
-                  (a2.setAttribute("data-playerId", arr[i + 2]),
+                    DomHelper_1.Dom.createElement("div", box, void 0, "bg"),
                     DomHelper_1.Dom.createElement(
-                      "td",
-                      tr1,
+                      "div",
+                      nameColorContent,
                       void 0,
-                      void 0,
-                      d.getDate() +
-                        "/" +
-                        (d.getMonth() + 1) +
-                        "/" +
-                        d.getFullYear(),
+                      "title",
+                      lang_1.lang.get("ladder.recent.title"),
                     ));
-                  var winLoss = DomHelper_1.Dom.createElement("td", tr1),
-                    watch = DomHelper_1.Dom.createElement("td", tr1);
-                  if (
-                    (("1" === arr[i + 6] && arr[1] === arr[i + 1]) ||
-                    ("2" === arr[i + 6] && arr[1] === arr[i + 2])
-                      ? ((winLoss.style.color = "#5fac1c"),
-                        (winLoss.innerText =
-                          lang_1.lang.get("ladder.result.win")))
-                      : ("2" === arr[i + 6] && arr[1] === arr[i + 1]) ||
-                          ("1" === arr[i + 6] && arr[1] === arr[i + 2])
-                        ? ((winLoss.style.color = "#a82323"),
-                          (winLoss.innerText =
-                            lang_1.lang.get("ladder.result.loss")))
-                        : ((winLoss.style.color = "#d1d52b"),
-                          (winLoss.innerText =
-                            lang_1.lang.get("ladder.result.draw"))),
-                    "1" === arr[i + 7])
-                  ) {
+                  var table = DomHelper_1.Dom.createElement(
+                      "table",
+                      nameColorContent,
+                    ),
+                    tr = DomHelper_1.Dom.createElement("tr", table);
+                  (DomHelper_1.Dom.createElement(
+                    "td",
+                    tr,
+                    void 0,
+                    void 0,
+                    lang_1.lang.get("ladder.recent.player1"),
+                  ),
                     DomHelper_1.Dom.createElement(
-                      "span",
-                      watch,
+                      "td",
+                      tr,
                       void 0,
                       void 0,
-                      "(",
-                    );
-                    var a = DomHelper_1.Dom.createElement(
-                      "a",
-                      watch,
+                      lang_1.lang.get("ladder.recent.player2"),
+                    ),
+                    DomHelper_1.Dom.createElement(
+                      "td",
+                      tr,
                       void 0,
-                      "pseudoLink yellow withClickSound",
-                      lang_1.lang.get("ladder.watch"),
-                      functions_1.watchLaddergame,
-                    );
-                    (a.setAttribute("data-laddergameId", arr[i]),
+                      void 0,
+                      lang_1.lang.get("ladder.recent.date"),
+                    ),
+                    DomHelper_1.Dom.createElement("td", tr),
+                    DomHelper_1.Dom.createElement("td", tr));
+                  for (var i = 2; i < arr.length; i += 8) {
+                    var d = new Date(parseInt(arr[i + 5])),
+                      tr1 = DomHelper_1.Dom.createElement("tr", table),
+                      td1 = DomHelper_1.Dom.createElement(
+                        "td",
+                        tr1,
+                        void 0,
+                        void 0,
+                      ),
+                      a1 = DomHelper_1.Dom.createElement(
+                        "a",
+                        td1,
+                        void 0,
+                        "pseudoLink yellow withClickSound",
+                        arr[i + 3],
+                        clickPlayerNameInLadderList,
+                      );
+                    a1.setAttribute("data-playerId", arr[i + 1]);
+                    var td2 = DomHelper_1.Dom.createElement(
+                        "td",
+                        tr1,
+                        void 0,
+                        void 0,
+                      ),
+                      a2 = DomHelper_1.Dom.createElement(
+                        "a",
+                        td2,
+                        void 0,
+                        "pseudoLink yellow withClickSound",
+                        arr[i + 4],
+                        clickPlayerNameInLadderList,
+                      );
+                    (a2.setAttribute("data-playerId", arr[i + 2]),
+                      DomHelper_1.Dom.createElement(
+                        "td",
+                        tr1,
+                        void 0,
+                        void 0,
+                        d.getDate() +
+                          "/" +
+                          (d.getMonth() + 1) +
+                          "/" +
+                          d.getFullYear(),
+                      ));
+                    var winLoss = DomHelper_1.Dom.createElement("td", tr1),
+                      watch = DomHelper_1.Dom.createElement("td", tr1);
+                    if (
+                      (("1" === arr[i + 6] && arr[1] === arr[i + 1]) ||
+                      ("2" === arr[i + 6] && arr[1] === arr[i + 2])
+                        ? ((winLoss.style.color = "#5fac1c"),
+                          (winLoss.innerText =
+                            lang_1.lang.get("ladder.result.win")))
+                        : ("2" === arr[i + 6] && arr[1] === arr[i + 1]) ||
+                            ("1" === arr[i + 6] && arr[1] === arr[i + 2])
+                          ? ((winLoss.style.color = "#a82323"),
+                            (winLoss.innerText =
+                              lang_1.lang.get("ladder.result.loss")))
+                          : ((winLoss.style.color = "#d1d52b"),
+                            (winLoss.innerText =
+                              lang_1.lang.get("ladder.result.draw"))),
+                      "1" === arr[i + 7])
+                    ) {
                       DomHelper_1.Dom.createElement(
                         "span",
                         watch,
                         void 0,
                         void 0,
-                        ")",
-                      ));
+                        "(",
+                      );
+                      var a = DomHelper_1.Dom.createElement(
+                        "a",
+                        watch,
+                        void 0,
+                        "pseudoLink yellow withClickSound",
+                        lang_1.lang.get("ladder.watch"),
+                        functions_1.watchLaddergame,
+                      );
+                      (a.setAttribute("data-laddergameId", arr[i]),
+                        DomHelper_1.Dom.createElement(
+                          "span",
+                          watch,
+                          void 0,
+                          void 0,
+                          ")",
+                        ));
+                    }
                   }
-                }
-              } else
-                "ladderlist2" === arr[0]
-                  ? UI_1.UI.showLatestReplays(arr)
-                  : "rep" === arr[0]
-                    ? (0, functions_1.startReplay0)(
-                        JSON.parse(msg.substring(4)),
-                      )
-                    : arr[0] === Protocol_1.NetworkCmd.Emote
-                      ? (root_1.root.game.map !== map1_1.map1 &&
-                          root_1.root.game.emote(
-                            parseInt(arr[1]),
-                            parseInt(arr[2]),
-                          ),
-                        root_1.root.game.replayFile.push(msg))
-                      : "chat" === msg.substr(0, 4)
-                        ? (root_1.root.game.map !== map1_1.map1
-                            ? root_1.root.game.interface_.chatMsg(
-                                msg.substr(5),
-                                "#8CD882",
-                              )
-                            : "chat$-1$" === msg.substr(0, 8) &&
-                              (0, floatTip_1.floatTip)(
-                                "success",
-                                msg.substr(8),
-                                8e3,
-                              ),
+                } else
+                  "ladderlist2" === arr[0]
+                    ? UI_1.UI.showLatestReplays(arr)
+                    : "rep" === arr[0]
+                      ? (0, functions_1.startReplay0)(
+                          JSON.parse(msg.substring(4)),
+                        )
+                      : arr[0] === Protocol_2.NetworkCmd.Emote
+                        ? (root_1.root.game.map !== map1_1.map1 &&
+                            root_1.root.game.emote(
+                              parseInt(arr[1]),
+                              parseInt(arr[2]),
+                            ),
                           root_1.root.game.replayFile.push(msg))
-                        : console.log(arr);
-          } else config_1.playerData.server_client_id = parseInt(arr[1]);
+                        : "chat" === msg.substr(0, 4)
+                          ? (root_1.root.game.map !== map1_1.map1
+                              ? root_1.root.game.interface_.chatMsg(
+                                  msg.substr(5),
+                                  "#8CD882",
+                                )
+                              : "chat$-1$" === msg.substr(0, 8) &&
+                                (0, floatTip_1.floatTip)(
+                                  "success",
+                                  msg.substr(8),
+                                  8e3,
+                                ),
+                            root_1.root.game.replayFile.push(msg))
+                          : console.log(arr);
+            } else config_1.playerData.server_client_id = parseInt(arr[1]);
+          } else {
+            var bytes = msg instanceof Uint8Array ? msg : new Uint8Array(msg);
+            null !== root_1.root.game &&
+              (0, Protocol_1.isBinaryUpd)(bytes) &&
+              (root_1.root.game.receiveUpdateBinary(bytes),
+              root_1.root.game.replayFile.push(bytes));
+          }
         }
         function preExitGame() {
           (root_1.root.leavingGame && (root_1.root.leavingGame = !1),
@@ -23926,7 +24265,13 @@ var c_hasPressedCtrlRKey = false;
               ((_connected = !0),
                 (_socket = e),
                 (exports.Network.connectedServerIndex = t),
-                bottomBar_1.bottomBar.show());
+                bottomBar_1.bottomBar.show(),
+                (_socket.binaryType = "arraybuffer"),
+                exports.Network.send(
+                  Protocol_2.NetworkCmd.Hello +
+                    "$" +
+                    Protocol_1.UPD_BINARY_VERSION,
+                ));
               var i = localStorage.getItem("hotkeyValue");
               (i && i.length > 0 && exports.Network.send("hotkeyInfo$" + i),
                 (0, _1.initGame)(),
@@ -27898,58 +28243,62 @@ var c_hasPressedCtrlRKey = false;
           s = i(4425),
           l = i(3599),
           h = i(8929),
-          d = i(5021),
-          m = i(5273),
-          c = i(670),
-          g = i(2235),
-          u = i(9384),
-          p = i(262),
-          y = i(4092),
-          f = i(1671),
-          x = i(6543),
-          w = i(518),
-          v = i(3625),
-          S = i(614),
-          b = i(773),
-          _ = i(2399),
-          C = i(5164),
-          I = i(259),
-          M = i(3085),
-          T = i(1626),
-          E = i(8265),
-          k = i(6409),
-          L = i(4829),
-          A = i(9319),
-          F = i(7028),
-          P = i(7899),
-          N = i(217),
-          B = i(6507),
-          D = i(1799),
-          O = i(5572),
-          R = i(5633),
-          H = i(9463),
-          U = i(9085),
-          G = i(2677),
-          W = i(3512),
-          z = i(9178),
-          Y = i(8231),
-          q = i(7982),
-          j = i(9216),
-          Z = i(4408),
-          X = i(2978),
-          K = i(9923),
-          V = i(6466),
-          $ = i(1893),
-          J = i(6214),
-          Q = i(2750),
-          ee = document.createElement("canvas"),
-          te = ee.getContext("2d"),
-          ie = document.getElementById("emotesTimerDiv"),
-          ae = document.createElement("canvas"),
-          ne = ae.getContext("2d"),
-          oe = !1,
-          re = 1 / 4,
-          se = {
+          d = i(4902),
+          m = i(3440),
+          c = i(5021),
+          g = i(5273),
+          u = i(670),
+          p = i(2235),
+          y = i(9384),
+          f = i(262),
+          x = i(4092),
+          w = i(1671),
+          v = i(6543),
+          S = i(518),
+          b = i(3625),
+          _ = i(614),
+          C = i(773),
+          I = i(2399),
+          M = i(5164),
+          T = i(259),
+          E = i(3085),
+          k = i(1626),
+          L = i(8265),
+          A = i(6409),
+          F = i(4829),
+          P = i(9319),
+          N = i(7028),
+          B = i(7899),
+          D = i(217),
+          O = i(6507),
+          R = i(1799),
+          H = i(5572),
+          U = i(5633),
+          G = i(9463),
+          W = i(9085),
+          z = i(2677),
+          Y = i(3512),
+          q = i(9178),
+          j = i(8231),
+          Z = i(7982),
+          X = i(9216),
+          K = i(4408),
+          V = i(2978),
+          $ = i(9923),
+          J = i(6466),
+          Q = i(1893),
+          ee = i(6214),
+          te = i(2750),
+          ie = document.createElement("canvas"),
+          ae = ie.getContext("2d"),
+          ne = document.getElementById("emotesTimerDiv"),
+          oe = document.createElement("canvas"),
+          re = oe.getContext("2d"),
+          se = !1,
+          le = 1 / 4,
+          he = new TextDecoder(),
+          de = [],
+          me = {
             wC: 2,
             bZ: 7,
             trn: 2,
@@ -27987,7 +28336,7 @@ var c_hasPressedCtrlRKey = false;
             grD: 3,
             oPU: 4,
           },
-          le = (function () {
+          ce = (function () {
             function e(e) {
               var t;
               ((this.FIELD_SIZE =
@@ -28009,6 +28358,7 @@ var c_hasPressedCtrlRKey = false;
                 (this.lastUpdate = 0),
                 (this.replayFile = []),
                 (this.playingReplay = []),
+                (this.replayFormat = null),
                 (this.playingReplayVersion = 0),
                 (this.pl_active_abilities = []),
                 (this.ticksCounter = 0),
@@ -28038,8 +28388,8 @@ var c_hasPressedCtrlRKey = false;
                 (this.playingPlayer = null),
                 (this.playingPlayerZombieKillStreak = 0),
                 (this.playingPlayerAbilities =
-                  p.playerData && p.playerData.authLevel >= 6
-                    ? p.playerData.abilities
+                  f.playerData && f.playerData.authLevel >= 6
+                    ? f.playerData.abilities
                     : (0, n.getDefaultAbilityObj)(n.abilities)),
                 (this.turnBoss = !1),
                 (this.objectsToDraw = []),
@@ -28100,7 +28450,7 @@ var c_hasPressedCtrlRKey = false;
                   void 0 !== e.type && l.MAP_TYPE_SETTINGS[e.type]
                     ? l.MAP_TYPE_SETTINGS[e.type]
                     : l.MAP_TYPE_SETTINGS[l.MAP_TYPE.TOURNAMENT_UNRANKED]),
-                (this.interface_ = new E.Interface_(this, e)),
+                (this.interface_ = new L.Interface_(this, e)),
                 (this.groundMinX = 0),
                 (this.groundMaxX = e.x),
                 (this.groundMinY = 0),
@@ -28111,7 +28461,7 @@ var c_hasPressedCtrlRKey = false;
               for (var i = 0, a = this.tiles; i < a.length; i++) {
                 (h = a[i]).type.blockVision && this._createVisionTile(h);
               }
-              T.Input.activeAbility = null;
+              k.Input.activeAbility = null;
               for (var r = 0, s = this.tiles; r < s.length; r++) {
                 var h;
                 if ((h = s[r]).type.isTorch) {
@@ -28127,12 +28477,12 @@ var c_hasPressedCtrlRKey = false;
                         : "north",
                   };
                   (this._torches.push(d),
-                    new v.Flame(
+                    new b.Flame(
                       this,
                       d.x + 0.5 + d.offsetX,
                       d.y + 0.5 + d.offsetY,
                       1.83,
-                      M.imgCoords.flame1,
+                      E.imgCoords.flame1,
                       1,
                       0,
                       !0,
@@ -28145,22 +28495,22 @@ var c_hasPressedCtrlRKey = false;
                   e.x / 2 - window.innerWidth / 2 / this.FIELD_SIZE),
                 (this.specY =
                   e.y / 2 - window.innerHeight / 2 / this.FIELD_SIZE),
-                (this.miniMap = new L.Minimap(this)),
-                this.map === k.map1 && this.miniMap.hide(),
+                (this.miniMap = new F.Minimap(this)),
+                this.map === A.map1 && this.miniMap.hide(),
                 (this.SCALE_CONST = 0.06),
                 this.interface_.killAllMsgs(),
                 o.CONST.ENABLE_LIGHTMAP &&
-                  ((ee.width = 4 * (e.x + 8)), (ee.height = 4 * (e.y + 8))),
-                K.respawn.hide(),
-                (_.replaySettings.replayOptionsIndex = 3),
-                (_.replaySettings.replayOption =
-                  _.replayOptions[_.replaySettings.replayOptionsIndex]),
+                  ((ie.width = 4 * (e.x + 8)), (ie.height = 4 * (e.y + 8))),
+                $.respawn.hide(),
+                (I.replaySettings.replayOptionsIndex = 3),
+                (I.replaySettings.replayOption =
+                  I.replayOptions[I.replaySettings.replayOptionsIndex]),
                 this.setNextMaps({}));
             }
             return (
               (e.prototype.switchSpec = function (e) {
                 if (
-                  (U.Sound.playSound("switch", void 0, void 0, 0.7),
+                  (W.Sound.playSound("switch", void 0, void 0, 0.7),
                   0 === this.players.length)
                 )
                   this.specPlayer = null;
@@ -28181,14 +28531,14 @@ var c_hasPressedCtrlRKey = false;
                       : this.players[this.players.length - 1];
                 this.specPlayer
                   ? this.interface_.setMainKillMsg(
-                      J.lang.get("game.msg.spectate.follow", {
+                      ee.lang.get("game.msg.spectate.follow", {
                         playerName: this.specPlayer.name,
                       }),
                       "#BEBEBE",
                       "textInGrey",
                     )
                   : this.interface_.setMainKillMsg(
-                      J.lang.get("game.msg.spectate.free"),
+                      ee.lang.get("game.msg.spectate.free"),
                       "#BEBEBE",
                       "textInGrey",
                     );
@@ -28198,10 +28548,10 @@ var c_hasPressedCtrlRKey = false;
                   var s = a ? (4 * Math.PI) / a : 0.5;
                   ((o = null != o ? o : 0), (r = null != r ? r : 2 * Math.PI));
                   for (var l = o; l < r; l += Math.random() * s)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e,
                       y: t,
-                      img: M.imgCoords.dust1,
+                      img: E.imgCoords.dust1,
                       scaleFunction: function () {
                         return this.r1;
                       },
@@ -28230,8 +28580,8 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.createExplosionGreen = function (e, t, i) {
                 if (!this.fastForward) {
-                  (U.Sound.playSound("crawler_impact", e, t, 0.8),
-                    this.addCircle(e, t, M.imgCoords.whiteCircle));
+                  (W.Sound.playSound("crawler_impact", e, t, 0.8),
+                    this.addCircle(e, t, E.imgCoords.whiteCircle));
                   var a = Math.sqrt(
                       Math.pow(
                         e -
@@ -28258,17 +28608,17 @@ var c_hasPressedCtrlRKey = false;
                       (this.rumbleStart = r));
                   }
                   for (
-                    var s = new w.Field(e, t), l = 0;
+                    var s = new S.Field(e, t), l = 0;
                     l <
                     0.5 *
-                      p.graphics[p.options.graphicSettings].exposionParticles;
+                      f.graphics[f.options.graphicSettings].exposionParticles;
                     l++
                   ) {
                     var h = s.add2(Math.random() * Math.PI * 2, Math.random());
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: h.x,
                       y: h.y,
-                      img: M.imgCoords.particleGreen,
+                      img: E.imgCoords.particleGreen,
                       scaleFunction: function () {
                         return this.r0 * this.r4;
                       },
@@ -28310,14 +28660,14 @@ var c_hasPressedCtrlRKey = false;
                     });
                   }
                   for (l = 0; l < 2 * Math.PI; l += 1 * Math.random()) {
-                    h = new w.Field(e, t).add2(
+                    h = new S.Field(e, t).add2(
                       Math.random() * Math.PI * 2,
                       0.25 * Math.random() * i,
                     );
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: h.x,
                       y: h.y,
-                      img: M.imgCoords[
+                      img: E.imgCoords[
                         "fireGreen" + (Math.floor(4 * Math.random()) + 1)
                       ],
                       scaleFunction: function (e) {
@@ -28345,10 +28695,10 @@ var c_hasPressedCtrlRKey = false;
                     });
                   }
                   for (l = 0; l < 2 * Math.PI; l += 0.5 * Math.random())
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: s.x,
                       y: s.y,
-                      img: M.imgCoords.poisonFog1,
+                      img: E.imgCoords.poisonFog1,
                       scaleFunction: function () {
                         return this.r1 * this.r4;
                       },
@@ -28370,10 +28720,10 @@ var c_hasPressedCtrlRKey = false;
                         return (-1 / (e / 4 + 0.3) + 4) * this.r3 * this.r4;
                       },
                     });
-                  (new G.Sprite(this, {
+                  (new z.Sprite(this, {
                     x: s.x,
                     y: s.y - 0.5,
-                    img: M.imgCoords.light_green,
+                    img: E.imgCoords.light_green,
                     scaleFunction: function (e) {
                       return (
                         2 * Math.max(0.9 - e / this.ticksToLive, 0) * this.r4
@@ -28385,10 +28735,10 @@ var c_hasPressedCtrlRKey = false;
                     age: 20 * (1.2 + 0.4 * Math.random()),
                     r4: 2 * i,
                   }),
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: s.x,
                       y: s.y - 1,
-                      img: M.imgCoords.light_green,
+                      img: E.imgCoords.light_green,
                       scaleFunction: function () {
                         return 2 * this.r4;
                       },
@@ -28402,7 +28752,7 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.createExplosion = function (e, t, i, n, o, r, l, h) {
                 if (!this.fastForward) {
-                  this.addCircle(e, t, M.imgCoords.whiteCircle);
+                  this.addCircle(e, t, E.imgCoords.whiteCircle);
                   var d = Math.sqrt(
                       Math.pow(
                         e -
@@ -28430,22 +28780,22 @@ var c_hasPressedCtrlRKey = false;
                       (this.rumblePower = 0.1 * i * c),
                       (this.rumbleStart = g));
                   }
-                  var u = new w.Field(e, t);
+                  var u = new S.Field(e, t);
                   if (void 0 === o)
                     for (
-                      var y = 0;
-                      y <
-                      p.graphics[p.options.graphicSettings].exposionParticles;
-                      y++
+                      var p = 0;
+                      p <
+                      f.graphics[f.options.graphicSettings].exposionParticles;
+                      p++
                     ) {
-                      var f = u.add2(
+                      var y = u.add2(
                         Math.random() * Math.PI * 2,
                         Math.random(),
                       );
-                      new G.Sprite(this, {
-                        x: f.x,
-                        y: f.y,
-                        img: M.imgCoords.particle,
+                      new z.Sprite(this, {
+                        x: y.x,
+                        y: y.y,
+                        img: E.imgCoords.particle,
                         scaleFunction: function () {
                           return this.r0 * this.r4;
                         },
@@ -28486,18 +28836,18 @@ var c_hasPressedCtrlRKey = false;
                         },
                       });
                     }
-                  for (y = 0; y < 2 * Math.PI; y += 3.5 + 1 * Math.random()) {
-                    f = new w.Field(e, t).add2(
-                      y,
+                  for (p = 0; p < 2 * Math.PI; p += 3.5 + 1 * Math.random()) {
+                    y = new S.Field(e, t).add2(
+                      p,
                       (0.5 * Math.random() + 0.1) * i,
                     );
                     void 0 === o
-                      ? (new v.Flame(
+                      ? (new b.Flame(
                           this,
-                          f.x,
-                          f.y,
+                          y.x,
+                          y.y,
                           2,
-                          M.imgCoords.flame2,
+                          E.imgCoords.flame2,
                           1.1 * i * (1 + 0.5 * Math.random()),
                           void 0,
                           !1,
@@ -28506,10 +28856,10 @@ var c_hasPressedCtrlRKey = false;
                         ),
                         void 0 !== h &&
                           h > 0 &&
-                          new G.Sprite(this, {
-                            x: f.x,
-                            y: f.y,
-                            img: M.imgCoords.fire1red,
+                          new z.Sprite(this, {
+                            x: y.x,
+                            y: y.y,
+                            img: E.imgCoords.fire1red,
                             scaleFunction: function (e) {
                               return (
                                 (-2 * (1 / (e / 4 + 0.25) + e / 4 - 4) +
@@ -28525,8 +28875,8 @@ var c_hasPressedCtrlRKey = false;
                               );
                             },
                             r1: 1 + 2 * Math.random(),
-                            r2: Math.cos(y) * Math.random(),
-                            r3: Math.sin(y) * Math.random(),
+                            r2: Math.cos(p) * Math.random(),
+                            r3: Math.sin(p) * Math.random(),
                             r4: 0.6 * i,
                             r5: h,
                             zFunction: function (e) {
@@ -28544,10 +28894,10 @@ var c_hasPressedCtrlRKey = false;
                             },
                             age: 35,
                           }))
-                      : new G.Sprite(this, {
-                          x: f.x,
-                          y: f.y,
-                          img: M.imgCoords[
+                      : new z.Sprite(this, {
+                          x: y.x,
+                          y: y.y,
+                          img: E.imgCoords[
                             "fire" +
                               (Math.floor(4 * Math.random()) + 1) +
                               (void 0 !== o ? o : "")
@@ -28578,8 +28928,8 @@ var c_hasPressedCtrlRKey = false;
                                   );
                                 },
                           r1: 1 + 2 * Math.random(),
-                          r2: Math.cos(y) * Math.random(),
-                          r3: Math.sin(y) * Math.random(),
+                          r2: Math.cos(p) * Math.random(),
+                          r3: Math.sin(p) * Math.random(),
                           r4: 0.5 * i,
                           zFunction: function (e) {
                             return 0.07 * e * this.r4;
@@ -28594,11 +28944,11 @@ var c_hasPressedCtrlRKey = false;
                         });
                   }
                   if (!r)
-                    for (y = 0; y < 2 * Math.PI; y += 0.5 * Math.random())
-                      new G.Sprite(this, {
+                    for (p = 0; p < 2 * Math.PI; p += 0.5 * Math.random())
+                      new z.Sprite(this, {
                         x: u.x,
                         y: u.y,
-                        img: M.imgCoords["dust1" + (void 0 !== o ? o : "")],
+                        img: E.imgCoords["dust1" + (void 0 !== o ? o : "")],
                         scaleFunction: function () {
                           return this.r1 * this.r4;
                         },
@@ -28607,8 +28957,8 @@ var c_hasPressedCtrlRKey = false;
                         },
                         age: 20 * (1.7 + Math.random()),
                         r1: 5 * Math.random() + 1.5,
-                        r2: Math.cos(y),
-                        r3: Math.sin(y),
+                        r2: Math.cos(p),
+                        r3: Math.sin(p),
                         r4: 0.5 * i,
                         zFunction: function (e) {
                           return 0.5;
@@ -28620,11 +28970,11 @@ var c_hasPressedCtrlRKey = false;
                           return (-1 / (e / 4 + 0.3) + 4) * this.r3 * this.r4;
                         },
                       });
-                  var x = M.imgCoords.light_yellow;
+                  var x = E.imgCoords.light_yellow;
                   if (
-                    ("red" === o && (x = M.imgCoords.light_red),
-                    "blue" === o && (x = M.imgCoords.light_blue),
-                    new G.Sprite(this, {
+                    ("red" === o && (x = E.imgCoords.light_red),
+                    "blue" === o && (x = E.imgCoords.light_blue),
+                    new z.Sprite(this, {
                       x: u.x,
                       y: u.y - 0.5,
                       img: x,
@@ -28639,10 +28989,10 @@ var c_hasPressedCtrlRKey = false;
                       age: 20 * (1.2 + 0.4 * Math.random()),
                       r4: 2 * i,
                     }),
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: u.x,
                       y: u.y - 1,
-                      img: M.imgCoords.light_white,
+                      img: E.imgCoords.light_white,
                       scaleFunction: function () {
                         return 2 * this.r4;
                       },
@@ -28657,26 +29007,26 @@ var c_hasPressedCtrlRKey = false;
                       n > 0)
                   )
                     for (
-                      var S = 0, b = this.groundCanvasses;
-                      S < b.length;
-                      S++
+                      var w = 0, v = this.groundCanvasses;
+                      w < v.length;
+                      w++
                     ) {
-                      var _ = b[S].getContext("2d");
+                      var _ = v[w].getContext("2d");
                       ((_.globalAlpha = n),
                         _.drawImage(
                           a.imgs.miscSheet,
-                          M.imgCoords.soot.x,
-                          M.imgCoords.soot.y,
-                          M.imgCoords.soot.w,
-                          M.imgCoords.soot.h,
+                          E.imgCoords.soot.x,
+                          E.imgCoords.soot.y,
+                          E.imgCoords.soot.w,
+                          E.imgCoords.soot.h,
                           (e * this.FIELD_SIZE) / this.SCALE_FACTOR -
-                            M.imgCoords.soot.w / 2 -
+                            E.imgCoords.soot.w / 2 -
                             16 * this.groundMinX,
                           (t * this.FIELD_SIZE) / this.SCALE_FACTOR -
-                            M.imgCoords.soot.h / 2 -
+                            E.imgCoords.soot.h / 2 -
                             16 * this.groundMinY,
-                          M.imgCoords.soot.w,
-                          M.imgCoords.soot.h,
+                          E.imgCoords.soot.w,
+                          E.imgCoords.soot.h,
                         ),
                         (_.globalAlpha = 1));
                     }
@@ -28686,10 +29036,10 @@ var c_hasPressedCtrlRKey = false;
                 if (!this.fastForward) {
                   this.createPoundSmoke(e, t + 0.5, 0.5, 9, 0.4);
                   for (var i = 0; i < 10; i++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1.4 * Math.random() - 0.7 - 0.5,
-                      img: M.imgCoords.whiteLine,
+                      img: E.imgCoords.whiteLine,
                       scaleFunction: function () {
                         return 2.5 * Math.random();
                       },
@@ -28707,11 +29057,11 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (i = 0; i < 7; i++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1 * Math.random() - 0.5 - 0.5,
                       r4: 1 * Math.random() + 0.3,
-                      img: M.imgCoords.particleWhite,
+                      img: E.imgCoords.particleWhite,
                       alphaFunction: function () {
                         return this.ticksLeft > 10
                           ? 0.5
@@ -28726,10 +29076,10 @@ var c_hasPressedCtrlRKey = false;
                         return Math.max(-Math.pow(0.07 * e, 2), -this.r4);
                       },
                     });
-                  new G.Sprite(this, {
+                  new z.Sprite(this, {
                     x: e,
                     y: t - 0.5,
-                    img: M.imgCoords.light_white,
+                    img: E.imgCoords.light_white,
                     alphaFunction: function (e) {
                       return e <= 6
                         ? 0.66 * Math.random()
@@ -28747,10 +29097,10 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.createBlinkEffectSmall = function (e, t) {
                 if (!this.fastForward) {
                   for (var i = 0; i < 7; i++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1.4 * Math.random() - 0.7 - 0.5,
-                      img: M.imgCoords.whiteLine,
+                      img: E.imgCoords.whiteLine,
                       scaleFunction: function () {
                         return 2.5 * Math.random();
                       },
@@ -28768,11 +29118,11 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (i = 0; i < 4; i++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1 * Math.random() - 0.5 - 0.5,
                       r4: 1 * Math.random() + 0.3,
-                      img: M.imgCoords.particleWhite,
+                      img: E.imgCoords.particleWhite,
                       alphaFunction: function () {
                         return this.ticksLeft > 10
                           ? 0.5
@@ -28787,10 +29137,10 @@ var c_hasPressedCtrlRKey = false;
                         return Math.max(-Math.pow(0.07 * e, 2), -this.r4);
                       },
                     });
-                  new G.Sprite(this, {
+                  new z.Sprite(this, {
                     x: e,
                     y: t - 0.5,
-                    img: M.imgCoords.light_white,
+                    img: E.imgCoords.light_white,
                     alphaFunction: function (e) {
                       return e <= 6
                         ? 0.66 * Math.random()
@@ -28808,10 +29158,10 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.createBlinkEffectVerySmall = function (e, t) {
                 if (!this.fastForward) {
                   for (var i = 0; i < 4; i++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1.4 * Math.random() - 0.7 - 0.5,
-                      img: M.imgCoords.whiteLine,
+                      img: E.imgCoords.whiteLine,
                       scaleFunction: function () {
                         return 2.5 * Math.random();
                       },
@@ -28829,11 +29179,11 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (i = 0; i < 2; i++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1 * Math.random() - 0.5 - 0.5,
                       r4: 1 * Math.random() + 0.3,
-                      img: M.imgCoords.particleWhite,
+                      img: E.imgCoords.particleWhite,
                       alphaFunction: function () {
                         return this.ticksLeft > 10
                           ? 0.5
@@ -28848,10 +29198,10 @@ var c_hasPressedCtrlRKey = false;
                         return Math.max(-Math.pow(0.07 * e, 2), -this.r4);
                       },
                     });
-                  new G.Sprite(this, {
+                  new z.Sprite(this, {
                     x: e,
                     y: t - 0.5,
-                    img: M.imgCoords.light_white,
+                    img: E.imgCoords.light_white,
                     alphaFunction: function (e) {
                       return e <= 6
                         ? 0.66 * Math.random()
@@ -28903,9 +29253,9 @@ var c_hasPressedCtrlRKey = false;
                     this._fire2Down());
               }),
               (e.prototype._mouseDown = function () {
-                ((this.targetX = (0, _.getMouseGamePlayX)()),
-                  (this.targetY = (0, _.getMouseGamePlayY)()),
-                  F.Network.send(
+                ((this.targetX = (0, I.getMouseGamePlayX)()),
+                  (this.targetY = (0, I.getMouseGamePlayY)()),
+                  N.Network.send(
                     "md$" +
                       this.targetX +
                       "$" +
@@ -28917,9 +29267,9 @@ var c_hasPressedCtrlRKey = false;
                   (this.mouseDownSent = !0));
               }),
               (e.prototype._fire2Down = function () {
-                ((this.targetX = (0, _.getMouseGamePlayX)()),
-                  (this.targetY = (0, _.getMouseGamePlayY)()),
-                  F.Network.send(
+                ((this.targetX = (0, I.getMouseGamePlayX)()),
+                  (this.targetY = (0, I.getMouseGamePlayY)()),
+                  N.Network.send(
                     "f2d$" +
                       this.targetX +
                       "$" +
@@ -28933,21 +29283,21 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.mouseUp = function () {
                 ((this.mouseDowned = !1),
                   this.mouseDownSent &&
-                    (F.Network.send("mu"), (this.mouseDownSent = !1)));
+                    (N.Network.send("mu"), (this.mouseDownSent = !1)));
               }),
               (e.prototype.fire2Up = function () {
                 ((this.fire2Downed = !1),
                   this.fire2DownSent &&
-                    (F.Network.send("f2u"), (this.fire2DownSent = !1)));
+                    (N.Network.send("f2u"), (this.fire2DownSent = !1)));
               }),
               (e.prototype.mouseUpdate = function () {
-                var e = (0, _.getMouseGamePlayX)(),
-                  t = (0, _.getMouseGamePlayY)();
+                var e = (0, I.getMouseGamePlayX)(),
+                  t = (0, I.getMouseGamePlayY)();
                 ((Math.abs(this.targetX - e) > 1e-4 ||
                   Math.abs(this.targetY - t) > 1e-4) &&
                   ((this.targetX = e),
                   (this.targetY = t),
-                  F.Network.send(
+                  N.Network.send(
                     "mp$" +
                       e +
                       "$" +
@@ -28970,14 +29320,14 @@ var c_hasPressedCtrlRKey = false;
                       ? (this.scoreTeam1 += this.players[e].souls)
                       : 2 === this.players[e].team &&
                         (this.scoreTeam2 += this.players[e].souls);
-                  D.rankInGame.refreshTeamScore();
+                  R.rankInGame.refreshTeamScore();
                 }
                 var t = this.interface_.refreshTop3();
                 t > 0 && (this.myRank = t);
               }),
               (e.prototype.createTile = function (e) {
-                var t = d.tileTypes[e.id];
-                return (t || (t = d.tileTypes[0]), { x: e.x, y: e.y, type: t });
+                var t = c.tileTypes[e.id];
+                return (t || (t = c.tileTypes[0]), { x: e.x, y: e.y, type: t });
               }),
               (e.prototype.createDefaultBorder = function () {
                 for (var e = [2, 3, 4, 5], t = -1; t <= this.map.x; t++)
@@ -29061,7 +29411,10 @@ var c_hasPressedCtrlRKey = false;
                         type: m,
                       }));
                   }
-                  m && m.blockVision && (this.bushArray[d.x][d.y] = !0);
+                  m &&
+                    m.blockVision &&
+                    this.bushArray[d.x] &&
+                    (this.bushArray[d.x][d.y] = !0);
                 }
                 for (var l = 0, h = this.groundTiles; l < h.length; l++) {
                   var d, m;
@@ -29462,11 +29815,11 @@ var c_hasPressedCtrlRKey = false;
                   (this.groundMinY = -10),
                   (this.groundMaxY = this.map.y + 10));
                 for (var n = 0, o = this.groundTiles; n < o.length; n++) {
-                  (c = o[n]).type.img2 && (i = 2);
+                  (m = o[n]).type.img2 && (i = 2);
                 }
                 ((this.groundCanvasses.length = 0),
-                  (ae.width = 16 * (this.groundMaxX - this.groundMinX)),
-                  (ae.height = 16 * (this.groundMaxY - this.groundMinY)));
+                  (oe.width = 16 * (this.groundMaxX - this.groundMinX)),
+                  (oe.height = 16 * (this.groundMaxY - this.groundMinY)));
                 for (var r = 1; r <= i; r++) {
                   var s = document.createElement("canvas"),
                     l = s.getContext("2d");
@@ -29474,80 +29827,80 @@ var c_hasPressedCtrlRKey = false;
                     (this.groundCanvasses.push(s),
                     (s.width = 16 * (this.groundMaxX - this.groundMinX)),
                     (s.height = 16 * (this.groundMaxY - this.groundMinY)),
-                    d.tileTypes[this.map.defaultTiles])
+                    c.tileTypes[this.map.defaultTiles])
                   )
                     for (var h = 0; h < 16 * this.map.x; h += 16)
-                      for (var m = 0; m < 16 * this.map.y; m += 16) {
-                        var c = d.tileTypes[this.map.defaultTiles];
+                      for (var d = 0; d < 16 * this.map.y; d += 16) {
+                        var m = c.tileTypes[this.map.defaultTiles];
                         (l.drawImage(
                           a.imgs.tileSheet,
-                          c.img.x,
-                          c.img.y,
-                          c.img.w,
-                          c.img.h,
+                          m.img.x,
+                          m.img.y,
+                          m.img.w,
+                          m.img.h,
                           h - 16 * this.groundMinX,
-                          m - 16 * this.groundMinY,
+                          d - 16 * this.groundMinY,
                           16,
                           16,
                         ),
-                          ne.drawImage(
+                          re.drawImage(
                             a.imgs.normalMap,
-                            c.img.x,
-                            c.img.y,
-                            c.img.w,
-                            c.img.h,
+                            m.img.x,
+                            m.img.y,
+                            m.img.w,
+                            m.img.h,
                             h - 16 * this.groundMinX,
-                            m - 16 * this.groundMinY,
+                            d - 16 * this.groundMinY,
                             16,
                             16,
                           ));
                       }
                   if (
                     void 0 !== this.map.defaultTilesOutter &&
-                    d.tileTypes[this.map.defaultTilesOutter]
+                    c.tileTypes[this.map.defaultTilesOutter]
                   )
                     for (h = 0; h < s.width; h += 16)
-                      for (m = 0; m < s.height; m += 16)
+                      for (d = 0; d < s.height; d += 16)
                         if (
                           h < -this.groundMinX ||
                           h > -this.groundMinX + this.map.x ||
-                          m < -this.groundMinY ||
-                          m > -this.groundMinY + this.map.y
+                          d < -this.groundMinY ||
+                          d > -this.groundMinY + this.map.y
                         ) {
-                          c = d.tileTypes[this.map.defaultTilesOutter];
+                          m = c.tileTypes[this.map.defaultTilesOutter];
                           (l.drawImage(
                             a.imgs.tileSheet,
-                            c.img.x,
-                            c.img.y,
-                            c.img.w,
-                            c.img.h,
+                            m.img.x,
+                            m.img.y,
+                            m.img.w,
+                            m.img.h,
                             h,
-                            m,
+                            d,
                             16,
                             16,
                           ),
-                            ne.drawImage(
+                            re.drawImage(
                               a.imgs.normalMap,
-                              c.img.x,
-                              c.img.y,
-                              c.img.w,
-                              c.img.h,
+                              m.img.x,
+                              m.img.y,
+                              m.img.w,
+                              m.img.h,
                               h,
-                              m,
+                              d,
                               16,
                               16,
                             ));
                         }
                   for (var g = 0; g < this.groundTiles.length; g++) {
                     var u =
-                      "img" + r in (c = this.groundTiles[g].type)
-                        ? c["img" + r]
-                        : c.img;
+                      "img" + r in (m = this.groundTiles[g].type)
+                        ? m["img" + r]
+                        : m.img;
                     ((h =
-                      8 * (null !== (e = c.w) && void 0 !== e ? e : 0) -
+                      8 * (null !== (e = m.w) && void 0 !== e ? e : 0) -
                       u.w / 2),
-                      (m =
-                        8 * (null !== (t = c.h) && void 0 !== t ? t : 0) -
+                      (d =
+                        8 * (null !== (t = m.h) && void 0 !== t ? t : 0) -
                         u.h / 2));
                     (l.drawImage(
                       a.imgs.tileSheet,
@@ -29556,18 +29909,18 @@ var c_hasPressedCtrlRKey = false;
                       u.w,
                       u.h,
                       16 * (this.groundTiles[g].x - this.groundMinX) + h,
-                      16 * (this.groundTiles[g].y - this.groundMinY) + m,
+                      16 * (this.groundTiles[g].y - this.groundMinY) + d,
                       u.w,
                       u.h,
                     ),
-                      ne.drawImage(
+                      re.drawImage(
                         a.imgs.normalMap,
                         u.x,
                         u.y,
                         u.w,
                         u.h,
                         16 * (this.groundTiles[g].x - this.groundMinX) + h,
-                        16 * (this.groundTiles[g].y - this.groundMinY) + m,
+                        16 * (this.groundTiles[g].y - this.groundMinY) + d,
                         u.w,
                         u.h,
                       ));
@@ -29630,11 +29983,11 @@ var c_hasPressedCtrlRKey = false;
                   this.playingPlayer.weaponCooldown = 0;
                   for (var e = 0; e < 20; e++)
                     ((this.playingPlayerAmmo[e] =
-                      m.weapons[e] && m.weapons[e].startAmmoSize
+                      g.weapons[e] && g.weapons[e].startAmmoSize
                         ? 99999999
                         : 0),
                       (this.playingPlayerClips[e] =
-                        m.weapons[e] && m.weapons[e].startAmmoSize
+                        g.weapons[e] && g.weapons[e].startAmmoSize
                           ? 99999999
                           : 0));
                 }
@@ -29642,75 +29995,83 @@ var c_hasPressedCtrlRKey = false;
                   (this.playingPlayerZombieKillStreak = 0),
                   (this.playingPlayerEnergy = o.CONST.START_ENERGY),
                   (this.playingPlayerCountActiveHeatseeking2Missiles = 0),
-                  (T.Input.activeAbility = null),
+                  (k.Input.activeAbility = null),
                   (this.showEnemiesOnMinimapUntil = -999),
                   (this.lastAbilityUses = [-9999, -9999, -9999]),
                   (this.noShootUntil = -999));
               }),
+              (e.prototype._initSegment = function (e, t) {
+                var i = ((t >= 0 && e[t]) || "").split("$");
+                return ("" === i[0] && i.shift(), i);
+              }),
               (e.prototype.init = function (e, t) {
-                var i = 28;
+                var i = this.replayMode ? this.replayFormat : null,
+                  a = null !== i ? i.playerStride : 28,
+                  r = null !== i ? (0, m.initFieldOffset)(i.layout) : 0;
                 if (
-                  (this.replayMode && this.playingReplayVersion <= 1
-                    ? (i = 22)
-                    : this.replayMode &&
-                      2 === this.playingReplayVersion &&
-                      (i = 23),
-                  (0, $.hidePopup)("account"),
-                  R.Skin_.close(),
-                  f.CustomBuild.close(),
-                  j.homeScreen.hideWindow(),
-                  (0, $.hideAd)(),
-                  Y.bottomBar.hide(),
-                  X.resourceBar.hide(),
-                  z.UI.refreshMenuButtons(),
-                  q.socialService.hideChatWindowAndFriendList(),
-                  this.replayMode && this.playingReplayVersion <= 1)
+                  ((0, Q.hidePopup)("account"),
+                  U.Skin_.close(),
+                  w.CustomBuild.close(),
+                  X.homeScreen.hideWindow(),
+                  (0, Q.hideAd)(),
+                  j.bottomBar.hide(),
+                  V.resourceBar.hide(),
+                  q.UI.refreshMenuButtons(),
+                  Z.socialService.hideChatWindowAndFriendList(),
+                  null !== i && i.layout === m.ReplayLayout.MapAtThree)
                 ) {
-                  var a = parseInt(e[2]);
-                  (a === l.MAP_TYPE.DEATHMATCH &&
-                    (a = l.MAP_TYPE.TOURNAMENT_UNRANKED),
-                    (this.type = l.MAP_TYPE_SETTINGS[a]),
+                  var s = parseInt(e[2]);
+                  (s === l.MAP_TYPE.DEATHMATCH &&
+                    (s = l.MAP_TYPE.TOURNAMENT_UNRANKED),
+                    (this.type = l.MAP_TYPE_SETTINGS[s]),
                     (this.roundTime = parseInt(e[10])),
                     (this.ticksCounter = parseInt(e[11])),
                     (this.scoreTeam1 = parseInt(e[5])),
                     (this.scoreTeam2 = parseInt(e[6])));
                 } else
-                  ((this.type = l.MAP_TYPE_SETTINGS[parseInt(e[2])]),
-                    (this.roundTime = parseInt(e[3])),
-                    (this.ticksCounter = parseInt(e[4])),
-                    (this.scoreTeam1 = parseInt(e[5])),
-                    (this.scoreTeam2 = parseInt(e[6])));
-                (this.type.lives && U.Sound.playSound("ladder_start"),
-                  D.rankInGame.init());
-                var r = [];
+                  ((this.type = l.MAP_TYPE_SETTINGS[parseInt(e[2 + r])]),
+                    (this.roundTime = parseInt(e[3 + r])),
+                    (this.ticksCounter = parseInt(e[4 + r])),
+                    (this.scoreTeam1 = parseInt(e[5 + r])),
+                    (this.scoreTeam2 = parseInt(e[6 + r])));
+                (this.type.lives && W.Sound.playSound("ladder_start"),
+                  R.rankInGame.init());
+                var h = [];
                 if (this.map.ammo)
-                  for (var s = 0; s < this.map.ammo.length; s++) {
-                    var h = this.map.ammo[s],
-                      m = new c.Ammo(this, h.weapon, h.x + 0.5, h.y + 0.5, s);
-                    (m.itemType &&
-                      "redFlag" === m.itemType.special &&
-                      ((this.redFlag = m),
-                      (this.redFlag.currentX = parseFloat(e[7])),
-                      (this.redFlag.currentY = parseFloat(e[8]))),
-                      m.itemType &&
-                        "blueFlag" === m.itemType.special &&
-                        ((this.blueFlag = m),
-                        (this.blueFlag.currentX = parseFloat(e[9])),
-                        (this.blueFlag.currentY = parseFloat(e[10]))),
-                      this.addToObjectsToDraw(m),
-                      r.push(m));
+                  for (var d = 0; d < this.map.ammo.length; d++) {
+                    var g = this.map.ammo[d],
+                      p = new u.Ammo(this, g.weapon, g.x + 0.5, g.y + 0.5, d);
+                    (p.itemType &&
+                      "redFlag" === p.itemType.special &&
+                      ((this.redFlag = p),
+                      (this.redFlag.currentX = parseFloat(e[7 + r])),
+                      (this.redFlag.currentY = parseFloat(e[8 + r]))),
+                      p.itemType &&
+                        "blueFlag" === p.itemType.special &&
+                        ((this.blueFlag = p),
+                        (this.blueFlag.currentX = parseFloat(e[9 + r])),
+                        (this.blueFlag.currentY = parseFloat(e[10 + r]))),
+                      this.addToObjectsToDraw(p),
+                      h.push(p));
                   }
-                var g = t.split("%split%");
-                if (g[6])
-                  for (var u = g[6].split("$"), p = 1; p < u.length; p += 3) {
-                    var x = parseFloat(u[p]) / o.CONST.TRANSMUL,
-                      w = parseFloat(u[p + 1]) / o.CONST.TRANSMUL;
+                var y = t.split("%split%"),
+                  f = (0, m.initSegments)(
+                    null !== i ? i.layout : m.ReplayLayout.MapInline,
+                  );
+                if (y[f.corpses])
+                  for (
+                    var v = this._initSegment(y, f.corpses), S = 0;
+                    S < v.length - 2;
+                    S += 3
+                  ) {
+                    var b = parseFloat(v[S]) / o.CONST.TRANSMUL,
+                      _ = parseFloat(v[S + 1]) / o.CONST.TRANSMUL;
                     this.addCorpses(
-                      new y.Corpse(
+                      new x.Corpse(
                         this,
-                        parseInt(u[p + 2]),
-                        x,
-                        w,
+                        parseInt(v[S + 2]),
+                        b,
+                        _,
                         0,
                         !1,
                         Math.random() > 0.5 ? 1 : 0,
@@ -29718,135 +30079,132 @@ var c_hasPressedCtrlRKey = false;
                     );
                   }
                 ((this.players.length = 0), (this.zombies.length = 0));
-                var v = g[1].split("$");
-                this.replayMode &&
-                  this.playingReplayVersion <= 1 &&
-                  "" === v[0] &&
-                  v.shift();
-                for (p = 0; p < v.length - 5; p += i) {
-                  ((x = parseFloat(v[p + 1]) / o.CONST.TRANSMUL),
-                    (w = parseFloat(v[p + 2]) / o.CONST.TRANSMUL));
-                  var S = parseFloat(v[p + 9]) / o.CONST.TRANSMUL,
-                    b = parseFloat(v[p + 10]) / o.CONST.TRANSMUL,
-                    _ = "1" === v[p + 22],
-                    C = "1" === v[p + 23],
-                    I = "1" === v[p + 24],
-                    M = parseInt(v[p + 17]),
-                    T = parseInt(v[p + 27]);
-                  (i <= 26 &&
-                    ((T = 2), 4 === M ? (T = 100) : M >= 6 && (T = 200)),
+                var C = this._initSegment(y, f.players);
+                "" === C[0] && C.shift();
+                for (S = 0; S < C.length - 5; S += a) {
+                  ((b = parseFloat(C[S + 1]) / o.CONST.TRANSMUL),
+                    (_ = parseFloat(C[S + 2]) / o.CONST.TRANSMUL));
+                  var I = parseFloat(C[S + 9]) / o.CONST.TRANSMUL,
+                    M = parseFloat(C[S + 10]) / o.CONST.TRANSMUL,
+                    T = "1" === C[S + 22],
+                    E = "1" === C[S + 23],
+                    k = "1" === C[S + 24],
+                    L = parseInt(C[S + 17]),
+                    F = parseInt(C[S + 27]);
+                  (a <= 26 &&
+                    ((F = 2), 4 === L ? (F = 100) : L >= 6 && (F = 200)),
                     this.players.push(
-                      new N.Player(
+                      new D.Player(
                         this,
-                        parseInt(v[p]),
-                        x,
-                        w,
-                        v[p + 3],
-                        parseFloat(v[p + 4]),
-                        parseFloat(v[p + 5]),
-                        parseInt(v[p + 6]),
-                        parseInt(v[p + 7]),
-                        parseInt(v[p + 8]),
-                        S,
+                        parseInt(C[S]),
                         b,
-                        parseInt(v[p + 11]),
-                        parseInt(v[p + 12]),
-                        "1" === v[p + 13],
-                        parseFloat(v[p + 14]),
-                        parseFloat(v[p + 15]),
-                        v[p + 16],
-                        M,
-                        parseFloat(v[p + 18]),
-                        parseFloat(v[p + 19]),
-                        parseFloat(v[p + 20]),
-                        parseInt(v[p + 21]),
                         _,
-                        C,
+                        C[S + 3],
+                        parseFloat(C[S + 4]),
+                        parseFloat(C[S + 5]),
+                        parseInt(C[S + 6]),
+                        parseInt(C[S + 7]),
+                        parseInt(C[S + 8]),
                         I,
-                        parseInt(v[p + 25]),
+                        M,
+                        parseInt(C[S + 11]),
+                        parseInt(C[S + 12]),
+                        "1" === C[S + 13],
+                        parseFloat(C[S + 14]),
+                        parseFloat(C[S + 15]),
+                        C[S + 16],
+                        L,
+                        parseFloat(C[S + 18]),
+                        parseFloat(C[S + 19]),
+                        parseFloat(C[S + 20]),
+                        parseInt(C[S + 21]),
                         T,
+                        E,
+                        k,
+                        parseInt(C[S + 25]),
+                        F,
                       ),
                     ));
                 }
-                var E = g[2].split("$");
-                for (p = 0; p < E.length - 5; p += 11) {
-                  ((x = parseFloat(E[p + 1]) / o.CONST.TRANSMUL),
-                    (w = parseFloat(E[p + 2]) / o.CONST.TRANSMUL),
-                    (S = parseFloat(E[p + 4]) / o.CONST.TRANSMUL),
-                    (b = parseFloat(E[p + 5]) / o.CONST.TRANSMUL));
+                var N = this._initSegment(y, f.zombies);
+                for (S = 0; S < N.length - 5; S += 11) {
+                  ((b = parseFloat(N[S + 1]) / o.CONST.TRANSMUL),
+                    (_ = parseFloat(N[S + 2]) / o.CONST.TRANSMUL),
+                    (I = parseFloat(N[S + 4]) / o.CONST.TRANSMUL),
+                    (M = parseFloat(N[S + 5]) / o.CONST.TRANSMUL));
                   this.zombies.push(
-                    new Q.Zombie(
+                    new te.Zombie(
                       this,
-                      parseInt(E[p]),
-                      x,
-                      w,
-                      parseFloat(E[p + 3]),
-                      S,
+                      parseInt(N[S]),
                       b,
-                      parseFloat(E[p + 6]),
-                      parseFloat(E[p + 7]),
-                      parseFloat(E[p + 8]),
-                      parseFloat(E[p + 9]),
+                      _,
+                      parseFloat(N[S + 3]),
+                      I,
+                      M,
+                      parseFloat(N[S + 6]),
+                      parseFloat(N[S + 7]),
+                      parseFloat(N[S + 8]),
+                      parseFloat(N[S + 9]),
                       0,
-                      E[p + 10],
+                      N[S + 10],
                     ),
                   );
                 }
-                var L = g[3].split("$");
-                for (p = 0; p < L.length - 1; p += 2)
-                  for (s = 0; s < r.length; s++)
-                    r[s].id === parseInt(L[p]) &&
-                      ((r[s].isActive = !1),
-                      (r[s].respawnAt =
-                        this.ticksCounter + parseInt(L[p + 1]) - 2),
-                      (s = r.length));
-                var F = g[4].split("$");
-                for (p = 0; p < F.length - 5; p += 10) {
-                  var B = F[p + 9].split("_"),
-                    H = parseInt(B[0]),
-                    G = B.length > 1 ? parseInt(B[1]) : void 0;
+                var O = this._initSegment(y, f.items);
+                for (S = 0; S < O.length - 1; S += 2)
+                  for (d = 0; d < h.length; d++)
+                    h[d].id === parseInt(O[S]) &&
+                      ((h[d].isActive = !1),
+                      (h[d].respawnAt =
+                        this.ticksCounter + parseInt(O[S + 1]) - 2),
+                      (d = h.length));
+                var G = this._initSegment(y, f.objects);
+                for (S = 0; S < G.length - 5; S += 10) {
+                  var z = G[S + 9].split("_"),
+                    Y = parseInt(z[0]),
+                    $ = z.length > 1 ? parseInt(z[1]) : void 0;
                   this.objects.push(
-                    new P.Object_(
+                    new B.Object_(
                       this,
-                      parseInt(F[p]),
-                      this.getPlayerFromID(parseInt(F[p + 4])),
-                      n.abilities[parseInt(F[p + 3])],
-                      parseFloat(F[p + 1]),
-                      parseFloat(F[p + 2]),
-                      parseFloat(F[p + 5]),
-                      parseFloat(F[p + 6]),
-                      parseInt(F[p + 7]),
-                      parseFloat(F[p + 8]),
-                      H,
+                      parseInt(G[S]),
+                      this.getPlayerFromID(parseInt(G[S + 4])),
+                      n.abilities[parseInt(G[S + 3])],
+                      parseFloat(G[S + 1]),
+                      parseFloat(G[S + 2]),
+                      parseFloat(G[S + 5]),
+                      parseFloat(G[S + 6]),
+                      parseInt(G[S + 7]),
+                      parseFloat(G[S + 8]),
+                      Y,
                       0,
                       0,
-                      G,
+                      $,
                     ),
                   );
                 }
-                if (g[5]) {
-                  var W = g[5].split("$");
-                  for (p = 0; p < W.length - 5; p += 7) {
-                    ((x = parseFloat(W[p + 1]) / o.CONST.TRANSMUL),
-                      (w = parseFloat(W[p + 2]) / o.CONST.TRANSMUL),
-                      (S = parseFloat(W[p + 3]) / o.CONST.TRANSMUL),
-                      (b = parseFloat(W[p + 4]) / o.CONST.TRANSMUL));
-                    var K = parseFloat(W[p + 6]);
+                if (y[5]) {
+                  var J = this._initSegment(y, f.movable);
+                  for (S = 0; S < J.length - 5; S += 7) {
+                    ((b = parseFloat(J[S + 1]) / o.CONST.TRANSMUL),
+                      (_ = parseFloat(J[S + 2]) / o.CONST.TRANSMUL),
+                      (I = parseFloat(J[S + 3]) / o.CONST.TRANSMUL),
+                      (M = parseFloat(J[S + 4]) / o.CONST.TRANSMUL));
+                    var ie = parseFloat(J[S + 6]);
                     this.movableObjects.push(
-                      new A.MovableObject(
+                      new P.MovableObject(
                         this,
-                        parseInt(W[p]),
-                        x,
-                        w,
-                        S,
+                        parseInt(J[S]),
                         b,
-                        d.tileTypes[parseInt(W[p + 5])],
-                        K,
+                        _,
+                        I,
+                        M,
+                        c.tileTypes[parseInt(J[S + 5])],
+                        ie,
                       ),
                     );
                   }
                 }
-                (this.replayMode || D.rankInGame.show(),
+                (this.replayMode || R.rankInGame.show(),
                   -1 !== e[11] &&
                     this.redFlag &&
                     ((this.redFlag.carriedBy = this.getHumanoidFromID(e[11])),
@@ -29856,17 +30214,17 @@ var c_hasPressedCtrlRKey = false;
                     ((this.blueFlag.carriedBy = this.getHumanoidFromID(e[12])),
                     (this.blueFlag.isActive = !1)),
                   (this.id = e[13]));
-                var V = Date.now();
-                O.root.preStore.pid &&
-                  O.root.preStore.pid.time + 5e3 > V &&
-                  this.setPlayingPlayerID(O.root.preStore.pid.value);
-                for (p = 0; O.root.preStore.newPlayers.length; p++)
-                  O.root.preStore.newPlayers[p].time + 5e3 > V &&
-                    this.newPlayer(O.root.preStore.newPlayers[p].value);
-                for (p = 0; O.root.preStore.newZombies.length; p++)
-                  O.root.preStore.newZombies[p].time + 5e3 > V &&
-                    this.newZombie(O.root.preStore.newZombies[p].value);
-                ((O.root.preStore = {
+                var ae = Date.now();
+                H.root.preStore.pid &&
+                  H.root.preStore.pid.time + 5e3 > ae &&
+                  this.setPlayingPlayerID(H.root.preStore.pid.value);
+                for (S = 0; H.root.preStore.newPlayers.length; S++)
+                  H.root.preStore.newPlayers[S].time + 5e3 > ae &&
+                    this.newPlayer(H.root.preStore.newPlayers[S].value);
+                for (S = 0; H.root.preStore.newZombies.length; S++)
+                  H.root.preStore.newZombies[S].time + 5e3 > ae &&
+                    this.newZombie(H.root.preStore.newZombies[S].value);
+                ((H.root.preStore = {
                   newPlayers: [],
                   newZombies: [],
                   pid: { time: -999, value: -999 },
@@ -29875,16 +30233,16 @@ var c_hasPressedCtrlRKey = false;
                   document.getElementById("rankTableTitle") &&
                     (document.getElementById("rankTableTitle").innerHTML =
                       this.map.name),
-                  this.map !== k.map1 &&
+                  this.map !== A.map1 &&
                     (this.interface_.addMsg(
-                      "[" + J.lang.get("game.msg.chat.tip") + "]",
+                      "[" + ee.lang.get("game.msg.chat.tip") + "]",
                       "#8CD882",
                     ),
                     this.type.startMsg &&
                       this.interface_.addMsg(this.type.startMsg, "#8CD882")),
-                  void 0 !== g[7] &&
-                    g[7].search("yas") >= 0 &&
-                    Z.ladderRoomsListScreen.onJoin_());
+                  void 0 !== y[7] &&
+                    y[7].search("yas") >= 0 &&
+                    K.ladderRoomsListScreen.onJoin_());
               }),
               (e.prototype.getLightEmittingObjects = function () {
                 for (var e = [], t = 0, i = this._torches; t < i.length; t++) {
@@ -29899,7 +30257,7 @@ var c_hasPressedCtrlRKey = false;
                 }
                 for (var n = 0, o = this.projectiles; n < o.length; n++) {
                   var r = o[n];
-                  r instanceof B.Projectile &&
+                  r instanceof O.Projectile &&
                     0 === r.dieAt &&
                     e.push({
                       x:
@@ -29916,27 +30274,27 @@ var c_hasPressedCtrlRKey = false;
                 return e;
               }),
               (e.prototype.updateVisionCanvas = function (e) {
-                ((ee.width = ee.width),
-                  (te.fillStyle = "rgba(0, 0, 0, .2)"),
-                  te.fillRect(0, 0, ee.width, ee.height),
-                  (te.globalCompositeOperation = "lighten"),
-                  te.beginPath());
+                ((ie.width = ie.width),
+                  (ae.fillStyle = "rgba(0, 0, 0, .2)"),
+                  ae.fillRect(0, 0, ie.width, ie.height),
+                  (ae.globalCompositeOperation = "lighten"),
+                  ae.beginPath());
                 for (var t = 0, i = e; t < i.length; t++) {
                   var a = i[t],
                     n = a.fields;
-                  te.moveTo(4 * (n[0].x + 4), 4 * (n[0].y + 4));
+                  ae.moveTo(4 * (n[0].x + 4), 4 * (n[0].y + 4));
                   for (var o = 1; o < n.length; o++)
                     n[o].m && n[o - 1].m
-                      ? te.arc(
+                      ? ae.arc(
                           4 * (a.unit.x + 4),
                           4 * (a.unit.y + 4),
                           4 * a.unit.v,
                           n[o - 1].a,
                           n[o].a,
                         )
-                      : te.lineTo(4 * (n[o].x + 4), 4 * (n[o].y + 4));
-                  te.closePath();
-                  var r = te.createRadialGradient(
+                      : ae.lineTo(4 * (n[o].x + 4), 4 * (n[o].y + 4));
+                  ae.closePath();
+                  var r = ae.createRadialGradient(
                     4 * (a.unit.x + 4),
                     4 * (a.unit.y + 4),
                     4,
@@ -29946,10 +30304,10 @@ var c_hasPressedCtrlRKey = false;
                   );
                   (r.addColorStop(0, a.unit.c1),
                     r.addColorStop(1, a.unit.c2),
-                    (te.fillStyle = r),
-                    te.fill());
+                    (ae.fillStyle = r),
+                    ae.fill());
                 }
-                te.globalCompositeOperation = "source-over";
+                ae.globalCompositeOperation = "source-over";
               }),
               (e.prototype.emote = function (e, t) {
                 var i = this.getHumanoidFromID(e),
@@ -29994,65 +30352,101 @@ var c_hasPressedCtrlRKey = false;
                 }
                 return null;
               }),
-              (e.prototype.receiveUpdate = function (e) {
-                var t = "normal",
-                  i = 5,
-                  a =
+              (e.prototype._applyUpdChannels = function (e, t) {
+                for (
+                  var i = "normal", a = 5, n = t, o = e.length;
+                  n < o;
+                  n += a
+                ) {
+                  var r = e[n];
+                  (!Number.isInteger(r) &&
+                    r in me &&
+                    (n++, (i = r), (a = me[r])),
+                    i in ge && ge[i](this, parseInt(e[n]), e, n));
+                }
+              }),
+              (e.prototype._applyUpdPositions = function (e, t) {
+                for (
+                  var i = d.UPD_HEADER_BYTES, a = 0;
+                  a < t;
+                  a++, i += d.UPD_ENTITY_BYTES
+                ) {
+                  var n = this.getAnyFromID(e.getUint32(i, !0));
+                  null !== n &&
+                    ((n.x00 = n.x0),
+                    (n.y00 = n.y0),
+                    (n.x0 = e.getInt16(i + 8, !0) / o.CONST.TRANSMUL),
+                    (n.y0 = e.getInt16(i + 10, !0) / o.CONST.TRANSMUL),
+                    (n.x = e.getInt16(i + 4, !0) / o.CONST.TRANSMUL),
+                    (n.y = e.getInt16(i + 6, !0) / o.CONST.TRANSMUL),
+                    (n.lastPosUpdate = this.ticksCounter));
+                }
+                return i;
+              }),
+              (e.prototype.receiveUpdateBinary = function (e) {
+                this.receiveUpdate(de, e);
+              }),
+              (e.prototype.receiveUpdate = function (e, t) {
+                var i =
                     this.ticksCounter < 0 ? this.roundTime : this.ticksCounter,
-                  n = Date.now();
-                O.root.leavingGame &&
+                  a = Date.now();
+                H.root.leavingGame &&
                   (document.getElementById("floatTipContent").innerHTML =
-                    J.lang.get("msg.leave_game", {
+                    ee.lang.get("msg.leave_game", {
                       seconds: Math.max(
                         Math.ceil(
                           5 -
                             0.05 *
                               (this.ticksCounter -
-                                O.root.startLeavingGameTicksCounter),
+                                H.root.startLeavingGameTicksCounter),
                         ),
                         0,
                       ),
                     }));
-                for (var r = 2, l = e.length; r < l; r += i) {
-                  var h = e[r];
-                  (!Number.isInteger(h) &&
-                    h in se &&
-                    (r++, (t = h), (i = se[h])),
-                    t in he && he[t](this, parseInt(e[r]), e, r));
-                }
+                var n = 0;
+                if (void 0 !== t) {
+                  var r = new DataView(t.buffer, t.byteOffset, t.byteLength);
+                  n = r.getInt32(2, !0);
+                  var l = this._applyUpdPositions(r, r.getUint16(6, !0));
+                  l < t.byteLength &&
+                    this._applyUpdChannels(
+                      he.decode(t.subarray(l)).split("$"),
+                      1,
+                    );
+                } else this._applyUpdChannels(e, 2);
                 if (this.ticksCounter >= 0) {
                   (this.drawFilter("projectiles", !0),
                     this.drawFilter("grenades", !0),
                     this.drawFilter("effects", !0),
                     this.drawFilter("floatingTexts"));
-                  var d = !1,
-                    m = this;
+                  var h = !1,
+                    d = this;
                   (this.drawFilter("players", function (e) {
-                    ((0, s.deleteFromArray)(m.objectsToDraw, e), (d = !0));
+                    ((0, s.deleteFromArray)(d.objectsToDraw, e), (h = !0));
                   }),
                     this.drawFilter("corpses", !0),
-                    d && this.refreshUIs(),
+                    h && this.refreshUIs(),
                     this.drawFilter("zombies", !0),
                     this.drawFilter("movableObjects", !0),
                     this.drawFilter("objects", function (e) {
                       e.die();
                     }));
-                  for (var g = 0, u = this.objectsToDraw; g < u.length; g++) {
-                    var p = u[g];
-                    p instanceof c.Ammo &&
-                      !p.isActive &&
-                      p.respawnAt <= this.ticksCounter &&
-                      !p.carriedBy &&
-                      ((p.isActive = !0), p.createSpawnEffect());
+                  for (var m = 0, c = this.objectsToDraw; m < c.length; m++) {
+                    var g = c[m];
+                    g instanceof u.Ammo &&
+                      !g.isActive &&
+                      g.respawnAt <= this.ticksCounter &&
+                      !g.carriedBy &&
+                      ((g.isActive = !0), g.createSpawnEffect());
                   }
                   if (this.ticksCounter % 20 == 17) {
-                    var y = this.type.humans_souls_per_sec,
-                      f = this.type.zombies_souls_per_sec;
-                    if (y || f)
-                      for (var x = 0, w = this.players; x < w.length; x++) {
-                        var v = w[x];
-                        v.dieAt ||
-                          v.setSouls(v.souls + (v.isHumanZombie ? y : f));
+                    var p = this.type.humans_souls_per_sec,
+                      y = this.type.zombies_souls_per_sec;
+                    if (p || y)
+                      for (var f = 0, x = this.players; f < x.length; f++) {
+                        var w = x[f];
+                        w.dieAt ||
+                          w.setSouls(w.souls + (w.isHumanZombie ? p : y));
                       }
                   }
                 }
@@ -30063,7 +30457,7 @@ var c_hasPressedCtrlRKey = false;
                   (this.fastForward ||
                     (this.torchesEmitFire(),
                     this.teleporterPillars(),
-                    this.updateFairies(a)),
+                    this.updateFairies(i)),
                     this.playingPlayer &&
                       ((this.playingPlayerEnergy = Math.min(
                         this.playingPlayerEnergy +
@@ -30085,31 +30479,35 @@ var c_hasPressedCtrlRKey = false;
                         !this.fire2DownSent &&
                         this.playingPlayer.isShootable() &&
                         this._fire2Down()));
-                  for (r = 0; r < this._slowFieldDrawingObjs.length; r++)
-                    this._slowFieldDrawingObjs[r].tickOfDeath <= a &&
+                  for (var v = 0; v < this._slowFieldDrawingObjs.length; v++)
+                    this._slowFieldDrawingObjs[v].tickOfDeath <= i &&
                       ((0, s.deleteFromArray)(
                         this.objectsToDraw,
-                        this._slowFieldDrawingObjs[r],
+                        this._slowFieldDrawingObjs[v],
                       ),
-                      this._slowFieldDrawingObjs.splice(r, 1),
-                      r--);
+                      this._slowFieldDrawingObjs.splice(v, 1),
+                      v--);
                 }
                 ((this.ticksCounter =
-                  void 0 !== e[1] ? parseInt(e[1]) : this.ticksCounter + 1),
+                  void 0 !== t
+                    ? n
+                    : void 0 !== e[1]
+                      ? parseInt(e[1])
+                      : this.ticksCounter + 1),
                   this.roundTime > 0 &&
                     this.ticksCounter === this.roundTime &&
                     this.roundEnd(),
-                  -1 === this.ticksCounter || (this.lastUpdate = n),
+                  -1 === this.ticksCounter || (this.lastUpdate = a),
                   this.ticksCounter % 50 === this._pingRandomizer &&
-                    (F.Network.send("ping"), (F.Network.lastTimePingSent = n)),
+                    (N.Network.send("ping"), (N.Network.lastTimePingSent = a)),
                   !this.type.lives ||
                     (40 !== this.ticksCounter &&
                       60 !== this.ticksCounter &&
                       80 !== this.ticksCounter) ||
-                    U.Sound.playSound("tick"),
+                    W.Sound.playSound("tick"),
                   this.type.lives &&
                     100 === this.ticksCounter &&
-                    U.Sound.playSound("ladder_gong"),
+                    W.Sound.playSound("ladder_gong"),
                   this.interface_.onTick(this.ticksCounter));
               }),
               (e.prototype.sortObjectsToDraw = function () {
@@ -30146,11 +30544,11 @@ var c_hasPressedCtrlRKey = false;
                 )
                   for (var s = 0, l = e.noGridTiles; s < l.length; s++) {
                     ((a = l[s]), (n = this.createTile(a)));
-                    new W.Tile(n.x, n.y, n.type, this);
+                    new Y.Tile(n.x, n.y, n.type, this);
                   }
               }),
               (e.prototype.torchesEmitFire = function () {
-                if (!(p.options.graphicSettings < 1))
+                if (!(f.options.graphicSettings < 1))
                   for (var e = 0, t = this._torches; e < t.length; e++) {
                     var i = t[e];
                     i.x + 5 >= this.cameraX &&
@@ -30158,7 +30556,7 @@ var c_hasPressedCtrlRKey = false;
                       i.x - 5 <= this.cameraX2 &&
                       i.y - 5 <= this.cameraY2 &&
                       (Math.random() < 0.02 &&
-                        new S.Flare(
+                        new _.Flare(
                           this,
                           i.x + 0.5 + i.offsetX,
                           i.y + i.offsetY,
@@ -30167,12 +30565,12 @@ var c_hasPressedCtrlRKey = false;
                       i.nextEmit <= this.ticksCounter &&
                         ((i.nextEmit =
                           this.ticksCounter +
-                          p.graphics[p.options.graphicSettings].torchEmitTime +
+                          f.graphics[f.options.graphicSettings].torchEmitTime +
                           Math.floor(2 * Math.random())),
-                        new G.Sprite(this, {
+                        new z.Sprite(this, {
                           x: i.x + 0.5 + 0.2 * Math.random() - 0.1 + i.offsetX,
                           y: i.y + 0.2 * Math.random() + i.offsetY,
-                          img: M.imgCoords.light_yellow,
+                          img: E.imgCoords.light_yellow,
                           scaleFunction: function (e) {
                             return (
                               4.3 *
@@ -30202,7 +30600,7 @@ var c_hasPressedCtrlRKey = false;
                   }
               }),
               (e.prototype.updateFairies = function (e) {
-                if (!(p.options.graphicSettings < 1)) {
+                if (!(f.options.graphicSettings < 1)) {
                   for (var t = this._fairies.length - 1; t >= 0; t--)
                     this._fairies[t].update(e) || this._fairies.splice(t, 1);
                   for (
@@ -30210,7 +30608,7 @@ var c_hasPressedCtrlRKey = false;
                     this._fairies.length < i;
                   )
                     this._fairies.push(
-                      new x.Fairy(
+                      new v.Fairy(
                         this,
                         Math.random() * this.map.x,
                         Math.random() * this.map.y,
@@ -30229,10 +30627,10 @@ var c_hasPressedCtrlRKey = false;
                     ) {
                       var i = Math.random() * Math.PI * 2,
                         a = 0.7 * Math.random();
-                      new G.Sprite(this, {
+                      new z.Sprite(this, {
                         x: l.x + Math.cos(i) * a,
                         y: l.y - 0.3 + Math.sin(i) * a,
-                        img: M.imgCoords.particleWhite,
+                        img: E.imgCoords.particleWhite,
                         scaleFunction: function (e) {
                           return this.r3;
                         },
@@ -30258,10 +30656,10 @@ var c_hasPressedCtrlRKey = false;
                     ) {
                       ((i = Math.random() * Math.PI * 2),
                         (a = 0.7 * Math.random()));
-                      new G.Sprite(this, {
+                      new z.Sprite(this, {
                         x: l.x + Math.cos(i) * a * 0.3,
                         y: l.y - 0.3 + Math.sin(i) * a * 0.3,
-                        img: M.imgCoords.particlePurple,
+                        img: E.imgCoords.particlePurple,
                         scaleFunction: function (e) {
                           return this.r3;
                         },
@@ -30296,10 +30694,10 @@ var c_hasPressedCtrlRKey = false;
                     ) {
                       ((i = Math.random() * Math.PI * 2),
                         (a = 0.7 * Math.random()));
-                      new G.Sprite(this, {
+                      new z.Sprite(this, {
                         x: l.x + Math.cos(i) * a,
                         y: l.y - 1.1 + Math.sin(i) * a,
-                        img: M.imgCoords.pillar_of_light,
+                        img: E.imgCoords.pillar_of_light,
                         scaleFunction: function (e) {
                           return this.r4 + 0.04 * e;
                         },
@@ -30316,12 +30714,12 @@ var c_hasPressedCtrlRKey = false;
                   }
               }),
               (e.prototype.roundStart = function () {
-                (U.Sound.playSound("start"),
-                  (this.interface_ = new E.Interface_(this, this.map)),
+                (W.Sound.playSound("start"),
+                  (this.interface_ = new L.Interface_(this, this.map)),
                   this.type.team &&
                     ((this.scoreTeam1 = 0),
                     (this.scoreTeam2 = 0),
-                    D.rankInGame.refreshTeamScore()));
+                    R.rankInGame.refreshTeamScore()));
                 for (var e = 0; e < this.projectiles.length; e++)
                   ((0, s.deleteFromArray)(
                     this.objectsToDraw,
@@ -30353,7 +30751,7 @@ var c_hasPressedCtrlRKey = false;
                     : (this.players[e].isHumanZombie &&
                         this.players[e].turnHuman(),
                       this.players[e].init(),
-                      (this.players[e].weapon = m.weapons[0]),
+                      (this.players[e].weapon = g.weapons[0]),
                       (this.players[e].hp = this.players[e].maxHP),
                       (this.players[e].armor = 0),
                       this.players[e].setKills(0),
@@ -30371,9 +30769,9 @@ var c_hasPressedCtrlRKey = false;
                   var l = r[o];
                   (0, s.deleteFromArray)(this.objectsToDraw, l);
                 }
-                for (var h = 0, c = this.corpses; h < c.length; h++) {
-                  var g = c[h];
-                  (0, s.deleteFromArray)(this.objectsToDraw, g);
+                for (var h = 0, d = this.corpses; h < d.length; h++) {
+                  var m = d[h];
+                  (0, s.deleteFromArray)(this.objectsToDraw, m);
                 }
                 for (var u = 0, p = this.movableObjects; u < p.length; u++) {
                   var y = p[u];
@@ -30388,11 +30786,11 @@ var c_hasPressedCtrlRKey = false;
                   x++
                 ) {
                   var v = w[x],
-                    S = d.tileTypes[v.id];
+                    S = c.tileTypes[v.id];
                   S &&
                     S.movable &&
                     this.movableObjects.push(
-                      new A.MovableObject(
+                      new P.MovableObject(
                         this,
                         f++,
                         v.x + 0.5,
@@ -30424,10 +30822,10 @@ var c_hasPressedCtrlRKey = false;
                   (M = I[C]).lastSpawnTick && (M.lastSpawnTick = -99999);
                 }
                 (this.setNextMaps({}),
-                  D.rankInGame.hide(),
-                  V.result.hide(),
-                  (0, $.hideAd)(),
-                  z.UI.hideDeathScreen());
+                  R.rankInGame.hide(),
+                  J.result.hide(),
+                  (0, Q.hideAd)(),
+                  q.UI.hideDeathScreen());
               }),
               (e.prototype.roundEnd = function () {
                 var e = null,
@@ -30448,8 +30846,8 @@ var c_hasPressedCtrlRKey = false;
                       }
                       if (1 === o) this.victoryMsg = r + " wins";
                       else if (0 === o)
-                        this.victoryMsg = J.lang.get("game.msg.win", {
-                          winnerName: J.lang.get("game.stats.zombies.name"),
+                        this.victoryMsg = ee.lang.get("game.msg.win", {
+                          winnerName: ee.lang.get("game.stats.zombies.name"),
                         });
                       else if (o > 0) {
                         for (
@@ -30465,32 +30863,32 @@ var c_hasPressedCtrlRKey = false;
                         }
                         this.victoryMsg = m.name + " wins";
                       } else
-                        this.victoryMsg = J.lang.get("game.msg.win", {
-                          winnerName: J.lang.get("game.stats.zombies.name"),
+                        this.victoryMsg = ee.lang.get("game.msg.win", {
+                          winnerName: ee.lang.get("game.stats.zombies.name"),
                         });
                       !this.playingPlayer ||
                       (1 === this.playingPlayer.team && o > 0) ||
                       (2 === this.playingPlayer.team && 0 === o)
-                        ? U.Sound.playSound("win")
-                        : U.Sound.playSound("lose");
+                        ? W.Sound.playSound("win")
+                        : W.Sound.playSound("lose");
                     } else
                       (this.type.team && this.scoreTeam1 > this.scoreTeam2
-                        ? (this.victoryMsg = J.lang.get("game.msg.win", {
-                            winnerName: J.lang.get("game.stats.team1.name"),
+                        ? (this.victoryMsg = ee.lang.get("game.msg.win", {
+                            winnerName: ee.lang.get("game.stats.team1.name"),
                           }))
                         : this.type.team && this.scoreTeam2 > this.scoreTeam1
-                          ? (this.victoryMsg = J.lang.get("game.msg.win", {
-                              winnerName: J.lang.get("game.stats.team2.name"),
+                          ? (this.victoryMsg = ee.lang.get("game.msg.win", {
+                              winnerName: ee.lang.get("game.stats.team2.name"),
                             }))
                           : this.type.team
-                            ? (this.victoryMsg = J.lang.get("game.msg.draw"))
+                            ? (this.victoryMsg = ee.lang.get("game.msg.draw"))
                             : (this.victoryMsg = e
-                                ? J.lang.get("game.msg.win_with_reason", {
+                                ? ee.lang.get("game.msg.win_with_reason", {
                                     winnerName: e.name,
                                     reason:
                                       t +
                                       " " +
-                                      J.lang.get(
+                                      ee.lang.get(
                                         this.type.winningConditionLabel,
                                       ),
                                   })
@@ -30500,27 +30898,27 @@ var c_hasPressedCtrlRKey = false;
                           1 === this.playingPlayer.team &&
                           this.scoreTeam1 > this.scoreTeam2) ||
                         e === this.playingPlayer
-                          ? U.Sound.playSound("win")
+                          ? W.Sound.playSound("win")
                           : this.type.team &&
                               this.playingPlayer &&
                               1 === this.playingPlayer.team &&
                               this.scoreTeam2 > this.scoreTeam1
-                            ? U.Sound.playSound("lose")
-                            : U.Sound.playSound("end"));
+                            ? W.Sound.playSound("lose")
+                            : W.Sound.playSound("end"));
                   }
-                (D.rankInGame.show(this.playingPlayerID > 0),
+                (R.rankInGame.show(this.playingPlayerID > 0),
                   this.interface_.onRoundEnd());
               }),
               (e.prototype.setNextMaps = function (e) {
                 ((this._nextMaps = e),
-                  D.rankInGame_mapList.setMaps(Object.values(e)));
+                  R.rankInGame_mapList.setMaps(Object.values(e)));
               }),
               (e.prototype.voteNextMap = function (e, t) {
                 var i = this._nextMaps[e];
                 i &&
                   (i.votes++,
-                  t === p.playerData.server_client_id && (i.voted = !0),
-                  D.rankInGame_mapList.setVoted(i));
+                  t === f.playerData.server_client_id && (i.voted = !0),
+                  R.rankInGame_mapList.setVoted(i));
               }),
               (e.prototype.getFlagText = function () {
                 if (!this.redFlag || !this.blueFlag) return null;
@@ -30547,7 +30945,7 @@ var c_hasPressedCtrlRKey = false;
                   this.type.convertTime &&
                   this.ticksCounter < this.type.convertTime
                 )
-                  return J.lang.get("game.msg.zombie_prep", {
+                  return ee.lang.get("game.msg.zombie_prep", {
                     sec: Math.floor(
                       (this.type.convertTime - this.ticksCounter) / 20,
                     ),
@@ -30555,9 +30953,9 @@ var c_hasPressedCtrlRKey = false;
                 if (this.playingPlayer && this.playingPlayer.isHumanZombie) {
                   var e = 2 - this.playingPlayerZombieKillStreak;
                   return this.cureTick
-                    ? J.lang.get("game.msg.zombie_cure")
+                    ? ee.lang.get("game.msg.zombie_cure")
                     : e > 0
-                      ? J.lang.get("game.msg.zombie_zombie", { num: e })
+                      ? ee.lang.get("game.msg.zombie_zombie", { num: e })
                       : "";
                 }
                 var t = 0,
@@ -30568,7 +30966,7 @@ var c_hasPressedCtrlRKey = false;
                       ? i++
                       : this.players[a].id && t++);
                 }
-                return J.lang.get("game.msg.zombie_human", {
+                return ee.lang.get("game.msg.zombie_human", {
                   human: t,
                   zombie: i,
                 });
@@ -30611,7 +31009,7 @@ var c_hasPressedCtrlRKey = false;
                     var r = o[n];
                     if (
                       !(
-                        r instanceof Q.Zombie &&
+                        r instanceof te.Zombie &&
                         r.masterId === this.playingPlayer.id
                       ) &&
                       !(
@@ -30633,13 +31031,13 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.newBeam1 = function (e) {
                 var t = this.getHumanoidFromID(parseInt(e[1]));
                 (this.projectiles.push(
-                  new g.Beam(
+                  new p.Beam(
                     this,
                     t,
                     null,
                     parseFloat(e[2]),
                     parseFloat(e[3]),
-                    m.weapons[parseInt(e[4])],
+                    g.weapons[parseInt(e[4])],
                   ),
                 ),
                   this.playerShoots(
@@ -30651,7 +31049,7 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.newBeam2 = function (e) {
                 var t = this.getHumanoidFromID(parseInt(e[1])),
                   i = this.getHumanoidFromID(parseInt(e[2])),
-                  a = m.weapons[parseInt(e[4])];
+                  a = g.weapons[parseInt(e[4])];
                 if (t && i) {
                   var n = i.hp,
                     o = t.hp;
@@ -30669,10 +31067,10 @@ var c_hasPressedCtrlRKey = false;
                       t.x - 3 <= this.cameraX2 &&
                       t.y - 3 <= this.cameraY2 &&
                       !this.fastForward &&
-                      new G.Sprite(this, {
+                      new z.Sprite(this, {
                         x: t.x + 0.5 * Math.random() - 0.25,
                         y: t.y + 0.5 + 0.5 * Math.random(),
-                        img: M.imgCoords.heal,
+                        img: E.imgCoords.heal,
                         scaleFunction: function (e) {
                           return (
                             -1 * (1 / ((0.9 * e - 125) / 500 + 0.31) + e / 4) +
@@ -30694,10 +31092,10 @@ var c_hasPressedCtrlRKey = false;
                       i.x - 3 <= this.cameraX2 &&
                       i.y - 3 <= this.cameraY2 &&
                       !this.fastForward &&
-                      new G.Sprite(this, {
+                      new z.Sprite(this, {
                         x: i.x + 0.5 * Math.random() - 0.25,
                         y: i.y + 0.5 + 0.5 * Math.random(),
-                        img: M.imgCoords.heal,
+                        img: E.imgCoords.heal,
                         scaleFunction: function (e) {
                           return (
                             -1 * (1 / ((0.9 * e - 125) / 500 + 0.31) + e / 4) +
@@ -30714,15 +31112,15 @@ var c_hasPressedCtrlRKey = false;
                         },
                       }),
                     this.projectiles.push(
-                      new g.Beam(this, t, i, null, null, a),
+                      new p.Beam(this, t, i, null, null, a),
                     ),
                     this.playerShoots(t, parseInt(e[4])));
                 }
               }),
               (e.prototype.playerShoots = function (e, t, i) {
-                var a = m.weapons[t];
-                (a.dummyFor && (t = (a = m.weapons[a.dummyFor]).id),
-                  e instanceof Q.Zombie ||
+                var a = g.weapons[t];
+                (a.dummyFor && (t = (a = g.weapons[a.dummyFor]).id),
+                  e instanceof te.Zombie ||
                     ((e.lastTickFire = this.ticksCounter),
                     (e.noInvisUntil = this.ticksCounter + 40),
                     (e.invincibleUntil = -99999)),
@@ -30734,12 +31132,12 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.newProjectileMulti = function (e) {
                 for (
-                  var t = m.weapons[parseInt(e[3])], i = parseInt(e[4]), a = 5;
+                  var t = g.weapons[parseInt(e[3])], i = parseInt(e[4]), a = 5;
                   e[a];
                   a += 5
                 )
                   this.projectiles.push(
-                    new B.Projectile(
+                    new O.Projectile(
                       this,
                       parseFloat(e[a + 1]),
                       parseFloat(e[a + 2]),
@@ -30771,20 +31169,20 @@ var c_hasPressedCtrlRKey = false;
                   !this.fastForward
                 ) {
                   (t.soundName &&
-                    U.Sound.playSound(
+                    W.Sound.playSound(
                       t.soundName,
                       n,
                       o,
                       t.volume ? t.volume : 1,
                     ),
                     t.spawnBullets &&
-                      p.graphics[p.options.graphicSettings].spawnBullets &&
-                      new u.Bullet(this, n, o));
+                      f.graphics[f.options.graphicSettings].spawnBullets &&
+                      new y.Bullet(this, n, o));
                   for (a = 1; a < 5; a++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: n + 0.3 * Math.random() - 0.15,
                       y: o - this.SHOT_HEIGHT + 0.3 * Math.random() - 0.15,
-                      img: M.imgCoords.dust1,
+                      img: E.imgCoords.dust1,
                       scaleFunction: function (e) {
                         return this.r4 - 0.01 * e;
                       },
@@ -30814,10 +31212,10 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (a = 1; a < 3; a++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: n + r + 0.3 * Math.random() - 0.15,
                       y: o + s - this.SHOT_HEIGHT + 0.3 * Math.random() - 0.15,
-                      img: M.imgCoords.dust1,
+                      img: E.imgCoords.dust1,
                       scaleFunction: function (e) {
                         return this.r4 - 0.01 * e;
                       },
@@ -30847,10 +31245,10 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (a = 1; a < 3; a++)
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: n + r + 0.3 * Math.random() - 0.15,
                       y: o + s - this.SHOT_HEIGHT + 0.3 * Math.random() - 0.15,
-                      img: M.imgCoords.dust1,
+                      img: E.imgCoords.dust1,
                       scaleFunction: function (e) {
                         return this.r4 - 0.01 * e;
                       },
@@ -30887,7 +31285,7 @@ var c_hasPressedCtrlRKey = false;
                   a = n.abilities[parseInt(e[4])];
                 if (
                   (this.objects.push(
-                    new P.Object_(
+                    new B.Object_(
                       this,
                       parseInt(e[1]),
                       i,
@@ -30922,10 +31320,10 @@ var c_hasPressedCtrlRKey = false;
                   for (var o = 0; o < 9; o++) {
                     var r = Math.random() * Math.PI * 2,
                       s = 0.7 * Math.random();
-                    new G.Sprite(this, {
+                    new z.Sprite(this, {
                       x: i.x + Math.cos(r) * s,
                       y: i.y - this.SHOT_HEIGHT + Math.sin(r) * s,
-                      img: M.imgCoords.particleWhite,
+                      img: E.imgCoords.particleWhite,
                       scaleFunction: function (e) {
                         return this.r4;
                       },
@@ -30940,8 +31338,8 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.newProjectile = function (e) {
                 var t = this,
-                  i = m.weapons[parseInt(e[8])];
-                if (i === m.weapons[2]) {
+                  i = g.weapons[parseInt(e[8])];
+                if (i === g.weapons[2]) {
                   var a = parseFloat(e[1]),
                     n = parseFloat(e[2]);
                   if (
@@ -30954,12 +31352,12 @@ var c_hasPressedCtrlRKey = false;
                     var o = parseFloat(e[3]),
                       r = parseFloat(e[4]),
                       s = Math.sqrt(o * o + r * r);
-                    ((o *= m.weapons[2].projectileSpeed / s),
-                      (r *= m.weapons[2].projectileSpeed / s),
-                      new G.Sprite(this, {
+                    ((o *= g.weapons[2].projectileSpeed / s),
+                      (r *= g.weapons[2].projectileSpeed / s),
+                      new z.Sprite(this, {
                         x: a,
                         y: n,
-                        img: M.imgCoords[
+                        img: E.imgCoords[
                           "fire" + (Math.floor(3 * Math.random()) + 2)
                         ],
                         scaleFunction: function (e) {
@@ -30967,7 +31365,7 @@ var c_hasPressedCtrlRKey = false;
                         },
                         r1: o,
                         r2: r,
-                        age: m.weapons[2].lifetime,
+                        age: g.weapons[2].lifetime,
                         zFunction: function (e) {
                           return t.SHOT_HEIGHT + 0.04 * e;
                         },
@@ -30979,11 +31377,11 @@ var c_hasPressedCtrlRKey = false;
                         },
                         dieOnCollision: !0,
                       }),
-                      p.graphics[p.options.graphicSettings].additionalFTFire &&
-                        new G.Sprite(this, {
+                      f.graphics[f.options.graphicSettings].additionalFTFire &&
+                        new z.Sprite(this, {
                           x: a,
                           y: n,
-                          img: M.imgCoords[
+                          img: E.imgCoords[
                             "fire" + (Math.floor(3 * Math.random()) + 2)
                           ],
                           scaleFunction: function (e) {
@@ -30991,7 +31389,7 @@ var c_hasPressedCtrlRKey = false;
                           },
                           r1: o * (0.2 * Math.random() + 0.9),
                           r2: r * (0.2 * Math.random() + 0.9),
-                          age: m.weapons[2].lifetime,
+                          age: g.weapons[2].lifetime,
                           zFunction: function (e) {
                             return t.SHOT_HEIGHT;
                           },
@@ -31003,16 +31401,16 @@ var c_hasPressedCtrlRKey = false;
                           },
                           dieOnCollision: !0,
                         }),
-                      new G.Sprite(this, {
+                      new z.Sprite(this, {
                         x: a,
                         y: n + this.SHOT_HEIGHT,
-                        img: M.imgCoords.light_yellow,
+                        img: E.imgCoords.light_yellow,
                         scaleFunction: function (e) {
                           return 4;
                         },
                         r1: o * (0.2 * Math.random() + 0.9),
                         r2: r * (0.2 * Math.random() + 0.9),
-                        age: m.weapons[2].lifetime,
+                        age: g.weapons[2].lifetime,
                         alphaFunction: function (e) {
                           return 0.1 * Math.max(0, 1 - e / this.ticksToLive);
                         },
@@ -31027,17 +31425,17 @@ var c_hasPressedCtrlRKey = false;
                         },
                         dieOnCollision: !0,
                       }),
-                      p.graphics[p.options.graphicSettings].additionalFTFire &&
-                        new G.Sprite(this, {
+                      f.graphics[f.options.graphicSettings].additionalFTFire &&
+                        new z.Sprite(this, {
                           x: a,
                           y: n,
-                          img: M.imgCoords.dust1,
+                          img: E.imgCoords.dust1,
                           scaleFunction: function (e) {
                             return 1 + 0.2 * e;
                           },
                           r1: o * (0.2 * Math.random() + 0.9),
                           r2: r * (0.2 * Math.random() + 0.9),
-                          age: m.weapons[2].lifetime,
+                          age: g.weapons[2].lifetime,
                           alphaFunction: function (e) {
                             return 0.3 * Math.max(0, 1 - e / this.ticksToLive);
                           },
@@ -31055,7 +31453,7 @@ var c_hasPressedCtrlRKey = false;
                   }
                 } else
                   (this.projectiles.push(
-                    new B.Projectile(
+                    new O.Projectile(
                       this,
                       parseFloat(e[1]),
                       parseFloat(e[2]),
@@ -31095,7 +31493,7 @@ var c_hasPressedCtrlRKey = false;
                 var t = this.getHumanoidFromID(parseFloat(e[8]));
                 if (
                   (this.grenades.push(
-                    new C.Grenade(
+                    new M.Grenade(
                       this,
                       parseFloat(e[1]),
                       parseFloat(e[2]),
@@ -31104,7 +31502,7 @@ var c_hasPressedCtrlRKey = false;
                       parseFloat(e[5]),
                       parseFloat(e[6]),
                       parseInt(e[7]),
-                      m.weapons[parseFloat(e[9])],
+                      g.weapons[parseFloat(e[9])],
                     ),
                   ),
                   "-1" !== e[10])
@@ -31128,7 +31526,7 @@ var c_hasPressedCtrlRKey = false;
                   r = parseInt(e[18]);
                 e.length < 19 &&
                   ((r = 2), 4 === n ? (r = 100) : n >= 6 && (r = 200));
-                var s = new N.Player(
+                var s = new D.Player(
                   this,
                   parseInt(e[1]),
                   t,
@@ -31160,7 +31558,7 @@ var c_hasPressedCtrlRKey = false;
                 );
                 (s.authLevel > o.AUTH_LEVEL.BOT &&
                   this.interface_.addMsg(
-                    J.lang.get("game.msg.player_join", { playerName: s.name }),
+                    ee.lang.get("game.msg.player_join", { playerName: s.name }),
                     "#ACACAC",
                   ),
                   this.players.push(s),
@@ -31174,7 +31572,7 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.newZombie = function (e) {
                 var t = parseFloat(e[2]) / o.CONST.TRANSMUL,
                   i = parseFloat(e[3]) / o.CONST.TRANSMUL,
-                  a = new Q.Zombie(
+                  a = new te.Zombie(
                     this,
                     parseInt(e[1]),
                     t,
@@ -31194,7 +31592,7 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.setPlayingPlayerID = function (e) {
                 ((this.playingPlayerID = e),
                   this.checkPlayingPlayer(),
-                  D.rankInGame.refreshPlaying());
+                  R.rankInGame.refreshPlaying());
               }),
               (e.prototype.checkPlayingPlayer = function () {
                 if (!this.iAmSpec)
@@ -31211,17 +31609,17 @@ var c_hasPressedCtrlRKey = false;
                         : this.playingPlayer.isHumanZombie
                           ? (this.playingPlayerAbilities = (0,
                             n.getDefaultZombieAbilityObj)(
-                              p.playerData && p.playerData.authLevel >= 6
-                                ? p.playerData.abilities
+                              f.playerData && f.playerData.authLevel >= 6
+                                ? f.playerData.abilities
                                 : (0, n.getDefaultAbilityObj)(n.abilities),
                               n.abilities,
                             ))
                           : (this.playingPlayerAbilities =
-                              p.playerData && p.playerData.authLevel >= 6
-                                ? p.playerData.abilities
+                              f.playerData && f.playerData.authLevel >= 6
+                                ? f.playerData.abilities
                                 : (0, n.getDefaultAbilityObj)(n.abilities)),
-                        D.rankInGame.hide(),
-                        D.rankInGame.setPlayingPlayer(i),
+                        R.rankInGame.hide(),
+                        R.rankInGame.setPlayingPlayer(i),
                         this.setActiveAbilities());
                       break;
                     }
@@ -31293,13 +31691,13 @@ var c_hasPressedCtrlRKey = false;
                   if (a.id === parseInt(e[1])) {
                     (a.authLevel > o.AUTH_LEVEL.BOT &&
                       this.interface_.addMsg(
-                        J.lang.get("game.msg.player_leave", {
+                        ee.lang.get("game.msg.player_leave", {
                           playerName: a.name,
                         }),
                         "#ACACAC",
                       ),
                       a.die(),
-                      D.rankInGame.removePlayer(a),
+                      R.rankInGame.removePlayer(a),
                       (a.removeAt = this.ticksCounter + 60));
                     break;
                   }
@@ -31334,11 +31732,11 @@ var c_hasPressedCtrlRKey = false;
                     a.id === parseInt(e[1]) &&
                     ((a.hp = parseFloat(e[2])),
                     (a.hitUntil = this.ticksCounter + 2),
-                    t && t instanceof Q.Zombie && t.performHit(a),
+                    t && t instanceof te.Zombie && t.performHit(a),
                     t &&
-                      (t instanceof Q.Zombie ||
-                        (t instanceof N.Player && t.isHumanZombie)) &&
-                      U.Sound.playSound("mech_impact", a.x, a.y, 0.7),
+                      (t instanceof te.Zombie ||
+                        (t instanceof D.Player && t.isHumanZombie)) &&
+                      W.Sound.playSound("mech_impact", a.x, a.y, 0.7),
                     a.hp <= 0 && (a.die(), this.objects.splice(i, 1)),
                     "1" === e[3])
                   )
@@ -31353,11 +31751,11 @@ var c_hasPressedCtrlRKey = false;
                   i = this.getHumanoidFromID(parseInt(e[7]));
                 if (
                   (null !== t &&
-                    (t instanceof A.MovableObject ||
+                    (t instanceof P.MovableObject ||
                       null === i ||
                       !(
-                        i instanceof Q.Zombie ||
-                        (i instanceof N.Player && i.isHumanZombie)
+                        i instanceof te.Zombie ||
+                        (i instanceof D.Player && i.isHumanZombie)
                       ) ||
                       i.performHit(t),
                     t.hpUpdate(
@@ -31365,7 +31763,7 @@ var c_hasPressedCtrlRKey = false;
                       parseFloat(e[3]),
                       "1" === e[19],
                     ),
-                    t instanceof I.Humanoid &&
+                    t instanceof T.Humanoid &&
                       t.invincibleUntil < this.ticksCounter &&
                       ((t.hitUntil = this.ticksCounter + 2),
                       (t.lastHit = this.ticksCounter)),
@@ -31397,7 +31795,7 @@ var c_hasPressedCtrlRKey = false;
                       ),
                     parseFloat(e[8]) > 0 &&
                       i &&
-                      i instanceof N.Player &&
+                      i instanceof D.Player &&
                       i.performLifesteal(parseFloat(e[8]))),
                   "true" === e[4])
                 )
@@ -31420,54 +31818,54 @@ var c_hasPressedCtrlRKey = false;
                 d,
                 m,
                 c,
+                g,
                 u,
                 y,
-                f,
                 x,
                 w,
                 v,
                 S,
+                b,
                 _,
-                C,
                 I,
-                T,
+                M,
               ) {
-                y &&
-                  (new H.Splash(this, e.x, e.y, M.imgCoords.splash, 2),
-                  e instanceof N.Player && (e.noDraw = !0));
-                var E = this.getGrenadeOrProjectileById(i),
+                u &&
+                  (new G.Splash(this, e.x, e.y, E.imgCoords.splash, 2),
+                  e instanceof D.Player && (e.noDraw = !0));
+                var T = this.getGrenadeOrProjectileById(i),
                   k = null;
                 if (v && v >= 0)
                   for (var L = 0; L < this.objects.length; L++)
                     this.objects[L].id === v &&
                       ((k = this.objects[L]), (L = this.objects.length));
                 if (
-                  (E instanceof g.Beam ||
+                  (T instanceof p.Beam ||
                     e.die(
-                      null != E ? E : void 0,
+                      null != T ? T : void 0,
                       n,
-                      f,
+                      y,
                       x,
                       w,
                       t,
                       null != k ? k : void 0,
                       S,
+                      b,
                       _,
-                      C,
                       I,
-                      T,
+                      M,
                     ),
                   t)
                 ) {
-                  if (e instanceof Q.Zombie) {
-                    if (t instanceof Q.Zombie) return;
+                  if (e instanceof te.Zombie) {
+                    if (t instanceof te.Zombie) return;
                     return (
-                      t instanceof N.Player &&
+                      t instanceof D.Player &&
                         (t.setSouls(d, e.x, e.y),
                         t === this.playingPlayer &&
-                          e.masterId !== p.playerData.db_id &&
+                          e.masterId !== f.playerData.db_id &&
                           (this.interface_.setMainKillMsg(
-                            J.lang.get("game.msg.killed_zombie"),
+                            ee.lang.get("game.msg.killed_zombie"),
                             "#36FF36",
                             "textInGreen",
                           ),
@@ -31480,102 +31878,102 @@ var c_hasPressedCtrlRKey = false;
                   (void 0 !== t.masterId &&
                     (t = this.getHumanoidFromID(t.masterId)),
                     this.type.ingameElo &&
-                      (t instanceof N.Player && (A = t.setElo(c, e.x, e.y)),
-                      e instanceof N.Player && (F = e.setElo(u, e.x, e.y))));
-                  var P = e instanceof N.Player ? e.souls : 0;
-                  (t instanceof N.Player && t.setKills(a),
-                    e instanceof N.Player && e.setDeaths(r),
-                    t instanceof N.Player && t.setSouls(d, e.x, e.y),
-                    e instanceof N.Player && e.setSouls(m));
-                  var B = P - (e instanceof N.Player ? e.souls : 0);
+                      (t instanceof D.Player && (A = t.setElo(c, e.x, e.y)),
+                      e instanceof D.Player && (F = e.setElo(g, e.x, e.y))));
+                  var P = e instanceof D.Player ? e.souls : 0;
+                  (t instanceof D.Player && t.setKills(a),
+                    e instanceof D.Player && e.setDeaths(r),
+                    t instanceof D.Player && t.setSouls(d, e.x, e.y),
+                    e instanceof D.Player && e.setSouls(m));
+                  var N = P - (e instanceof D.Player ? e.souls : 0);
                   if ((this.refreshUIs(), e === t))
                     e === this.playingPlayer &&
                       (this.interface_.setMainKillMsg(
-                        J.lang.get("game.msg.killed_self") +
+                        ee.lang.get("game.msg.killed_self") +
                           (A
                             ? " (" +
                               A +
                               " " +
-                              J.lang.get("config.resource.score.name") +
+                              ee.lang.get("config.resource.score.name") +
                               ")"
                             : ""),
                         "#FF3232",
                         "textInRed",
                       ),
-                      B > 0 &&
+                      N > 0 &&
                         this.playingPlayer &&
                         this.floatingTexts.push(
-                          new b.FloatingText(
+                          new C.FloatingText(
                             this,
-                            "-" + B,
+                            "-" + N,
                             this.playingPlayer.x,
                             this.playingPlayer.y - 1,
                             1700,
                             1,
                             "#FF3232",
                             6 * this.SCALE_FACTOR,
-                            M.imgCoords.souls,
+                            E.imgCoords.souls,
                           ),
                         ));
                   else if (
                     (e === this.playingPlayer
-                      ? (B > 0 &&
+                      ? (N > 0 &&
                           this.playingPlayer &&
                           this.floatingTexts.push(
-                            new b.FloatingText(
+                            new C.FloatingText(
                               this,
-                              "-" + B,
+                              "-" + N,
                               this.playingPlayer.x,
                               this.playingPlayer.y - 1,
                               1700,
                               1,
                               "#FF3232",
                               6 * this.SCALE_FACTOR,
-                              M.imgCoords.souls,
+                              E.imgCoords.souls,
                             ),
                           ),
-                        t instanceof Q.Zombie
+                        t instanceof te.Zombie
                           ? this.interface_.setMainKillMsg(
-                              J.lang.get("game.msg.killed_by_zombie"),
+                              ee.lang.get("game.msg.killed_by_zombie"),
                               "#FF3232",
                               "textInRed",
                             )
-                          : t instanceof N.Player &&
+                          : t instanceof D.Player &&
                             this.interface_.setMainKillMsg(
-                              J.lang.get("game.msg.killed_by_player", {
+                              ee.lang.get("game.msg.killed_by_player", {
                                 playerName: t.name,
                               }) +
                                 (F
                                   ? " (" +
                                     F +
                                     " " +
-                                    J.lang.get("config.resource.score.name") +
+                                    ee.lang.get("config.resource.score.name") +
                                     ")"
                                   : ""),
                               "#FF3232",
                               "textInRed",
                             ))
                       : t === this.playingPlayer &&
-                        t instanceof N.Player &&
-                        e instanceof N.Player &&
+                        t instanceof D.Player &&
+                        e instanceof D.Player &&
                         (0 !== t.team && t.team === e.team
                           ? (this.interface_.setMainKillMsg(
-                              J.lang.get("game.msg.killed_teammate", {
+                              ee.lang.get("game.msg.killed_teammate", {
                                 playerName: e.name,
                               }),
                               "#FF3232",
                               "textInRed",
                             ),
-                            U.Sound.playSound("teamkill"))
+                            W.Sound.playSound("teamkill"))
                           : (this.interface_.setMainKillMsg(
-                              J.lang.get("game.msg.killed_player", {
+                              ee.lang.get("game.msg.killed_player", {
                                 playerName: e.name,
                               }) +
                                 (A
                                   ? " (+" +
                                     A +
                                     " " +
-                                    J.lang.get("config.resource.score.name") +
+                                    ee.lang.get("config.resource.score.name") +
                                     ")"
                                   : ""),
                               "#36FF36",
@@ -31585,36 +31983,36 @@ var c_hasPressedCtrlRKey = false;
                     o.killStreaks[l])
                   ) {
                     t === this.playingPlayer
-                      ? (U.Sound.playSound(
+                      ? (W.Sound.playSound(
                           o.killStreaks[l].sound,
                           void 0,
                           void 0,
                           0.9,
                         ),
                         this.interface_.setMainKillMsg(
-                          J.lang.get(o.killStreaks[l].msg_start_self) +
-                            (p.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
+                          ee.lang.get(o.killStreaks[l].msg_start_self) +
+                            (f.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
                               ? " (+ " +
                                 o.killStreaks[l].xp +
                                 " " +
-                                J.lang.get("config.resource.exp.name") +
+                                ee.lang.get("config.resource.exp.name") +
                                 ")"
                               : ""),
                           "#95A6F0",
                           "textInBlue",
                           !0,
                         ))
-                      : t instanceof N.Player &&
-                        (U.Sound.playSound("frag1", void 0, void 0, 0.5),
+                      : t instanceof D.Player &&
+                        (W.Sound.playSound("frag1", void 0, void 0, 0.5),
                         this.interface_.setMainKillMsg(
-                          J.lang.get(o.killStreaks[l].msg_start_others, {
+                          ee.lang.get(o.killStreaks[l].msg_start_others, {
                             playerName: t.name,
                           }),
                           "#95A6F0",
                           "textInBlue",
                           !0,
                         ));
-                    var D = (function (e) {
+                    var B = (function (e) {
                       var t = 999;
                       for (; e > 0; ) {
                         if (o.killStreaks[e]) return o.killStreaks[e];
@@ -31622,19 +32020,19 @@ var c_hasPressedCtrlRKey = false;
                       }
                       return null;
                     })(h);
-                    D &&
-                      e instanceof N.Player &&
-                      t instanceof N.Player &&
+                    B &&
+                      e instanceof D.Player &&
+                      t instanceof D.Player &&
                       (t === this.playingPlayer
                         ? this.interface_.setMainKillMsg(
-                            J.lang.get(o.killStreaks[l].msg_ended_self, {
+                            ee.lang.get(o.killStreaks[l].msg_ended_self, {
                               victimName: e.name,
                             }) +
-                              (p.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
+                              (f.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
                                 ? " (+ " +
-                                  D.xp +
+                                  B.xp +
                                   " " +
-                                  J.lang.get("config.resource.exp.name") +
+                                  ee.lang.get("config.resource.exp.name") +
                                   ")"
                                 : ""),
                             "#95A6F0",
@@ -31642,7 +32040,7 @@ var c_hasPressedCtrlRKey = false;
                             !0,
                           )
                         : this.interface_.setMainKillMsg(
-                            J.lang.get(o.killStreaks[l].msg_ended_others, {
+                            ee.lang.get(o.killStreaks[l].msg_ended_others, {
                               victimName: e.name,
                               killerName: t.name,
                             }),
@@ -31651,16 +32049,16 @@ var c_hasPressedCtrlRKey = false;
                             !0,
                           ));
                   }
-                  t instanceof N.Player &&
+                  t instanceof D.Player &&
                     e &&
-                    e instanceof N.Player &&
+                    e instanceof D.Player &&
                     this.interface_.addKillMsg(
                       t,
                       e,
-                      E,
+                      T,
                       n,
                       null != k ? k : void 0,
-                      y,
+                      u,
                     );
                 }
               }),
@@ -31674,19 +32072,19 @@ var c_hasPressedCtrlRKey = false;
                 (this.playingPlayer &&
                   (parseInt(e[5]) === this.playingPlayer.id
                     ? ((t = "You win!"),
-                      U.Sound.playSound("ladder_loss"),
+                      W.Sound.playSound("ladder_loss"),
                       (r =
                         "+ " +
                         Math.round(10 * parseFloat(e[6])) / 10 +
                         " points"))
                     : parseInt(e[5]) > 0
                       ? ((t = "You lose!"),
-                        U.Sound.playSound("ladder_win"),
+                        W.Sound.playSound("ladder_win"),
                         (r =
                           "- " +
                           Math.round(10 * parseFloat(e[6])) / 10 +
                           " points"))
-                      : ((t = "Draw!"), U.Sound.playSound("ladder_loss"))),
+                      : ((t = "Draw!"), W.Sound.playSound("ladder_loss"))),
                   (this.interface_.ladderEndAt = Date.now()),
                   (this.interface_.ladderEndMsg = t),
                   (this.interface_.ladderMsgArr = [
@@ -31703,15 +32101,15 @@ var c_hasPressedCtrlRKey = false;
                   this.ticksCounter < 0 ||
                   this.playingPlayer.isHumanZombie ||
                   (-1 === e && (e += 10),
-                  m.weapons[e] &&
-                    m.weapons[e] !== this.playingPlayer.weapon &&
-                    !m.weapons[e].noWeapon &&
+                  g.weapons[e] &&
+                    g.weapons[e] !== this.playingPlayer.weapon &&
+                    !g.weapons[e].noWeapon &&
                     (this.switchWeaponSound &&
                       this.switchWeaponSound.pause &&
                       (this.switchWeaponSound.pause(),
                       (this.switchWeaponSound.currentTime = 0),
                       (this.switchWeaponSound = null)),
-                    F.Network.send("sW$" + e)));
+                    N.Network.send("sW$" + e)));
               }),
               (e.prototype.getPathForPos = function (e, t) {
                 var i = 10,
@@ -31744,8 +32142,8 @@ var c_hasPressedCtrlRKey = false;
                 );
               }),
               (e.prototype.getPotentialPlaceTarget = function (e) {
-                var t = Math.floor((0, _.getMouseGamePlayX)()) + 0.5,
-                  i = Math.floor((0, _.getMouseGamePlayY)()) + 0.5;
+                var t = Math.floor((0, I.getMouseGamePlayX)()) + 0.5,
+                  i = Math.floor((0, I.getMouseGamePlayY)()) + 0.5;
                 return Math.sqrt(
                   Math.pow(this.playingPlayer.x - t, 2) +
                     Math.pow(this.playingPlayer.y - i, 2),
@@ -31798,9 +32196,9 @@ var c_hasPressedCtrlRKey = false;
                 var e =
                   30 - (Date.now() - this._timeOfLastPlayingPlayerEmote) / 1e3;
                 e > 0
-                  ? ((ie.innerText = Math.ceil(e).toString()),
-                    oe || ((ie.style.display = ""), (oe = !0)))
-                  : oe && ((ie.style.display = "none"), (oe = !1));
+                  ? ((ne.innerText = Math.ceil(e).toString()),
+                    se || ((ne.style.display = ""), (se = !0)))
+                  : se && ((ne.style.display = "none"), (se = !1));
               }),
               (e.prototype.draw = function () {
                 var e = Date.now(),
@@ -31817,7 +32215,7 @@ var c_hasPressedCtrlRKey = false;
                     this.mouseUpdate(),
                   this.playingPlayer &&
                     !this.playingPlayer.dieAt &&
-                    T.Input.leftMouse &&
+                    k.Input.leftMouse &&
                     this.playingPlayer.weapon &&
                     this.lastTimeMousePosSent + 65 < e)
                 ) {
@@ -31830,7 +32228,7 @@ var c_hasPressedCtrlRKey = false;
                             this.ticksCounter,
                           0,
                         ));
-                  (r - F.Network.lastPing - 150 < 0 && this.mouseUpdate(),
+                  (r - N.Network.lastPing - 150 < 0 && this.mouseUpdate(),
                     r <= 0 &&
                       this.lastEmptyClipSound + 500 < e &&
                       !this.playingPlayerClips[i.id] &&
@@ -31840,11 +32238,11 @@ var c_hasPressedCtrlRKey = false;
                         this.playingPlayer.weaponCooldowns2[i.id] >=
                           (i.cooldown2 || 0)) &&
                       (this.interface_.setMainKillMsg(
-                        J.lang.get("game.msg.no_ammo"),
+                        ee.lang.get("game.msg.no_ammo"),
                         "grey",
                         "textInGrey",
                       ),
-                      U.Sound.playSound(
+                      W.Sound.playSound(
                         "empty_clip",
                         this.playingPlayer.x,
                         this.playingPlayer.y,
@@ -31857,7 +32255,7 @@ var c_hasPressedCtrlRKey = false;
                     this.mouseUpdate();
                 this._percentageOfCurrentTickPassed = Math.min(
                   (e - this.lastUpdate) /
-                    _.replaySettings.replayOption.tickTime,
+                    I.replaySettings.replayOption.tickTime,
                   1,
                 );
                 var s =
@@ -31904,7 +32302,7 @@ var c_hasPressedCtrlRKey = false;
                         this.cameraX) *
                         this.FIELD_SIZE *
                         2 +
-                        T.Input.x * c) /
+                        k.Input.x * c) /
                         (2 + c) /
                         this.FIELD_SIZE +
                       this.cameraX),
@@ -31915,7 +32313,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                           this.FIELD_SIZE *
                           2 +
-                          T.Input.y * c) /
+                          k.Input.y * c) /
                           (2 + c) /
                           this.FIELD_SIZE +
                         this.cameraY));
@@ -31933,7 +32331,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraX) *
                           this.FIELD_SIZE *
                           2 +
-                          T.Input.x) /
+                          k.Input.x) /
                           3 /
                           this.FIELD_SIZE +
                         this.cameraX),
@@ -31943,7 +32341,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                           this.FIELD_SIZE *
                           2 +
-                          T.Input.y) /
+                          k.Input.y) /
                           3 /
                           this.FIELD_SIZE +
                         this.cameraY));
@@ -31954,13 +32352,13 @@ var c_hasPressedCtrlRKey = false;
                       -window.innerHeight / 2 / this.FIELD_SIZE + d)),
                     this.iAmSpec &&
                       !m &&
-                      (T.Input.keys[T.commandKeys[T.COMMAND.UP]] &&
+                      (k.Input.keys[k.commandKeys[k.COMMAND.UP]] &&
                         (this.specY -= 0.019 * this.timeDiff),
-                      T.Input.keys[T.commandKeys[T.COMMAND.DOWN]] &&
+                      k.Input.keys[k.commandKeys[k.COMMAND.DOWN]] &&
                         (this.specY += 0.019 * this.timeDiff),
-                      T.Input.keys[T.commandKeys[T.COMMAND.LEFT]] &&
+                      k.Input.keys[k.commandKeys[k.COMMAND.LEFT]] &&
                         (this.specX -= 0.019 * this.timeDiff),
-                      T.Input.keys[T.commandKeys[T.COMMAND.RIGHT]] &&
+                      k.Input.keys[k.commandKeys[k.COMMAND.RIGHT]] &&
                         (this.specX += 0.019 * this.timeDiff),
                       (this.cameraX = this.specX),
                       (this.cameraY = this.specY)));
@@ -31983,28 +32381,28 @@ var c_hasPressedCtrlRKey = false;
                   t.fillRect(0, 0, window.innerWidth, window.innerHeight),
                   !this.fastForward)
                 ) {
-                  var y =
+                  var p =
                       this.groundCanvasses[
                         Math.floor(s / 10) % this.groundCanvasses.length
                       ],
-                    f = Math.min(
+                    y = Math.min(
                       window.innerWidth,
-                      y.width * this.SCALE_FACTOR,
+                      p.width * this.SCALE_FACTOR,
                     ),
                     x = Math.min(
                       window.innerHeight,
-                      y.height * this.SCALE_FACTOR,
+                      p.height * this.SCALE_FACTOR,
                     );
                   if (
                     (t.drawImage(
-                      y,
+                      p,
                       16 * (this.cameraX - this.groundMinX),
                       16 * (this.cameraY - this.groundMinY),
-                      f / this.SCALE_FACTOR,
+                      y / this.SCALE_FACTOR,
                       x / this.SCALE_FACTOR,
                       0,
                       0,
-                      f,
+                      y,
                       x,
                     ),
                     this._groundLightCanvasses.length > 0)
@@ -32017,11 +32415,11 @@ var c_hasPressedCtrlRKey = false;
                       w,
                       16 * (this.cameraX - this.groundMinX),
                       16 * (this.cameraY - this.groundMinY),
-                      f / this.SCALE_FACTOR,
+                      y / this.SCALE_FACTOR,
                       x / this.SCALE_FACTOR,
                       0,
                       0,
-                      f,
+                      y,
                       x,
                     );
                   }
@@ -32033,75 +32431,75 @@ var c_hasPressedCtrlRKey = false;
                       b.x - 1 <= this.cameraX2 &&
                       b.y - 1 <= this.cameraY2
                     ) {
-                      var C = b.type,
-                        I = b.shiftX
-                          ? C.img.x +
+                      var _ = b.type,
+                        C = b.shiftX
+                          ? _.img.x +
                             8 * Math.sign(b.shiftX) -
                             ((16 * b.shiftX * s) % 16)
-                          : C.img.x,
-                        E = b.shiftY
-                          ? C.img.y +
+                          : _.img.x,
+                        M = b.shiftY
+                          ? _.img.y +
                             8 * Math.sign(b.shiftY) -
                             ((16 * b.shiftY * s) % 16)
-                          : C.img.y;
+                          : _.img.y;
                       ((l = (b.x - this.cameraX) * this.FIELD_SIZE),
                         (d = (b.y - this.cameraY) * this.FIELD_SIZE));
                       t.drawImage(
                         a.imgs.tileSheet,
-                        I,
-                        E,
-                        C.img.w,
-                        C.img.h,
+                        C,
+                        M,
+                        _.img.w,
+                        _.img.h,
                         l,
                         d,
-                        C.w * this.FIELD_SIZE,
-                        C.h * this.FIELD_SIZE,
+                        _.w * this.FIELD_SIZE,
+                        _.h * this.FIELD_SIZE,
                       );
                     }
                   }
                   o.CONST.ENABLE_LIGHTMAP &&
                     t.drawImage(
-                      ee,
+                      ie,
                       4 * this.cameraX + 16,
                       4 * this.cameraY + 16,
-                      (f / this.SCALE_FACTOR) * re,
-                      (x / this.SCALE_FACTOR) * re,
+                      (y / this.SCALE_FACTOR) * le,
+                      (x / this.SCALE_FACTOR) * le,
                       0,
                       0,
-                      f,
+                      y,
                       x,
                     );
-                  for (var L = 0; L < this._whiteCircles.length; L++) {
-                    var A = this._whiteCircles[L];
-                    if (A.time + 30 > this.ticksCounter) {
-                      var P = s - A.time,
-                        B = A.img,
-                        D = 6 * P,
-                        O = this.g2rx(A.x) - (B.w / 2) * D,
-                        R = this.g2ry(A.y) - (B.h / 2) * D;
-                      ((t.globalAlpha = Math.max(0.4 - P / 20, 0)),
+                  for (var T = 0; T < this._whiteCircles.length; T++) {
+                    var L = this._whiteCircles[T];
+                    if (L.time + 30 > this.ticksCounter) {
+                      var F = s - L.time,
+                        P = L.img,
+                        B = 6 * F,
+                        O = this.g2rx(L.x) - (P.w / 2) * B,
+                        R = this.g2ry(L.y) - (P.h / 2) * B;
+                      ((t.globalAlpha = Math.max(0.4 - F / 20, 0)),
                         t.drawImage(
                           a.imgs.miscSheet,
-                          B.x,
-                          B.y,
-                          B.w,
-                          B.h,
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
                           O,
                           R,
-                          B.w * D,
-                          B.h * D,
+                          P.w * B,
+                          P.h * B,
                         ),
                         (t.globalAlpha = 1));
-                    } else (this._whiteCircles.splice(L, 1), L--);
+                    } else (this._whiteCircles.splice(T, 1), T--);
                   }
-                  var H = M.imgCoords.fog.w / 16;
+                  var H = E.imgCoords.fog.w / 16;
                   this.drawFog(s, H);
                   for (
-                    var G = 0, W = this.objectsToDraw.slice();
-                    G < W.length;
-                    G++
+                    var U = 0, G = this.objectsToDraw.slice();
+                    U < G.length;
+                    U++
                   ) {
-                    var z = W[G];
+                    var z = G[U];
                     (z.draw(
                       s,
                       this.cameraX,
@@ -32110,7 +32508,7 @@ var c_hasPressedCtrlRKey = false;
                       this.cameraY2,
                       this._percentageOfCurrentTickPassed,
                     ),
-                      z instanceof N.Player &&
+                      z instanceof D.Player &&
                         z !== this.playingPlayer &&
                         z.weapon &&
                         z.weapon.hasLine &&
@@ -32122,16 +32520,16 @@ var c_hasPressedCtrlRKey = false;
                     this.playingPlayer &&
                     ((this.playingPlayer.weapon &&
                       this.playingPlayer.weapon.isHeatSeeking) ||
-                      (T.Input.activeAbility && T.Input.activeAbility.locks))
+                      (k.Input.activeAbility && k.Input.activeAbility.locks))
                   ) {
                     if (
                       (this.refreshLockedPlayer(
-                        (0, _.getMouseGamePlayX)(),
-                        (0, _.getMouseGamePlayY)(),
+                        (0, I.getMouseGamePlayX)(),
+                        (0, I.getMouseGamePlayY)(),
                       ),
                       this.targetLockedPlayer)
                     ) {
-                      D =
+                      B =
                         this.SCALE_FACTOR *
                         (1.7 - (Math.floor(0.4 * this.ticksCounter) % 4) * 0.1);
                       var Y =
@@ -32139,23 +32537,23 @@ var c_hasPressedCtrlRKey = false;
                             this._percentageOfCurrentTickPassed * (m.x - m.x0) -
                             this.cameraX) *
                             this.FIELD_SIZE -
-                          (M.imgCoords.aimLock.w / 2) * D,
+                          (E.imgCoords.aimLock.w / 2) * B,
                         q =
                           (m.y0 +
                             this._percentageOfCurrentTickPassed * (m.y - m.y0) -
                             this.cameraY) *
                             this.FIELD_SIZE -
-                          0.75 * M.imgCoords.aimLock.h * D;
+                          0.75 * E.imgCoords.aimLock.h * B;
                       t.drawImage(
                         a.imgs.miscSheet,
-                        M.imgCoords.aimLock.x,
-                        M.imgCoords.aimLock.y,
-                        M.imgCoords.aimLock.w,
-                        M.imgCoords.aimLock.h,
+                        E.imgCoords.aimLock.x,
+                        E.imgCoords.aimLock.y,
+                        E.imgCoords.aimLock.w,
+                        E.imgCoords.aimLock.h,
                         Y,
                         q,
-                        D * M.imgCoords.aimLock.w,
-                        D * M.imgCoords.aimLock.h,
+                        B * E.imgCoords.aimLock.w,
+                        B * E.imgCoords.aimLock.h,
                       );
                     }
                   } else this.targetLockedPlayer = null;
@@ -32166,12 +32564,12 @@ var c_hasPressedCtrlRKey = false;
                   )
                     if (
                       (m = this.getClosestAlly(
-                        (0, _.getMouseGamePlayX)(),
-                        (0, _.getMouseGamePlayY)(),
+                        (0, I.getMouseGamePlayX)(),
+                        (0, I.getMouseGamePlayY)(),
                         this.playingPlayer.weapon.autoAimRange,
                       ))
                     ) {
-                      ((D =
+                      ((B =
                         this.SCALE_FACTOR *
                         (1.7 -
                           (Math.floor(0.4 * this.ticksCounter) % 4) * 0.1)),
@@ -32180,30 +32578,30 @@ var c_hasPressedCtrlRKey = false;
                             this._percentageOfCurrentTickPassed * (m.x - m.x0) -
                             this.cameraX) *
                             this.FIELD_SIZE -
-                          (M.imgCoords.aimLockGreen.w / 2) * D),
+                          (E.imgCoords.aimLockGreen.w / 2) * B),
                         (q =
                           (m.y0 +
                             this._percentageOfCurrentTickPassed * (m.y - m.y0) -
                             this.cameraY) *
                             this.FIELD_SIZE -
-                          0.75 * M.imgCoords.aimLockGreen.h * D));
+                          0.75 * E.imgCoords.aimLockGreen.h * B));
                       t.drawImage(
                         a.imgs.miscSheet,
-                        M.imgCoords.aimLockGreen.x,
-                        M.imgCoords.aimLockGreen.y,
-                        M.imgCoords.aimLockGreen.w,
-                        M.imgCoords.aimLockGreen.h,
+                        E.imgCoords.aimLockGreen.x,
+                        E.imgCoords.aimLockGreen.y,
+                        E.imgCoords.aimLockGreen.w,
+                        E.imgCoords.aimLockGreen.h,
                         Y,
                         q,
-                        D * M.imgCoords.aimLockGreen.w,
-                        D * M.imgCoords.aimLockGreen.h,
+                        B * E.imgCoords.aimLockGreen.w,
+                        B * E.imgCoords.aimLockGreen.h,
                       );
                     }
                   for (var j = 0, Z = this.floatingTexts; j < Z.length; j++) {
                     Z[j].draw();
                   }
                   var X = this.cameraX + (this.cameraX2 - this.cameraX) / 2;
-                  if (p.options.graphicSettings > 1) {
+                  if (f.options.graphicSettings > 1) {
                     t.globalAlpha = 0.05;
                     for (
                       l = 0 - H - ((s / 73.27) % H);
@@ -32224,20 +32622,20 @@ var c_hasPressedCtrlRKey = false;
                             this.FIELD_SIZE));
                         Y <= window.innerWidth &&
                           q <= window.innerHeight &&
-                          Y + M.imgCoords.fog.w * this.SCALE_FACTOR * 1.5 >=
+                          Y + E.imgCoords.fog.w * this.SCALE_FACTOR * 1.5 >=
                             0 &&
-                          q + M.imgCoords.fog.h * this.SCALE_FACTOR * 1.5 >=
+                          q + E.imgCoords.fog.h * this.SCALE_FACTOR * 1.5 >=
                             0 &&
                           t.drawImage(
                             a.imgs.tileSheet,
-                            M.imgCoords.fog.x,
-                            M.imgCoords.fog.y,
-                            M.imgCoords.fog.w,
-                            M.imgCoords.fog.h,
+                            E.imgCoords.fog.x,
+                            E.imgCoords.fog.y,
+                            E.imgCoords.fog.w,
+                            E.imgCoords.fog.h,
                             Y,
                             q,
-                            1.5 * this.SCALE_FACTOR * M.imgCoords.fog.w,
-                            1.5 * this.SCALE_FACTOR * M.imgCoords.fog.h,
+                            1.5 * this.SCALE_FACTOR * E.imgCoords.fog.w,
+                            1.5 * this.SCALE_FACTOR * E.imgCoords.fog.h,
                           );
                       }
                     t.globalAlpha = 1;
@@ -32261,7 +32659,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                         this.FIELD_SIZE));
                     ((t.globalAlpha = 0.2),
-                      (0, _.drawCircle)(
+                      (0, I.drawCircle)(
                         t,
                         l,
                         d,
@@ -32274,8 +32672,8 @@ var c_hasPressedCtrlRKey = false;
                   }
                   if (
                     this.playingPlayer &&
-                    T.Input.activeAbility &&
-                    T.Input.activeAbility.range
+                    k.Input.activeAbility &&
+                    k.Input.activeAbility.range
                   ) {
                     ((l =
                       (this.playingPlayer.x0 +
@@ -32290,13 +32688,13 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                         this.FIELD_SIZE));
                     ((t.globalAlpha = 0.2),
-                      (0, _.drawCircle)(
+                      (0, I.drawCircle)(
                         t,
                         l,
                         d,
                         this.FIELD_SIZE *
                           this.getAbilityFieldValue(
-                            T.Input.activeAbility,
+                            k.Input.activeAbility,
                             "range",
                           ),
                         "white",
@@ -32305,80 +32703,80 @@ var c_hasPressedCtrlRKey = false;
                   }
                   if (
                     this.playingPlayer &&
-                    T.Input.activeAbility &&
-                    T.Input.activeAbility.type === n.AbilityType.Place &&
-                    T.Input.activeAbility.object
+                    k.Input.activeAbility &&
+                    k.Input.activeAbility.type === n.AbilityType.Place &&
+                    k.Input.activeAbility.object
                   ) {
-                    var K = this.getPotentialPlaceTarget(T.Input.activeAbility);
+                    var K = this.getPotentialPlaceTarget(k.Input.activeAbility);
                     if (K) {
-                      var V = h.objects[T.Input.activeAbility.object],
+                      var V = h.objects[k.Input.activeAbility.object],
                         $ = h.animationData[V.animation];
-                      ((D = this.SCALE_FACTOR * (V.imgScale ? V.imgScale : 1)),
-                        (B = M.imgCoords[V.img[0]]),
+                      ((B = this.SCALE_FACTOR * (V.imgScale ? V.imgScale : 1)),
+                        (P = E.imgCoords[V.img[0]]),
                         (l =
                           (K.x - this.cameraX) * this.FIELD_SIZE +
-                          (-B.w / 2) * D),
+                          (-P.w / 2) * B),
                         (d =
                           (K.y +
                             (V.yOffset ? V.yOffset : 0) / 16 -
                             0.2 -
                             this.cameraY) *
                             this.FIELD_SIZE +
-                          (8 - B.h) * D));
+                          (8 - P.h) * B));
                       if (
                         (t.drawImage(
                           a.imgs.miscSheet,
-                          B.x,
-                          B.y,
-                          B.w,
-                          B.h,
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
                           l,
                           d,
-                          B.w * D,
-                          B.h * D,
+                          P.w * B,
+                          P.h * B,
                         ),
                         $ && $.imgTurret01)
                       ) {
-                        B = $.imgTurret01;
-                        var Q =
+                        P = $.imgTurret01;
+                        var J =
                             (K.x - this.cameraX) * this.FIELD_SIZE +
-                            (-B.w / 2) * D,
-                          te =
+                            (-P.w / 2) * B,
+                          Q =
                             (K.y - 0.2 - this.cameraY) * this.FIELD_SIZE +
-                            (8 - B.h) * D;
+                            (8 - P.h) * B;
                         t.drawImage(
                           a.imgs.miscSheet,
-                          B.x,
-                          B.y,
-                          B.w,
-                          B.h,
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
+                          J,
                           Q,
-                          te,
-                          B.w * D,
-                          B.h * D,
+                          P.w * B,
+                          P.h * B,
                         );
                       }
                     }
                   }
-                  if (p.options.graphicSettings > 1)
+                  if (f.options.graphicSettings > 1)
                     for (
-                      var ie =
+                      var te =
                           this.cameraX + (this.cameraX2 - this.cameraX) / 2,
                         ae = 0,
                         ne = this._fairies;
                       ae < ne.length;
                       ae++
                     ) {
-                      ne[ae].draw(s, ie, this.cameraY2);
+                      ne[ae].draw(s, te, this.cameraY2);
                     }
-                  (p.options.graphicSettings > 1 &&
+                  (f.options.graphicSettings > 1 &&
                     ((t.globalAlpha = 0.6),
                     t.drawImage(
                       a.imgs.miscSheet,
-                      M.imgCoords.filter.x,
-                      M.imgCoords.filter.y,
-                      M.imgCoords.filter.w,
-                      M.imgCoords.filter.h,
+                      E.imgCoords.filter.x,
+                      E.imgCoords.filter.y,
+                      E.imgCoords.filter.w,
+                      E.imgCoords.filter.h,
                       0,
                       0,
                       window.innerWidth,
@@ -32395,7 +32793,7 @@ var c_hasPressedCtrlRKey = false;
                       t.fillRect(0, 0, window.innerWidth, window.innerHeight),
                       (this.redScreen -= this.timeDiff)),
                     this.lastPickUp + 250 >= e &&
-                      !p.options.noPickupFlash &&
+                      !f.options.noPickupFlash &&
                       ((t.fillStyle =
                         "rgba(255, 255, 255, " +
                         (125 - Math.abs(125 - (e - this.lastPickUp))) / 450 +
@@ -32414,23 +32812,23 @@ var c_hasPressedCtrlRKey = false;
                   oe = 'url("imgs/cursor.cur"), auto';
                 else if (
                   this.playingPlayer &&
-                  T.Input.activeAbility &&
-                  ((T.Input.activeAbility.type === n.AbilityType.Blink &&
+                  k.Input.activeAbility &&
+                  ((k.Input.activeAbility.type === n.AbilityType.Blink &&
                     this.playingPlayer.carriesFlag()) ||
-                    T.Input.activeAbility.energy > this.playingPlayerEnergy ||
+                    k.Input.activeAbility.energy > this.playingPlayerEnergy ||
                     this.lastAbilityUses[
-                      this.pl_active_abilities[0] === T.Input.activeAbility
+                      this.pl_active_abilities[0] === k.Input.activeAbility
                         ? 0
                         : 1
                     ] +
-                      T.Input.activeAbility.cooldown >
+                      k.Input.activeAbility.cooldown >
                       this.ticksCounter)
                 )
                   oe = 'url("imgs/cx.cur"), auto';
                 else if (
                   this.playingPlayer &&
-                  T.Input.activeAbility &&
-                  T.Input.activeAbility.type === n.AbilityType.Blink
+                  k.Input.activeAbility &&
+                  k.Input.activeAbility.type === n.AbilityType.Blink
                 )
                   oe = 'url("imgs/cb.cur"), auto';
                 else if (
@@ -32447,19 +32845,19 @@ var c_hasPressedCtrlRKey = false;
                   this.playingPlayer.weapon.aoeCursor &&
                   !this.playingPlayer.dieAt
                 )
-                  ((0, _.drawCircle)(
+                  ((0, I.drawCircle)(
                     this.ctx,
-                    T.Input.x,
-                    T.Input.y,
+                    k.Input.x,
+                    k.Input.y,
                     this.playingPlayer.weapon.aoe * this.FIELD_SIZE,
                     void 0,
                     "rgba(255, 150, 150, 0.2)",
                     0.9,
                   ),
-                    (0, _.drawCircle)(
+                    (0, I.drawCircle)(
                       this.ctx,
-                      T.Input.x,
-                      T.Input.y,
+                      k.Input.x,
+                      k.Input.y,
                       0.066 * this.FIELD_SIZE,
                       void 0,
                       "rgba(255, 255, 255, 0.15)",
@@ -32472,17 +32870,17 @@ var c_hasPressedCtrlRKey = false;
                   !this.playingPlayer.weapon.aoeCursor &&
                   !this.playingPlayer.dieAt
                 ) {
-                  var se = 0;
-                  (T.Input.leftMouse && (se = 6),
-                    (oe = 'url("imgs/c' + se + '.cur"), auto'));
+                  var re = 0;
+                  (k.Input.leftMouse && (re = 6),
+                    (oe = 'url("imgs/c' + re + '.cur"), auto'));
                 } else oe = 'url("imgs/cursor.cur"), auto';
                 (this._lastCursorStr !== oe &&
                   ((this._lastCursorStr = oe), (this.canvas.style.cursor = oe)),
-                  this.map !== k.map1 && this.interface_.draw(s),
+                  this.map !== A.map1 && this.interface_.draw(s),
                   (this.previousFramesTick = this.ticksCounter));
               }),
               (e.prototype.drawFog = function (e, t) {
-                if (!(p.options.graphicSettings < 1)) {
+                if (!(f.options.graphicSettings < 1)) {
                   this.ctx.globalAlpha = 0.06;
                   for (var i = ((e / 67) % t) - t; i < this.map.x; i += t)
                     for (
@@ -32500,16 +32898,16 @@ var c_hasPressedCtrlRKey = false;
                       n + t > this.map.y && (l = n + t - this.map.y);
                       var h = (i + o - this.cameraX) * this.FIELD_SIZE,
                         d = (n + r - this.cameraY) * this.FIELD_SIZE,
-                        m = M.imgCoords.fog.x + 16 * o,
-                        c = M.imgCoords.fog.y + 16 * r,
-                        g = M.imgCoords.fog.w - 16 * (o + s),
-                        u = M.imgCoords.fog.h - 16 * (r + l),
-                        y = g * this.SCALE_FACTOR,
-                        f = u * this.SCALE_FACTOR;
+                        m = E.imgCoords.fog.x + 16 * o,
+                        c = E.imgCoords.fog.y + 16 * r,
+                        g = E.imgCoords.fog.w - 16 * (o + s),
+                        u = E.imgCoords.fog.h - 16 * (r + l),
+                        p = g * this.SCALE_FACTOR,
+                        y = u * this.SCALE_FACTOR;
                       h <= window.innerWidth &&
                         d <= window.innerHeight &&
-                        h + y >= 0 &&
-                        d + f >= 0 &&
+                        h + p >= 0 &&
+                        d + y >= 0 &&
                         this.ctx.drawImage(
                           a.imgs.tileSheet,
                           m,
@@ -32518,8 +32916,8 @@ var c_hasPressedCtrlRKey = false;
                           u,
                           h,
                           d,
+                          p,
                           y,
-                          f,
                         );
                     }
                   this.ctx.globalAlpha = 1;
@@ -32534,8 +32932,8 @@ var c_hasPressedCtrlRKey = false;
               e
             );
           })();
-        t.Game = le;
-        var he = {
+        t.Game = ce;
+        var ge = {
           normal: function (e, t, i, a) {
             var n = e.getAnyFromID(t);
             null !== n &&
@@ -32553,11 +32951,11 @@ var c_hasPressedCtrlRKey = false;
               (n === e.playingPlayer && n.resetCooldowns(),
               (n.isReloading = !1),
               (n.lastWeapon = n.weapon),
-              (n.weapon = m.weapons[parseInt(i[a + 1])]),
+              (n.weapon = g.weapons[parseInt(i[a + 1])]),
               (n.switchWeaponUntil = e.ticksCounter + o.CONST.WPN_SWITCH_TICKS),
               n.resetCooldowns(),
               n === e.playingPlayer &&
-                ((e.switchWeaponSound = U.Sound.playSound(
+                ((e.switchWeaponSound = W.Sound.playSound(
                   "switch_weapon",
                   void 0,
                   void 0,
@@ -32648,7 +33046,7 @@ var c_hasPressedCtrlRKey = false;
                       i[a + 1] +
                       " because of auto team balance"),
                   e.interface_.setMainKillMsg(r, "#36FF36", "textInGreen"),
-                  U.Sound.playSound("switch", void 0, void 0, 0.8));
+                  W.Sound.playSound("switch", void 0, void 0, 0.8));
               }
           },
           o2u: function (e, t, i, a) {
@@ -32672,7 +33070,7 @@ var c_hasPressedCtrlRKey = false;
                 ((r.standTime = s),
                   1 === s &&
                     e.playingPlayer === r &&
-                    U.Sound.playSound("zoom", r.x, r.y, 1));
+                    W.Sound.playSound("zoom", r.x, r.y, 1));
                 break;
               }
             }
@@ -32691,7 +33089,7 @@ var c_hasPressedCtrlRKey = false;
                 r = parseFloat(i[a + 1]);
               ((n.hp = Math.min(n.hp + r, n.maxHP)),
                 !(n.hp <= o) &&
-                  n instanceof I.Humanoid &&
+                  n instanceof T.Humanoid &&
                   ((n.hpGlideAmount = n.hp - o),
                   (n.hpGlideStart = e.ticksCounter),
                   (n.hpGlideEnd = e.ticksCounter + (n.hpGlideAmount / r) * 4),
@@ -32700,10 +33098,10 @@ var c_hasPressedCtrlRKey = false;
                     n.x - 3 <= e.cameraX2 &&
                     n.y - 3 <= e.cameraY2 &&
                     !e.fastForward &&
-                    new G.Sprite(e, {
+                    new z.Sprite(e, {
                       x: n.x + 0.5 * Math.random() - 0.25,
                       y: n.y + 0.5 + 0.5 * Math.random(),
-                      img: M.imgCoords.heal,
+                      img: E.imgCoords.heal,
                       scaleFunction: function (e) {
                         return (
                           -1 * (1 / ((0.9 * e - 125) / 500 + 0.31) + e / 4) +
@@ -32732,14 +33130,16 @@ var c_hasPressedCtrlRKey = false;
               if (n.isHumanZombie)
                 o =
                   e.playingPlayer === n
-                    ? J.lang.get("game.msg.turn_boss.zombie_boss")
-                    : J.lang.get("game.msg.turn_boss.zombie", { boss: n.name });
+                    ? ee.lang.get("game.msg.turn_boss.zombie_boss")
+                    : ee.lang.get("game.msg.turn_boss.zombie", {
+                        boss: n.name,
+                      });
               else {
                 for (var r = 0, s = 0, l = e.players; s < l.length; s++) {
                   var h = l[s];
                   h.isHumanZombie || h.hp <= 0 || r++;
                 }
-                o = J.lang.get("game.msg.turn_boss.human", { human: r });
+                o = ee.lang.get("game.msg.turn_boss.human", { human: r });
               }
               e.interface_.setMainKillMsg(o, "#FF3232", "textInRed");
             }
@@ -32747,7 +33147,7 @@ var c_hasPressedCtrlRKey = false;
           nF: function (e, t, i, a) {
             if (!e.fastForward) {
               for (var n = 0; n < 2 * Math.PI; n += 0.3 + 0.3 * Math.random())
-                new G.Sprite(e, {
+                new z.Sprite(e, {
                   x:
                     parseFloat(i[a]) +
                     Math.cos(n) *
@@ -32757,7 +33157,7 @@ var c_hasPressedCtrlRKey = false;
                     0 +
                     Math.sin(n) *
                       (parseFloat(i[a + 3]) - 0.9 + 0.4 * Math.random()),
-                  img: M.imgCoords.poisonFog1,
+                  img: E.imgCoords.poisonFog1,
                   r4: 0.01 * (Math.random() - 0.5),
                   r5: parseFloat(i[a + 3]) / 2.9,
                   scaleFunction: function (e) {
@@ -32786,7 +33186,7 @@ var c_hasPressedCtrlRKey = false;
                   },
                 });
               for (n = 0; n < 2 * Math.PI; n += 0.3 + 0.3 * Math.random())
-                new G.Sprite(e, {
+                new z.Sprite(e, {
                   x:
                     parseInt(i[a]) +
                     Math.cos(n) * (parseFloat(i[a + 3]) - 0.8) * Math.random(),
@@ -32794,7 +33194,7 @@ var c_hasPressedCtrlRKey = false;
                     parseInt(i[a + 1]) -
                     0 +
                     Math.sin(n) * (parseFloat(i[a + 3]) - 0.8) * Math.random(),
-                  img: M.imgCoords.poisonFog2,
+                  img: E.imgCoords.poisonFog2,
                   r4: 0.01 * (Math.random() - 0.5),
                   r5: parseFloat(i[a + 3]) / 3,
                   scaleFunction: function (e) {
@@ -32848,7 +33248,7 @@ var c_hasPressedCtrlRKey = false;
           grU: function (e, t, i, a) {
             var n = e.getGrenadeOrProjectileById(t);
             null !== n &&
-              n instanceof C.Grenade &&
+              n instanceof M.Grenade &&
               n.updatePos(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -32858,7 +33258,7 @@ var c_hasPressedCtrlRKey = false;
           oPU: function (e, t, i, a) {
             var n = e.getObjectFromID(t);
             null !== n &&
-              n instanceof P.Object_ &&
+              n instanceof B.Object_ &&
               n.updatePos(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -32868,7 +33268,7 @@ var c_hasPressedCtrlRKey = false;
           grD: function (e, t, i, a) {
             var n = e.getGrenadeOrProjectileById(t);
             null !== n &&
-              n instanceof C.Grenade &&
+              n instanceof M.Grenade &&
               n.serverDeath(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -32877,7 +33277,7 @@ var c_hasPressedCtrlRKey = false;
           grCU: function (e, t, i, a) {
             var n = e.getGrenadeOrProjectileById(t);
             null !== n &&
-              n instanceof C.Grenade &&
+              n instanceof M.Grenade &&
               n.updateCharge(
                 parseFloat(i[a + 1]),
                 parseFloat(i[a + 2]),
@@ -32896,7 +33296,7 @@ var c_hasPressedCtrlRKey = false;
                     o.x - 3 <= e.cameraX2 &&
                     o.y - 3 <= e.cameraY2 &&
                     (e.createPoundSmoke(o.x, o.y + 0.5, 0.5, 9, 0.4),
-                    U.Sound.playSound("invis", o.x, o.y)))
+                    W.Sound.playSound("invis", o.x, o.y)))
                 : r.type === n.AbilityType.Playdead
                   ? ((o.turnCorpseTill = e.ticksCounter + r.duration),
                     (o.isFakeCorpse = !0))
@@ -32909,7 +33309,7 @@ var c_hasPressedCtrlRKey = false;
                           e.ticksCounter +
                           e.getAbilityFieldValue(r, "duration")),
                         e.interface_.setMainKillMsg(
-                          J.lang.get("game.skills.scan.tip"),
+                          ee.lang.get("game.skills.scan.tip"),
                           "rgba(0, 255, 6, 0.7)",
                           "textInGreen",
                           !0,
@@ -32918,8 +33318,8 @@ var c_hasPressedCtrlRKey = false;
                         o.y + 5 >= e.cameraY &&
                         o.x - 5 <= e.cameraX2 &&
                         o.y - 5 <= e.cameraY2 &&
-                        (e.addCircle(o.x, o.y, M.imgCoords.greenCircle),
-                        U.Sound.playSound(
+                        (e.addCircle(o.x, o.y, E.imgCoords.greenCircle),
+                        W.Sound.playSound(
                           "scan",
                           o.x,
                           o.y,
@@ -32937,7 +33337,7 @@ var c_hasPressedCtrlRKey = false;
                         o.y + 5 >= e.cameraY &&
                         o.x - 5 <= e.cameraX2 &&
                         o.y - 5 <= e.cameraY2 &&
-                        U.Sound.playSound(
+                        W.Sound.playSound(
                           "shield",
                           o.x,
                           o.y,
@@ -33031,7 +33431,7 @@ var c_hasPressedCtrlRKey = false;
               (n.weaponCooldowns2[n.weapon.id] = n.weapon.cooldown2),
               n.weapon.reload2Sound &&
                 n === e.playingPlayer &&
-                (n.reloadSound2 = U.Sound.playSound(
+                (n.reloadSound2 = W.Sound.playSound(
                   n.weapon.reload2Sound,
                   n.x,
                   n.y,
@@ -33090,24 +33490,25 @@ var c_hasPressedCtrlRKey = false;
           h = a(i(9554)),
           d = a(i(4891)),
           m = i(2399),
-          c = i(3085),
-          g = i(1626),
-          u = i(9622),
-          p = i(7028),
-          y = i(1799),
-          f = i(5572),
-          x = i(9085),
-          w = i(6214),
-          v = document.createElement("canvas"),
-          S = v.getContext("2d"),
-          b = document.getElementById("canvas"),
-          _ = b.getContext("2d"),
-          C = document.getElementById("chatDisplayDiv"),
-          I = document.getElementById("chatloginner"),
-          M = document.getElementById("killsDisplayDiv"),
-          T = [],
-          E = 0,
-          k = (function () {
+          c = i(4902),
+          g = i(3085),
+          u = i(1626),
+          p = i(9622),
+          y = i(7028),
+          f = i(1799),
+          x = i(5572),
+          w = i(9085),
+          v = i(6214),
+          S = document.createElement("canvas"),
+          b = S.getContext("2d"),
+          _ = document.getElementById("canvas"),
+          C = _.getContext("2d"),
+          I = document.getElementById("chatDisplayDiv"),
+          M = document.getElementById("chatloginner"),
+          T = document.getElementById("killsDisplayDiv"),
+          E = [],
+          k = 0,
+          L = (function () {
             function e(e, t) {
               if (
                 ((this.messages = []),
@@ -33152,7 +33553,7 @@ var c_hasPressedCtrlRKey = false;
                 (this.gifProcessing = !1),
                 (this._respawnCounter = 0),
                 (this.game = e),
-                (I.innerHTML = ""),
+                (M.innerHTML = ""),
                 t && t.tutorialMessages)
               )
                 for (var i = 0; i < t.tutorialMessages.length; i++)
@@ -33162,7 +33563,10 @@ var c_hasPressedCtrlRKey = false;
             return (
               (e.prototype.analyzeReplay = function (e) {
                 for (var t = 0, i = 0, a = e; i < a.length; i++) {
-                  "upd" === a[i].split("$")[0] && t++;
+                  var n = a[i];
+                  ("string" == typeof n
+                    ? "upd" === n.split("$")[0]
+                    : (0, c.isBinaryUpd)(n)) && t++;
                 }
                 ((this.replayLength = t),
                   (this.replayLengthStr = (0, m.ticks2TimeStr)(
@@ -33226,7 +33630,7 @@ var c_hasPressedCtrlRKey = false;
                     "</span>] ");
                 var i =
                   t +
-                  u.NameColorUI.getHTMLCodeFromColorIndex(
+                  p.NameColorUI.getHTMLCodeFromColorIndex(
                     e.name,
                     "span",
                     e.nameColor,
@@ -33245,22 +33649,22 @@ var c_hasPressedCtrlRKey = false;
                     h = document.createElement("div"),
                     d = this.getFormattedPlayerName(e),
                     m = this.getFormattedPlayerName(t),
-                    g = document.createElement("canvas"),
-                    u = g.getContext("2d"),
+                    c = document.createElement("canvas"),
+                    u = c.getContext("2d"),
                     p =
                       i && i.weapon
-                        ? c.imgCoords[i.weapon.img]
-                        : c.imgCoords.grenade1,
+                        ? g.imgCoords[i.weapon.img]
+                        : g.imgCoords.grenade1,
                     y = void 0 !== a ? s.weapons[a] : null;
-                  (y && (p = c.imgCoords[y.img]),
-                    o && (p = c.imgCoords[o.ability.icon]),
-                    r && (p = c.imgCoords.splashSingle));
+                  (y && (p = g.imgCoords[y.img]),
+                    o && (p = g.imgCoords[o.ability.icon]),
+                    r && (p = g.imgCoords.splashSingle));
                   var f =
                     (i && i.weapon) || y
                       ? 0.3 * this.game.SCALE_FACTOR_BASE
                       : 0.6 * this.game.SCALE_FACTOR_BASE;
-                  ((g.width = Math.floor(f * p.w)),
-                    (g.height = Math.floor(f * p.h)),
+                  ((c.width = Math.floor(f * p.w)),
+                    (c.height = Math.floor(f * p.h)),
                     (u.mozImageSmoothingEnabled = !1),
                     (u.msImageSmoothingEnabled = !1),
                     (u.imageSmoothingEnabled = !1),
@@ -33272,18 +33676,18 @@ var c_hasPressedCtrlRKey = false;
                       p.h,
                       0,
                       0,
-                      g.width,
-                      g.height,
+                      c.width,
+                      c.height,
                     ),
                     (h.innerHTML =
                       e === t
-                        ? w.lang.get("game.msg.killed_self_broadcast", {
+                        ? v.lang.get("game.msg.killed_self_broadcast", {
                             playerName: d,
                           })
-                        : d + " <img src='" + g.toDataURL() + "' /> " + m),
+                        : d + " <img src='" + c.toDataURL() + "' /> " + m),
                     (h.className = "chatMsg noSelect killMsg"),
                     h.setAttribute("data-time", l.toString()),
-                    M.appendChild(h));
+                    T.appendChild(h));
                 }
               }),
               (e.prototype.chatMsg = function (e, t) {
@@ -33312,10 +33716,10 @@ var c_hasPressedCtrlRKey = false;
                       (r.className = "chatMsg noSelect"),
                       (s.className = "noSelect"),
                       r.setAttribute("data-time", i.toString()),
-                      C.appendChild(r),
-                      I.appendChild(s),
-                      "none" !== C.style.display &&
-                        x.Sound.playSound("chat", void 0, void 0, 0.5));
+                      I.appendChild(r),
+                      M.appendChild(s),
+                      "none" !== I.style.display &&
+                        w.Sound.playSound("chat", void 0, void 0, 0.5));
                   }
                 }
               }),
@@ -33327,7 +33731,7 @@ var c_hasPressedCtrlRKey = false;
                     "<span style='color: " + t + ";'>" + e + "</span>"),
                     (a.className = "chatMsg noSelect"),
                     a.setAttribute("data-time", i.toString()),
-                    C.appendChild(a));
+                    I.appendChild(a));
                 }
               }),
               (e.prototype.click = function () {
@@ -33335,7 +33739,7 @@ var c_hasPressedCtrlRKey = false;
                 return this.hoverWeapon >= 0 && !l.options.weaponsUnclickable
                   ? (this.game.switchWeapon(this.hoverWeapon), !0)
                   : this.cureButtonHovered
-                    ? ((this.game.cureTick = 0), p.Network.send("cure"), !0)
+                    ? ((this.game.cureTick = 0), y.Network.send("cure"), !0)
                     : this.hoverAbility >= 0 && !l.options.weaponsUnclickable
                       ? (this.initAbility(
                           this.game.pl_active_abilities[this.hoverAbility],
@@ -33345,7 +33749,7 @@ var c_hasPressedCtrlRKey = false;
                       : this.hoverChoice && this.game.playingPlayer
                         ? (this.showOldUpgChoicesUntil < e &&
                             ((this.currentUpgChoicesEnd = e + 200),
-                            p.Network.send(
+                            y.Network.send(
                               "upg$" +
                                 this.hoverChoice.index +
                                 "$" +
@@ -33355,7 +33759,7 @@ var c_hasPressedCtrlRKey = false;
                             (this.selectedChoiceUntil = e + 500),
                             (this.upgradeChoicesAvailable = !1),
                             (this.abilityPoints -= this.hoverChoice.cost),
-                            x.Sound.playSound("beebeep"),
+                            w.Sound.playSound("beebeep"),
                             this.game.playingPlayer.createAtributeEffect()),
                           !0)
                         : this.upgNotificationStart > 0 &&
@@ -33366,21 +33770,21 @@ var c_hasPressedCtrlRKey = false;
                             : this.unskipButtonHover
                               ? (this.shopUpgrades(), !0)
                               : this.provisionalReplayPos >= 0
-                                ? (x.Sound.playSound("click"),
+                                ? (w.Sound.playSound("click"),
                                   this.replayJumpTo(),
                                   !0)
                                 : this.gifButtonIsHovered
-                                  ? (x.Sound.playSound("click"),
+                                  ? (w.Sound.playSound("click"),
                                     this.recordGIF
                                       ? this.endGIF()
                                       : this.startGIF(),
                                     !0)
                                   : this.replayPlusHover
-                                    ? (x.Sound.playSound("click"),
+                                    ? (w.Sound.playSound("click"),
                                       (0, m.changeReplaySpeed)(1),
                                       !0)
                                     : !!this.replayMinusHover &&
-                                      (x.Sound.playSound("click"),
+                                      (w.Sound.playSound("click"),
                                       (0, m.changeReplaySpeed)(-1),
                                       !0);
               }),
@@ -33389,11 +33793,11 @@ var c_hasPressedCtrlRKey = false;
                   (this.currentUpgChoicesEnd =
                     this.currentUpgChoicesStart + 9999999),
                   (this.upgNotificationStart = -9999),
-                  x.Sound.playSound("beebeep"));
+                  w.Sound.playSound("beebeep"));
               }),
               (e.prototype.hideUpgrades = function () {
                 ((this.currentUpgChoicesEnd = Date.now() + 200),
-                  x.Sound.playSound("beebeep"),
+                  w.Sound.playSound("beebeep"),
                   (this.hoverChoice = null));
               }),
               (e.prototype.setRespawnCounter = function (e) {
@@ -33401,45 +33805,45 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.initAbility = function (e, t) {
                 if (void 0 !== e)
-                  if (g.Input.activeAbility === e)
-                    ((g.Input.activeAbility = null),
-                      x.Sound.playSound("switch"));
+                  if (u.Input.activeAbility === e)
+                    ((u.Input.activeAbility = null),
+                      w.Sound.playSound("switch"));
                   else {
                     var i = !1;
                     ((e.energy || 0) > this.game.playingPlayerEnergy
                       ? ((i = !0),
-                        this.addMsg(w.lang.get("game.msg.no_energy"), "red"),
-                        x.Sound.playSound("negative", 0.8))
+                        this.addMsg(v.lang.get("game.msg.no_energy"), "red"),
+                        w.Sound.playSound("negative", 0.8))
                       : this.game.lastAbilityUses[t] + e.cooldown >
                           this.game.ticksCounter
                         ? ((i = !0),
                           this.addMsg(
-                            w.lang.get("game.msg.no_cooldown"),
+                            v.lang.get("game.msg.no_cooldown"),
                             "red",
                           ),
-                          x.Sound.playSound("negative", 0.8))
+                          w.Sound.playSound("negative", 0.8))
                         : e.type === o.AbilityType.Blink &&
                           this.game.playingPlayer &&
                           this.game.playingPlayer.carriesFlag() &&
                           ((i = !0),
                           this.addMsg(
-                            w.lang.get("game.skills.teleport.disabled_in_ctf"),
+                            v.lang.get("game.skills.teleport.disabled_in_ctf"),
                             "red",
                           ),
-                          x.Sound.playSound("negative", 0.8)),
+                          w.Sound.playSound("negative", 0.8)),
                       e.isInstant
                         ? i ||
-                          (p.Network.send("ab$" + e.id),
-                          (g.Input.activeAbility = null))
-                        : (i || x.Sound.playSound("switch"),
-                          (g.Input.activeAbility = e)));
+                          (y.Network.send("ab$" + e.id),
+                          (u.Input.activeAbility = null))
+                        : (i || w.Sound.playSound("switch"),
+                          (u.Input.activeAbility = e)));
                   }
               }),
               (e.prototype.killAllMsgs = function () {
-                for (; C.childNodes.length > 0; )
-                  C.removeChild(C.childNodes[0]);
-                for (; M.childNodes.length > 0; )
-                  M.removeChild(M.childNodes[0]);
+                for (; I.childNodes.length > 0; )
+                  I.removeChild(I.childNodes[0]);
+                for (; T.childNodes.length > 0; )
+                  T.removeChild(T.childNodes[0]);
               }),
               (e.prototype.refreshTop3 = function () {
                 var e = this.game.type.winningCondition;
@@ -33502,7 +33906,7 @@ var c_hasPressedCtrlRKey = false;
                       n.levelUpMaxUpgLvl[parseInt(e[a + 1])] &&
                       (s = n.levelUpMaxUpgLvl[parseInt(e[a + 1])]),
                     this.currentUpgChoices.push({
-                      img: c.imgCoords[n.icon],
+                      img: g.imgCoords[n.icon],
                       text:
                         n.name +
                         ("-1" !== e[a + 1]
@@ -33542,39 +33946,39 @@ var c_hasPressedCtrlRKey = false;
                   i = Date.now(),
                   a = 98;
                 if (l.options.showFPS) {
-                  for (T.push(1e3 / (i - E)), E = i; T.length > 10; )
-                    T.splice(0, 1);
+                  for (E.push(1e3 / (i - k)), k = i; E.length > 10; )
+                    E.splice(0, 1);
                   var o = Math.round(
-                    T.reduce(function (e, t) {
+                    E.reduce(function (e, t) {
                       return e + t;
-                    }) / T.length,
+                    }) / E.length,
                   );
-                  ((0, m.drawText)(_, "FPS: " + o, "white", 18, 10, a),
+                  ((0, m.drawText)(C, "FPS: " + o, "white", 18, 10, a),
                     (a += 28));
                 }
                 l.options.showPing &&
                   (0, m.drawText)(
-                    _,
-                    "Ping: " + p.Network.lastPing,
+                    C,
+                    "Ping: " + y.Network.lastPing,
                     "white",
                     18,
                     10,
                     a,
                   );
-                for (var r = C.childNodes, h = 0; h < r.length; h++)
+                for (var r = I.childNodes, h = 0; h < r.length; h++)
                   (r[h].getAttribute("data-time") < i - 1e4 ||
                     h < r.length - 10) &&
-                    C.removeChild(r[h]);
-                r = M.childNodes;
+                    I.removeChild(r[h]);
+                r = T.childNodes;
                 for (h = 0; h < r.length; h++)
                   (r[h].getAttribute("data-time") < i - 1e4 ||
                     h < r.length - 10) &&
-                    M.removeChild(r[h]);
+                    T.removeChild(r[h]);
                 var d = 0.8 * this.game.SCALE_FACTOR_BASE,
-                  u = 0.5 * d,
-                  f = 0.4 * d,
+                  c = 0.5 * d,
+                  p = 0.4 * d,
                   x = l.options.weaponsUnclickable ? 0.7 : 1,
-                  I = this.game.playingPlayerIsZombie
+                  w = this.game.playingPlayerIsZombie
                     ? [s.weapons[12]]
                     : s.weapons;
                 if (
@@ -33583,13 +33987,13 @@ var c_hasPressedCtrlRKey = false;
                     this.game.playingPlayerIsZombie) &&
                   !this.game.playingPlayer.dieAt
                 ) {
-                  var k = c.imgCoords.weaponFrame2,
-                    L = window.innerWidth - (k.w + 1) * f,
-                    A = window.innerHeight - (k.h + 1) * f;
+                  var M = g.imgCoords.weaponFrame2,
+                    L = window.innerWidth - (M.w + 1) * p,
+                    A = window.innerHeight - (M.h + 1) * p;
                   this.hoverWeapon = -1;
-                  var F = c.imgCoords.weaponFrameCurrent;
-                  for (h = 0; h < I.length; h++) {
-                    var P = I[I.length - h - 1],
+                  var F = g.imgCoords.weaponFrameCurrent;
+                  for (h = 0; h < w.length; h++) {
+                    var P = w[w.length - h - 1],
                       N =
                         this.game.playingPlayerClips[P.id] +
                         this.game.playingPlayerAmmo[P.id];
@@ -33598,66 +34002,66 @@ var c_hasPressedCtrlRKey = false;
                         !P.noWeapon) ||
                       (P === s.weapons[12] && this.game.playingPlayerIsZombie)
                     ) {
-                      k =
+                      M =
                         N > 0 || P === s.weapons[12]
-                          ? c.imgCoords.weaponFrame2Green
-                          : c.imgCoords.weaponFrame2;
+                          ? g.imgCoords.weaponFrame2Green
+                          : g.imgCoords.weaponFrame2;
                       var B =
                         N > 0 || P === s.weapons[12]
                           ? n.imgs.miscSheet
                           : n.imgs.miscSheetGrey;
-                      ((_.globalAlpha = x),
-                        _.drawImage(
+                      ((C.globalAlpha = x),
+                        C.drawImage(
                           B,
-                          k.x,
-                          k.y,
-                          k.w,
-                          k.h,
+                          M.x,
+                          M.y,
+                          M.w,
+                          M.h,
                           L,
                           A,
-                          k.w * f,
-                          k.h * f,
+                          M.w * p,
+                          M.h * p,
                         ),
                         (this.game.playingPlayer.weapon !== P &&
                           P !== s.weapons[12]) ||
-                          _.drawImage(
+                          C.drawImage(
                             n.imgs.miscSheet,
                             F.x,
                             F.y,
                             F.w,
                             F.h,
-                            L - 3 * f,
-                            A - 3 * f,
-                            F.w * f,
-                            F.h * f,
+                            L - 3 * p,
+                            A - 3 * p,
+                            F.w * p,
+                            F.h * p,
                           ));
-                      var D = c.imgCoords[P.img];
-                      _.drawImage(
+                      var D = g.imgCoords[P.img];
+                      C.drawImage(
                         B,
                         D.x,
                         D.y,
                         D.w,
                         D.h,
-                        L + k.w * f * 0.4 - 0.5 * D.w * f * 1.3,
-                        A + (k.h - 3) * f - D.h * f * 1.3,
-                        D.w * f * 1.3,
-                        D.h * f * 1.3,
+                        L + M.w * p * 0.4 - 0.5 * D.w * p * 1.3,
+                        A + (M.h - 3) * p - D.h * p * 1.3,
+                        D.w * p * 1.3,
+                        D.h * p * 1.3,
                       );
-                      var O = c.imgCoords[P.ammoImgSmall],
+                      var O = g.imgCoords[P.ammoImgSmall],
                         R =
                           1.2 *
-                          f *
+                          p *
                           (null !== (t = P.ammoImgSmallScale) && void 0 !== t
                             ? t
                             : 1);
-                      _.drawImage(
+                      C.drawImage(
                         B,
                         O.x,
                         O.y,
                         O.w,
                         O.h,
-                        L + k.w * f * 0.25 - O.w * R,
-                        A + k.h * f * 0.2 - 0.5 * O.h * R,
+                        L + M.w * p * 0.25 - O.w * R,
+                        A + M.h * p * 0.2 - 0.5 * O.h * R,
                         O.w * R,
                         O.h * R,
                       );
@@ -33669,47 +34073,47 @@ var c_hasPressedCtrlRKey = false;
                           ")";
                       if (
                         ((0, m.drawText)(
-                          _,
+                          C,
                           H,
                           N > 0
                             ? "#4FAC43"
                             : "rgba(255, 255, 255, " + 0.7 * x + ")",
-                          7.5 * f,
-                          L + k.w * f * 0.35,
-                          A + 0.55 * k.h,
+                          7.5 * p,
+                          L + M.w * p * 0.35,
+                          A + 0.55 * M.h,
                         ),
                         !P.hideHotkey)
                       ) {
-                        var U = g.commandKeys[g.COMMAND["WPN" + (P.id + 1)]],
-                          G = g.Input.keys[U]
+                        var U = u.commandKeys[u.COMMAND["WPN" + (P.id + 1)]],
+                          G = u.Input.keys[U]
                             ? "rgba(100, 170, 110, " + 0.8 * x + ")"
                             : "rgba(255, 255, 255, " + 0.8 * x + ")";
                         (0, m.drawText)(
-                          _,
-                          "[" + g.keyNames[U] + "]",
+                          C,
+                          "[" + u.keyNames[U] + "]",
                           G,
-                          6 * f,
-                          L + k.w * f * 0.8,
-                          A + k.h * f * 0.8,
-                          10 * f,
+                          6 * p,
+                          L + M.w * p * 0.8,
+                          A + M.h * p * 0.8,
+                          10 * p,
                           "right",
                         );
                       }
-                      ((_.globalAlpha = 1),
+                      ((C.globalAlpha = 1),
                         !l.options.weaponsUnclickable &&
-                          g.Input.x >= L &&
-                          g.Input.y >= A &&
-                          g.Input.y <= A + k.h * f &&
+                          u.Input.x >= L &&
+                          u.Input.y >= A &&
+                          u.Input.y <= A + M.h * p &&
                           ((this.hoverWeapon = P.id),
-                          (_.fillStyle = "rgba(0, 0, 0, 0.8)"),
-                          _.fillRect(
+                          (C.fillStyle = "rgba(0, 0, 0, 0.8)"),
+                          C.fillRect(
                             window.innerWidth - 100 * d,
                             window.innerHeight - 80 * d,
                             60 * d,
                             50 * d,
                           ),
                           (0, m.drawText)(
-                            _,
+                            C,
                             P.name,
                             "white",
                             4 * d,
@@ -33723,7 +34127,7 @@ var c_hasPressedCtrlRKey = false;
                             50 * d,
                           ),
                           (0, m.drawText)(
-                            _,
+                            C,
                             P.description,
                             "#D4D4D4",
                             3 * d,
@@ -33735,20 +34139,20 @@ var c_hasPressedCtrlRKey = false;
                             void 0,
                             3.5 * d,
                           ),
-                          (_.globalAlpha = 0.5),
-                          _.drawImage(
+                          (C.globalAlpha = 0.5),
+                          C.drawImage(
                             n.imgs.miscSheet,
                             F.x,
                             F.y,
                             F.w,
                             F.h,
-                            L - 3 * f,
-                            A - 3 * f,
-                            F.w * f,
-                            F.h * f,
+                            L - 3 * p,
+                            A - 3 * p,
+                            F.w * p,
+                            F.h * p,
                           ),
-                          (_.globalAlpha = 1)),
-                        (A -= (k.h + 2) * f));
+                          (C.globalAlpha = 1)),
+                        (A -= (M.h + 2) * p));
                     }
                   }
                 }
@@ -33758,7 +34162,7 @@ var c_hasPressedCtrlRKey = false;
                     1,
                   );
                   (0, m.drawText)(
-                    _,
+                    C,
                     "Speed x" + m.replaySettings.replayOption.display,
                     "#FFD155",
                     0.35 * this.game.FIELD_SIZE_BASE,
@@ -33771,11 +34175,11 @@ var c_hasPressedCtrlRKey = false;
                 }
                 if (
                   (this.game.playingPlayer &&
-                    g.Input.activeAbility &&
-                    g.Input.activeAbility.activeMsg &&
+                    u.Input.activeAbility &&
+                    u.Input.activeAbility.activeMsg &&
                     (0, m.drawText)(
-                      _,
-                      g.Input.activeAbility.activeMsg,
+                      C,
+                      u.Input.activeAbility.activeMsg,
                       "#C0EDBA",
                       0.4 * this.game.FIELD_SIZE_BASE,
                       0.5 * window.innerWidth,
@@ -33788,7 +34192,7 @@ var c_hasPressedCtrlRKey = false;
                     ),
                   this._respawnCounter > 0 &&
                     (0, m.drawText)(
-                      _,
+                      C,
                       "Spawning in " +
                         Math.round((10 * this._respawnCounter) / 20) / 10 +
                         "s",
@@ -33804,41 +34208,41 @@ var c_hasPressedCtrlRKey = false;
                 )
                   for (h = 0; h < this.game.pl_active_abilities.length; h++)
                     if (this.game.pl_active_abilities[h]) {
-                      _.globalAlpha = x;
+                      C.globalAlpha = x;
                       var z = this.game.pl_active_abilities[h];
-                      ((k =
+                      ((M =
                         this.game.playingPlayerEnergy >= z.energy
-                          ? c.imgCoords.abilityFrameGreen
-                          : c.imgCoords.abilityFrame),
+                          ? g.imgCoords.abilityFrameGreen
+                          : g.imgCoords.abilityFrame),
                         (L =
                           window.innerWidth -
-                          u *
-                            (k.w + 1) *
+                          c *
+                            (M.w + 1) *
                             (this.game.pl_active_abilities.length - h) -
-                          (c.imgCoords.weaponFrame.w + 6) * f),
-                        (A = window.innerHeight - (k.h + 1) * u),
+                          (g.imgCoords.weaponFrame.w + 6) * p),
+                        (A = window.innerHeight - (M.h + 1) * c),
                         (B =
                           z.energy <= this.game.playingPlayerEnergy &&
                           this.game.lastAbilityUses[h] + z.cooldown <=
                             this.game.ticksCounter
                             ? n.imgs.miscSheet
                             : n.imgs.miscSheetGrey));
-                      _.drawImage(
+                      C.drawImage(
                         B,
-                        k.x,
-                        k.y,
-                        k.w,
-                        k.h,
+                        M.x,
+                        M.y,
+                        M.w,
+                        M.h,
                         L,
                         A,
-                        k.w * u,
-                        k.h * u,
+                        M.w * c,
+                        M.h * c,
                       );
-                      var Y = c.imgCoords[z.icon],
-                        q = ((k.w - 6) * u) / Math.max(Y.w, Y.h),
-                        j = L + (k.w * u - Y.w * q) / 2,
-                        Z = A + 0.2 * (k.h * u - Y.h * q);
-                      _.drawImage(
+                      var Y = g.imgCoords[z.icon],
+                        q = ((M.w - 6) * c) / Math.max(Y.w, Y.h),
+                        j = L + (M.w * c - Y.w * q) / 2,
+                        Z = A + 0.2 * (M.h * c - Y.h * q);
+                      C.drawImage(
                         B,
                         Y.x,
                         Y.y,
@@ -33849,47 +34253,47 @@ var c_hasPressedCtrlRKey = false;
                         Y.w * q,
                         Y.h * q,
                       );
-                      ((U = g.commandKeys[g.COMMAND["ABILITY" + (h + 1)]]),
-                        (G = g.Input.keys[U]
+                      ((U = u.commandKeys[u.COMMAND["ABILITY" + (h + 1)]]),
+                        (G = u.Input.keys[U]
                           ? "rgba(100, 170, 110, " + 0.8 * x + ")"
                           : "rgba(255, 255, 255, " + 0.7 * x + ")"));
                       ((0, m.drawText)(
-                        _,
-                        (0, g.getKeyName)(U),
+                        C,
+                        (0, u.getKeyName)(U),
                         G,
                         3.5 * d,
-                        L + k.w * u * 0.5,
-                        A + 38 * u,
-                        k.w,
+                        L + M.w * c * 0.5,
+                        A + 38 * c,
+                        M.w,
                         "center",
                       ),
                         !l.options.weaponsUnclickable &&
-                          g.Input.x > L &&
-                          g.Input.x < L + k.w * u &&
-                          g.Input.y > window.innerHeight - (k.h + 1) * u &&
+                          u.Input.x > L &&
+                          u.Input.x < L + M.w * c &&
+                          u.Input.y > window.innerHeight - (M.h + 1) * c &&
                           ((this.hoverAbility = h),
-                          (_.globalAlpha = 0.3),
-                          _.drawImage(
+                          (C.globalAlpha = 0.3),
+                          C.drawImage(
                             n.imgs.miscSheetWhite,
-                            k.x,
-                            k.y,
-                            k.w,
-                            k.h,
+                            M.x,
+                            M.y,
+                            M.w,
+                            M.h,
                             L,
                             A,
-                            k.w * u,
-                            k.h * u,
+                            M.w * c,
+                            M.h * c,
                           ),
-                          (_.globalAlpha = 1),
-                          (_.fillStyle = "rgba(0, 0, 0, 0.8)"),
-                          _.fillRect(
+                          (C.globalAlpha = 1),
+                          (C.fillStyle = "rgba(0, 0, 0, 0.8)"),
+                          C.fillRect(
                             window.innerWidth - 100 * d,
                             window.innerHeight - 65 * d,
                             65 * d,
                             35 * d,
                           ),
                           (0, m.drawText)(
-                            _,
+                            C,
                             z.name,
                             "white",
                             4 * d,
@@ -33897,8 +34301,8 @@ var c_hasPressedCtrlRKey = false;
                             window.innerHeight - 58 * d,
                           ),
                           (0, m.drawText)(
-                            _,
-                            w.lang.get("game.skills.misc.energy_cost", {
+                            C,
+                            v.lang.get("game.skills.misc.energy_cost", {
                               energy: z.energy,
                             }),
                             "#DD52CE",
@@ -33909,7 +34313,7 @@ var c_hasPressedCtrlRKey = false;
                             "left",
                           ),
                           (0, m.drawText)(
-                            _,
+                            C,
                             z.description,
                             "#D4D4D4",
                             3 * d,
@@ -33929,17 +34333,17 @@ var c_hasPressedCtrlRKey = false;
                         this.game.ticksCounter;
                       X > 0 &&
                         (0, m.drawText)(
-                          _,
+                          C,
                           Math.floor(X / 20).toString(),
                           "red",
                           9 * d,
-                          L + k.w * u * 0.5,
-                          A + 25 * u,
-                          k.w,
+                          L + M.w * c * 0.5,
+                          A + 25 * c,
+                          M.w,
                           "center",
                           1,
                           "rgba(0, 0, 0, 0.65)",
-                          k.h,
+                          M.h,
                         );
                     }
                 this.game.playingPlayer &&
@@ -33947,8 +34351,8 @@ var c_hasPressedCtrlRKey = false;
                     this.game.ticksCounter &&
                   this.game.ticksCounter > 0 &&
                   (0, m.drawText)(
-                    _,
-                    w.lang.get("game.msg.invincible", {
+                    C,
+                    v.lang.get("game.msg.invincible", {
                       seconds: Math.ceil(
                         (this.game.playingPlayer.invincibleUntil -
                           this.game.ticksCounter) /
@@ -33968,8 +34372,8 @@ var c_hasPressedCtrlRKey = false;
                 var K = 7.5 * d;
                 if (this.game.type.team && this.game.type.souls) {
                   var V = 0.9 * d,
-                    $ = c.imgCoords.souls;
-                  (_.drawImage(
+                    $ = g.imgCoords.souls;
+                  (C.drawImage(
                     n.imgs.miscSheet,
                     $.x,
                     $.y,
@@ -33981,7 +34385,7 @@ var c_hasPressedCtrlRKey = false;
                     $.h * V,
                   ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.game.scoreTeam1.toString(),
                       "#A13232",
                       6 * d,
@@ -33994,7 +34398,7 @@ var c_hasPressedCtrlRKey = false;
                       7 * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.game.scoreTeam2.toString(),
                       "#1B698E",
                       6 * d,
@@ -34024,9 +34428,9 @@ var c_hasPressedCtrlRKey = false;
                         this.game.roundTime - this.game.ticksCounter,
                       )),
                       (Q = !0)),
-                    y.rankInGame.refreshTime(Q, J),
+                    f.rankInGame.refreshTime(Q, J),
                     (0, m.drawText)(
-                      _,
+                      C,
                       J,
                       "rgba(255, 255, 255, 0.7)",
                       5.5 * d,
@@ -34047,7 +34451,7 @@ var c_hasPressedCtrlRKey = false;
                     ie && ie.isHumanZombie;
                   }
                   (0, m.drawText)(
-                    _,
+                    C,
                     "Alive: 1 / " + this.game.players.length,
                     "white",
                     4.5 * d,
@@ -34061,7 +34465,7 @@ var c_hasPressedCtrlRKey = false;
                 !this.game.playingPlayer.dieAt &&
                 this.game.showEnemiesOnMinimapUntil >= this.game.ticksCounter
                   ? this.scanMsg(
-                      w.lang.get("game.skills.scan.countdown", {
+                      v.lang.get("game.skills.scan.countdown", {
                         seconds: Math.floor(
                           (this.game.showEnemiesOnMinimapUntil -
                             this.game.ticksCounter) /
@@ -34073,7 +34477,7 @@ var c_hasPressedCtrlRKey = false;
                     )
                   : this.game.type.flag
                     ? this.scanMsg(
-                        w.lang.get(this.game.getFlagText()),
+                        v.lang.get(this.game.getFlagText()),
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
@@ -34089,7 +34493,7 @@ var c_hasPressedCtrlRKey = false;
                       ),
                   this.game.ticksCounter < 0 &&
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.game.victoryMsg,
                       "rgba(255, 255, 255, 0.7)",
                       7 * d,
@@ -34099,8 +34503,8 @@ var c_hasPressedCtrlRKey = false;
                       "center",
                     ),
                   this.game.ticksCounter < 0
-                    ? y.rankInGame.setVictoryMessage(this.game.victoryMsg)
-                    : y.rankInGame.setVictoryMessage(""),
+                    ? f.rankInGame.setVictoryMessage(this.game.victoryMsg)
+                    : f.rankInGame.setVictoryMessage(""),
                   (d *= 0.7));
                 var ae = 0,
                   ne = 0;
@@ -34117,13 +34521,13 @@ var c_hasPressedCtrlRKey = false;
                   this.game.type.souls &&
                   this.game.ticksCounter > 0
                 ) {
-                  ((Y = c.imgCoords.newStatsFrame), (F = c.imgCoords.soulsBar));
-                  var re = c.imgCoords.hpBar1,
-                    se = c.imgCoords.energyBar;
+                  ((Y = g.imgCoords.newStatsFrame), (F = g.imgCoords.soulsBar));
+                  var re = g.imgCoords.hpBar1,
+                    se = g.imgCoords.energyBar;
                   if (
                     ((ae = window.innerHeight - (Y.h + 1) * d),
                     (ne = 1 * d),
-                    _.drawImage(
+                    C.drawImage(
                       n.imgs.miscSheet,
                       Y.x,
                       Y.y,
@@ -34135,7 +34539,7 @@ var c_hasPressedCtrlRKey = false;
                       Y.h * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.soulLvl.toString(),
                       "#e1f063",
                       8 * d,
@@ -34149,7 +34553,7 @@ var c_hasPressedCtrlRKey = false;
                       10 * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.game.playingPlayer.name,
                       "#b9cc8d",
                       8 * d,
@@ -34163,7 +34567,7 @@ var c_hasPressedCtrlRKey = false;
                       42 * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.game.playingPlayer.souls.toString(),
                       "#b4b7b8",
                       7 * d,
@@ -34177,7 +34581,7 @@ var c_hasPressedCtrlRKey = false;
                       16 * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.abilityPoints.toString(),
                       "#5cc3ef",
                       7 * d,
@@ -34190,7 +34594,7 @@ var c_hasPressedCtrlRKey = false;
                       void 0,
                       16 * d,
                     ),
-                    _.drawImage(
+                    C.drawImage(
                       n.imgs.miscSheet,
                       F.x,
                       F.y,
@@ -34202,7 +34606,7 @@ var c_hasPressedCtrlRKey = false;
                       10 * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.soulsGot + " / " + this.soulsNeeded,
                       "#d0e661",
                       8 * d,
@@ -34211,7 +34615,7 @@ var c_hasPressedCtrlRKey = false;
                       84 * d,
                       "center",
                     ),
-                    _.drawImage(
+                    C.drawImage(
                       n.imgs.miscSheet,
                       re.x,
                       re.y,
@@ -34226,7 +34630,7 @@ var c_hasPressedCtrlRKey = false;
                       5 * d,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       Math.ceil(this.game.playingPlayer.hp) +
                         " / " +
                         Math.ceil(this.game.playingPlayer.maxHP),
@@ -34242,7 +34646,7 @@ var c_hasPressedCtrlRKey = false;
                       void 0,
                       "black",
                     ),
-                    _.drawImage(
+                    C.drawImage(
                       n.imgs.miscSheet,
                       se.x,
                       se.y,
@@ -34253,20 +34657,20 @@ var c_hasPressedCtrlRKey = false;
                       73 * d * (this.game.playingPlayerEnergy / 100),
                       2 * d,
                     ),
-                    (Y = c.imgCoords.newUpgFrame),
-                    (F = c.imgCoords.newUpgFrameWhite),
-                    (re = c.imgCoords.newUpgFrameYellow),
+                    (Y = g.imgCoords.newUpgFrame),
+                    (F = g.imgCoords.newUpgFrameWhite),
+                    (re = g.imgCoords.newUpgFrameYellow),
                     (ae -= (Y.h + 1) * d),
                     this.game.playingPlayer.dieAt)
                   )
                     return;
                   if (this.upgNotificationStart > 0) {
                     var le = ((this.game.ticksCounter / 3) % 3) + 1;
-                    Y = c.imgCoords["newUps" + Math.floor(le)];
+                    Y = g.imgCoords["newUps" + Math.floor(le)];
                     var he = i - this.upgNotificationStart,
                       de = Math.min(Y.h, (he / 400) * Y.h);
-                    ((_.globalAlpha = 1 - (le % 1)),
-                      _.drawImage(
+                    ((C.globalAlpha = 1 - (le % 1)),
+                      C.drawImage(
                         n.imgs.miscSheet,
                         Y.x,
                         Y.y,
@@ -34277,9 +34681,9 @@ var c_hasPressedCtrlRKey = false;
                         Y.w * d,
                         de * d,
                       ),
-                      (Y = c.imgCoords["newUps" + ((Math.floor(le) % 3) + 1)]),
-                      (_.globalAlpha = le % 1),
-                      _.drawImage(
+                      (Y = g.imgCoords["newUps" + ((Math.floor(le) % 3) + 1)]),
+                      (C.globalAlpha = le % 1),
+                      C.drawImage(
                         n.imgs.miscSheet,
                         Y.x,
                         Y.y,
@@ -34290,10 +34694,10 @@ var c_hasPressedCtrlRKey = false;
                         Y.w * d,
                         de * d,
                       ),
-                      (_.globalAlpha = 1),
+                      (C.globalAlpha = 1),
                       (0, m.drawText)(
-                        _,
-                        w.lang.get("game.msg.choose_upgrade"),
+                        C,
+                        v.lang.get("game.msg.choose_upgrade"),
                         "#4BA6FA",
                         8 * d,
                         ne + 5 * d,
@@ -34306,10 +34710,10 @@ var c_hasPressedCtrlRKey = false;
                         100 * d,
                       ),
                       (0, m.drawText)(
-                        _,
-                        w.lang.get("game.msg.upgrade_shortcut", {
-                          key: g.keyNames[
-                            g.commandKeys[g.COMMAND.PICK_UPGRADE]
+                        C,
+                        v.lang.get("game.msg.upgrade_shortcut", {
+                          key: u.keyNames[
+                            u.commandKeys[u.COMMAND.PICK_UPGRADE]
                           ],
                         }),
                         "#4BA6FA",
@@ -34323,13 +34727,13 @@ var c_hasPressedCtrlRKey = false;
                         void 0,
                         100 * d,
                       ),
-                      g.Input.x <= Y.w * d &&
-                        g.Input.y >= ae &&
+                      u.Input.x <= Y.w * d &&
+                        u.Input.y >= ae &&
                         ((this.upgNotificationHovered = !0),
                         (le = ((this.game.ticksCounter / 5) % 4) + 1),
-                        (Y = c.imgCoords["newUpsFrame" + Math.floor(le)]),
-                        (_.globalAlpha = 1 - (le % 1)),
-                        _.drawImage(
+                        (Y = g.imgCoords["newUpsFrame" + Math.floor(le)]),
+                        (C.globalAlpha = 1 - (le % 1)),
+                        C.drawImage(
                           n.imgs.miscSheet,
                           Y.x,
                           Y.y,
@@ -34341,11 +34745,11 @@ var c_hasPressedCtrlRKey = false;
                           Y.h * d,
                         ),
                         (Y =
-                          c.imgCoords[
+                          g.imgCoords[
                             "newUpsFrame" + ((Math.floor(le) % 4) + 1)
                           ]),
-                        (_.globalAlpha = le % 1),
-                        _.drawImage(
+                        (C.globalAlpha = le % 1),
+                        C.drawImage(
                           n.imgs.miscSheet,
                           Y.x,
                           Y.y,
@@ -34356,7 +34760,7 @@ var c_hasPressedCtrlRKey = false;
                           Y.w * d,
                           Y.h * d,
                         ),
-                        (_.globalAlpha = 1)));
+                        (C.globalAlpha = 1)));
                   } else if (oe.length > 0) {
                     (this.currentUpgChoicesStart + 350 > i &&
                       (ne -=
@@ -34369,7 +34773,7 @@ var c_hasPressedCtrlRKey = false;
                       var me = oe[h],
                         ce = me.img,
                         ge = (16 * d) / Math.max(ce.w, ce.h);
-                      (_.drawImage(
+                      (C.drawImage(
                         n.imgs.miscSheet,
                         Y.x,
                         Y.y,
@@ -34380,7 +34784,7 @@ var c_hasPressedCtrlRKey = false;
                         Y.w * d,
                         Y.h * d,
                       ),
-                        _.drawImage(
+                        C.drawImage(
                           n.imgs.miscSheet,
                           ce.x,
                           ce.y,
@@ -34392,7 +34796,7 @@ var c_hasPressedCtrlRKey = false;
                           ce.h * ge,
                         ),
                         (0, m.drawText)(
-                          _,
+                          C,
                           me.cost.toString(),
                           "#5cc3ef",
                           7.5 * d,
@@ -34400,7 +34804,7 @@ var c_hasPressedCtrlRKey = false;
                           ae + 18 * d,
                         ),
                         (0, m.drawText)(
-                          _,
+                          C,
                           me.text,
                           "#FFFDC0",
                           6.5 * d,
@@ -34414,9 +34818,9 @@ var c_hasPressedCtrlRKey = false;
                           70 * d,
                         ));
                       for (var ue = 0; ue < me.maxLvl; ue++)
-                        ((_.fillStyle =
+                        ((C.fillStyle =
                           ue < me.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
-                          _.fillRect(
+                          C.fillRect(
                             ne + 24 * d + 11 * ue * d,
                             ae + 4 * d,
                             10 * d,
@@ -34425,8 +34829,8 @@ var c_hasPressedCtrlRKey = false;
                       (this.lastChoiceIndex === h &&
                       this.selectedChoiceUntil > i
                         ? this.game.ticksCounter % 2 == 1 &&
-                          ((_.globalAlpha = 0.75),
-                          _.drawImage(
+                          ((C.globalAlpha = 0.75),
+                          C.drawImage(
                             n.imgs.miscSheet,
                             re.x,
                             re.y,
@@ -34437,13 +34841,13 @@ var c_hasPressedCtrlRKey = false;
                             re.w * d,
                             re.h * d,
                           ),
-                          (_.globalAlpha = 1))
-                        : g.Input.x <= ne + Y.w * d &&
-                          g.Input.y >= ae &&
-                          g.Input.y <= ae + Y.h * d &&
+                          (C.globalAlpha = 1))
+                        : u.Input.x <= ne + Y.w * d &&
+                          u.Input.y >= ae &&
+                          u.Input.y <= ae + Y.h * d &&
                           ((this.hoverChoice = me),
-                          (_.globalAlpha = 0.4),
-                          _.drawImage(
+                          (C.globalAlpha = 0.4),
+                          C.drawImage(
                             n.imgs.miscSheetWhite,
                             Y.x,
                             Y.y,
@@ -34454,13 +34858,13 @@ var c_hasPressedCtrlRKey = false;
                             Y.w * d,
                             Y.h * d,
                           ),
-                          (_.globalAlpha = 1)),
+                          (C.globalAlpha = 1)),
                         (ae -= (Y.h + 1) * d));
                     }
-                    ((F = c.imgCoords.upgSkip),
+                    ((F = g.imgCoords.upgSkip),
                       (ne += 5 * d),
                       (ae += (Y.h + 1) * d - F.h * d),
-                      _.drawImage(
+                      C.drawImage(
                         n.imgs.miscSheet,
                         F.x,
                         F.y,
@@ -34472,10 +34876,10 @@ var c_hasPressedCtrlRKey = false;
                         F.h * d,
                       ),
                       (0, m.drawText)(
-                        _,
-                        w.lang.get("game.msg.hideskip_shortcut", {
-                          key: g.keyNames[
-                            g.commandKeys[g.COMMAND.PICK_UPGRADE]
+                        C,
+                        v.lang.get("game.msg.hideskip_shortcut", {
+                          key: u.keyNames[
+                            u.commandKeys[u.COMMAND.PICK_UPGRADE]
                           ],
                         }),
                         "#304420",
@@ -34490,12 +34894,12 @@ var c_hasPressedCtrlRKey = false;
                         62 * d,
                         "#688551",
                       ),
-                      ((g.Input.x <= ne + F.w * d &&
-                        g.Input.y >= ae &&
-                        g.Input.y <= ae + F.h * d) ||
-                        g.Input.keys[g.commandKeys[g.COMMAND.PICK_UPGRADE]]) &&
-                        ((_.globalAlpha = 0.3),
-                        _.drawImage(
+                      ((u.Input.x <= ne + F.w * d &&
+                        u.Input.y >= ae &&
+                        u.Input.y <= ae + F.h * d) ||
+                        u.Input.keys[u.commandKeys[u.COMMAND.PICK_UPGRADE]]) &&
+                        ((C.globalAlpha = 0.3),
+                        C.drawImage(
                           n.imgs.miscSheetWhite,
                           F.x,
                           F.y,
@@ -34506,17 +34910,17 @@ var c_hasPressedCtrlRKey = false;
                           F.w * d,
                           F.h * d,
                         ),
-                        (_.globalAlpha = 1),
+                        (C.globalAlpha = 1),
                         (this.skipButtonHover = !0)),
                       this.currentUpgChoicesEnd + 200 < i &&
                         this.upgradeChoicesAvailable &&
-                        ((F = c.imgCoords.upgUnskip),
+                        ((F = g.imgCoords.upgUnskip),
                         (ne = 5 * d),
                         (ae =
                           window.innerHeight -
-                          (c.imgCoords.newStatsFrame.h + 1) * d -
+                          (g.imgCoords.newStatsFrame.h + 1) * d -
                           F.h * d),
-                        _.drawImage(
+                        C.drawImage(
                           n.imgs.miscSheet,
                           F.x,
                           F.y,
@@ -34528,10 +34932,10 @@ var c_hasPressedCtrlRKey = false;
                           F.h * d,
                         ),
                         (0, m.drawText)(
-                          _,
-                          w.lang.get("game.msg.show_upgrades_shortcut", {
-                            key: g.keyNames[
-                              g.commandKeys[g.COMMAND.PICK_UPGRADE]
+                          C,
+                          v.lang.get("game.msg.show_upgrades_shortcut", {
+                            key: u.keyNames[
+                              u.commandKeys[u.COMMAND.PICK_UPGRADE]
                             ],
                           }),
                           "#304420",
@@ -34546,14 +34950,14 @@ var c_hasPressedCtrlRKey = false;
                           64 * d,
                           "#688551",
                         ),
-                        ((g.Input.x <= ne + F.w * d &&
-                          g.Input.y >= ae &&
-                          g.Input.y <= ae + F.h * d) ||
-                          g.Input.keys[
-                            g.commandKeys[g.COMMAND.PICK_UPGRADE]
+                        ((u.Input.x <= ne + F.w * d &&
+                          u.Input.y >= ae &&
+                          u.Input.y <= ae + F.h * d) ||
+                          u.Input.keys[
+                            u.commandKeys[u.COMMAND.PICK_UPGRADE]
                           ]) &&
-                          ((_.globalAlpha = 0.3),
-                          _.drawImage(
+                          ((C.globalAlpha = 0.3),
+                          C.drawImage(
                             n.imgs.miscSheetWhite,
                             F.x,
                             F.y,
@@ -34564,36 +34968,36 @@ var c_hasPressedCtrlRKey = false;
                             F.w * d,
                             F.h * d,
                           ),
-                          (_.globalAlpha = 1),
+                          (C.globalAlpha = 1),
                           (this.unskipButtonHover = !0))));
                   }
                 }
                 if (this.game.tickDiff > 0 && this.recordGIF) {
-                  ((v.width = v.width),
-                    S.drawImage(
-                      b,
+                  ((S.width = S.width),
+                    b.drawImage(
+                      _,
                       0,
                       0,
-                      b.width,
-                      b.height,
+                      _.width,
+                      _.height,
                       0,
                       0,
-                      v.width,
-                      v.height,
+                      S.width,
+                      S.height,
                     ));
-                  Y = c.imgCoords.main_logo;
-                  (S.drawImage(
+                  Y = g.imgCoords.main_logo;
+                  (b.drawImage(
                     n.imgs.miscSheet,
                     Y.x,
                     Y.y,
                     Y.w,
                     Y.h,
                     2,
-                    v.height - 2 - Y.h,
+                    S.height - 2 - Y.h,
                     Y.w,
                     Y.h,
                   ),
-                    this.gif.addFrame(S, { delay: 50, copy: !0 }));
+                    this.gif.addFrame(b, { delay: 50, copy: !0 }));
                 }
                 if (
                   ((this.cureButtonHovered = !1),
@@ -34603,9 +35007,9 @@ var c_hasPressedCtrlRKey = false;
                     (this.game.cureTick = 0),
                   this.game.cureTick)
                 ) {
-                  Y = c.imgCoords.cureButton;
+                  Y = g.imgCoords.cureButton;
                   var pe = 2.08;
-                  _.drawImage(
+                  C.drawImage(
                     n.imgs.miscSheet,
                     Y.x,
                     Y.y,
@@ -34616,7 +35020,7 @@ var c_hasPressedCtrlRKey = false;
                     Y.w * pe,
                     Y.h * pe,
                   );
-                  var ye = w.lang.get("game.buttons.cure");
+                  var ye = v.lang.get("game.buttons.cure");
                   ((ye +=
                     " ( " +
                     Math.floor(
@@ -34624,7 +35028,7 @@ var c_hasPressedCtrlRKey = false;
                     ) +
                     " )"),
                     (0, m.drawText)(
-                      _,
+                      C,
                       ye,
                       "white",
                       8 * d,
@@ -34633,12 +35037,12 @@ var c_hasPressedCtrlRKey = false;
                       200 * d,
                       "center",
                     ),
-                    g.Input.x >= 208 &&
-                      g.Input.x <= (Y.w + 100) * pe &&
-                      g.Input.y <= Y.h * pe &&
+                    u.Input.x >= 208 &&
+                      u.Input.x <= (Y.w + 100) * pe &&
+                      u.Input.y <= Y.h * pe &&
                       ((this.cureButtonHovered = !0),
-                      (_.globalAlpha = 0.5),
-                      _.drawImage(
+                      (C.globalAlpha = 0.5),
+                      C.drawImage(
                         n.imgs.miscSheetWhite,
                         Y.x,
                         Y.y,
@@ -34649,7 +35053,7 @@ var c_hasPressedCtrlRKey = false;
                         Y.w * pe,
                         Y.h * pe,
                       ),
-                      (_.globalAlpha = 1)));
+                      (C.globalAlpha = 1)));
                 }
                 if (
                   ((this.replayPlusHover = !1),
@@ -34657,7 +35061,7 @@ var c_hasPressedCtrlRKey = false;
                   this.game.replayMode && this.replayLength)
                 ) {
                   d = 0.8 * this.game.SCALE_FACTOR_BASE;
-                  ((Y = c.imgCoords.replayBar), (F = c.imgCoords.replayPos));
+                  ((Y = g.imgCoords.replayBar), (F = g.imgCoords.replayPos));
                   var fe = this.replayTimer / this.replayLength;
                   J =
                     " " +
@@ -34669,10 +35073,10 @@ var c_hasPressedCtrlRKey = false;
                         " (" + (0, m.ticks2TimeStr)(this.fastForwardTo) + ")")
                     : ((this.provisionalReplayPos = -1),
                       (this.provisionalReplayPerc = -1),
-                      g.Input.x <= 90 * d &&
-                        g.Input.y >= window.innerHeight - (Y.h + 2) * d &&
+                      u.Input.x <= 90 * d &&
+                        u.Input.y >= window.innerHeight - (Y.h + 2) * d &&
                         ((this.provisionalReplayPerc = Math.min(
-                          Math.max((g.Input.x / d - 5) / 78, 0),
+                          Math.max((u.Input.x / d - 5) / 78, 0),
                           1,
                         )),
                         (this.provisionalReplayPos = Math.floor(
@@ -34683,7 +35087,7 @@ var c_hasPressedCtrlRKey = false;
                           (0, m.ticks2TimeStr)(this.provisionalReplayPos) +
                           ")"))),
                     (0, m.drawText)(
-                      _,
+                      C,
                       J,
                       "white",
                       6 * d,
@@ -34695,7 +35099,7 @@ var c_hasPressedCtrlRKey = false;
                       "rgba(0, 0, 0, 0.5)",
                       10 * d,
                     ),
-                    _.drawImage(
+                    C.drawImage(
                       n.imgs.miscSheet,
                       Y.x,
                       Y.y,
@@ -34706,7 +35110,7 @@ var c_hasPressedCtrlRKey = false;
                       Y.w * d,
                       Y.h * d,
                     ),
-                    _.drawImage(
+                    C.drawImage(
                       n.imgs.miscSheet,
                       F.x,
                       F.y,
@@ -34718,8 +35122,8 @@ var c_hasPressedCtrlRKey = false;
                       F.h * d,
                     ),
                     this.game.fastForward && this.fastForwardTo > 0
-                      ? ((_.globalAlpha = 0.5),
-                        _.drawImage(
+                      ? ((C.globalAlpha = 0.5),
+                        C.drawImage(
                           n.imgs.miscSheet,
                           F.x,
                           F.y,
@@ -34731,10 +35135,10 @@ var c_hasPressedCtrlRKey = false;
                           F.w * d,
                           F.h * d,
                         ),
-                        (_.globalAlpha = 1))
+                        (C.globalAlpha = 1))
                       : this.provisionalReplayPerc >= 0 &&
-                        ((_.globalAlpha = 0.5),
-                        _.drawImage(
+                        ((C.globalAlpha = 0.5),
+                        C.drawImage(
                           n.imgs.miscSheet,
                           F.x,
                           F.y,
@@ -34745,9 +35149,9 @@ var c_hasPressedCtrlRKey = false;
                           F.w * d,
                           F.h * d,
                         ),
-                        (_.globalAlpha = 1)),
-                    (Y = c.imgCoords.replayPlusMinus),
-                    _.drawImage(
+                        (C.globalAlpha = 1)),
+                    (Y = g.imgCoords.replayPlusMinus),
+                    C.drawImage(
                       n.imgs.miscSheet,
                       Y.x,
                       Y.y,
@@ -34758,14 +35162,14 @@ var c_hasPressedCtrlRKey = false;
                       Y.w * d,
                       Y.h * d,
                     ),
-                    g.Input.x >= 90 * d &&
-                      g.Input.x <= (90 + Y.w) * d &&
-                      g.Input.y >= window.innerHeight - (Y.h + 2) * d &&
-                      g.Input.y <= window.innerHeight - (Y.h + 2 - 9) * d &&
+                    u.Input.x >= 90 * d &&
+                      u.Input.x <= (90 + Y.w) * d &&
+                      u.Input.y >= window.innerHeight - (Y.h + 2) * d &&
+                      u.Input.y <= window.innerHeight - (Y.h + 2 - 9) * d &&
                       ((this.replayPlusHover = !0),
-                      (F = c.imgCoords.replayWhite),
-                      (_.globalAlpha = 0.2),
-                      _.drawImage(
+                      (F = g.imgCoords.replayWhite),
+                      (C.globalAlpha = 0.2),
+                      C.drawImage(
                         n.imgs.miscSheet,
                         F.x,
                         F.y,
@@ -34776,14 +35180,14 @@ var c_hasPressedCtrlRKey = false;
                         F.w * d,
                         F.h * d,
                       ),
-                      (_.globalAlpha = 1)),
-                    g.Input.x >= 90 * d &&
-                      g.Input.x <= (90 + Y.w) * d &&
-                      g.Input.y >= window.innerHeight - (Y.h + 2 - 9) * d &&
+                      (C.globalAlpha = 1)),
+                    u.Input.x >= 90 * d &&
+                      u.Input.x <= (90 + Y.w) * d &&
+                      u.Input.y >= window.innerHeight - (Y.h + 2 - 9) * d &&
                       ((this.replayMinusHover = !0),
-                      (F = c.imgCoords.replayWhite),
-                      (_.globalAlpha = 0.2),
-                      _.drawImage(
+                      (F = g.imgCoords.replayWhite),
+                      (C.globalAlpha = 0.2),
+                      C.drawImage(
                         n.imgs.miscSheet,
                         F.x,
                         F.y,
@@ -34794,12 +35198,12 @@ var c_hasPressedCtrlRKey = false;
                         F.w * d,
                         F.h * d,
                       ),
-                      (_.globalAlpha = 1)),
+                      (C.globalAlpha = 1)),
                     (this.gifButtonIsHovered = !1),
                     this.game.fastForward ||
                       (this.gifProcessing
                         ? (0, m.drawText)(
-                            _,
+                            C,
                             " gif is being processed ...",
                             "white",
                             6 * d,
@@ -34812,9 +35216,9 @@ var c_hasPressedCtrlRKey = false;
                             10 * d,
                           )
                         : ((Y = this.recordGIF
-                            ? c.imgCoords.stopGif
-                            : c.imgCoords.startGif),
-                          _.drawImage(
+                            ? g.imgCoords.stopGif
+                            : g.imgCoords.startGif),
+                          C.drawImage(
                             n.imgs.miscSheet,
                             Y.x,
                             Y.y,
@@ -34825,13 +35229,13 @@ var c_hasPressedCtrlRKey = false;
                             Y.w * d,
                             Y.h * d,
                           ),
-                          g.Input.x <= (Y.w + 2) * d &&
-                            g.Input.y >= window.innerHeight - (Y.h + 34) * d &&
-                            g.Input.y <= window.innerHeight - 34 * d &&
+                          u.Input.x <= (Y.w + 2) * d &&
+                            u.Input.y >= window.innerHeight - (Y.h + 34) * d &&
+                            u.Input.y <= window.innerHeight - 34 * d &&
                             ((this.gifButtonIsHovered = !0),
-                            (Y = c.imgCoords.whiteGif),
-                            (_.globalAlpha = 0.2),
-                            _.drawImage(
+                            (Y = g.imgCoords.whiteGif),
+                            (C.globalAlpha = 0.2),
+                            C.drawImage(
                               n.imgs.miscSheet,
                               Y.x,
                               Y.y,
@@ -34842,10 +35246,10 @@ var c_hasPressedCtrlRKey = false;
                               Y.w * d,
                               Y.h * d,
                             ),
-                            (_.globalAlpha = 1)),
+                            (C.globalAlpha = 1)),
                           this.recordGIF &&
                             (0, m.drawText)(
-                              _,
+                              C,
                               " recording ...",
                               "white",
                               6 * d,
@@ -34861,7 +35265,7 @@ var c_hasPressedCtrlRKey = false;
                 if (this.ladderEndAt > 0) {
                   he = (Date.now() - this.ladderEndAt) / 1e3;
                   var xe = Math.min(20.8 * he, 500),
-                    we = _.createLinearGradient(
+                    we = C.createLinearGradient(
                       0,
                       0.2 * window.innerHeight,
                       0,
@@ -34871,8 +35275,8 @@ var c_hasPressedCtrlRKey = false;
                     we.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
                     we.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
                     we.addColorStop(1, "rgba(0, 0, 0, 0)"),
-                    (_.fillStyle = we),
-                    _.fillRect(
+                    (C.fillStyle = we),
+                    C.fillRect(
                       0,
                       0.5 * window.innerHeight -
                         15 * this.game.SCALE_FACTOR_BASE * xe,
@@ -34895,7 +35299,7 @@ var c_hasPressedCtrlRKey = false;
                         0.6 * Math.min(1, 2 * he) +
                         ")"),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.ladderEndMsg,
                       G,
                       11 * this.game.SCALE_FACTOR_BASE,
@@ -34906,7 +35310,7 @@ var c_hasPressedCtrlRKey = false;
                       "center",
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.ladderMsgArr[0],
                       "rgba(255, 255, 255, " + Math.min(1, 2 * he) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
@@ -34918,7 +35322,7 @@ var c_hasPressedCtrlRKey = false;
                       "right",
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.ladderMsgArr[2],
                       "rgba(255, 255, 100, " + Math.min(1, 2 * he) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
@@ -34930,7 +35334,7 @@ var c_hasPressedCtrlRKey = false;
                       "right",
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       ":",
                       "rgba(255, 255, 255, " + Math.min(1, 2 * he) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
@@ -34941,7 +35345,7 @@ var c_hasPressedCtrlRKey = false;
                       "center",
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.ladderMsgArr[1],
                       "rgba(255, 255, 255, " + Math.min(1, 2 * he) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
@@ -34952,7 +35356,7 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.ladderMsgArr[3],
                       "rgba(255, 255, 100, " + Math.min(1, 2 * he) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
@@ -34964,7 +35368,7 @@ var c_hasPressedCtrlRKey = false;
                     ),
                     this.ladderMsgArr[4] &&
                       (0, m.drawText)(
-                        _,
+                        C,
                         this.ladderMsgArr[4],
                         ve,
                         3.5 * this.game.SCALE_FACTOR_BASE,
@@ -34976,13 +35380,13 @@ var c_hasPressedCtrlRKey = false;
                       ));
                   var Se = this.game.SCALE_FACTOR_BASE,
                     be = 0.4 * this.game.SCALE_FACTOR_BASE;
-                  _.fillStyle = "white";
+                  C.fillStyle = "white";
                   Y =
                     "You lose!" === this.ladderEndMsg
-                      ? c.imgCoords.light_red
-                      : c.imgCoords.light_green;
+                      ? g.imgCoords.light_red
+                      : g.imgCoords.light_green;
                   for (var _e = 0.5 * window.innerWidth; _e > 0; _e -= 7 * Se) {
-                    _.globalAlpha = Math.max(
+                    C.globalAlpha = Math.max(
                       1 -
                         5 *
                           Math.abs(
@@ -35004,7 +35408,7 @@ var c_hasPressedCtrlRKey = false;
                       ) *
                       Se *
                       2;
-                    (_.drawImage(
+                    (C.drawImage(
                       n.imgs.miscSheet,
                       Y.x,
                       Y.y,
@@ -35015,7 +35419,7 @@ var c_hasPressedCtrlRKey = false;
                       Y.w * be,
                       Y.h * be,
                     ),
-                      _.drawImage(
+                      C.drawImage(
                         n.imgs.miscSheet,
                         Y.x,
                         Y.y,
@@ -35026,20 +35430,20 @@ var c_hasPressedCtrlRKey = false;
                         Y.w * be,
                         Y.h * be,
                       ),
-                      _.fillRect(
+                      C.fillRect(
                         _e - Se,
                         0.5 * window.innerHeight - Ce,
                         2 * Se,
                         2 * Ce,
                       ),
-                      _.fillRect(
+                      C.fillRect(
                         window.innerWidth - _e - Se,
                         0.5 * window.innerHeight - Ce,
                         2 * Se,
                         2 * Ce,
                       ));
                   }
-                  _.globalAlpha = 1;
+                  C.globalAlpha = 1;
                 }
                 if (
                   this.game.type.lives &&
@@ -35052,8 +35456,8 @@ var c_hasPressedCtrlRKey = false;
                       Math.floor(this.game.ticksCounter / 20)
                     ])
                   ) {
-                    ((_.fillStyle = "rgba(0, 0, 0, 0.5)"),
-                      _.fillRect(
+                    ((C.fillStyle = "rgba(0, 0, 0, 0.5)"),
+                      C.fillRect(
                         0,
                         0.5 * window.innerHeight -
                           20 * this.game.SCALE_FACTOR_BASE,
@@ -35067,7 +35471,7 @@ var c_hasPressedCtrlRKey = false;
                       (1 - 0.3 * (he = (this.game.ticksCounter / 20) % 1)) +
                       ")";
                     (0, m.drawText)(
-                      _,
+                      C,
                       J,
                       G,
                       this.game.SCALE_FACTOR_BASE * (11 + 4 * he),
@@ -35080,9 +35484,9 @@ var c_hasPressedCtrlRKey = false;
                   } else {
                     he = 1 - (this.game.ticksCounter % 20) / 20;
                     ((Ie = Math.max(0.5 * he, 0)),
-                      (_.fillStyle =
+                      (C.fillStyle =
                         "rgba(0, 0, 0, " + Math.max(0.5 * he, 0) + ")"),
-                      _.fillRect(
+                      C.fillRect(
                         0,
                         0.5 * window.innerHeight -
                           20 * this.game.SCALE_FACTOR_BASE,
@@ -35093,7 +35497,7 @@ var c_hasPressedCtrlRKey = false;
                   }
                   this.game.players.length >= 2 &&
                     ((0, m.drawText)(
-                      _,
+                      C,
                       this.game.players[0].name,
                       "rgba(255, 255, 255, " + Ie + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
@@ -35104,7 +35508,7 @@ var c_hasPressedCtrlRKey = false;
                       "right",
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       "vs",
                       "rgba(255, 255, 100, " + Ie + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
@@ -35115,7 +35519,7 @@ var c_hasPressedCtrlRKey = false;
                       "center",
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       this.game.players[1].name,
                       "rgba(255, 255, 255, " + Ie + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
@@ -35125,7 +35529,7 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                     ),
                     (0, m.drawText)(
-                      _,
+                      C,
                       "First player who dies 5 times, loses.",
                       "rgba(180, 180, 180, " + Ie + ")",
                       3 * this.game.SCALE_FACTOR_BASE,
@@ -35139,14 +35543,14 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.startGIF = function () {
                 var e = 700 / window.innerWidth;
-                ((v.width = window.innerWidth * e),
-                  (v.height = window.innerHeight * e),
-                  (S.imageSmoothingEnabled = !1),
+                ((S.width = window.innerWidth * e),
+                  (S.height = window.innerHeight * e),
+                  (b.imageSmoothingEnabled = !1),
                   (this.gif = new d.default({
                     workers: 3,
                     quality: 10,
-                    width: v.width,
-                    height: v.height,
+                    width: S.width,
+                    height: S.height,
                   })),
                   (this.recordGIF = !0));
               }),
@@ -35174,9 +35578,9 @@ var c_hasPressedCtrlRKey = false;
                 this.provisionalReplayPos !== this.replayTimer &&
                   (this.provisionalReplayPos < this.replayTimer &&
                     (0, m.startReplay)(),
-                  (f.root.game.interface_.fastForwardTo =
+                  (x.root.game.interface_.fastForwardTo =
                     this.provisionalReplayPos),
-                  (f.root.game.fastForward = !0),
+                  (x.root.game.fastForward = !0),
                   (m.replaySettings.oldReplayOptionsIndex =
                     m.replaySettings.replayOptionsIndex),
                   (m.replaySettings.replayOptionsIndex =
@@ -35186,7 +35590,7 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.scanMsg = function (e, t, i) {
                 (0, m.drawText)(
-                  _,
+                  C,
                   e,
                   t,
                   0.3 * this.game.FIELD_SIZE_BASE,
@@ -35199,7 +35603,7 @@ var c_hasPressedCtrlRKey = false;
               e
             );
           })();
-        t.Interface_ = k;
+        t.Interface_ = L;
       },
       8287: (e, t, i) => {
         "use strict";
