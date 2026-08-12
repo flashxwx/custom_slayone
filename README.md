@@ -156,6 +156,8 @@ For any support of this project, please contact @**flashqwq** on Discord.
 
 Or, you can just open issue/request of this repo on github, but it might not be found in a short time.
 
+Discord Server For Slay.one 3rd Party Devs: https://discord.com/invite/DV8df6c3dr
+
 # Contributors
 - ARK77
 - Flash
