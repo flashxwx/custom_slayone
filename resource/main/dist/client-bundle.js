@@ -104,8 +104,8 @@ var c_hasPressedCtrlRKey = false;
               F,
               P,
               N,
-              B,
               D,
+              B,
               O,
             ) {
               var R = e.call(this, t, i) || this;
@@ -130,7 +130,7 @@ var c_hasPressedCtrlRKey = false;
                 (R.weaponCooldown = 0),
                 (R._nameCanvasBgColor = ""),
                 (R._nameCanvasAnimationFrame = 0),
-                (R.db_id = D),
+                (R.db_id = B),
                 o || (o = "Player"),
                 (R.name = (0, u.escapeHtml)(o.substr(0, 15))),
                 (R.authLevel = E),
@@ -166,7 +166,7 @@ var c_hasPressedCtrlRKey = false;
                 (R.clanTag = T || ""),
                 R.init(),
                 (R.isFakeCorpse = N),
-                (R.isBoss = !!B),
+                (R.isBoss = !!D),
                 R.hp <= 0 &&
                   ((R.dieAt = t.ticksCounter),
                   (R.finallyRemoveAt = t.ticksCounter + 50)),
@@ -1150,8 +1150,8 @@ var c_hasPressedCtrlRKey = false;
                     F = 1,
                     P = this.isHumanZombie,
                     N = this.lastTickFire,
-                    B = this._hat,
-                    D = this.team,
+                    D = this._hat,
+                    B = this.team,
                     O =
                       !this.dieAt && this.z <= 0
                         ? -(
@@ -1431,7 +1431,7 @@ var c_hasPressedCtrlRKey = false;
                     h.drawImage(o.imgs.shadow, v, S, 32 * d, 32 * d),
                     (h.globalAlpha = 1));
                   var ie = e - this.lastSpawnTick;
-                  if ((1 === D || 2 === D) && !this.isFakeCorpse) {
+                  if ((1 === B || 2 === B) && !this.isFakeCorpse) {
                     var ae =
                         1 === this.team
                           ? y.imgCoords.light_red
@@ -1463,8 +1463,8 @@ var c_hasPressedCtrlRKey = false;
                       var he = le[se];
                       this.updateAndDrawPillar(he, ie);
                     }
-                  var de = 1 === D ? this._game.blueFlag : this._game.redFlag,
-                    me = 1 === D ? y.imgCoords.blueFlag : y.imgCoords.redFlag;
+                  var de = 1 === B ? this._game.blueFlag : this._game.redFlag,
+                    me = 1 === B ? y.imgCoords.blueFlag : y.imgCoords.redFlag;
                   de &&
                     de.carriedBy === this &&
                     h.drawImage(
@@ -1587,12 +1587,12 @@ var c_hasPressedCtrlRKey = false;
                         (h.globalAlpha = 1),
                         (ue = !1),
                         (E = null),
-                        (B = this._originalHat),
+                        (D = this._originalHat),
                         (P = !1),
                         pe <= 5 &&
                           ((h.globalAlpha = (5 - pe) / 5),
                           h.drawImage(
-                            o.legs[B.legs],
+                            o.legs[D.legs],
                             32 * (this._legFrame + 3),
                             256,
                             32,
@@ -1602,7 +1602,7 @@ var c_hasPressedCtrlRKey = false;
                             32 * d,
                             32 * d,
                           ),
-                          B.hatOnly &&
+                          D.hatOnly &&
                             h.drawImage(
                               o.heads[0],
                               512 + 32 * this._legFrame,
@@ -1615,7 +1615,7 @@ var c_hasPressedCtrlRKey = false;
                               32 * d,
                             ),
                           h.drawImage(
-                            o.heads[B.offset],
+                            o.heads[D.offset],
                             512 + 32 * this._legFrame,
                             0,
                             32,
@@ -1653,8 +1653,8 @@ var c_hasPressedCtrlRKey = false;
                         (h.globalAlpha = 1),
                         (ue = pe <= 4),
                         (E = null),
-                        (D = 1),
-                        (B = this._originalHat),
+                        (B = 1),
+                        (D = this._originalHat),
                         (P = !1));
                     } else if (this.lastZombieToHumanTransformation + 40 > e) {
                       pe = Math.max(
@@ -1682,8 +1682,8 @@ var c_hasPressedCtrlRKey = false;
                         (h.globalAlpha = 1),
                         (ue = pe <= 0),
                         (E = null),
-                        (D = 1),
-                        (B = this._originalHat),
+                        (B = 1),
+                        (D = this._originalHat),
                         (P = !1));
                     } else if (this.turnedBossAt + 40 > e) {
                       var fe = this.isHumanZombie
@@ -1890,7 +1890,7 @@ var c_hasPressedCtrlRKey = false;
                               (h.globalAlpha = 1)));
                         } else {
                           var Ce = this.direction + c,
-                            Ie = 0 === B.legs && 2 === D ? 4 : B.legs;
+                            Ie = 0 === D.legs && 2 === B ? 4 : D.legs;
                           ((h.globalAlpha = $ * F),
                             h.drawImage(
                               o.legs[Ie],
@@ -1903,7 +1903,7 @@ var c_hasPressedCtrlRKey = false;
                               32 * d,
                               32 * d,
                             ),
-                            B.hatOnly &&
+                            D.hatOnly &&
                               h.drawImage(
                                 o.heads[0],
                                 512 + 32 * Ce,
@@ -1916,7 +1916,7 @@ var c_hasPressedCtrlRKey = false;
                                 32 * d,
                               ),
                             h.drawImage(
-                              o.heads[B.offset],
+                              o.heads[D.offset],
                               512 + 32 * Ce,
                               0,
                               32,
@@ -1940,7 +1940,7 @@ var c_hasPressedCtrlRKey = false;
                                 32 * d,
                                 32 * d,
                               ),
-                              B.hatOnly &&
+                              D.hatOnly &&
                                 h.drawImage(
                                   o.headsBlack[0],
                                   512 + 32 * Ce,
@@ -1953,7 +1953,7 @@ var c_hasPressedCtrlRKey = false;
                                   32 * d,
                                 ),
                               h.drawImage(
-                                o.headsBlack[B.offset],
+                                o.headsBlack[D.offset],
                                 512 + 32 * Ce,
                                 0,
                                 32,
@@ -1977,7 +1977,7 @@ var c_hasPressedCtrlRKey = false;
                                 32 * d,
                                 32 * d,
                               ),
-                              B.hatOnly &&
+                              D.hatOnly &&
                                 h.drawImage(
                                   o.headsWhite[0],
                                   512 + 32 * Ce,
@@ -1990,7 +1990,7 @@ var c_hasPressedCtrlRKey = false;
                                   32 * d,
                                 ),
                               h.drawImage(
-                                o.headsWhite[B.offset],
+                                o.headsWhite[D.offset],
                                 512 + 32 * Ce,
                                 0,
                                 32,
@@ -2010,7 +2010,7 @@ var c_hasPressedCtrlRKey = false;
                         var Me = this._game.ticksCounter - N,
                           Te = Me < 4 ? 0 : 256;
                         (h.drawImage(
-                          o.legs[B.legs],
+                          o.legs[D.legs],
                           32 * c,
                           32 * K,
                           32,
@@ -2023,7 +2023,7 @@ var c_hasPressedCtrlRKey = false;
                           A > 0 &&
                             ((h.globalAlpha = A),
                             h.drawImage(
-                              o.legsWhite[B.legs],
+                              o.legsWhite[D.legs],
                               32 * c,
                               32 * K,
                               32,
@@ -2048,7 +2048,7 @@ var c_hasPressedCtrlRKey = false;
                                 45 * d,
                               ))
                             : (h.drawImage(
-                                o.heads[B.offset + 1],
+                                o.heads[D.offset + 1],
                                 32 * V + Te,
                                 0,
                                 32,
@@ -2061,7 +2061,7 @@ var c_hasPressedCtrlRKey = false;
                               A > 0 &&
                                 ((h.globalAlpha = A),
                                 h.drawImage(
-                                  o.headsWhite[B.offset + 1],
+                                  o.headsWhite[D.offset + 1],
                                   32 * V + Te,
                                   0,
                                   32,
@@ -2073,7 +2073,7 @@ var c_hasPressedCtrlRKey = false;
                                 ),
                                 (h.globalAlpha = 1))));
                       } else {
-                        Ie = 0 === B.legs && 2 === D ? 4 : B.legs;
+                        Ie = 0 === D.legs && 2 === B ? 4 : D.legs;
                         if (
                           ((h.globalAlpha = F),
                           h.drawImage(
@@ -2135,7 +2135,7 @@ var c_hasPressedCtrlRKey = false;
                             ),
                             (h.globalAlpha = 1));
                         } else
-                          (B.hatOnly &&
+                          (D.hatOnly &&
                             ((h.globalAlpha = F),
                             h.drawImage(
                               o.heads[0],
@@ -2179,7 +2179,7 @@ var c_hasPressedCtrlRKey = false;
                               (h.globalAlpha = 1))),
                             (h.globalAlpha = F),
                             h.drawImage(
-                              o.heads[B.offset],
+                              o.heads[D.offset],
                               32 * V + (ce ? 256 : 0),
                               0,
                               32,
@@ -2193,7 +2193,7 @@ var c_hasPressedCtrlRKey = false;
                             this.flameDeath &&
                               ((h.globalAlpha = L * F),
                               h.drawImage(
-                                o.headsBlack[B.offset],
+                                o.headsBlack[D.offset],
                                 32 * V + (ce ? 256 : 0),
                                 0,
                                 32,
@@ -2536,10 +2536,10 @@ var c_hasPressedCtrlRKey = false;
                         this.lastShieldHit <= e && this.lastShieldHit + 10 >= e)
                       ) {
                         Ae = 1;
-                        var Be = 1.1 * d;
+                        var De = 1.1 * d;
                         ((Ne =
                           Math.min(Math.max(e - this.lastShieldHit, 0), 10) /
-                          10) < 0.1 && ((Ae = 10 * Ne), (Be = d + d * Ne * 1)),
+                          10) < 0.1 && ((Ae = 10 * Ne), (De = d + d * Ne * 1)),
                           Ne > 0.5 && (Ae = 0.66 * (1 - Ne)),
                           (Fe = y.imgCoords.refShield3),
                           (h.globalAlpha = Ae),
@@ -2560,19 +2560,19 @@ var c_hasPressedCtrlRKey = false;
                             Fe.y,
                             Fe.w,
                             Fe.h,
-                            g - (Fe.w / 2) * Be,
-                            p - x - (Fe.h / 2 + 6) * Be,
-                            Fe.w * Be,
-                            Fe.h * Be,
+                            g - (Fe.w / 2) * De,
+                            p - x - (Fe.h / 2 + 6) * De,
+                            Fe.w * De,
+                            Fe.h * De,
                           ),
                           (h.globalAlpha = 1));
                       }
                     }
                     if (this.zombieSense && !this.isFakeCorpse && this.hp > 0) {
-                      var De = (e % 16) / 15,
+                      var Be = (e % 16) / 15,
                         Oe = y.imgCoords.zombieSenseCircle,
-                        Re = d * (0.25 + 1.5 * De);
-                      ((h.globalAlpha = Math.max(0.8 - De, 0.01)),
+                        Re = d * (0.25 + 1.5 * Be);
+                      ((h.globalAlpha = Math.max(0.8 - Be, 0.01)),
                         h.drawImage(
                           o.imgs.miscSheet,
                           Oe.x,
@@ -5096,27 +5096,29 @@ var c_hasPressedCtrlRKey = false;
           }
           return a <= 100 * o.CONST.MAX_ABILITY_POINTS ? i : s(t.abilities);
         }
-        ((t.getStrongAIAbilityObj = function (e) {
-          for (var t = [], i = 0; i < e.length; i++) {
-            var a = e[i],
-              n = { lvl: 0 };
+        ((t.getStrongAIAbilityObj = function (e, t) {
+          for (var i = [], a = 0; a < e.length; a++) {
+            var n = e[a],
+              o = { lvl: 0 };
             if (
-              (t.push(n),
-              "movementSpeed" === a.field
-                ? (n.lvl = 7)
-                : "lifesteal" === a.field
-                  ? (n.lvl = 2)
-                  : "hpRegeneration" === a.field
-                    ? (n.lvl = 3)
-                    : "energyRegeneration" === a.field && (n.lvl = 1),
-              void 0 !== a.levelUpFields)
+              (i.push(o),
+              "maxHP" === n.field
+                ? (o.lvl = t ? 0 : 5)
+                : "movementSpeed" === n.field
+                  ? (o.lvl = t ? 7 : 4)
+                  : "lifesteal" === n.field
+                    ? (o.lvl = 2)
+                    : "hpRegeneration" === n.field
+                      ? (o.lvl = t ? 3 : 2)
+                      : "energyRegeneration" === n.field && (o.lvl = t ? 1 : 0),
+              void 0 !== n.levelUpFields)
             ) {
-              n.attributes = [];
-              for (var o = 0; o < a.levelUpFields.length; o++)
-                n.attributes.push(0);
+              o.attributes = [];
+              for (var r = 0; r < n.levelUpFields.length; r++)
+                o.attributes.push(0);
             }
           }
-          return ((t[m[Math.floor(Math.random() * m.length)].id].lvl = 1), t);
+          return ((i[m[Math.floor(Math.random() * m.length)].id].lvl = 1), i);
         }),
           (t.getDefaultZombieAbilityObj = function (e, t) {
             for (var i = [], a = 0, n = t; a < n.length; a++) {
@@ -8855,8 +8857,8 @@ var c_hasPressedCtrlRKey = false;
           F = document.getElementById("resourceBar"),
           P = document.getElementById("unlockDivInner"),
           N = document.getElementById("menuButtonContainer"),
-          B = document.getElementById("friendsContainer"),
-          D = document.getElementById("levelUp"),
+          D = document.getElementById("friendsContainer"),
+          B = document.getElementById("levelUp"),
           O = document.getElementById("openChest"),
           R = document.getElementById("ladderDiv"),
           H = document.getElementById("result"),
@@ -8883,9 +8885,9 @@ var c_hasPressedCtrlRKey = false;
             (E.style.transform = "scale(".concat(t / 800, ")")),
             (P.style.transform = "scale(".concat(t / 600, ")")),
             (N.style.transform = "scale(".concat(t / 1e3, ")")),
-            (B.style.transform = "scale(".concat(t / 700, ")")),
+            (D.style.transform = "scale(".concat(t / 700, ")")),
             (O.style.transform = "scale(".concat(t / 600, ")")),
-            (D.style.transform = "translate(-50%, -50%) scale(".concat(
+            (B.style.transform = "translate(-50%, -50%) scale(".concat(
               t / 600,
               ")",
             )),
@@ -10081,13 +10083,13 @@ var c_hasPressedCtrlRKey = false;
                     } else {
                       var N = this.direction;
                       N >= 1 && (N = 1);
-                      var B = Math.floor(
+                      var D = Math.floor(
                         Math.min(Math.max(0.25 * (e - this.dieAt), 0), 7),
                       );
                       ((l.globalAlpha = E),
                         l.drawImage(
                           o.imgs.zombieDeath,
-                          32 * B,
+                          32 * D,
                           32 * N,
                           32,
                           32,
@@ -10101,7 +10103,7 @@ var c_hasPressedCtrlRKey = false;
                           ((l.globalAlpha = v * E),
                           l.drawImage(
                             o.imgs.zombieDeathBlack,
-                            32 * B,
+                            32 * D,
                             32 * N,
                             32,
                             32,
@@ -10116,8 +10118,8 @@ var c_hasPressedCtrlRKey = false;
                     this.playSpawnAnimation &&
                     this.tickOfSpawn + 30 >= e
                   ) {
-                    var D = this._game.ticksCounter - this.tickOfSpawn,
-                      O = Math.floor(Math.min((D / 30) * 8, 7)),
+                    var B = this._game.ticksCounter - this.tickOfSpawn,
+                      O = Math.floor(Math.min((B / 30) * 8, 7)),
                       R = this.isRangedZombie
                         ? c.imgCoords.zombieSpawn2
                         : c.imgCoords.zombieSpawn1;
@@ -12036,7 +12038,7 @@ var c_hasPressedCtrlRKey = false;
               (S.classList.add("disabled"), (N.innerText = ""));
               for (var a = 0; a < 36; a++) {
                 var n = document.createElement("span");
-                ((n.innerText = "."), N.appendChild(n), D());
+                ((n.innerText = "."), N.appendChild(n), B());
               }
               return (
                 o.Network.send("legacyLogin$" + e + "$" + t + "$" + i),
@@ -12098,20 +12100,20 @@ var c_hasPressedCtrlRKey = false;
               return (0, a.validateMail)(e)
                 ? (n.api.recoverAccount(e, t),
                   (C.innerText = s.lang.get("account.recover.processing")),
-                  B(),
+                  D(),
                   null)
                 : ((C.innerText = s.lang.get("account.recover.email.invalid")),
                   null);
             }
           },
         };
-        var B = function () {
+        var D = function () {
           if (C.innerText.includes(s.lang.get("account.recover.processing"))) {
             var e = (C.innerText.match(/\./g) || []).length / 2;
             e = (e + 1) % 4;
             for (var t = "", i = 0; i < e; i++) t += ".";
             ((C.innerText = t + s.lang.get("account.recover.processing") + t),
-              setTimeout(B, 200));
+              setTimeout(D, 200));
           }
         };
         ((d.onkeydown = m.onkeydown =
@@ -12137,7 +12139,7 @@ var c_hasPressedCtrlRKey = false;
           (k.onclick = t.loginScreen.showRecover),
           (document.getElementById("loginCloseBtn").onclick =
             t.loginScreen.hide));
-        var D = function () {
+        var B = function () {
           var e = N.childNodes;
           if (!(e.length < 5 || null === N.offsetParent)) {
             for (var t = Date.now(), i = 0; i < e.length; i++)
@@ -12145,7 +12147,7 @@ var c_hasPressedCtrlRKey = false;
                 0.5 * Math.sin(0.004 * -t + 0.33 * i) + 0.5,
                 2,
               ).toString();
-            setTimeout(D, 100);
+            setTimeout(B, 100);
           }
         };
       },
@@ -23298,11 +23300,11 @@ var c_hasPressedCtrlRKey = false;
           F = document.getElementById("clanMainContent"),
           P = document.getElementById("myClan"),
           N = document.getElementById("myClan_memberList"),
-          B = {},
-          D = "";
+          D = {},
+          B = "";
         ((t.clanMain = {
           show0: function () {
-            t.clanMain.show(D);
+            t.clanMain.show(B);
           },
           show: function (e) {
             n.playerData.clanTag || e
@@ -23311,7 +23313,7 @@ var c_hasPressedCtrlRKey = false;
           },
           show1: function (e) {
             void 0 !== e &&
-              ((D = e.tag),
+              ((B = e.tag),
               (w.style.display = "none"),
               (P.style.display = "none"),
               (G.style.display = "none"),
@@ -23328,7 +23330,7 @@ var c_hasPressedCtrlRKey = false;
                   ? "visible"
                   : "hidden"),
               (I.style.display = n.playerData.clanTag == e.tag ? "" : "none"),
-              (M.style.display = n.playerData.clanTag || B[e.id] ? "none" : ""),
+              (M.style.display = n.playerData.clanTag || D[e.id] ? "none" : ""),
               (A.style.visibility =
                 n.playerData.clanTag === e.tag &&
                 n.playerData.clanRole >= a.AUTH_LEVEL.MOD
@@ -23336,7 +23338,7 @@ var c_hasPressedCtrlRKey = false;
                   : "hidden"));
           },
           showMembers: function () {
-            s.Network.send("getMemberList$" + D);
+            s.Network.send("getMemberList$" + B);
           },
           showApps: function () {
             s.Network.send("getClanAppsOfPlayer");
@@ -23361,7 +23363,7 @@ var c_hasPressedCtrlRKey = false;
                 ((c.innerText = o.role),
                 (c.className = "role"),
                 l.appendChild(c),
-                D === n.playerData.clanTag &&
+                B === n.playerData.clanTag &&
                   o.id !== n.playerData.db_id &&
                   n.playerData.clanRole >= o.roleNumber &&
                   n.playerData.clanRole >= a.AUTH_LEVEL.MOD)
@@ -23378,7 +23380,7 @@ var c_hasPressedCtrlRKey = false;
                   s.appendChild(g));
               }
               if (
-                D === n.playerData.clanTag &&
+                B === n.playerData.clanTag &&
                 o.id !== n.playerData.db_id &&
                 n.playerData.clanRole >= o.roleNumber &&
                 o.roleNumber >= a.AUTH_LEVEL.MOD
@@ -23394,7 +23396,7 @@ var c_hasPressedCtrlRKey = false;
                   s.appendChild(u));
               }
               if (
-                D === n.playerData.clanTag &&
+                B === n.playerData.clanTag &&
                 o.id !== n.playerData.db_id &&
                 n.playerData.clanRole > o.roleNumber &&
                 o.roleNumber < a.AUTH_LEVEL.ADMIN
@@ -23739,6 +23741,7 @@ var c_hasPressedCtrlRKey = false;
                 else if ("rl2" === arr[0])
                   (root_1.root.game.reload2(arr),
                     root_1.root.game.replayFile.push(msg));
+                else if ("bdbg" === arr[0]) root_1.root.game.botDebug(arr);
                 else if ("rsp" === arr[0])
                   (root_1.root.game.playerRespawns(arr),
                     root_1.root.game.replayFile.push(msg));
@@ -27121,8 +27124,8 @@ var c_hasPressedCtrlRKey = false;
                         (c.globalAlpha = 1)),
                       this.animation.muzzleFlash && this.lastTickFire >= e - 2)
                     ) {
-                      var B = this.animation.muzzleFlash,
-                        D = Math.floor(0.5 * e) % 2;
+                      var D = this.animation.muzzleFlash,
+                        B = Math.floor(0.5 * e) % 2;
                       ((o =
                         (this.x - this.game.cameraX) * this.game.FIELD_SIZE -
                         22 * I),
@@ -27132,8 +27135,8 @@ var c_hasPressedCtrlRKey = false;
                           22 * I),
                         c.drawImage(
                           u.imgs.miscSheet,
-                          B.x + 44 * this.direction,
-                          B.y + 44 * D,
+                          D.x + 44 * this.direction,
+                          D.y + 44 * B,
                           44,
                           44,
                           o - 0 * I + L,
@@ -27531,7 +27534,7 @@ var c_hasPressedCtrlRKey = false;
           F = null,
           P = null,
           N = null,
-          B = function (e, t) {
+          D = function (e, t) {
             null === A || A.readyState !== WebSocket.OPEN
               ? t &&
                 R(function () {
@@ -27539,8 +27542,8 @@ var c_hasPressedCtrlRKey = false;
                 })
               : A.send(JSON.stringify(e));
           },
-          D = function () {
-            B({ gcHistory: { channel: "global", limit: 25 } });
+          B = function () {
+            D({ gcHistory: { channel: "global", limit: 25 } });
           },
           O = function (e) {
             var t,
@@ -27641,12 +27644,12 @@ var c_hasPressedCtrlRKey = false;
           var t = e.detail;
           if (null !== t && "object" == typeof t) {
             var i = { gc: t.message, gcChannel: t.channel };
-            B(i);
+            D(i);
           }
         }),
           window.addEventListener("globalChatHistoryRequest", function (e) {
             var t = e.detail;
-            B({ gcHistory: t }, !0);
+            D({ gcHistory: t }, !0);
           }),
           window.addEventListener("globalChatModerate", function (e) {
             var t = e.detail;
@@ -27654,7 +27657,7 @@ var c_hasPressedCtrlRKey = false;
               var i = {
                 gcMod: { channel: t.channel, id: t.id, action: t.action },
               };
-              B(i);
+              D(i);
             }
           }),
           window.addEventListener("friendChatSend", function (e) {
@@ -27668,7 +27671,7 @@ var c_hasPressedCtrlRKey = false;
               var i = (t.message || "").trim();
               if (0 !== i.length) {
                 var a = { m: i, p: t.id };
-                B(a);
+                D(a);
               }
             }
           }),
@@ -27718,7 +27721,7 @@ var c_hasPressedCtrlRKey = false;
                 t.socialService.connectGuest());
             },
             connectGuest: function () {
-              R(D);
+              R(B);
             },
             login: function (e, t, i) {
               (window.dispatchEvent(new CustomEvent("chatAuthReset")),
@@ -28268,8 +28271,8 @@ var c_hasPressedCtrlRKey = false;
           F = i(4829),
           P = i(9319),
           N = i(7028),
-          B = i(7899),
-          D = i(217),
+          D = i(7899),
+          B = i(217),
           O = i(6507),
           R = i(1799),
           H = i(5572),
@@ -28399,6 +28402,14 @@ var c_hasPressedCtrlRKey = false;
                 (this.playingPlayerID = -1),
                 (this.playingPlayerAmmo = []),
                 (this.playingPlayerClips = []),
+                (this.botDebugName = ""),
+                (this.botDebugWeapon = -1),
+                (this.botDebugHP = 0),
+                (this.botDebugArmor = 0),
+                (this.botDebugState = ""),
+                (this.botDebugClips = []),
+                (this.botDebugAmmo = []),
+                (this.botDebugAt = 0),
                 (this.lastTimeMousePosSent = -999),
                 (this.noShootUntil = -999),
                 (this.lastPickUp = -999),
@@ -29519,6 +29530,29 @@ var c_hasPressedCtrlRKey = false;
                 }
                 return !0;
               }),
+              (e.prototype.botDebug = function (e) {
+                ((this.botDebugName = e[1]),
+                  (this.botDebugWeapon = parseInt(e[2])),
+                  (this.botDebugHP = parseInt(e[3])),
+                  (this.botDebugArmor = parseInt(e[4])),
+                  (this.botDebugState = e[5] || ""),
+                  (this.botDebugAt = Date.now()),
+                  (this.botDebugClips = []),
+                  (this.botDebugAmmo = []));
+                for (
+                  var t = 0, i = String(e[6] || "").split(";");
+                  t < i.length;
+                  t++
+                ) {
+                  var a = i[t];
+                  if (a) {
+                    var n = a.split(","),
+                      o = parseInt(n[0]);
+                    ((this.botDebugClips[o] = parseInt(n[1])),
+                      (this.botDebugAmmo[o] = parseInt(n[2])));
+                  }
+                }
+              }),
               (e.prototype.reload2 = function (e) {
                 ((this.playingPlayerAmmo[e[1]] = parseInt(e[3])),
                   (this.playingPlayerClips[e[1]] = parseInt(e[2])));
@@ -30094,7 +30128,7 @@ var c_hasPressedCtrlRKey = false;
                   (a <= 26 &&
                     ((F = 2), 4 === L ? (F = 100) : L >= 6 && (F = 200)),
                     this.players.push(
-                      new D.Player(
+                      new B.Player(
                         this,
                         parseInt(C[S]),
                         b,
@@ -30164,7 +30198,7 @@ var c_hasPressedCtrlRKey = false;
                     Y = parseInt(z[0]),
                     $ = z.length > 1 ? parseInt(z[1]) : void 0;
                   this.objects.push(
-                    new B.Object_(
+                    new D.Object_(
                       this,
                       parseInt(G[S]),
                       this.getPlayerFromID(parseInt(G[S + 4])),
@@ -31285,7 +31319,7 @@ var c_hasPressedCtrlRKey = false;
                   a = n.abilities[parseInt(e[4])];
                 if (
                   (this.objects.push(
-                    new B.Object_(
+                    new D.Object_(
                       this,
                       parseInt(e[1]),
                       i,
@@ -31526,7 +31560,7 @@ var c_hasPressedCtrlRKey = false;
                   r = parseInt(e[18]);
                 e.length < 19 &&
                   ((r = 2), 4 === n ? (r = 100) : n >= 6 && (r = 200));
-                var s = new D.Player(
+                var s = new B.Player(
                   this,
                   parseInt(e[1]),
                   t,
@@ -31735,7 +31769,7 @@ var c_hasPressedCtrlRKey = false;
                     t && t instanceof te.Zombie && t.performHit(a),
                     t &&
                       (t instanceof te.Zombie ||
-                        (t instanceof D.Player && t.isHumanZombie)) &&
+                        (t instanceof B.Player && t.isHumanZombie)) &&
                       W.Sound.playSound("mech_impact", a.x, a.y, 0.7),
                     a.hp <= 0 && (a.die(), this.objects.splice(i, 1)),
                     "1" === e[3])
@@ -31755,7 +31789,7 @@ var c_hasPressedCtrlRKey = false;
                       null === i ||
                       !(
                         i instanceof te.Zombie ||
-                        (i instanceof D.Player && i.isHumanZombie)
+                        (i instanceof B.Player && i.isHumanZombie)
                       ) ||
                       i.performHit(t),
                     t.hpUpdate(
@@ -31795,7 +31829,7 @@ var c_hasPressedCtrlRKey = false;
                       ),
                     parseFloat(e[8]) > 0 &&
                       i &&
-                      i instanceof D.Player &&
+                      i instanceof B.Player &&
                       i.performLifesteal(parseFloat(e[8]))),
                   "true" === e[4])
                 )
@@ -31832,7 +31866,7 @@ var c_hasPressedCtrlRKey = false;
               ) {
                 u &&
                   (new G.Splash(this, e.x, e.y, E.imgCoords.splash, 2),
-                  e instanceof D.Player && (e.noDraw = !0));
+                  e instanceof B.Player && (e.noDraw = !0));
                 var T = this.getGrenadeOrProjectileById(i),
                   k = null;
                 if (v && v >= 0)
@@ -31860,7 +31894,7 @@ var c_hasPressedCtrlRKey = false;
                   if (e instanceof te.Zombie) {
                     if (t instanceof te.Zombie) return;
                     return (
-                      t instanceof D.Player &&
+                      t instanceof B.Player &&
                         (t.setSouls(d, e.x, e.y),
                         t === this.playingPlayer &&
                           e.masterId !== f.playerData.db_id &&
@@ -31878,14 +31912,14 @@ var c_hasPressedCtrlRKey = false;
                   (void 0 !== t.masterId &&
                     (t = this.getHumanoidFromID(t.masterId)),
                     this.type.ingameElo &&
-                      (t instanceof D.Player && (A = t.setElo(c, e.x, e.y)),
-                      e instanceof D.Player && (F = e.setElo(g, e.x, e.y))));
-                  var P = e instanceof D.Player ? e.souls : 0;
-                  (t instanceof D.Player && t.setKills(a),
-                    e instanceof D.Player && e.setDeaths(r),
-                    t instanceof D.Player && t.setSouls(d, e.x, e.y),
-                    e instanceof D.Player && e.setSouls(m));
-                  var N = P - (e instanceof D.Player ? e.souls : 0);
+                      (t instanceof B.Player && (A = t.setElo(c, e.x, e.y)),
+                      e instanceof B.Player && (F = e.setElo(g, e.x, e.y))));
+                  var P = e instanceof B.Player ? e.souls : 0;
+                  (t instanceof B.Player && t.setKills(a),
+                    e instanceof B.Player && e.setDeaths(r),
+                    t instanceof B.Player && t.setSouls(d, e.x, e.y),
+                    e instanceof B.Player && e.setSouls(m));
+                  var N = P - (e instanceof B.Player ? e.souls : 0);
                   if ((this.refreshUIs(), e === t))
                     e === this.playingPlayer &&
                       (this.interface_.setMainKillMsg(
@@ -31938,7 +31972,7 @@ var c_hasPressedCtrlRKey = false;
                               "#FF3232",
                               "textInRed",
                             )
-                          : t instanceof D.Player &&
+                          : t instanceof B.Player &&
                             this.interface_.setMainKillMsg(
                               ee.lang.get("game.msg.killed_by_player", {
                                 playerName: t.name,
@@ -31954,8 +31988,8 @@ var c_hasPressedCtrlRKey = false;
                               "textInRed",
                             ))
                       : t === this.playingPlayer &&
-                        t instanceof D.Player &&
-                        e instanceof D.Player &&
+                        t instanceof B.Player &&
+                        e instanceof B.Player &&
                         (0 !== t.team && t.team === e.team
                           ? (this.interface_.setMainKillMsg(
                               ee.lang.get("game.msg.killed_teammate", {
@@ -32002,7 +32036,7 @@ var c_hasPressedCtrlRKey = false;
                           "textInBlue",
                           !0,
                         ))
-                      : t instanceof D.Player &&
+                      : t instanceof B.Player &&
                         (W.Sound.playSound("frag1", void 0, void 0, 0.5),
                         this.interface_.setMainKillMsg(
                           ee.lang.get(o.killStreaks[l].msg_start_others, {
@@ -32012,7 +32046,7 @@ var c_hasPressedCtrlRKey = false;
                           "textInBlue",
                           !0,
                         ));
-                    var B = (function (e) {
+                    var D = (function (e) {
                       var t = 999;
                       for (; e > 0; ) {
                         if (o.killStreaks[e]) return o.killStreaks[e];
@@ -32020,9 +32054,9 @@ var c_hasPressedCtrlRKey = false;
                       }
                       return null;
                     })(h);
-                    B &&
-                      e instanceof D.Player &&
-                      t instanceof D.Player &&
+                    D &&
+                      e instanceof B.Player &&
+                      t instanceof B.Player &&
                       (t === this.playingPlayer
                         ? this.interface_.setMainKillMsg(
                             ee.lang.get(o.killStreaks[l].msg_ended_self, {
@@ -32030,7 +32064,7 @@ var c_hasPressedCtrlRKey = false;
                             }) +
                               (f.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
                                 ? " (+ " +
-                                  B.xp +
+                                  D.xp +
                                   " " +
                                   ee.lang.get("config.resource.exp.name") +
                                   ")"
@@ -32049,9 +32083,9 @@ var c_hasPressedCtrlRKey = false;
                             !0,
                           ));
                   }
-                  t instanceof D.Player &&
+                  t instanceof B.Player &&
                     e &&
-                    e instanceof D.Player &&
+                    e instanceof B.Player &&
                     this.interface_.addKillMsg(
                       t,
                       e,
@@ -32474,9 +32508,9 @@ var c_hasPressedCtrlRKey = false;
                     if (L.time + 30 > this.ticksCounter) {
                       var F = s - L.time,
                         P = L.img,
-                        B = 6 * F,
-                        O = this.g2rx(L.x) - (P.w / 2) * B,
-                        R = this.g2ry(L.y) - (P.h / 2) * B;
+                        D = 6 * F,
+                        O = this.g2rx(L.x) - (P.w / 2) * D,
+                        R = this.g2ry(L.y) - (P.h / 2) * D;
                       ((t.globalAlpha = Math.max(0.4 - F / 20, 0)),
                         t.drawImage(
                           a.imgs.miscSheet,
@@ -32486,8 +32520,8 @@ var c_hasPressedCtrlRKey = false;
                           P.h,
                           O,
                           R,
-                          P.w * B,
-                          P.h * B,
+                          P.w * D,
+                          P.h * D,
                         ),
                         (t.globalAlpha = 1));
                     } else (this._whiteCircles.splice(T, 1), T--);
@@ -32508,7 +32542,7 @@ var c_hasPressedCtrlRKey = false;
                       this.cameraY2,
                       this._percentageOfCurrentTickPassed,
                     ),
-                      z instanceof D.Player &&
+                      z instanceof B.Player &&
                         z !== this.playingPlayer &&
                         z.weapon &&
                         z.weapon.hasLine &&
@@ -32529,7 +32563,7 @@ var c_hasPressedCtrlRKey = false;
                       ),
                       this.targetLockedPlayer)
                     ) {
-                      B =
+                      D =
                         this.SCALE_FACTOR *
                         (1.7 - (Math.floor(0.4 * this.ticksCounter) % 4) * 0.1);
                       var Y =
@@ -32537,13 +32571,13 @@ var c_hasPressedCtrlRKey = false;
                             this._percentageOfCurrentTickPassed * (m.x - m.x0) -
                             this.cameraX) *
                             this.FIELD_SIZE -
-                          (E.imgCoords.aimLock.w / 2) * B,
+                          (E.imgCoords.aimLock.w / 2) * D,
                         q =
                           (m.y0 +
                             this._percentageOfCurrentTickPassed * (m.y - m.y0) -
                             this.cameraY) *
                             this.FIELD_SIZE -
-                          0.75 * E.imgCoords.aimLock.h * B;
+                          0.75 * E.imgCoords.aimLock.h * D;
                       t.drawImage(
                         a.imgs.miscSheet,
                         E.imgCoords.aimLock.x,
@@ -32552,8 +32586,8 @@ var c_hasPressedCtrlRKey = false;
                         E.imgCoords.aimLock.h,
                         Y,
                         q,
-                        B * E.imgCoords.aimLock.w,
-                        B * E.imgCoords.aimLock.h,
+                        D * E.imgCoords.aimLock.w,
+                        D * E.imgCoords.aimLock.h,
                       );
                     }
                   } else this.targetLockedPlayer = null;
@@ -32569,7 +32603,7 @@ var c_hasPressedCtrlRKey = false;
                         this.playingPlayer.weapon.autoAimRange,
                       ))
                     ) {
-                      ((B =
+                      ((D =
                         this.SCALE_FACTOR *
                         (1.7 -
                           (Math.floor(0.4 * this.ticksCounter) % 4) * 0.1)),
@@ -32578,13 +32612,13 @@ var c_hasPressedCtrlRKey = false;
                             this._percentageOfCurrentTickPassed * (m.x - m.x0) -
                             this.cameraX) *
                             this.FIELD_SIZE -
-                          (E.imgCoords.aimLockGreen.w / 2) * B),
+                          (E.imgCoords.aimLockGreen.w / 2) * D),
                         (q =
                           (m.y0 +
                             this._percentageOfCurrentTickPassed * (m.y - m.y0) -
                             this.cameraY) *
                             this.FIELD_SIZE -
-                          0.75 * E.imgCoords.aimLockGreen.h * B));
+                          0.75 * E.imgCoords.aimLockGreen.h * D));
                       t.drawImage(
                         a.imgs.miscSheet,
                         E.imgCoords.aimLockGreen.x,
@@ -32593,8 +32627,8 @@ var c_hasPressedCtrlRKey = false;
                         E.imgCoords.aimLockGreen.h,
                         Y,
                         q,
-                        B * E.imgCoords.aimLockGreen.w,
-                        B * E.imgCoords.aimLockGreen.h,
+                        D * E.imgCoords.aimLockGreen.w,
+                        D * E.imgCoords.aimLockGreen.h,
                       );
                     }
                   for (var j = 0, Z = this.floatingTexts; j < Z.length; j++) {
@@ -32711,18 +32745,18 @@ var c_hasPressedCtrlRKey = false;
                     if (K) {
                       var V = h.objects[k.Input.activeAbility.object],
                         $ = h.animationData[V.animation];
-                      ((B = this.SCALE_FACTOR * (V.imgScale ? V.imgScale : 1)),
+                      ((D = this.SCALE_FACTOR * (V.imgScale ? V.imgScale : 1)),
                         (P = E.imgCoords[V.img[0]]),
                         (l =
                           (K.x - this.cameraX) * this.FIELD_SIZE +
-                          (-P.w / 2) * B),
+                          (-P.w / 2) * D),
                         (d =
                           (K.y +
                             (V.yOffset ? V.yOffset : 0) / 16 -
                             0.2 -
                             this.cameraY) *
                             this.FIELD_SIZE +
-                          (8 - P.h) * B));
+                          (8 - P.h) * D));
                       if (
                         (t.drawImage(
                           a.imgs.miscSheet,
@@ -32732,18 +32766,18 @@ var c_hasPressedCtrlRKey = false;
                           P.h,
                           l,
                           d,
-                          P.w * B,
-                          P.h * B,
+                          P.w * D,
+                          P.h * D,
                         ),
                         $ && $.imgTurret01)
                       ) {
                         P = $.imgTurret01;
                         var J =
                             (K.x - this.cameraX) * this.FIELD_SIZE +
-                            (-P.w / 2) * B,
+                            (-P.w / 2) * D,
                           Q =
                             (K.y - 0.2 - this.cameraY) * this.FIELD_SIZE +
-                            (8 - P.h) * B;
+                            (8 - P.h) * D;
                         t.drawImage(
                           a.imgs.miscSheet,
                           P.x,
@@ -32752,8 +32786,8 @@ var c_hasPressedCtrlRKey = false;
                           P.h,
                           J,
                           Q,
-                          P.w * B,
-                          P.h * B,
+                          P.w * D,
+                          P.h * D,
                         );
                       }
                     }
@@ -33258,7 +33292,7 @@ var c_hasPressedCtrlRKey = false;
           oPU: function (e, t, i, a) {
             var n = e.getObjectFromID(t);
             null !== n &&
-              n instanceof B.Object_ &&
+              n instanceof D.Object_ &&
               n.updatePos(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -33943,18 +33977,19 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.draw = function (e) {
                 var t,
-                  i = Date.now(),
-                  a = 98;
+                  i,
+                  a = Date.now(),
+                  o = 98;
                 if (l.options.showFPS) {
-                  for (E.push(1e3 / (i - k)), k = i; E.length > 10; )
+                  for (E.push(1e3 / (a - k)), k = a; E.length > 10; )
                     E.splice(0, 1);
-                  var o = Math.round(
+                  var r = Math.round(
                     E.reduce(function (e, t) {
                       return e + t;
                     }) / E.length,
                   );
-                  ((0, m.drawText)(C, "FPS: " + o, "white", 18, 10, a),
-                    (a += 28));
+                  ((0, m.drawText)(C, "FPS: " + r, "white", 18, 10, o),
+                    (o += 28));
                 }
                 l.options.showPing &&
                   (0, m.drawText)(
@@ -33963,22 +33998,22 @@ var c_hasPressedCtrlRKey = false;
                     "white",
                     18,
                     10,
-                    a,
+                    o,
                   );
-                for (var r = I.childNodes, h = 0; h < r.length; h++)
-                  (r[h].getAttribute("data-time") < i - 1e4 ||
-                    h < r.length - 10) &&
-                    I.removeChild(r[h]);
-                r = T.childNodes;
-                for (h = 0; h < r.length; h++)
-                  (r[h].getAttribute("data-time") < i - 1e4 ||
-                    h < r.length - 10) &&
-                    T.removeChild(r[h]);
-                var d = 0.8 * this.game.SCALE_FACTOR_BASE,
-                  c = 0.5 * d,
-                  p = 0.4 * d,
-                  x = l.options.weaponsUnclickable ? 0.7 : 1,
-                  w = this.game.playingPlayerIsZombie
+                for (var h = I.childNodes, d = 0; d < h.length; d++)
+                  (h[d].getAttribute("data-time") < a - 1e4 ||
+                    d < h.length - 10) &&
+                    I.removeChild(h[d]);
+                h = T.childNodes;
+                for (d = 0; d < h.length; d++)
+                  (h[d].getAttribute("data-time") < a - 1e4 ||
+                    d < h.length - 10) &&
+                    T.removeChild(h[d]);
+                var c = 0.8 * this.game.SCALE_FACTOR_BASE,
+                  p = 0.5 * c,
+                  x = 0.4 * c,
+                  w = l.options.weaponsUnclickable ? 0.7 : 1,
+                  M = this.game.playingPlayerIsZombie
                     ? [s.weapons[12]]
                     : s.weapons;
                 if (
@@ -33987,178 +34022,288 @@ var c_hasPressedCtrlRKey = false;
                     this.game.playingPlayerIsZombie) &&
                   !this.game.playingPlayer.dieAt
                 ) {
-                  var M = g.imgCoords.weaponFrame2,
-                    L = window.innerWidth - (M.w + 1) * p,
-                    A = window.innerHeight - (M.h + 1) * p;
+                  var L = g.imgCoords.weaponFrame2,
+                    A = window.innerWidth - (L.w + 1) * x,
+                    F = window.innerHeight - (L.h + 1) * x;
                   this.hoverWeapon = -1;
-                  var F = g.imgCoords.weaponFrameCurrent;
-                  for (h = 0; h < w.length; h++) {
-                    var P = w[w.length - h - 1],
-                      N =
-                        this.game.playingPlayerClips[P.id] +
-                        this.game.playingPlayerAmmo[P.id];
+                  var P = g.imgCoords.weaponFrameCurrent;
+                  for (d = 0; d < M.length; d++) {
+                    var N = M[M.length - d - 1],
+                      D =
+                        this.game.playingPlayerClips[N.id] +
+                        this.game.playingPlayerAmmo[N.id];
                     if (
-                      ((N > 0 || this.game.playingPlayer.weapon === P) &&
-                        !P.noWeapon) ||
-                      (P === s.weapons[12] && this.game.playingPlayerIsZombie)
+                      ((D > 0 || this.game.playingPlayer.weapon === N) &&
+                        !N.noWeapon) ||
+                      (N === s.weapons[12] && this.game.playingPlayerIsZombie)
                     ) {
-                      M =
-                        N > 0 || P === s.weapons[12]
+                      L =
+                        D > 0 || N === s.weapons[12]
                           ? g.imgCoords.weaponFrame2Green
                           : g.imgCoords.weaponFrame2;
                       var B =
-                        N > 0 || P === s.weapons[12]
+                        D > 0 || N === s.weapons[12]
                           ? n.imgs.miscSheet
                           : n.imgs.miscSheetGrey;
-                      ((C.globalAlpha = x),
+                      ((C.globalAlpha = w),
                         C.drawImage(
                           B,
-                          M.x,
-                          M.y,
-                          M.w,
-                          M.h,
-                          L,
+                          L.x,
+                          L.y,
+                          L.w,
+                          L.h,
                           A,
-                          M.w * p,
-                          M.h * p,
+                          F,
+                          L.w * x,
+                          L.h * x,
                         ),
-                        (this.game.playingPlayer.weapon !== P &&
-                          P !== s.weapons[12]) ||
+                        (this.game.playingPlayer.weapon !== N &&
+                          N !== s.weapons[12]) ||
                           C.drawImage(
                             n.imgs.miscSheet,
-                            F.x,
-                            F.y,
-                            F.w,
-                            F.h,
-                            L - 3 * p,
-                            A - 3 * p,
-                            F.w * p,
-                            F.h * p,
+                            P.x,
+                            P.y,
+                            P.w,
+                            P.h,
+                            A - 3 * x,
+                            F - 3 * x,
+                            P.w * x,
+                            P.h * x,
                           ));
-                      var D = g.imgCoords[P.img];
-                      C.drawImage(
-                        B,
-                        D.x,
-                        D.y,
-                        D.w,
-                        D.h,
-                        L + M.w * p * 0.4 - 0.5 * D.w * p * 1.3,
-                        A + (M.h - 3) * p - D.h * p * 1.3,
-                        D.w * p * 1.3,
-                        D.h * p * 1.3,
-                      );
-                      var O = g.imgCoords[P.ammoImgSmall],
-                        R =
-                          1.2 *
-                          p *
-                          (null !== (t = P.ammoImgSmallScale) && void 0 !== t
-                            ? t
-                            : 1);
+                      var O = g.imgCoords[N.img];
                       C.drawImage(
                         B,
                         O.x,
                         O.y,
                         O.w,
                         O.h,
-                        L + M.w * p * 0.25 - O.w * R,
-                        A + M.h * p * 0.2 - 0.5 * O.h * R,
-                        O.w * R,
-                        O.h * R,
+                        A + L.w * x * 0.4 - 0.5 * O.w * x * 1.3,
+                        F + (L.h - 3) * x - O.h * x * 1.3,
+                        O.w * x * 1.3,
+                        O.h * x * 1.3,
                       );
-                      var H = P.startAmmoSize
+                      var R = g.imgCoords[N.ammoImgSmall],
+                        H =
+                          1.2 *
+                          x *
+                          (null !== (t = N.ammoImgSmallScale) && void 0 !== t
+                            ? t
+                            : 1);
+                      C.drawImage(
+                        B,
+                        R.x,
+                        R.y,
+                        R.w,
+                        R.h,
+                        A + L.w * x * 0.25 - R.w * H,
+                        F + L.h * x * 0.2 - 0.5 * R.h * H,
+                        R.w * H,
+                        R.h * H,
+                      );
+                      var U = N.startAmmoSize
                         ? "INF"
-                        : this.game.playingPlayerClips[P.id] +
+                        : this.game.playingPlayerClips[N.id] +
                           " (" +
-                          this.game.playingPlayerAmmo[P.id] +
+                          this.game.playingPlayerAmmo[N.id] +
                           ")";
                       if (
                         ((0, m.drawText)(
                           C,
-                          H,
-                          N > 0
+                          U,
+                          D > 0
                             ? "#4FAC43"
-                            : "rgba(255, 255, 255, " + 0.7 * x + ")",
-                          7.5 * p,
-                          L + M.w * p * 0.35,
-                          A + 0.55 * M.h,
+                            : "rgba(255, 255, 255, " + 0.7 * w + ")",
+                          7.5 * x,
+                          A + L.w * x * 0.35,
+                          F + 0.55 * L.h,
                         ),
-                        !P.hideHotkey)
+                        !N.hideHotkey)
                       ) {
-                        var U = u.commandKeys[u.COMMAND["WPN" + (P.id + 1)]],
-                          G = u.Input.keys[U]
-                            ? "rgba(100, 170, 110, " + 0.8 * x + ")"
-                            : "rgba(255, 255, 255, " + 0.8 * x + ")";
+                        var G = u.commandKeys[u.COMMAND["WPN" + (N.id + 1)]],
+                          W = u.Input.keys[G]
+                            ? "rgba(100, 170, 110, " + 0.8 * w + ")"
+                            : "rgba(255, 255, 255, " + 0.8 * w + ")";
                         (0, m.drawText)(
                           C,
-                          "[" + u.keyNames[U] + "]",
-                          G,
-                          6 * p,
-                          L + M.w * p * 0.8,
-                          A + M.h * p * 0.8,
-                          10 * p,
+                          "[" + u.keyNames[G] + "]",
+                          W,
+                          6 * x,
+                          A + L.w * x * 0.8,
+                          F + L.h * x * 0.8,
+                          10 * x,
                           "right",
                         );
                       }
                       ((C.globalAlpha = 1),
                         !l.options.weaponsUnclickable &&
-                          u.Input.x >= L &&
-                          u.Input.y >= A &&
-                          u.Input.y <= A + M.h * p &&
-                          ((this.hoverWeapon = P.id),
+                          u.Input.x >= A &&
+                          u.Input.y >= F &&
+                          u.Input.y <= F + L.h * x &&
+                          ((this.hoverWeapon = N.id),
                           (C.fillStyle = "rgba(0, 0, 0, 0.8)"),
                           C.fillRect(
-                            window.innerWidth - 100 * d,
-                            window.innerHeight - 80 * d,
-                            60 * d,
-                            50 * d,
+                            window.innerWidth - 100 * c,
+                            window.innerHeight - 80 * c,
+                            60 * c,
+                            50 * c,
                           ),
                           (0, m.drawText)(
                             C,
-                            P.name,
+                            N.name,
                             "white",
-                            4 * d,
-                            window.innerWidth - 95 * d,
-                            window.innerHeight - 74 * d,
-                            200 * d,
+                            4 * c,
+                            window.innerWidth - 95 * c,
+                            window.innerHeight - 74 * c,
+                            200 * c,
                             "left",
                             1,
                             void 0,
                             void 0,
-                            50 * d,
+                            50 * c,
                           ),
                           (0, m.drawText)(
                             C,
-                            P.description,
+                            N.description,
                             "#D4D4D4",
-                            3 * d,
-                            window.innerWidth - 95 * d,
-                            window.innerHeight - 64 * d,
-                            50 * d,
+                            3 * c,
+                            window.innerWidth - 95 * c,
+                            window.innerHeight - 64 * c,
+                            50 * c,
                             "left",
                             1,
                             void 0,
-                            3.5 * d,
+                            3.5 * c,
                           ),
                           (C.globalAlpha = 0.5),
                           C.drawImage(
                             n.imgs.miscSheet,
-                            F.x,
-                            F.y,
-                            F.w,
-                            F.h,
-                            L - 3 * p,
-                            A - 3 * p,
-                            F.w * p,
-                            F.h * p,
+                            P.x,
+                            P.y,
+                            P.w,
+                            P.h,
+                            A - 3 * x,
+                            F - 3 * x,
+                            P.w * x,
+                            P.h * x,
                           ),
                           (C.globalAlpha = 1)),
-                        (A -= (M.h + 2) * p));
+                        (F -= (L.h + 2) * x));
                     }
                   }
                 }
-                if (m.replaySettings.lastReplaySpeedChange + 2e3 > i) {
-                  var W = Math.min(
-                    (m.replaySettings.lastReplaySpeedChange + 2e3 - i) / 750,
+                if (this.game.botDebugName && this.game.botDebugAt + 3e3 > a) {
+                  var z = g.imgCoords.weaponFrame2,
+                    Y = g.imgCoords.weaponFrameCurrent,
+                    q = 1 * x,
+                    j = window.innerHeight - (z.h + 1) * x;
+                  for (d = 0; d < s.weapons.length; d++) {
+                    if (!(N = s.weapons[s.weapons.length - d - 1]).noWeapon) {
+                      var Z = this.game.botDebugClips[N.id] || 0,
+                        X = this.game.botDebugAmmo[N.id] || 0,
+                        K = this.game.botDebugWeapon === N.id;
+                      if (!(Z <= 0 && X <= 0) || K) {
+                        var V = Z + X > 0;
+                        ((B = V ? n.imgs.miscSheet : n.imgs.miscSheetGrey),
+                          (L = V
+                            ? g.imgCoords.weaponFrame2Green
+                            : g.imgCoords.weaponFrame2));
+                        (C.drawImage(
+                          B,
+                          L.x,
+                          L.y,
+                          L.w,
+                          L.h,
+                          q,
+                          j,
+                          L.w * x,
+                          L.h * x,
+                        ),
+                          K &&
+                            C.drawImage(
+                              n.imgs.miscSheet,
+                              Y.x,
+                              Y.y,
+                              Y.w,
+                              Y.h,
+                              q - 3 * x,
+                              j - 3 * x,
+                              Y.w * x,
+                              Y.h * x,
+                            ));
+                        O = g.imgCoords[N.img];
+                        C.drawImage(
+                          B,
+                          O.x,
+                          O.y,
+                          O.w,
+                          O.h,
+                          q + L.w * x * 0.4 - 0.5 * O.w * x * 1.3,
+                          j + (L.h - 3) * x - O.h * x * 1.3,
+                          O.w * x * 1.3,
+                          O.h * x * 1.3,
+                        );
+                        ((R = g.imgCoords[N.ammoImgSmall]),
+                          (H =
+                            1.2 *
+                            x *
+                            (null !== (i = N.ammoImgSmallScale) && void 0 !== i
+                              ? i
+                              : 1)));
+                        C.drawImage(
+                          B,
+                          R.x,
+                          R.y,
+                          R.w,
+                          R.h,
+                          q + L.w * x * 0.25 - R.w * H,
+                          j + L.h * x * 0.2 - 0.5 * R.h * H,
+                          R.w * H,
+                          R.h * H,
+                        );
+                        var $ = N.startAmmoSize ? "INF" : Z + " (" + X + ")";
+                        ((0, m.drawText)(
+                          C,
+                          $,
+                          V ? "#4FAC43" : "rgba(255, 255, 255, 0.7)",
+                          7.5 * x,
+                          q + L.w * x * 0.35,
+                          j + 0.55 * L.h,
+                        ),
+                          (j -= (L.h + 2) * x));
+                      }
+                    }
+                  }
+                  ((0, m.drawText)(
+                    C,
+                    this.game.botDebugName +
+                      "   " +
+                      this.game.botDebugHP +
+                      " hp" +
+                      (this.game.botDebugArmor > 0
+                        ? " + " + this.game.botDebugArmor + " armor"
+                        : ""),
+                    "#FFD155",
+                    3.6 * c,
+                    q,
+                    j - 9 * c,
+                  ),
+                    (0, m.drawText)(
+                      C,
+                      this.game.botDebugState,
+                      "#D4D4D4",
+                      3.2 * c,
+                      q,
+                      j - 4 * c,
+                      120 * c,
+                      "left",
+                      1,
+                      void 0,
+                      4 * c,
+                    ));
+                }
+                if (m.replaySettings.lastReplaySpeedChange + 2e3 > a) {
+                  var J = Math.min(
+                    (m.replaySettings.lastReplaySpeedChange + 2e3 - a) / 750,
                     1,
                   );
                   (0, m.drawText)(
@@ -34170,7 +34315,7 @@ var c_hasPressedCtrlRKey = false;
                     window.innerHeight - 10 * this.game.SCALE_FACTOR_BASE,
                     500,
                     "right",
-                    W,
+                    J,
                   );
                 }
                 if (
@@ -34206,144 +34351,144 @@ var c_hasPressedCtrlRKey = false;
                   (this.hoverAbility = -1),
                   this.game.playingPlayer && !this.game.playingPlayer.dieAt)
                 )
-                  for (h = 0; h < this.game.pl_active_abilities.length; h++)
-                    if (this.game.pl_active_abilities[h]) {
-                      C.globalAlpha = x;
-                      var z = this.game.pl_active_abilities[h];
-                      ((M =
-                        this.game.playingPlayerEnergy >= z.energy
+                  for (d = 0; d < this.game.pl_active_abilities.length; d++)
+                    if (this.game.pl_active_abilities[d]) {
+                      C.globalAlpha = w;
+                      var Q = this.game.pl_active_abilities[d];
+                      ((L =
+                        this.game.playingPlayerEnergy >= Q.energy
                           ? g.imgCoords.abilityFrameGreen
                           : g.imgCoords.abilityFrame),
-                        (L =
+                        (A =
                           window.innerWidth -
-                          c *
-                            (M.w + 1) *
-                            (this.game.pl_active_abilities.length - h) -
-                          (g.imgCoords.weaponFrame.w + 6) * p),
-                        (A = window.innerHeight - (M.h + 1) * c),
+                          p *
+                            (L.w + 1) *
+                            (this.game.pl_active_abilities.length - d) -
+                          (g.imgCoords.weaponFrame.w + 6) * x),
+                        (F = window.innerHeight - (L.h + 1) * p),
                         (B =
-                          z.energy <= this.game.playingPlayerEnergy &&
-                          this.game.lastAbilityUses[h] + z.cooldown <=
+                          Q.energy <= this.game.playingPlayerEnergy &&
+                          this.game.lastAbilityUses[d] + Q.cooldown <=
                             this.game.ticksCounter
                             ? n.imgs.miscSheet
                             : n.imgs.miscSheetGrey));
                       C.drawImage(
                         B,
-                        M.x,
-                        M.y,
-                        M.w,
-                        M.h,
-                        L,
+                        L.x,
+                        L.y,
+                        L.w,
+                        L.h,
                         A,
-                        M.w * c,
-                        M.h * c,
+                        F,
+                        L.w * p,
+                        L.h * p,
                       );
-                      var Y = g.imgCoords[z.icon],
-                        q = ((M.w - 6) * c) / Math.max(Y.w, Y.h),
-                        j = L + (M.w * c - Y.w * q) / 2,
-                        Z = A + 0.2 * (M.h * c - Y.h * q);
+                      var ee = g.imgCoords[Q.icon],
+                        te = ((L.w - 6) * p) / Math.max(ee.w, ee.h),
+                        ie = A + (L.w * p - ee.w * te) / 2,
+                        ae = F + 0.2 * (L.h * p - ee.h * te);
                       C.drawImage(
                         B,
-                        Y.x,
-                        Y.y,
-                        Y.w,
-                        Y.h,
-                        j,
-                        Z,
-                        Y.w * q,
-                        Y.h * q,
+                        ee.x,
+                        ee.y,
+                        ee.w,
+                        ee.h,
+                        ie,
+                        ae,
+                        ee.w * te,
+                        ee.h * te,
                       );
-                      ((U = u.commandKeys[u.COMMAND["ABILITY" + (h + 1)]]),
-                        (G = u.Input.keys[U]
-                          ? "rgba(100, 170, 110, " + 0.8 * x + ")"
-                          : "rgba(255, 255, 255, " + 0.7 * x + ")"));
+                      ((G = u.commandKeys[u.COMMAND["ABILITY" + (d + 1)]]),
+                        (W = u.Input.keys[G]
+                          ? "rgba(100, 170, 110, " + 0.8 * w + ")"
+                          : "rgba(255, 255, 255, " + 0.7 * w + ")"));
                       ((0, m.drawText)(
                         C,
-                        (0, u.getKeyName)(U),
-                        G,
-                        3.5 * d,
-                        L + M.w * c * 0.5,
-                        A + 38 * c,
-                        M.w,
+                        (0, u.getKeyName)(G),
+                        W,
+                        3.5 * c,
+                        A + L.w * p * 0.5,
+                        F + 38 * p,
+                        L.w,
                         "center",
                       ),
                         !l.options.weaponsUnclickable &&
-                          u.Input.x > L &&
-                          u.Input.x < L + M.w * c &&
-                          u.Input.y > window.innerHeight - (M.h + 1) * c &&
-                          ((this.hoverAbility = h),
+                          u.Input.x > A &&
+                          u.Input.x < A + L.w * p &&
+                          u.Input.y > window.innerHeight - (L.h + 1) * p &&
+                          ((this.hoverAbility = d),
                           (C.globalAlpha = 0.3),
                           C.drawImage(
                             n.imgs.miscSheetWhite,
-                            M.x,
-                            M.y,
-                            M.w,
-                            M.h,
-                            L,
+                            L.x,
+                            L.y,
+                            L.w,
+                            L.h,
                             A,
-                            M.w * c,
-                            M.h * c,
+                            F,
+                            L.w * p,
+                            L.h * p,
                           ),
                           (C.globalAlpha = 1),
                           (C.fillStyle = "rgba(0, 0, 0, 0.8)"),
                           C.fillRect(
-                            window.innerWidth - 100 * d,
-                            window.innerHeight - 65 * d,
-                            65 * d,
-                            35 * d,
+                            window.innerWidth - 100 * c,
+                            window.innerHeight - 65 * c,
+                            65 * c,
+                            35 * c,
                           ),
                           (0, m.drawText)(
                             C,
-                            z.name,
+                            Q.name,
                             "white",
-                            4 * d,
-                            window.innerWidth - 96 * d,
-                            window.innerHeight - 58 * d,
+                            4 * c,
+                            window.innerWidth - 96 * c,
+                            window.innerHeight - 58 * c,
                           ),
                           (0, m.drawText)(
                             C,
                             v.lang.get("game.skills.misc.energy_cost", {
-                              energy: z.energy,
+                              energy: Q.energy,
                             }),
                             "#DD52CE",
-                            3 * d,
-                            window.innerWidth - 96 * d,
-                            window.innerHeight - 52 * d,
-                            90 * d,
+                            3 * c,
+                            window.innerWidth - 96 * c,
+                            window.innerHeight - 52 * c,
+                            90 * c,
                             "left",
                           ),
                           (0, m.drawText)(
                             C,
-                            z.description,
+                            Q.description,
                             "#D4D4D4",
-                            3 * d,
-                            window.innerWidth - 96 * d,
-                            window.innerHeight - 45 * d,
-                            55 * d,
+                            3 * c,
+                            window.innerWidth - 96 * c,
+                            window.innerHeight - 45 * c,
+                            55 * c,
                             "left",
                             1,
                             void 0,
-                            3.5 * d,
+                            3.5 * c,
                           )));
-                      var X =
+                      var ne =
                         this.game.lastAbilityUses[
-                          this.game.pl_active_abilities[0] === z ? 0 : 1
+                          this.game.pl_active_abilities[0] === Q ? 0 : 1
                         ] +
-                        z.cooldown -
+                        Q.cooldown -
                         this.game.ticksCounter;
-                      X > 0 &&
+                      ne > 0 &&
                         (0, m.drawText)(
                           C,
-                          Math.floor(X / 20).toString(),
+                          Math.floor(ne / 20).toString(),
                           "red",
-                          9 * d,
-                          L + M.w * c * 0.5,
-                          A + 25 * c,
-                          M.w,
+                          9 * c,
+                          A + L.w * p * 0.5,
+                          F + 25 * p,
+                          L.w,
                           "center",
                           1,
                           "rgba(0, 0, 0, 0.65)",
-                          M.h,
+                          L.h,
                         );
                     }
                 this.game.playingPlayer &&
@@ -34369,92 +34514,92 @@ var c_hasPressedCtrlRKey = false;
                     "rgba(255, 255, 255, 0.2)",
                     0.3 * this.game.FIELD_SIZE_BASE,
                   );
-                var K = 7.5 * d;
+                var oe = 7.5 * c;
                 if (this.game.type.team && this.game.type.souls) {
-                  var V = 0.9 * d,
-                    $ = g.imgCoords.souls;
+                  var re = 0.9 * c,
+                    se = g.imgCoords.souls;
                   (C.drawImage(
                     n.imgs.miscSheet,
-                    $.x,
-                    $.y,
-                    $.w,
-                    $.h,
-                    0.5 * window.innerWidth - 0.5 * $.w * V,
-                    1 * V,
-                    $.w * V,
-                    $.h * V,
+                    se.x,
+                    se.y,
+                    se.w,
+                    se.h,
+                    0.5 * window.innerWidth - 0.5 * se.w * re,
+                    1 * re,
+                    se.w * re,
+                    se.h * re,
                   ),
                     (0, m.drawText)(
                       C,
                       this.game.scoreTeam1.toString(),
                       "#A13232",
-                      6 * d,
-                      0.5 * window.innerWidth - (0.5 * $.w + 3) * V,
-                      K + 2 * d,
-                      70 * d,
+                      6 * c,
+                      0.5 * window.innerWidth - (0.5 * se.w + 3) * re,
+                      oe + 2 * c,
+                      70 * c,
                       "right",
                       1,
                       "rgba(0, 0, 0, 0.3)",
-                      7 * d,
+                      7 * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.game.scoreTeam2.toString(),
                       "#1B698E",
-                      6 * d,
-                      0.5 * window.innerWidth + (0.5 * $.w + 3) * V,
-                      K + 2 * d,
-                      70 * d,
+                      6 * c,
+                      0.5 * window.innerWidth + (0.5 * se.w + 3) * re,
+                      oe + 2 * c,
+                      70 * c,
                       "left",
                       1,
                       "rgba(0, 0, 0, 0.3)",
-                      7 * d,
+                      7 * c,
                     ),
-                    (K += 11 * d));
+                    (oe += 11 * c));
                 }
                 if (
                   this.game.roundTime > 0 &&
                   ("tutorial1" !== this.game.map.special ||
                     this.game.ticksCounter >= this.game.roundTime - 1200)
                 ) {
-                  var J = "",
-                    Q = void 0;
+                  var le = "",
+                    he = void 0;
                   (this.game.ticksCounter < 0
-                    ? ((J = Math.floor(
+                    ? ((le = Math.floor(
                         -this.game.ticksCounter / 20,
                       ).toString()),
-                      (Q = !1))
-                    : ((J = (0, m.ticks2TimeStr)(
+                      (he = !1))
+                    : ((le = (0, m.ticks2TimeStr)(
                         this.game.roundTime - this.game.ticksCounter,
                       )),
-                      (Q = !0)),
-                    f.rankInGame.refreshTime(Q, J),
+                      (he = !0)),
+                    f.rankInGame.refreshTime(he, le),
                     (0, m.drawText)(
                       C,
-                      J,
+                      le,
                       "rgba(255, 255, 255, 0.7)",
-                      5.5 * d,
+                      5.5 * c,
                       window.innerWidth / 2,
-                      K,
+                      oe,
                       0.9 * window.innerWidth,
                       "center",
                     ),
-                    (K += 6 * d));
+                    (oe += 6 * c));
                 }
                 if (this.game.type.coopZombieMode) {
                   for (
-                    var ee = 0, te = this.game.players;
-                    ee < te.length;
-                    ee++
+                    var de = 0, me = this.game.players;
+                    de < me.length;
+                    de++
                   ) {
-                    var ie = te[ee];
-                    ie && ie.isHumanZombie;
+                    var ce = me[de];
+                    ce && ce.isHumanZombie;
                   }
                   (0, m.drawText)(
                     C,
                     "Alive: 1 / " + this.game.players.length,
                     "white",
-                    4.5 * d,
+                    4.5 * c,
                     10,
                     130,
                     2 * window.innerWidth,
@@ -34473,7 +34618,7 @@ var c_hasPressedCtrlRKey = false;
                         ),
                       }),
                       "rgba(0, 255, 6, 0.7)",
-                      K + 2 * d,
+                      oe + 2 * c,
                     )
                   : this.game.type.flag
                     ? this.scanMsg(
@@ -34481,7 +34626,7 @@ var c_hasPressedCtrlRKey = false;
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
-                        K + 2 * d,
+                        oe + 2 * c,
                       )
                     : this.game.type.coopZombieMode &&
                       this.scanMsg(
@@ -34489,14 +34634,14 @@ var c_hasPressedCtrlRKey = false;
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
-                        K + 2 * d,
+                        oe + 2 * c,
                       ),
                   this.game.ticksCounter < 0 &&
                     (0, m.drawText)(
                       C,
                       this.game.victoryMsg,
                       "rgba(255, 255, 255, 0.7)",
-                      7 * d,
+                      7 * c,
                       window.innerWidth / 2,
                       17 * this.game.SCALE_FACTOR_BASE,
                       0.9 * window.innerWidth,
@@ -34505,15 +34650,15 @@ var c_hasPressedCtrlRKey = false;
                   this.game.ticksCounter < 0
                     ? f.rankInGame.setVictoryMessage(this.game.victoryMsg)
                     : f.rankInGame.setVictoryMessage(""),
-                  (d *= 0.7));
-                var ae = 0,
-                  ne = 0;
+                  (c *= 0.7));
+                var ge = 0,
+                  ue = 0;
                 ((this.hoverChoice = null),
                   (this.upgNotificationHovered = !1),
                   (this.skipButtonHover = !1),
                   (this.unskipButtonHover = !1));
-                var oe =
-                  this.showOldUpgChoicesUntil >= i
+                var pe =
+                  this.showOldUpgChoicesUntil >= a
                     ? this.oldUpgChoices
                     : this.currentUpgChoices;
                 if (
@@ -34521,113 +34666,114 @@ var c_hasPressedCtrlRKey = false;
                   this.game.type.souls &&
                   this.game.ticksCounter > 0
                 ) {
-                  ((Y = g.imgCoords.newStatsFrame), (F = g.imgCoords.soulsBar));
-                  var re = g.imgCoords.hpBar1,
-                    se = g.imgCoords.energyBar;
+                  ((ee = g.imgCoords.newStatsFrame),
+                    (P = g.imgCoords.soulsBar));
+                  var ye = g.imgCoords.hpBar1,
+                    fe = g.imgCoords.energyBar;
                   if (
-                    ((ae = window.innerHeight - (Y.h + 1) * d),
-                    (ne = 1 * d),
+                    ((ge = window.innerHeight - (ee.h + 1) * c),
+                    (ue = 1 * c),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      Y.x,
-                      Y.y,
-                      Y.w,
-                      Y.h,
-                      ne,
-                      ae,
-                      Y.w * d,
-                      Y.h * d,
+                      ee.x,
+                      ee.y,
+                      ee.w,
+                      ee.h,
+                      ue,
+                      ge,
+                      ee.w * c,
+                      ee.h * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.soulLvl.toString(),
                       "#e1f063",
-                      8 * d,
-                      ne + 16 * d,
-                      ae + 14 * d,
-                      24 * d,
+                      8 * c,
+                      ue + 16 * c,
+                      ge + 14 * c,
+                      24 * c,
                       "right",
                       1,
                       void 0,
                       void 0,
-                      10 * d,
+                      10 * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.game.playingPlayer.name,
                       "#b9cc8d",
-                      8 * d,
-                      ne + 20 * d,
-                      ae + 14 * d,
-                      100 * d,
+                      8 * c,
+                      ue + 20 * c,
+                      ge + 14 * c,
+                      100 * c,
                       "left",
                       1,
                       void 0,
                       void 0,
-                      42 * d,
+                      42 * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.game.playingPlayer.souls.toString(),
                       "#b4b7b8",
-                      7 * d,
-                      ne + 18 * d,
-                      ae + 29 * d,
-                      100 * d,
+                      7 * c,
+                      ue + 18 * c,
+                      ge + 29 * c,
+                      100 * c,
                       "left",
                       1,
                       void 0,
                       void 0,
-                      16 * d,
+                      16 * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.abilityPoints.toString(),
                       "#5cc3ef",
-                      7 * d,
-                      ne + 46 * d,
-                      ae + 29 * d,
-                      100 * d,
+                      7 * c,
+                      ue + 46 * c,
+                      ge + 29 * c,
+                      100 * c,
                       "left",
                       1,
                       void 0,
                       void 0,
-                      16 * d,
+                      16 * c,
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      F.x,
-                      F.y,
-                      F.w,
-                      F.h,
-                      ne + 69 * d,
-                      ae + 5 * d,
-                      73 * d * (this.soulsGot / this.soulsNeeded),
-                      10 * d,
+                      P.x,
+                      P.y,
+                      P.w,
+                      P.h,
+                      ue + 69 * c,
+                      ge + 5 * c,
+                      73 * c * (this.soulsGot / this.soulsNeeded),
+                      10 * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.soulsGot + " / " + this.soulsNeeded,
                       "#d0e661",
-                      8 * d,
-                      ne + 106 * d,
-                      ae + 14 * d,
-                      84 * d,
+                      8 * c,
+                      ue + 106 * c,
+                      ge + 14 * c,
+                      84 * c,
                       "center",
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      re.x,
-                      re.y,
-                      re.w,
-                      re.h,
-                      ne + 69 * d,
-                      ae + 20 * d,
+                      ye.x,
+                      ye.y,
+                      ye.w,
+                      ye.h,
+                      ue + 69 * c,
+                      ge + 20 * c,
                       73 *
-                        d *
+                        c *
                         (this.game.playingPlayer.hp /
                           this.game.playingPlayer.maxHP),
-                      5 * d,
+                      5 * c,
                     ),
                     (0, m.drawText)(
                       C,
@@ -34635,10 +34781,10 @@ var c_hasPressedCtrlRKey = false;
                         " / " +
                         Math.ceil(this.game.playingPlayer.maxHP),
                       "white",
-                      6 * d,
-                      ne + 106 * d,
-                      ae + 25 * d,
-                      84 * d,
+                      6 * c,
+                      ue + 106 * c,
+                      ge + 25 * c,
+                      84 * c,
                       "center",
                       1,
                       void 0,
@@ -34648,66 +34794,66 @@ var c_hasPressedCtrlRKey = false;
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      se.x,
-                      se.y,
-                      se.w,
-                      se.h,
-                      ne + 69 * d,
-                      ae + 28 * d,
-                      73 * d * (this.game.playingPlayerEnergy / 100),
-                      2 * d,
+                      fe.x,
+                      fe.y,
+                      fe.w,
+                      fe.h,
+                      ue + 69 * c,
+                      ge + 28 * c,
+                      73 * c * (this.game.playingPlayerEnergy / 100),
+                      2 * c,
                     ),
-                    (Y = g.imgCoords.newUpgFrame),
-                    (F = g.imgCoords.newUpgFrameWhite),
-                    (re = g.imgCoords.newUpgFrameYellow),
-                    (ae -= (Y.h + 1) * d),
+                    (ee = g.imgCoords.newUpgFrame),
+                    (P = g.imgCoords.newUpgFrameWhite),
+                    (ye = g.imgCoords.newUpgFrameYellow),
+                    (ge -= (ee.h + 1) * c),
                     this.game.playingPlayer.dieAt)
                   )
                     return;
                   if (this.upgNotificationStart > 0) {
-                    var le = ((this.game.ticksCounter / 3) % 3) + 1;
-                    Y = g.imgCoords["newUps" + Math.floor(le)];
-                    var he = i - this.upgNotificationStart,
-                      de = Math.min(Y.h, (he / 400) * Y.h);
-                    ((C.globalAlpha = 1 - (le % 1)),
+                    var xe = ((this.game.ticksCounter / 3) % 3) + 1;
+                    ee = g.imgCoords["newUps" + Math.floor(xe)];
+                    var we = a - this.upgNotificationStart,
+                      ve = Math.min(ee.h, (we / 400) * ee.h);
+                    ((C.globalAlpha = 1 - (xe % 1)),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        Y.x,
-                        Y.y,
-                        Y.w,
-                        de,
-                        ne,
-                        ae,
-                        Y.w * d,
-                        de * d,
+                        ee.x,
+                        ee.y,
+                        ee.w,
+                        ve,
+                        ue,
+                        ge,
+                        ee.w * c,
+                        ve * c,
                       ),
-                      (Y = g.imgCoords["newUps" + ((Math.floor(le) % 3) + 1)]),
-                      (C.globalAlpha = le % 1),
+                      (ee = g.imgCoords["newUps" + ((Math.floor(xe) % 3) + 1)]),
+                      (C.globalAlpha = xe % 1),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        Y.x,
-                        Y.y,
-                        Y.w,
-                        de,
-                        ne,
-                        ae,
-                        Y.w * d,
-                        de * d,
+                        ee.x,
+                        ee.y,
+                        ee.w,
+                        ve,
+                        ue,
+                        ge,
+                        ee.w * c,
+                        ve * c,
                       ),
                       (C.globalAlpha = 1),
                       (0, m.drawText)(
                         C,
                         v.lang.get("game.msg.choose_upgrade"),
                         "#4BA6FA",
-                        8 * d,
-                        ne + 5 * d,
-                        ae + 10 * d,
-                        200 * d,
+                        8 * c,
+                        ue + 5 * c,
+                        ge + 10 * c,
+                        200 * c,
                         "left",
                         1,
                         void 0,
                         void 0,
-                        100 * d,
+                        100 * c,
                       ),
                       (0, m.drawText)(
                         C,
@@ -34717,163 +34863,163 @@ var c_hasPressedCtrlRKey = false;
                           ],
                         }),
                         "#4BA6FA",
-                        6 * d,
-                        ne + 6 * d,
-                        ae + 21 * d,
-                        200 * d,
+                        6 * c,
+                        ue + 6 * c,
+                        ge + 21 * c,
+                        200 * c,
                         "left",
                         1,
                         void 0,
                         void 0,
-                        100 * d,
+                        100 * c,
                       ),
-                      u.Input.x <= Y.w * d &&
-                        u.Input.y >= ae &&
+                      u.Input.x <= ee.w * c &&
+                        u.Input.y >= ge &&
                         ((this.upgNotificationHovered = !0),
-                        (le = ((this.game.ticksCounter / 5) % 4) + 1),
-                        (Y = g.imgCoords["newUpsFrame" + Math.floor(le)]),
-                        (C.globalAlpha = 1 - (le % 1)),
+                        (xe = ((this.game.ticksCounter / 5) % 4) + 1),
+                        (ee = g.imgCoords["newUpsFrame" + Math.floor(xe)]),
+                        (C.globalAlpha = 1 - (xe % 1)),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          Y.x,
-                          Y.y,
-                          Y.w,
-                          Y.h,
-                          ne - 1 * d,
-                          ae - 2 * d,
-                          Y.w * d,
-                          Y.h * d,
+                          ee.x,
+                          ee.y,
+                          ee.w,
+                          ee.h,
+                          ue - 1 * c,
+                          ge - 2 * c,
+                          ee.w * c,
+                          ee.h * c,
                         ),
-                        (Y =
+                        (ee =
                           g.imgCoords[
-                            "newUpsFrame" + ((Math.floor(le) % 4) + 1)
+                            "newUpsFrame" + ((Math.floor(xe) % 4) + 1)
                           ]),
-                        (C.globalAlpha = le % 1),
+                        (C.globalAlpha = xe % 1),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          Y.x,
-                          Y.y,
-                          Y.w,
-                          Y.h,
-                          ne - 1 * d,
-                          ae - 2 * d,
-                          Y.w * d,
-                          Y.h * d,
+                          ee.x,
+                          ee.y,
+                          ee.w,
+                          ee.h,
+                          ue - 1 * c,
+                          ge - 2 * c,
+                          ee.w * c,
+                          ee.h * c,
                         ),
                         (C.globalAlpha = 1)));
-                  } else if (oe.length > 0) {
-                    (this.currentUpgChoicesStart + 350 > i &&
-                      (ne -=
-                        (d * Y.w * (this.currentUpgChoicesStart + 350 - i)) /
+                  } else if (pe.length > 0) {
+                    (this.currentUpgChoicesStart + 350 > a &&
+                      (ue -=
+                        (c * ee.w * (this.currentUpgChoicesStart + 350 - a)) /
                         350),
-                      this.currentUpgChoicesEnd < i &&
-                        (ne -=
-                          (d * Y.w * (i - this.currentUpgChoicesEnd)) / 350));
-                    for (h = 0; oe && h < oe.length; h++) {
-                      var me = oe[h],
-                        ce = me.img,
-                        ge = (16 * d) / Math.max(ce.w, ce.h);
+                      this.currentUpgChoicesEnd < a &&
+                        (ue -=
+                          (c * ee.w * (a - this.currentUpgChoicesEnd)) / 350));
+                    for (d = 0; pe && d < pe.length; d++) {
+                      var Se = pe[d],
+                        be = Se.img,
+                        _e = (16 * c) / Math.max(be.w, be.h);
                       (C.drawImage(
                         n.imgs.miscSheet,
-                        Y.x,
-                        Y.y,
-                        Y.w,
-                        Y.h,
-                        ne,
-                        ae,
-                        Y.w * d,
-                        Y.h * d,
+                        ee.x,
+                        ee.y,
+                        ee.w,
+                        ee.h,
+                        ue,
+                        ge,
+                        ee.w * c,
+                        ee.h * c,
                       ),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          ce.x,
-                          ce.y,
-                          ce.w,
-                          ce.h,
-                          ne + (Y.h * d) / 2 - (ce.w * ge) / 2 - 1 * d,
-                          ae + (Y.h * d) / 2 - (ce.h * ge) / 2,
-                          ce.w * ge,
-                          ce.h * ge,
+                          be.x,
+                          be.y,
+                          be.w,
+                          be.h,
+                          ue + (ee.h * c) / 2 - (be.w * _e) / 2 - 1 * c,
+                          ge + (ee.h * c) / 2 - (be.h * _e) / 2,
+                          be.w * _e,
+                          be.h * _e,
                         ),
                         (0, m.drawText)(
                           C,
-                          me.cost.toString(),
+                          Se.cost.toString(),
                           "#5cc3ef",
-                          7.5 * d,
-                          ne + 108 * d,
-                          ae + 18 * d,
+                          7.5 * c,
+                          ue + 108 * c,
+                          ge + 18 * c,
                         ),
                         (0, m.drawText)(
                           C,
-                          me.text,
+                          Se.text,
                           "#FFFDC0",
-                          6.5 * d,
-                          ne + 24 * d,
-                          ae + 22 * d,
-                          150 * d,
+                          6.5 * c,
+                          ue + 24 * c,
+                          ge + 22 * c,
+                          150 * c,
                           "left",
                           1,
                           void 0,
                           void 0,
-                          70 * d,
+                          70 * c,
                         ));
-                      for (var ue = 0; ue < me.maxLvl; ue++)
+                      for (var Ce = 0; Ce < Se.maxLvl; Ce++)
                         ((C.fillStyle =
-                          ue < me.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
+                          Ce < Se.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
                           C.fillRect(
-                            ne + 24 * d + 11 * ue * d,
-                            ae + 4 * d,
-                            10 * d,
-                            2 * d,
+                            ue + 24 * c + 11 * Ce * c,
+                            ge + 4 * c,
+                            10 * c,
+                            2 * c,
                           ));
-                      (this.lastChoiceIndex === h &&
-                      this.selectedChoiceUntil > i
+                      (this.lastChoiceIndex === d &&
+                      this.selectedChoiceUntil > a
                         ? this.game.ticksCounter % 2 == 1 &&
                           ((C.globalAlpha = 0.75),
                           C.drawImage(
                             n.imgs.miscSheet,
-                            re.x,
-                            re.y,
-                            re.w,
-                            re.h,
-                            ne,
-                            ae,
-                            re.w * d,
-                            re.h * d,
+                            ye.x,
+                            ye.y,
+                            ye.w,
+                            ye.h,
+                            ue,
+                            ge,
+                            ye.w * c,
+                            ye.h * c,
                           ),
                           (C.globalAlpha = 1))
-                        : u.Input.x <= ne + Y.w * d &&
-                          u.Input.y >= ae &&
-                          u.Input.y <= ae + Y.h * d &&
-                          ((this.hoverChoice = me),
+                        : u.Input.x <= ue + ee.w * c &&
+                          u.Input.y >= ge &&
+                          u.Input.y <= ge + ee.h * c &&
+                          ((this.hoverChoice = Se),
                           (C.globalAlpha = 0.4),
                           C.drawImage(
                             n.imgs.miscSheetWhite,
-                            Y.x,
-                            Y.y,
-                            Y.w,
-                            Y.h,
-                            ne,
-                            ae,
-                            Y.w * d,
-                            Y.h * d,
+                            ee.x,
+                            ee.y,
+                            ee.w,
+                            ee.h,
+                            ue,
+                            ge,
+                            ee.w * c,
+                            ee.h * c,
                           ),
                           (C.globalAlpha = 1)),
-                        (ae -= (Y.h + 1) * d));
+                        (ge -= (ee.h + 1) * c));
                     }
-                    ((F = g.imgCoords.upgSkip),
-                      (ne += 5 * d),
-                      (ae += (Y.h + 1) * d - F.h * d),
+                    ((P = g.imgCoords.upgSkip),
+                      (ue += 5 * c),
+                      (ge += (ee.h + 1) * c - P.h * c),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        F.x,
-                        F.y,
-                        F.w,
-                        F.h,
-                        ne,
-                        ae,
-                        F.w * d,
-                        F.h * d,
+                        P.x,
+                        P.y,
+                        P.w,
+                        P.h,
+                        ue,
+                        ge,
+                        P.w * c,
+                        P.h * c,
                       ),
                       (0, m.drawText)(
                         C,
@@ -34883,53 +35029,53 @@ var c_hasPressedCtrlRKey = false;
                           ],
                         }),
                         "#304420",
-                        6.5 * d,
-                        ne + 17 * d,
-                        ae + 12 * d,
-                        100 * d,
+                        6.5 * c,
+                        ue + 17 * c,
+                        ge + 12 * c,
+                        100 * c,
                         "left",
                         1,
                         void 0,
                         void 0,
-                        62 * d,
+                        62 * c,
                         "#688551",
                       ),
-                      ((u.Input.x <= ne + F.w * d &&
-                        u.Input.y >= ae &&
-                        u.Input.y <= ae + F.h * d) ||
+                      ((u.Input.x <= ue + P.w * c &&
+                        u.Input.y >= ge &&
+                        u.Input.y <= ge + P.h * c) ||
                         u.Input.keys[u.commandKeys[u.COMMAND.PICK_UPGRADE]]) &&
                         ((C.globalAlpha = 0.3),
                         C.drawImage(
                           n.imgs.miscSheetWhite,
-                          F.x,
-                          F.y,
-                          F.w,
-                          F.h,
-                          ne,
-                          ae,
-                          F.w * d,
-                          F.h * d,
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
+                          ue,
+                          ge,
+                          P.w * c,
+                          P.h * c,
                         ),
                         (C.globalAlpha = 1),
                         (this.skipButtonHover = !0)),
-                      this.currentUpgChoicesEnd + 200 < i &&
+                      this.currentUpgChoicesEnd + 200 < a &&
                         this.upgradeChoicesAvailable &&
-                        ((F = g.imgCoords.upgUnskip),
-                        (ne = 5 * d),
-                        (ae =
+                        ((P = g.imgCoords.upgUnskip),
+                        (ue = 5 * c),
+                        (ge =
                           window.innerHeight -
-                          (g.imgCoords.newStatsFrame.h + 1) * d -
-                          F.h * d),
+                          (g.imgCoords.newStatsFrame.h + 1) * c -
+                          P.h * c),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          F.x,
-                          F.y,
-                          F.w,
-                          F.h,
-                          ne,
-                          ae,
-                          F.w * d,
-                          F.h * d,
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
+                          ue,
+                          ge,
+                          P.w * c,
+                          P.h * c,
                         ),
                         (0, m.drawText)(
                           C,
@@ -34939,34 +35085,34 @@ var c_hasPressedCtrlRKey = false;
                             ],
                           }),
                           "#304420",
-                          6.5 * d,
-                          ne + 17 * d,
-                          ae + 12 * d,
-                          200 * d,
+                          6.5 * c,
+                          ue + 17 * c,
+                          ge + 12 * c,
+                          200 * c,
                           "left",
                           1,
                           void 0,
                           void 0,
-                          64 * d,
+                          64 * c,
                           "#688551",
                         ),
-                        ((u.Input.x <= ne + F.w * d &&
-                          u.Input.y >= ae &&
-                          u.Input.y <= ae + F.h * d) ||
+                        ((u.Input.x <= ue + P.w * c &&
+                          u.Input.y >= ge &&
+                          u.Input.y <= ge + P.h * c) ||
                           u.Input.keys[
                             u.commandKeys[u.COMMAND.PICK_UPGRADE]
                           ]) &&
                           ((C.globalAlpha = 0.3),
                           C.drawImage(
                             n.imgs.miscSheetWhite,
-                            F.x,
-                            F.y,
-                            F.w,
-                            F.h,
-                            ne,
-                            ae,
-                            F.w * d,
-                            F.h * d,
+                            P.x,
+                            P.y,
+                            P.w,
+                            P.h,
+                            ue,
+                            ge,
+                            P.w * c,
+                            P.h * c,
                           ),
                           (C.globalAlpha = 1),
                           (this.unskipButtonHover = !0))));
@@ -34985,17 +35131,17 @@ var c_hasPressedCtrlRKey = false;
                       S.width,
                       S.height,
                     ));
-                  Y = g.imgCoords.main_logo;
+                  ee = g.imgCoords.main_logo;
                   (b.drawImage(
                     n.imgs.miscSheet,
-                    Y.x,
-                    Y.y,
-                    Y.w,
-                    Y.h,
+                    ee.x,
+                    ee.y,
+                    ee.w,
+                    ee.h,
                     2,
-                    S.height - 2 - Y.h,
-                    Y.w,
-                    Y.h,
+                    S.height - 2 - ee.h,
+                    ee.w,
+                    ee.h,
                   ),
                     this.gif.addFrame(b, { delay: 50, copy: !0 }));
                 }
@@ -35007,21 +35153,21 @@ var c_hasPressedCtrlRKey = false;
                     (this.game.cureTick = 0),
                   this.game.cureTick)
                 ) {
-                  Y = g.imgCoords.cureButton;
-                  var pe = 2.08;
+                  ee = g.imgCoords.cureButton;
+                  var Ie = 2.08;
                   C.drawImage(
                     n.imgs.miscSheet,
-                    Y.x,
-                    Y.y,
-                    Y.w,
-                    Y.h,
+                    ee.x,
+                    ee.y,
+                    ee.w,
+                    ee.h,
                     208,
                     6.24,
-                    Y.w * pe,
-                    Y.h * pe,
+                    ee.w * Ie,
+                    ee.h * Ie,
                   );
-                  var ye = v.lang.get("game.buttons.cure");
-                  ((ye +=
+                  var Me = v.lang.get("game.buttons.cure");
+                  ((Me +=
                     " ( " +
                     Math.floor(
                       (this.game.cureTick - this.game.ticksCounter) / 20,
@@ -35029,29 +35175,29 @@ var c_hasPressedCtrlRKey = false;
                     " )"),
                     (0, m.drawText)(
                       C,
-                      ye,
+                      Me,
                       "white",
-                      8 * d,
-                      pe * (100 + 0.5 * Y.w),
+                      8 * c,
+                      Ie * (100 + 0.5 * ee.w),
                       49.92,
-                      200 * d,
+                      200 * c,
                       "center",
                     ),
                     u.Input.x >= 208 &&
-                      u.Input.x <= (Y.w + 100) * pe &&
-                      u.Input.y <= Y.h * pe &&
+                      u.Input.x <= (ee.w + 100) * Ie &&
+                      u.Input.y <= ee.h * Ie &&
                       ((this.cureButtonHovered = !0),
                       (C.globalAlpha = 0.5),
                       C.drawImage(
                         n.imgs.miscSheetWhite,
-                        Y.x,
-                        Y.y,
-                        Y.w,
-                        Y.h,
+                        ee.x,
+                        ee.y,
+                        ee.w,
+                        ee.h,
                         208,
                         6.24,
-                        Y.w * pe,
-                        Y.h * pe,
+                        ee.w * Ie,
+                        ee.h * Ie,
                       ),
                       (C.globalAlpha = 1)));
                 }
@@ -35060,143 +35206,143 @@ var c_hasPressedCtrlRKey = false;
                   (this.replayMinusHover = !1),
                   this.game.replayMode && this.replayLength)
                 ) {
-                  d = 0.8 * this.game.SCALE_FACTOR_BASE;
-                  ((Y = g.imgCoords.replayBar), (F = g.imgCoords.replayPos));
-                  var fe = this.replayTimer / this.replayLength;
-                  J =
+                  c = 0.8 * this.game.SCALE_FACTOR_BASE;
+                  ((ee = g.imgCoords.replayBar), (P = g.imgCoords.replayPos));
+                  var Te = this.replayTimer / this.replayLength;
+                  le =
                     " " +
                     (0, m.ticks2TimeStr)(this.replayTimer) +
                     " / " +
                     this.replayLengthStr;
                   (this.game.fastForward && this.fastForwardTo > 0
-                    ? (J +=
+                    ? (le +=
                         " (" + (0, m.ticks2TimeStr)(this.fastForwardTo) + ")")
                     : ((this.provisionalReplayPos = -1),
                       (this.provisionalReplayPerc = -1),
-                      u.Input.x <= 90 * d &&
-                        u.Input.y >= window.innerHeight - (Y.h + 2) * d &&
+                      u.Input.x <= 90 * c &&
+                        u.Input.y >= window.innerHeight - (ee.h + 2) * c &&
                         ((this.provisionalReplayPerc = Math.min(
-                          Math.max((u.Input.x / d - 5) / 78, 0),
+                          Math.max((u.Input.x / c - 5) / 78, 0),
                           1,
                         )),
                         (this.provisionalReplayPos = Math.floor(
                           this.provisionalReplayPerc * this.replayLength,
                         )),
-                        (J +=
+                        (le +=
                           " (" +
                           (0, m.ticks2TimeStr)(this.provisionalReplayPos) +
                           ")"))),
                     (0, m.drawText)(
                       C,
-                      J,
+                      le,
                       "white",
-                      6 * d,
-                      4 * d,
-                      window.innerHeight - (Y.h + 6) * d,
-                      200 * d,
+                      6 * c,
+                      4 * c,
+                      window.innerHeight - (ee.h + 6) * c,
+                      200 * c,
                       "left",
                       1,
                       "rgba(0, 0, 0, 0.5)",
-                      10 * d,
+                      10 * c,
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      Y.x,
-                      Y.y,
-                      Y.w,
-                      Y.h,
-                      2 * d,
-                      window.innerHeight - (Y.h + 2) * d,
-                      Y.w * d,
-                      Y.h * d,
+                      ee.x,
+                      ee.y,
+                      ee.w,
+                      ee.h,
+                      2 * c,
+                      window.innerHeight - (ee.h + 2) * c,
+                      ee.w * c,
+                      ee.h * c,
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      F.x,
-                      F.y,
-                      F.w,
-                      F.h,
-                      d * (5 + 78 * fe),
-                      window.innerHeight - (F.h + 2) * d,
-                      F.w * d,
-                      F.h * d,
+                      P.x,
+                      P.y,
+                      P.w,
+                      P.h,
+                      c * (5 + 78 * Te),
+                      window.innerHeight - (P.h + 2) * c,
+                      P.w * c,
+                      P.h * c,
                     ),
                     this.game.fastForward && this.fastForwardTo > 0
                       ? ((C.globalAlpha = 0.5),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          F.x,
-                          F.y,
-                          F.w,
-                          F.h,
-                          d *
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
+                          c *
                             (5 + (this.fastForwardTo / this.replayLength) * 78),
-                          window.innerHeight - (F.h + 2) * d,
-                          F.w * d,
-                          F.h * d,
+                          window.innerHeight - (P.h + 2) * c,
+                          P.w * c,
+                          P.h * c,
                         ),
                         (C.globalAlpha = 1))
                       : this.provisionalReplayPerc >= 0 &&
                         ((C.globalAlpha = 0.5),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          F.x,
-                          F.y,
-                          F.w,
-                          F.h,
-                          d * (5 + 78 * this.provisionalReplayPerc),
-                          window.innerHeight - (F.h + 2) * d,
-                          F.w * d,
-                          F.h * d,
+                          P.x,
+                          P.y,
+                          P.w,
+                          P.h,
+                          c * (5 + 78 * this.provisionalReplayPerc),
+                          window.innerHeight - (P.h + 2) * c,
+                          P.w * c,
+                          P.h * c,
                         ),
                         (C.globalAlpha = 1)),
-                    (Y = g.imgCoords.replayPlusMinus),
+                    (ee = g.imgCoords.replayPlusMinus),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      Y.x,
-                      Y.y,
-                      Y.w,
-                      Y.h,
-                      90 * d,
-                      window.innerHeight - (Y.h + 2) * d,
-                      Y.w * d,
-                      Y.h * d,
+                      ee.x,
+                      ee.y,
+                      ee.w,
+                      ee.h,
+                      90 * c,
+                      window.innerHeight - (ee.h + 2) * c,
+                      ee.w * c,
+                      ee.h * c,
                     ),
-                    u.Input.x >= 90 * d &&
-                      u.Input.x <= (90 + Y.w) * d &&
-                      u.Input.y >= window.innerHeight - (Y.h + 2) * d &&
-                      u.Input.y <= window.innerHeight - (Y.h + 2 - 9) * d &&
+                    u.Input.x >= 90 * c &&
+                      u.Input.x <= (90 + ee.w) * c &&
+                      u.Input.y >= window.innerHeight - (ee.h + 2) * c &&
+                      u.Input.y <= window.innerHeight - (ee.h + 2 - 9) * c &&
                       ((this.replayPlusHover = !0),
-                      (F = g.imgCoords.replayWhite),
+                      (P = g.imgCoords.replayWhite),
                       (C.globalAlpha = 0.2),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        F.x,
-                        F.y,
-                        F.w,
-                        F.h,
-                        90 * d,
-                        window.innerHeight - (Y.h + 2) * d,
-                        F.w * d,
-                        F.h * d,
+                        P.x,
+                        P.y,
+                        P.w,
+                        P.h,
+                        90 * c,
+                        window.innerHeight - (ee.h + 2) * c,
+                        P.w * c,
+                        P.h * c,
                       ),
                       (C.globalAlpha = 1)),
-                    u.Input.x >= 90 * d &&
-                      u.Input.x <= (90 + Y.w) * d &&
-                      u.Input.y >= window.innerHeight - (Y.h + 2 - 9) * d &&
+                    u.Input.x >= 90 * c &&
+                      u.Input.x <= (90 + ee.w) * c &&
+                      u.Input.y >= window.innerHeight - (ee.h + 2 - 9) * c &&
                       ((this.replayMinusHover = !0),
-                      (F = g.imgCoords.replayWhite),
+                      (P = g.imgCoords.replayWhite),
                       (C.globalAlpha = 0.2),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        F.x,
-                        F.y,
-                        F.w,
-                        F.h,
-                        90 * d,
-                        window.innerHeight - (Y.h + 2 - 9) * d,
-                        F.w * d,
-                        F.h * d,
+                        P.x,
+                        P.y,
+                        P.w,
+                        P.h,
+                        90 * c,
+                        window.innerHeight - (ee.h + 2 - 9) * c,
+                        P.w * c,
+                        P.h * c,
                       ),
                       (C.globalAlpha = 1)),
                     (this.gifButtonIsHovered = !1),
@@ -35206,45 +35352,45 @@ var c_hasPressedCtrlRKey = false;
                             C,
                             " gif is being processed ...",
                             "white",
-                            6 * d,
-                            4 * d,
-                            window.innerHeight - 38 * d,
-                            200 * d,
+                            6 * c,
+                            4 * c,
+                            window.innerHeight - 38 * c,
+                            200 * c,
                             "left",
                             1,
                             "rgba(0, 0, 0, 0.5)",
-                            10 * d,
+                            10 * c,
                           )
-                        : ((Y = this.recordGIF
+                        : ((ee = this.recordGIF
                             ? g.imgCoords.stopGif
                             : g.imgCoords.startGif),
                           C.drawImage(
                             n.imgs.miscSheet,
-                            Y.x,
-                            Y.y,
-                            Y.w,
-                            Y.h,
-                            2 * d,
-                            window.innerHeight - (34 + Y.h) * d,
-                            Y.w * d,
-                            Y.h * d,
+                            ee.x,
+                            ee.y,
+                            ee.w,
+                            ee.h,
+                            2 * c,
+                            window.innerHeight - (34 + ee.h) * c,
+                            ee.w * c,
+                            ee.h * c,
                           ),
-                          u.Input.x <= (Y.w + 2) * d &&
-                            u.Input.y >= window.innerHeight - (Y.h + 34) * d &&
-                            u.Input.y <= window.innerHeight - 34 * d &&
+                          u.Input.x <= (ee.w + 2) * c &&
+                            u.Input.y >= window.innerHeight - (ee.h + 34) * c &&
+                            u.Input.y <= window.innerHeight - 34 * c &&
                             ((this.gifButtonIsHovered = !0),
-                            (Y = g.imgCoords.whiteGif),
+                            (ee = g.imgCoords.whiteGif),
                             (C.globalAlpha = 0.2),
                             C.drawImage(
                               n.imgs.miscSheet,
-                              Y.x,
-                              Y.y,
-                              Y.w,
-                              Y.h,
-                              2 * d,
-                              window.innerHeight - (34 + Y.h) * d,
-                              Y.w * d,
-                              Y.h * d,
+                              ee.x,
+                              ee.y,
+                              ee.w,
+                              ee.h,
+                              2 * c,
+                              window.innerHeight - (34 + ee.h) * c,
+                              ee.w * c,
+                              ee.h * c,
                             ),
                             (C.globalAlpha = 1)),
                           this.recordGIF &&
@@ -35252,56 +35398,56 @@ var c_hasPressedCtrlRKey = false;
                               C,
                               " recording ...",
                               "white",
-                              6 * d,
-                              (4 + Y.w) * d,
-                              window.innerHeight - 38 * d,
-                              200 * d,
+                              6 * c,
+                              (4 + ee.w) * c,
+                              window.innerHeight - 38 * c,
+                              200 * c,
                               "left",
                               1,
                               "rgba(0, 0, 0, 0.5)",
-                              10 * d,
+                              10 * c,
                             ))));
                 }
                 if (this.ladderEndAt > 0) {
-                  he = (Date.now() - this.ladderEndAt) / 1e3;
-                  var xe = Math.min(20.8 * he, 500),
-                    we = C.createLinearGradient(
+                  we = (Date.now() - this.ladderEndAt) / 1e3;
+                  var Ee = Math.min(20.8 * we, 500),
+                    ke = C.createLinearGradient(
                       0,
                       0.2 * window.innerHeight,
                       0,
                       0.8 * window.innerHeight,
                     );
-                  (we.addColorStop(0, "rgba(0, 0, 0, 0)"),
-                    we.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
-                    we.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
-                    we.addColorStop(1, "rgba(0, 0, 0, 0)"),
-                    (C.fillStyle = we),
+                  (ke.addColorStop(0, "rgba(0, 0, 0, 0)"),
+                    ke.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
+                    ke.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
+                    ke.addColorStop(1, "rgba(0, 0, 0, 0)"),
+                    (C.fillStyle = ke),
                     C.fillRect(
                       0,
                       0.5 * window.innerHeight -
-                        15 * this.game.SCALE_FACTOR_BASE * xe,
+                        15 * this.game.SCALE_FACTOR_BASE * Ee,
                       window.innerWidth,
-                      30 * this.game.SCALE_FACTOR_BASE * xe,
+                      30 * this.game.SCALE_FACTOR_BASE * Ee,
                     ));
-                  G = "rgba(100, 255, 100, " + Math.min(1, 2 * he) + ")";
+                  W = "rgba(100, 255, 100, " + Math.min(1, 2 * we) + ")";
                   ("You lose!" === this.ladderEndMsg &&
-                    (G = "rgba(255, 100, 100, " + Math.min(1, 2 * he) + ")"),
+                    (W = "rgba(255, 100, 100, " + Math.min(1, 2 * we) + ")"),
                     "Draw!" === this.ladderEndMsg &&
-                      (G = "rgba(255, 255, 100, " + Math.min(1, 2 * he) + ")"));
-                  var ve =
-                    "rgba(100, 255, 100, " + 0.6 * Math.min(1, 2 * he) + ")";
+                      (W = "rgba(255, 255, 100, " + Math.min(1, 2 * we) + ")"));
+                  var Le =
+                    "rgba(100, 255, 100, " + 0.6 * Math.min(1, 2 * we) + ")";
                   ("You lose!" === this.ladderEndMsg &&
-                    (ve =
-                      "rgba(255, 100, 100, " + 0.6 * Math.min(1, 2 * he) + ")"),
+                    (Le =
+                      "rgba(255, 100, 100, " + 0.6 * Math.min(1, 2 * we) + ")"),
                     "Draw!" === this.ladderEndMsg &&
-                      (ve =
+                      (Le =
                         "rgba(255, 255, 100, " +
-                        0.6 * Math.min(1, 2 * he) +
+                        0.6 * Math.min(1, 2 * we) +
                         ")"),
                     (0, m.drawText)(
                       C,
                       this.ladderEndMsg,
-                      G,
+                      W,
                       11 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight -
@@ -35312,7 +35458,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[0],
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * he) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * we) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth -
                         14 * this.game.SCALE_FACTOR_BASE,
@@ -35324,7 +35470,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[2],
-                      "rgba(255, 255, 100, " + Math.min(1, 2 * he) + ")",
+                      "rgba(255, 255, 100, " + Math.min(1, 2 * we) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth -
                         1.9 * this.game.SCALE_FACTOR_BASE,
@@ -35336,7 +35482,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       ":",
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * he) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * we) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35347,7 +35493,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[1],
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * he) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * we) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth +
                         14 * this.game.SCALE_FACTOR_BASE,
@@ -35358,7 +35504,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[3],
-                      "rgba(255, 255, 100, " + Math.min(1, 2 * he) + ")",
+                      "rgba(255, 255, 100, " + Math.min(1, 2 * we) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth +
                         2.9 * this.game.SCALE_FACTOR_BASE,
@@ -35370,7 +35516,7 @@ var c_hasPressedCtrlRKey = false;
                       (0, m.drawText)(
                         C,
                         this.ladderMsgArr[4],
-                        ve,
+                        Le,
                         3.5 * this.game.SCALE_FACTOR_BASE,
                         0.5 * window.innerWidth,
                         0.5 * window.innerHeight +
@@ -35378,69 +35524,69 @@ var c_hasPressedCtrlRKey = false;
                         window.innerWidth,
                         "center",
                       ));
-                  var Se = this.game.SCALE_FACTOR_BASE,
-                    be = 0.4 * this.game.SCALE_FACTOR_BASE;
+                  var Ae = this.game.SCALE_FACTOR_BASE,
+                    Fe = 0.4 * this.game.SCALE_FACTOR_BASE;
                   C.fillStyle = "white";
-                  Y =
+                  ee =
                     "You lose!" === this.ladderEndMsg
                       ? g.imgCoords.light_red
                       : g.imgCoords.light_green;
-                  for (var _e = 0.5 * window.innerWidth; _e > 0; _e -= 7 * Se) {
+                  for (var Pe = 0.5 * window.innerWidth; Pe > 0; Pe -= 7 * Ae) {
                     C.globalAlpha = Math.max(
                       1 -
                         5 *
                           Math.abs(
-                            1 - (he - 0.4) - _e / (0.5 * window.innerWidth),
+                            1 - (we - 0.4) - Pe / (0.5 * window.innerWidth),
                           ),
                       0,
                     );
-                    var Ce =
+                    var Ne =
                       Math.pow(
                         Math.max(
                           1 -
                             5 *
                               Math.abs(
-                                1 - (he - 0.4) - _e / (0.5 * window.innerWidth),
+                                1 - (we - 0.4) - Pe / (0.5 * window.innerWidth),
                               ),
                           0,
                         ),
                         2,
                       ) *
-                      Se *
+                      Ae *
                       2;
                     (C.drawImage(
                       n.imgs.miscSheet,
-                      Y.x,
-                      Y.y,
-                      Y.w,
-                      Y.h,
-                      _e - 0.5 * Y.w * be,
-                      0.5 * window.innerHeight - 0.5 * Y.w * be,
-                      Y.w * be,
-                      Y.h * be,
+                      ee.x,
+                      ee.y,
+                      ee.w,
+                      ee.h,
+                      Pe - 0.5 * ee.w * Fe,
+                      0.5 * window.innerHeight - 0.5 * ee.w * Fe,
+                      ee.w * Fe,
+                      ee.h * Fe,
                     ),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        Y.x,
-                        Y.y,
-                        Y.w,
-                        Y.h,
-                        window.innerWidth - _e - 0.5 * Y.w * be,
-                        0.5 * window.innerHeight - 0.5 * Y.w * be,
-                        Y.w * be,
-                        Y.h * be,
+                        ee.x,
+                        ee.y,
+                        ee.w,
+                        ee.h,
+                        window.innerWidth - Pe - 0.5 * ee.w * Fe,
+                        0.5 * window.innerHeight - 0.5 * ee.w * Fe,
+                        ee.w * Fe,
+                        ee.h * Fe,
                       ),
                       C.fillRect(
-                        _e - Se,
-                        0.5 * window.innerHeight - Ce,
-                        2 * Se,
-                        2 * Ce,
+                        Pe - Ae,
+                        0.5 * window.innerHeight - Ne,
+                        2 * Ae,
+                        2 * Ne,
                       ),
                       C.fillRect(
-                        window.innerWidth - _e - Se,
-                        0.5 * window.innerHeight - Ce,
-                        2 * Se,
-                        2 * Ce,
+                        window.innerWidth - Pe - Ae,
+                        0.5 * window.innerHeight - Ne,
+                        2 * Ae,
+                        2 * Ne,
                       ));
                   }
                   C.globalAlpha = 1;
@@ -35450,9 +35596,9 @@ var c_hasPressedCtrlRKey = false;
                   this.game.ticksCounter < 139 &&
                   this.ladderEndAt <= 0
                 ) {
-                  var Ie = 0;
+                  var De = 0;
                   if (
-                    (J = ["5", "4", "3", "2", "1", "Go!"][
+                    (le = ["5", "4", "3", "2", "1", "Go!"][
                       Math.floor(this.game.ticksCounter / 20)
                     ])
                   ) {
@@ -35465,16 +35611,16 @@ var c_hasPressedCtrlRKey = false;
                         40 * this.game.SCALE_FACTOR_BASE +
                           this.game.SCALE_FACTOR_BASE,
                       ),
-                      (Ie = 1));
-                    G =
+                      (De = 1));
+                    W =
                       "rgba(100, 255, 100, " +
-                      (1 - 0.3 * (he = (this.game.ticksCounter / 20) % 1)) +
+                      (1 - 0.3 * (we = (this.game.ticksCounter / 20) % 1)) +
                       ")";
                     (0, m.drawText)(
                       C,
-                      J,
-                      G,
-                      this.game.SCALE_FACTOR_BASE * (11 + 4 * he),
+                      le,
+                      W,
+                      this.game.SCALE_FACTOR_BASE * (11 + 4 * we),
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight -
                         2 * this.game.SCALE_FACTOR_BASE,
@@ -35482,10 +35628,10 @@ var c_hasPressedCtrlRKey = false;
                       "center",
                     );
                   } else {
-                    he = 1 - (this.game.ticksCounter % 20) / 20;
-                    ((Ie = Math.max(0.5 * he, 0)),
+                    we = 1 - (this.game.ticksCounter % 20) / 20;
+                    ((De = Math.max(0.5 * we, 0)),
                       (C.fillStyle =
-                        "rgba(0, 0, 0, " + Math.max(0.5 * he, 0) + ")"),
+                        "rgba(0, 0, 0, " + Math.max(0.5 * we, 0) + ")"),
                       C.fillRect(
                         0,
                         0.5 * window.innerHeight -
@@ -35499,7 +35645,7 @@ var c_hasPressedCtrlRKey = false;
                     ((0, m.drawText)(
                       C,
                       this.game.players[0].name,
-                      "rgba(255, 255, 255, " + Ie + ")",
+                      "rgba(255, 255, 255, " + De + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth - 8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerHeight +
@@ -35510,7 +35656,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       "vs",
-                      "rgba(255, 255, 100, " + Ie + ")",
+                      "rgba(255, 255, 100, " + De + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35521,7 +35667,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       this.game.players[1].name,
-                      "rgba(255, 255, 255, " + Ie + ")",
+                      "rgba(255, 255, 255, " + De + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth + 8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerHeight +
@@ -35531,7 +35677,7 @@ var c_hasPressedCtrlRKey = false;
                     (0, m.drawText)(
                       C,
                       "First player who dies 5 times, loses.",
-                      "rgba(180, 180, 180, " + Ie + ")",
+                      "rgba(180, 180, 180, " + De + ")",
                       3 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -37115,8 +37261,8 @@ var c_hasPressedCtrlRKey = false;
           F = i(1893),
           P = i(6968),
           N = i(8117),
-          B = i(4180),
-          D = i(9038),
+          D = i(4180),
+          B = i(9038),
           O = i(6214),
           R = i(5306),
           H = document.getElementById("lpd"),
@@ -37294,7 +37440,7 @@ var c_hasPressedCtrlRKey = false;
             for (var i in K) {
               var a = K[i];
               ("iconButton" === a.widget
-                ? ((a.instance = (0, B.iconButton)(
+                ? ((a.instance = (0, D.iconButton)(
                     null !== (e = a.parent) && void 0 !== e ? e : j,
                     {
                       cssId: a.cssId,
@@ -37306,7 +37452,7 @@ var c_hasPressedCtrlRKey = false;
                   a.additionalClass &&
                     a.instance.classList.add(a.additionalClass))
                 : "labelButton" === a.widget &&
-                  (a.instance = (0, D.labelButton)(
+                  (a.instance = (0, B.labelButton)(
                     null !== (t = a.parent) && void 0 !== t ? t : j,
                     {
                       cssId: a.cssId,
@@ -37571,7 +37717,7 @@ var c_hasPressedCtrlRKey = false;
             return (
               (a.maxLength = 20),
               (a.value = X.term),
-              (0, B.iconButton)(i, {
+              (0, D.iconButton)(i, {
                 customClassName: "rankingSearchBtn",
                 iconClassName: "nameFilterSearchBtnIcon",
                 theme: "small",
@@ -38372,8 +38518,8 @@ var c_hasPressedCtrlRKey = false;
           F = document.getElementById("globalChatTabGlobal"),
           P = document.getElementById("globalChatTabClan"),
           N = document.getElementById("friendChatTabs"),
-          B = document.getElementById("globalChatCollapse"),
-          D = document.getElementById("slayTVCollapse");
+          D = document.getElementById("globalChatCollapse"),
+          B = document.getElementById("slayTVCollapse");
         ((window.globalChatRiderButton = F),
           (A.maxLength = n.CHAT_MESSAGE_MAX_LENGTH),
           (A.name = "slay_chat_" + Math.random().toString(36).substr(2)),
@@ -38415,11 +38561,11 @@ var c_hasPressedCtrlRKey = false;
             e !== j &&
               ((j = e),
               localStorage.setItem("collapseHomeChat", e ? "1" : "0"),
-              V("chatCollapsed", e, B, X, !0),
+              V("chatCollapsed", e, D, X, !0),
               $(),
               e && document.activeElement === A && A.blur());
           };
-        (V("chatCollapsed", j, B, X, !1), V("tvCollapsed", Z, D, K, !1));
+        (V("chatCollapsed", j, D, X, !1), V("tvCollapsed", Z, B, K, !1));
         var Q = function (e) {
             ((q.innerText = e), (q.style.display = ""));
           },
@@ -39145,16 +39291,16 @@ var c_hasPressedCtrlRKey = false;
             (g.Sound.playSound("click"),
               t.homeScreen.setActiveChatChannel("clan"));
           }),
-          (B.onclick = function () {
+          (D.onclick = function () {
             J(!j);
           }),
-          (D.onclick = function (e) {
+          (B.onclick = function (e) {
             var t;
             (e.stopPropagation(),
               (t = !Z) !== Z &&
                 ((Z = t),
                 localStorage.setItem("collapseSlayTV", t ? "1" : "0"),
-                V("tvCollapsed", t, D, K, !0),
+                V("tvCollapsed", t, B, K, !0),
                 $()));
           }),
           window.addEventListener("globalChatHistory", function (e) {
