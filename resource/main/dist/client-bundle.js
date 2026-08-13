@@ -42112,8 +42112,8 @@ moduleOptionsScreen.showWindow = function() {
 const styleElementOfSelecableTexts = document.createElement("style");
 
 styleElementOfSelecableTexts.textContent = `
-.globalChatMessageBody {
-  user-select: text;
+.globalChatMessageBody, .chatDivContentInnerMsg {
+  user-select: text !important;
 }
 `
 
