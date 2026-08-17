@@ -40,7 +40,7 @@ Find more the custom resource urls you want to use in below.
 ## Bug Fixs & Features
 Redirect https://slay.one/dist/client-bundle.js (**client codes**) to
 - https://flashxwx.github.io/custom_slayone/resource/main/dist/client-bundle.js
-  - Made message in global chat selecable.
+  - Made message in global chat and private chat selecable.
   - Fixed some issues that are very very small, but making the user experience smoother.
   - Easily switch accounts that you had logged in before in slay.one Settings. To delete the saved account, please select and use Ctrl+DEL. 
   - Can trigger out social UI using Ctrl+/ in game.
