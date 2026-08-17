@@ -101,6 +101,8 @@
             ) {
               var R = e.call(this, t, i) || this;
               return (
+                (R._blinks = !1),
+                (R._blinkDark = !1),
                 (R._legFrame = 0),
                 (R.aimX = 0),
                 (R.aimY = 0),
@@ -125,6 +127,8 @@
                 o || (o = "Player"),
                 (R.name = (0, u.escapeHtml)(o.substr(0, 15))),
                 (R.authLevel = E),
+                (R._blinks =
+                  E <= s.AUTH_LEVEL.BOT && 0 === R.name.indexOf("T-1")),
                 (O |= 0) in h.nameColors || (O = 50),
                 O > 200 && c.options.forcePlayerNameColor && (O = 200),
                 (R.nameColor = O),
@@ -564,10 +568,23 @@
                     )));
                 }
               }),
+              (t.prototype.headImg = function (e) {
+                return this._blinkDark && o.headsBlink[e]
+                  ? o.headsBlink[e]
+                  : o.heads[e];
+              }),
               (t.prototype.update = function () {
                 if (this.removeAt && this.removeAt <= this._game.ticksCounter)
                   return !1;
-                if (this.dieAt) {
+                if (
+                  (this._blinks &&
+                    (this._blinkDark =
+                      !!this.dieAt ||
+                      (Math.random() < 0.1
+                        ? !this._blinkDark
+                        : this._blinkDark)),
+                  this.dieAt)
+                ) {
                   if (
                     (this.dieAt + 40 === this._game.ticksCounter &&
                       this.isInvisible &&
@@ -1595,7 +1612,7 @@
                           ),
                           D.hatOnly &&
                             h.drawImage(
-                              o.heads[0],
+                              this.headImg(0),
                               512 + 32 * this._legFrame,
                               0,
                               32,
@@ -1606,7 +1623,7 @@
                               32 * d,
                             ),
                           h.drawImage(
-                            o.heads[D.offset],
+                            this.headImg(D.offset),
                             512 + 32 * this._legFrame,
                             0,
                             32,
@@ -1896,7 +1913,7 @@
                             ),
                             D.hatOnly &&
                               h.drawImage(
-                                o.heads[0],
+                                this.headImg(0),
                                 512 + 32 * Ce,
                                 0,
                                 32,
@@ -1907,7 +1924,7 @@
                                 32 * d,
                               ),
                             h.drawImage(
-                              o.heads[D.offset],
+                              this.headImg(D.offset),
                               512 + 32 * Ce,
                               0,
                               32,
@@ -2039,7 +2056,7 @@
                                 45 * d,
                               ))
                             : (h.drawImage(
-                                o.heads[D.offset + 1],
+                                this.headImg(D.offset + 1),
                                 32 * V + Te,
                                 0,
                                 32,
@@ -2129,7 +2146,7 @@
                           (D.hatOnly &&
                             ((h.globalAlpha = F),
                             h.drawImage(
-                              o.heads[0],
+                              this.headImg(0),
                               32 * V + (ce ? 256 : 0),
                               0,
                               32,
@@ -2170,7 +2187,7 @@
                               (h.globalAlpha = 1))),
                             (h.globalAlpha = F),
                             h.drawImage(
-                              o.heads[D.offset],
+                              this.headImg(D.offset),
                               32 * V + (ce ? 256 : 0),
                               0,
                               32,
@@ -2629,7 +2646,23 @@
                           : (a += 0.5 * Ye),
                         (n += Ye - ze * Ge),
                         (h.fillStyle = "black"),
-                        h.fillRect(a, n, We * Ge, ze * Ge),
+                        h.fillRect(a, n, We * Ge, ze * Ge));
+                      var qe = this._game.botDebugs[this.id];
+                      (qe &&
+                        qe.short &&
+                        qe.at + 3e3 > Date.now() &&
+                        (0, u.drawText)(
+                          h,
+                          qe.short,
+                          this._game.botDebugHoverId === this.id
+                            ? "#FFD155"
+                            : "rgba(212, 212, 212, 0.85)",
+                          0.2 * this._game.FIELD_SIZE,
+                          a + (We * Ge) / 2,
+                          n - 0.34 * this._game.FIELD_SIZE,
+                          void 0,
+                          "center",
+                        ),
                         this.updateNameCanvasAnimation(),
                         h.drawImage(
                           this._nameCanvas,
@@ -2644,7 +2677,7 @@
                           We * Ge,
                           0.26 * this._game.FIELD_SIZE,
                         ));
-                      var qe = Math.min(
+                      var je = Math.min(
                           this.hp -
                             (this.hpGlideEnd >= e
                               ? (this.hpGlideAmount * (this.hpGlideEnd - e)) /
@@ -2652,51 +2685,51 @@
                               : 0),
                           this.maxHP,
                         ),
-                        je =
+                        Ze =
                           !this._game.playingPlayer ||
                           this.isAlliedWith(this._game.playingPlayer)
                             ? y.imgCoords.hpBar1
                             : y.imgCoords.hpBar3,
-                        Ze = 40 * Ge * (qe / this.maxHP);
+                        Xe = 40 * Ge * (je / this.maxHP);
                       (h.drawImage(
                         o.imgs.miscSheet,
-                        je.x,
-                        je.y,
-                        je.w,
-                        je.h,
+                        Ze.x,
+                        Ze.y,
+                        Ze.w,
+                        Ze.h,
                         a + 1 * Ge,
                         n + 1 * Ge,
-                        Ze,
+                        Xe,
                         7 * Ge,
                       ),
                         (h.strokeStyle = "rgba(0, 0, 0, 1)"),
                         (h.lineWidth = Ge));
                       for (
-                        var Xe = s.CONST.HP_SEPERATOR_AMOUNT;
-                        Xe < this.maxHP;
-                        Xe += s.CONST.HP_SEPERATOR_AMOUNT
+                        var Ke = s.CONST.HP_SEPERATOR_AMOUNT;
+                        Ke < this.maxHP;
+                        Ke += s.CONST.HP_SEPERATOR_AMOUNT
                       )
                         (h.beginPath(),
                           h.moveTo(
-                            a + 1 * Ge + (Xe / this.maxHP) * 40 * Ge,
+                            a + 1 * Ge + (Ke / this.maxHP) * 40 * Ge,
                             n + 6 * Ge,
                           ),
                           h.lineTo(
-                            a + 1 * Ge + (Xe / this.maxHP) * 40 * Ge,
+                            a + 1 * Ge + (Ke / this.maxHP) * 40 * Ge,
                             n + 8 * Ge,
                           ),
                           h.stroke());
                       if (this.armor > 0) {
-                        var Ke = (this.armor / s.CONST.MAX_ARMOR) * 40;
+                        var Ve = (this.armor / s.CONST.MAX_ARMOR) * 40;
                         (h.drawImage(
                           o.imgs.miscSheet,
                           this._armorBar.x,
                           this._armorBar.y,
-                          0.7 * Ke,
+                          0.7 * Ve,
                           this._armorBar.h,
                           a + 1 * Ge,
                           n + 1 * Ge,
-                          Ke * Ge,
+                          Ve * Ge,
                           7 * Ge,
                         ),
                           (h.strokeStyle = "#CFD2E0"),
@@ -2709,43 +2742,43 @@
                           ));
                       }
                       if (this._game.playingPlayer === this) {
-                        var Ve =
+                        var $e =
                           this._game.pl_active_abilities[this.hoverAbility];
                         (f.Input.keys[f.commandKeys[f.COMMAND.ABILITY1]] &&
-                          (Ve = this._game.pl_active_abilities[0]),
+                          ($e = this._game.pl_active_abilities[0]),
                           f.Input.keys[f.commandKeys[f.COMMAND.ABILITY2]] &&
-                            (Ve = this._game.pl_active_abilities[1]),
-                          !Ve &&
+                            ($e = this._game.pl_active_abilities[1]),
+                          !$e &&
                             f.Input.activeAbility &&
-                            (Ve = f.Input.activeAbility),
-                          Ve &&
-                            ((je = y.imgCoords.barBlue),
-                            (Ze = (Ve.energy / 100) * 40 * Ge),
+                            ($e = f.Input.activeAbility),
+                          $e &&
+                            ((Ze = y.imgCoords.barBlue),
+                            (Xe = ($e.energy / 100) * 40 * Ge),
                             (h.globalAlpha = 0.6),
                             h.drawImage(
                               o.imgs.miscSheet,
-                              je.x,
-                              je.y,
-                              je.w,
-                              je.h,
+                              Ze.x,
+                              Ze.y,
+                              Ze.w,
+                              Ze.h,
                               a + 1 * Ge,
                               n + 9 * Ge,
-                              Ze,
+                              Xe,
                               3 * Ge,
                             ),
                             (h.globalAlpha = 1)),
-                          (je = y.imgCoords.energyBar),
-                          (Ze =
+                          (Ze = y.imgCoords.energyBar),
+                          (Xe =
                             (this._game.playingPlayerEnergy / 100) * 40 * Ge),
                           h.drawImage(
                             o.imgs.miscSheet,
-                            je.x,
-                            je.y,
-                            je.w,
-                            je.h,
+                            Ze.x,
+                            Ze.y,
+                            Ze.w,
+                            Ze.h,
                             a + 1 * Ge,
                             n + 9 * Ge,
-                            Ze,
+                            Xe,
                             3 * Ge,
                           ));
                       }
@@ -2761,7 +2794,7 @@
                                 1.56 * this._game.FIELD_SIZE,
                                 0.3 * this._game.FIELD_SIZE,
                               ),
-                              (Ze =
+                              (Xe =
                                 24 *
                                 (1 +
                                   (e - this.switchWeaponUntil) /
@@ -2770,11 +2803,11 @@
                                   o.imgs.miscSheet,
                                   y.imgCoords.barGrey.x,
                                   y.imgCoords.barGrey.y,
-                                  Ze,
+                                  Xe,
                                   4,
                                   a,
                                   n,
-                                  this._game.SCALE_FACTOR * Ze,
+                                  this._game.SCALE_FACTOR * Xe,
                                   0.24 * this._game.FIELD_SIZE,
                                 ),
                               (0, u.drawText)(
@@ -2799,7 +2832,7 @@
                                   1.56 * this._game.FIELD_SIZE,
                                   0.3 * this._game.FIELD_SIZE,
                                 ),
-                                (Ze =
+                                (Xe =
                                   ((this.weaponCooldown - l) /
                                     this.weapon.cooldown) *
                                   24) >= 0 &&
@@ -2807,11 +2840,11 @@
                                     o.imgs.miscSheet,
                                     y.imgCoords.barBlue.x,
                                     y.imgCoords.barBlue.y,
-                                    Ze,
+                                    Xe,
                                     4,
                                     a,
                                     n,
-                                    this._game.SCALE_FACTOR * Ze,
+                                    this._game.SCALE_FACTOR * Xe,
                                     0.24 * this._game.FIELD_SIZE,
                                   ))
                               : this.weapon &&
@@ -2827,7 +2860,7 @@
                                     1.56 * this._game.FIELD_SIZE,
                                     0.3 * this._game.FIELD_SIZE,
                                   ),
-                                  (Ze =
+                                  (Xe =
                                     ((this.weaponCooldowns2[this.weapon.id] -
                                       l) /
                                       this.weapon.cooldown2) *
@@ -2836,11 +2869,11 @@
                                       o.imgs.miscSheet,
                                       y.imgCoords.barBlue.x,
                                       y.imgCoords.barBlue.y,
-                                      Ze,
+                                      Xe,
                                       4,
                                       a,
                                       n,
-                                      this._game.SCALE_FACTOR * Ze,
+                                      this._game.SCALE_FACTOR * Xe,
                                       0.24 * this._game.FIELD_SIZE,
                                     ),
                                   (0, u.drawText)(
@@ -2862,7 +2895,7 @@
                                     1.56 * this._game.FIELD_SIZE,
                                     0.3 * this._game.FIELD_SIZE,
                                   ),
-                                  (Ze =
+                                  (Xe =
                                     ((e -
                                       (this._game.noShootUntil -
                                         s.CONST.NO_SHOOT_AFTER_BLINK_TICKS)) /
@@ -2872,49 +2905,49 @@
                                       o.imgs.miscSheet,
                                       y.imgCoords.barGrey.x,
                                       y.imgCoords.barGrey.y,
-                                      Ze,
+                                      Xe,
                                       4,
                                       a,
                                       n,
-                                      this._game.SCALE_FACTOR * Ze,
+                                      this._game.SCALE_FACTOR * Xe,
                                       0.24 * this._game.FIELD_SIZE,
                                     ))));
-                      var $e = Date.now();
-                      if (this.showEmoteUntil > $e && null !== this.lastEmote) {
-                        var Je =
-                            $e - (this.showEmoteUntil - s.CONST.EMOTE_DURATION),
-                          Qe = 1;
-                        Je < 500
-                          ? (Qe = 0.002 * Je)
-                          : Je > s.CONST.EMOTE_DURATION - 500 &&
-                            (Qe = 0.002 * (s.CONST.EMOTE_DURATION - Je));
-                        var et = this._game.SCALE_FACTOR,
-                          tt = p - 3.5 * this._game.FIELD_SIZE,
-                          it = y.imgCoords.emotesBubble;
-                        ((h.globalAlpha = 0.8 * Qe),
+                      var Je = Date.now();
+                      if (this.showEmoteUntil > Je && null !== this.lastEmote) {
+                        var Qe =
+                            Je - (this.showEmoteUntil - s.CONST.EMOTE_DURATION),
+                          et = 1;
+                        Qe < 500
+                          ? (et = 0.002 * Qe)
+                          : Qe > s.CONST.EMOTE_DURATION - 500 &&
+                            (et = 0.002 * (s.CONST.EMOTE_DURATION - Qe));
+                        var tt = this._game.SCALE_FACTOR,
+                          it = p - 3.5 * this._game.FIELD_SIZE,
+                          at = y.imgCoords.emotesBubble;
+                        ((h.globalAlpha = 0.8 * et),
                           h.drawImage(
                             o.imgs.miscSheet,
-                            it.x,
-                            it.y,
-                            it.w,
-                            it.h,
-                            g - 0.5 * it.w * et,
-                            tt,
-                            et * it.w,
-                            et * it.h,
+                            at.x,
+                            at.y,
+                            at.w,
+                            at.h,
+                            g - 0.5 * at.w * tt,
+                            it,
+                            tt * at.w,
+                            tt * at.h,
                           ));
-                        oe = (10 * et) / (it = this.lastEmote.img).h;
-                        ((h.globalAlpha = 1 * Qe),
+                        oe = (10 * tt) / (at = this.lastEmote.img).h;
+                        ((h.globalAlpha = 1 * et),
                           h.drawImage(
                             o.imgs.miscSheet,
-                            it.x,
-                            it.y,
-                            it.w,
-                            it.h,
-                            g - 0.5 * it.w * oe,
-                            tt + 2 * et,
-                            oe * it.w,
-                            oe * it.h,
+                            at.x,
+                            at.y,
+                            at.w,
+                            at.h,
+                            g - 0.5 * at.w * oe,
+                            it + 2 * tt,
+                            oe * at.w,
+                            oe * at.h,
                           ),
                           (h.globalAlpha = 1));
                       }
@@ -28392,14 +28425,8 @@
                 (this.playingPlayerID = -1),
                 (this.playingPlayerAmmo = []),
                 (this.playingPlayerClips = []),
-                (this.botDebugName = ""),
-                (this.botDebugWeapon = -1),
-                (this.botDebugHP = 0),
-                (this.botDebugArmor = 0),
-                (this.botDebugState = ""),
-                (this.botDebugClips = []),
-                (this.botDebugAmmo = []),
-                (this.botDebugAt = 0),
+                (this.botDebugs = {}),
+                (this.botDebugHoverId = -1),
                 (this.lastTimeMousePosSent = -999),
                 (this.noShootUntil = -999),
                 (this.lastPickUp = -999),
@@ -29521,27 +29548,67 @@
                 return !0;
               }),
               (e.prototype.botDebug = function (e) {
-                ((this.botDebugName = e[1]),
-                  (this.botDebugWeapon = parseInt(e[2])),
-                  (this.botDebugHP = parseInt(e[3])),
-                  (this.botDebugArmor = parseInt(e[4])),
-                  (this.botDebugState = e[5] || ""),
-                  (this.botDebugAt = Date.now()),
-                  (this.botDebugClips = []),
-                  (this.botDebugAmmo = []));
                 for (
-                  var t = 0, i = String(e[6] || "").split(";");
-                  t < i.length;
-                  t++
+                  var t = {
+                      name: e[2],
+                      weapon: parseInt(e[3]),
+                      hp: parseInt(e[4]),
+                      armor: parseInt(e[5]),
+                      state: e[6] || "",
+                      short: e[7] || "",
+                      clips: [],
+                      ammo: [],
+                      at: Date.now(),
+                    },
+                    i = 0,
+                    a = String(e[8] || "").split(";");
+                  i < a.length;
+                  i++
                 ) {
-                  var a = i[t];
-                  if (a) {
-                    var n = a.split(","),
-                      o = parseInt(n[0]);
-                    ((this.botDebugClips[o] = parseInt(n[1])),
-                      (this.botDebugAmmo[o] = parseInt(n[2])));
+                  var n = a[i];
+                  if (n) {
+                    var o = n.split(","),
+                      r = parseInt(o[0]);
+                    ((t.clips[r] = parseInt(o[1])),
+                      (t.ammo[r] = parseInt(o[2])));
                   }
                 }
+                this.botDebugs[parseInt(e[1])] = t;
+              }),
+              (e.prototype.botDebugShown = function () {
+                var e = Date.now() - 3e3,
+                  t = this.botDebugs[this.botDebugHoverId];
+                if (t && t.at > e) return t;
+                var i = null;
+                for (var a in this.botDebugs) {
+                  var n = this.botDebugs[a];
+                  if (!(n.at <= e)) {
+                    if (null !== i) return null;
+                    i = n;
+                  }
+                }
+                return i;
+              }),
+              (e.prototype.updateBotDebugHover = function () {
+                for (
+                  var e = (0, I.getMouseGamePlayX)(),
+                    t = (0, I.getMouseGamePlayY)(),
+                    i = -1,
+                    a = 1.2,
+                    n = 0,
+                    o = this.players;
+                  n < o.length;
+                  n++
+                ) {
+                  var r = o[n];
+                  if (this.botDebugs[r.id]) {
+                    var s = Math.sqrt(
+                      Math.pow(r.x - e, 2) + Math.pow(r.y - t, 2),
+                    );
+                    s < a && ((a = s), (i = r.id));
+                  }
+                }
+                i >= 0 && (this.botDebugHoverId = i);
               }),
               (e.prototype.reload2 = function (e) {
                 ((this.playingPlayerAmmo[e[1]] = parseInt(e[3])),
@@ -34181,20 +34248,22 @@
                     }
                   }
                 }
-                if (this.game.botDebugName && this.game.botDebugAt + 3e3 > a) {
-                  var z = g.imgCoords.weaponFrame2,
-                    Y = g.imgCoords.weaponFrameCurrent,
-                    q = 1 * x,
-                    j = window.innerHeight - (z.h + 1) * x;
+                this.game.updateBotDebugHover();
+                var z = this.game.botDebugShown();
+                if (null !== z) {
+                  var Y = g.imgCoords.weaponFrame2,
+                    q = g.imgCoords.weaponFrameCurrent,
+                    j = 1 * x,
+                    Z = window.innerHeight - (Y.h + 1) * x;
                   for (d = 0; d < s.weapons.length; d++) {
                     if (!(N = s.weapons[s.weapons.length - d - 1]).noWeapon) {
-                      var Z = this.game.botDebugClips[N.id] || 0,
-                        X = this.game.botDebugAmmo[N.id] || 0,
-                        K = this.game.botDebugWeapon === N.id;
-                      if (!(Z <= 0 && X <= 0) || K) {
-                        var V = Z + X > 0;
-                        ((B = V ? n.imgs.miscSheet : n.imgs.miscSheetGrey),
-                          (L = V
+                      var X = z.clips[N.id] || 0,
+                        K = z.ammo[N.id] || 0,
+                        V = z.weapon === N.id;
+                      if (!(X <= 0 && K <= 0) || V) {
+                        var $ = X + K > 0;
+                        ((B = $ ? n.imgs.miscSheet : n.imgs.miscSheetGrey),
+                          (L = $
                             ? g.imgCoords.weaponFrame2Green
                             : g.imgCoords.weaponFrame2));
                         (C.drawImage(
@@ -34203,22 +34272,22 @@
                           L.y,
                           L.w,
                           L.h,
-                          q,
                           j,
+                          Z,
                           L.w * x,
                           L.h * x,
                         ),
-                          K &&
+                          V &&
                             C.drawImage(
                               n.imgs.miscSheet,
-                              Y.x,
-                              Y.y,
-                              Y.w,
-                              Y.h,
-                              q - 3 * x,
+                              q.x,
+                              q.y,
+                              q.w,
+                              q.h,
                               j - 3 * x,
-                              Y.w * x,
-                              Y.h * x,
+                              Z - 3 * x,
+                              q.w * x,
+                              q.h * x,
                             ));
                         O = g.imgCoords[N.img];
                         C.drawImage(
@@ -34227,8 +34296,8 @@
                           O.y,
                           O.w,
                           O.h,
-                          q + L.w * x * 0.4 - 0.5 * O.w * x * 1.3,
-                          j + (L.h - 3) * x - O.h * x * 1.3,
+                          j + L.w * x * 0.4 - 0.5 * O.w * x * 1.3,
+                          Z + (L.h - 3) * x - O.h * x * 1.3,
                           O.w * x * 1.3,
                           O.h * x * 1.3,
                         );
@@ -34245,45 +34314,43 @@
                           R.y,
                           R.w,
                           R.h,
-                          q + L.w * x * 0.25 - R.w * H,
-                          j + L.h * x * 0.2 - 0.5 * R.h * H,
+                          j + L.w * x * 0.25 - R.w * H,
+                          Z + L.h * x * 0.2 - 0.5 * R.h * H,
                           R.w * H,
                           R.h * H,
                         );
-                        var $ = N.startAmmoSize ? "INF" : Z + " (" + X + ")";
+                        var J = N.startAmmoSize ? "INF" : X + " (" + K + ")";
                         ((0, m.drawText)(
                           C,
-                          $,
-                          V ? "#4FAC43" : "rgba(255, 255, 255, 0.7)",
+                          J,
+                          $ ? "#4FAC43" : "rgba(255, 255, 255, 0.7)",
                           7.5 * x,
-                          q + L.w * x * 0.35,
-                          j + 0.55 * L.h,
+                          j + L.w * x * 0.35,
+                          Z + 0.55 * L.h,
                         ),
-                          (j -= (L.h + 2) * x));
+                          (Z -= (L.h + 2) * x));
                       }
                     }
                   }
                   ((0, m.drawText)(
                     C,
-                    this.game.botDebugName +
+                    z.name +
                       "   " +
-                      this.game.botDebugHP +
+                      z.hp +
                       " hp" +
-                      (this.game.botDebugArmor > 0
-                        ? " + " + this.game.botDebugArmor + " armor"
-                        : ""),
+                      (z.armor > 0 ? " + " + z.armor + " armor" : ""),
                     "#FFD155",
                     3.6 * c,
-                    q,
-                    j - 9 * c,
+                    j,
+                    Z - 9 * c,
                   ),
                     (0, m.drawText)(
                       C,
-                      this.game.botDebugState,
+                      z.state,
                       "#D4D4D4",
                       3.2 * c,
-                      q,
-                      j - 4 * c,
+                      j,
+                      Z - 4 * c,
                       120 * c,
                       "left",
                       1,
@@ -34292,7 +34359,7 @@
                     ));
                 }
                 if (m.replaySettings.lastReplaySpeedChange + 2e3 > a) {
-                  var J = Math.min(
+                  var Q = Math.min(
                     (m.replaySettings.lastReplaySpeedChange + 2e3 - a) / 750,
                     1,
                   );
@@ -34305,7 +34372,7 @@
                     window.innerHeight - 10 * this.game.SCALE_FACTOR_BASE,
                     500,
                     "right",
-                    J,
+                    Q,
                   );
                 }
                 if (
@@ -34344,9 +34411,9 @@
                   for (d = 0; d < this.game.pl_active_abilities.length; d++)
                     if (this.game.pl_active_abilities[d]) {
                       C.globalAlpha = w;
-                      var Q = this.game.pl_active_abilities[d];
+                      var ee = this.game.pl_active_abilities[d];
                       ((L =
-                        this.game.playingPlayerEnergy >= Q.energy
+                        this.game.playingPlayerEnergy >= ee.energy
                           ? g.imgCoords.abilityFrameGreen
                           : g.imgCoords.abilityFrame),
                         (A =
@@ -34357,8 +34424,8 @@
                           (g.imgCoords.weaponFrame.w + 6) * x),
                         (F = window.innerHeight - (L.h + 1) * p),
                         (B =
-                          Q.energy <= this.game.playingPlayerEnergy &&
-                          this.game.lastAbilityUses[d] + Q.cooldown <=
+                          ee.energy <= this.game.playingPlayerEnergy &&
+                          this.game.lastAbilityUses[d] + ee.cooldown <=
                             this.game.ticksCounter
                             ? n.imgs.miscSheet
                             : n.imgs.miscSheetGrey));
@@ -34373,20 +34440,20 @@
                         L.w * p,
                         L.h * p,
                       );
-                      var ee = g.imgCoords[Q.icon],
-                        te = ((L.w - 6) * p) / Math.max(ee.w, ee.h),
-                        ie = A + (L.w * p - ee.w * te) / 2,
-                        ae = F + 0.2 * (L.h * p - ee.h * te);
+                      var te = g.imgCoords[ee.icon],
+                        ie = ((L.w - 6) * p) / Math.max(te.w, te.h),
+                        ae = A + (L.w * p - te.w * ie) / 2,
+                        ne = F + 0.2 * (L.h * p - te.h * ie);
                       C.drawImage(
                         B,
-                        ee.x,
-                        ee.y,
-                        ee.w,
-                        ee.h,
-                        ie,
+                        te.x,
+                        te.y,
+                        te.w,
+                        te.h,
                         ae,
-                        ee.w * te,
-                        ee.h * te,
+                        ne,
+                        te.w * ie,
+                        te.h * ie,
                       );
                       ((G = u.commandKeys[u.COMMAND["ABILITY" + (d + 1)]]),
                         (W = u.Input.keys[G]
@@ -34429,7 +34496,7 @@
                           ),
                           (0, m.drawText)(
                             C,
-                            Q.name,
+                            ee.name,
                             "white",
                             4 * c,
                             window.innerWidth - 96 * c,
@@ -34438,7 +34505,7 @@
                           (0, m.drawText)(
                             C,
                             v.lang.get("game.skills.misc.energy_cost", {
-                              energy: Q.energy,
+                              energy: ee.energy,
                             }),
                             "#DD52CE",
                             3 * c,
@@ -34449,7 +34516,7 @@
                           ),
                           (0, m.drawText)(
                             C,
-                            Q.description,
+                            ee.description,
                             "#D4D4D4",
                             3 * c,
                             window.innerWidth - 96 * c,
@@ -34460,16 +34527,16 @@
                             void 0,
                             3.5 * c,
                           )));
-                      var ne =
+                      var oe =
                         this.game.lastAbilityUses[
-                          this.game.pl_active_abilities[0] === Q ? 0 : 1
+                          this.game.pl_active_abilities[0] === ee ? 0 : 1
                         ] +
-                        Q.cooldown -
+                        ee.cooldown -
                         this.game.ticksCounter;
-                      ne > 0 &&
+                      oe > 0 &&
                         (0, m.drawText)(
                           C,
-                          Math.floor(ne / 20).toString(),
+                          Math.floor(oe / 20).toString(),
                           "red",
                           9 * c,
                           A + L.w * p * 0.5,
@@ -34504,28 +34571,28 @@
                     "rgba(255, 255, 255, 0.2)",
                     0.3 * this.game.FIELD_SIZE_BASE,
                   );
-                var oe = 7.5 * c;
+                var re = 7.5 * c;
                 if (this.game.type.team && this.game.type.souls) {
-                  var re = 0.9 * c,
-                    se = g.imgCoords.souls;
+                  var se = 0.9 * c,
+                    le = g.imgCoords.souls;
                   (C.drawImage(
                     n.imgs.miscSheet,
-                    se.x,
-                    se.y,
-                    se.w,
-                    se.h,
-                    0.5 * window.innerWidth - 0.5 * se.w * re,
-                    1 * re,
-                    se.w * re,
-                    se.h * re,
+                    le.x,
+                    le.y,
+                    le.w,
+                    le.h,
+                    0.5 * window.innerWidth - 0.5 * le.w * se,
+                    1 * se,
+                    le.w * se,
+                    le.h * se,
                   ),
                     (0, m.drawText)(
                       C,
                       this.game.scoreTeam1.toString(),
                       "#A13232",
                       6 * c,
-                      0.5 * window.innerWidth - (0.5 * se.w + 3) * re,
-                      oe + 2 * c,
+                      0.5 * window.innerWidth - (0.5 * le.w + 3) * se,
+                      re + 2 * c,
                       70 * c,
                       "right",
                       1,
@@ -34537,53 +34604,53 @@
                       this.game.scoreTeam2.toString(),
                       "#1B698E",
                       6 * c,
-                      0.5 * window.innerWidth + (0.5 * se.w + 3) * re,
-                      oe + 2 * c,
+                      0.5 * window.innerWidth + (0.5 * le.w + 3) * se,
+                      re + 2 * c,
                       70 * c,
                       "left",
                       1,
                       "rgba(0, 0, 0, 0.3)",
                       7 * c,
                     ),
-                    (oe += 11 * c));
+                    (re += 11 * c));
                 }
                 if (
                   this.game.roundTime > 0 &&
                   ("tutorial1" !== this.game.map.special ||
                     this.game.ticksCounter >= this.game.roundTime - 1200)
                 ) {
-                  var le = "",
-                    he = void 0;
+                  var he = "",
+                    de = void 0;
                   (this.game.ticksCounter < 0
-                    ? ((le = Math.floor(
+                    ? ((he = Math.floor(
                         -this.game.ticksCounter / 20,
                       ).toString()),
-                      (he = !1))
-                    : ((le = (0, m.ticks2TimeStr)(
+                      (de = !1))
+                    : ((he = (0, m.ticks2TimeStr)(
                         this.game.roundTime - this.game.ticksCounter,
                       )),
-                      (he = !0)),
-                    f.rankInGame.refreshTime(he, le),
+                      (de = !0)),
+                    f.rankInGame.refreshTime(de, he),
                     (0, m.drawText)(
                       C,
-                      le,
+                      he,
                       "rgba(255, 255, 255, 0.7)",
                       5.5 * c,
                       window.innerWidth / 2,
-                      oe,
+                      re,
                       0.9 * window.innerWidth,
                       "center",
                     ),
-                    (oe += 6 * c));
+                    (re += 6 * c));
                 }
                 if (this.game.type.coopZombieMode) {
                   for (
-                    var de = 0, me = this.game.players;
-                    de < me.length;
-                    de++
+                    var me = 0, ce = this.game.players;
+                    me < ce.length;
+                    me++
                   ) {
-                    var ce = me[de];
-                    ce && ce.isHumanZombie;
+                    var ge = ce[me];
+                    ge && ge.isHumanZombie;
                   }
                   (0, m.drawText)(
                     C,
@@ -34608,7 +34675,7 @@
                         ),
                       }),
                       "rgba(0, 255, 6, 0.7)",
-                      oe + 2 * c,
+                      re + 2 * c,
                     )
                   : this.game.type.flag
                     ? this.scanMsg(
@@ -34616,7 +34683,7 @@
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
-                        oe + 2 * c,
+                        re + 2 * c,
                       )
                     : this.game.type.coopZombieMode &&
                       this.scanMsg(
@@ -34624,7 +34691,7 @@
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
-                        oe + 2 * c,
+                        re + 2 * c,
                       ),
                   this.game.ticksCounter < 0 &&
                     (0, m.drawText)(
@@ -34641,13 +34708,13 @@
                     ? f.rankInGame.setVictoryMessage(this.game.victoryMsg)
                     : f.rankInGame.setVictoryMessage(""),
                   (c *= 0.7));
-                var ge = 0,
-                  ue = 0;
+                var ue = 0,
+                  pe = 0;
                 ((this.hoverChoice = null),
                   (this.upgNotificationHovered = !1),
                   (this.skipButtonHover = !1),
                   (this.unskipButtonHover = !1));
-                var pe =
+                var ye =
                   this.showOldUpgChoicesUntil >= a
                     ? this.oldUpgChoices
                     : this.currentUpgChoices;
@@ -34656,31 +34723,31 @@
                   this.game.type.souls &&
                   this.game.ticksCounter > 0
                 ) {
-                  ((ee = g.imgCoords.newStatsFrame),
+                  ((te = g.imgCoords.newStatsFrame),
                     (P = g.imgCoords.soulsBar));
-                  var ye = g.imgCoords.hpBar1,
-                    fe = g.imgCoords.energyBar;
+                  var fe = g.imgCoords.hpBar1,
+                    xe = g.imgCoords.energyBar;
                   if (
-                    ((ge = window.innerHeight - (ee.h + 1) * c),
-                    (ue = 1 * c),
+                    ((ue = window.innerHeight - (te.h + 1) * c),
+                    (pe = 1 * c),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      ee.x,
-                      ee.y,
-                      ee.w,
-                      ee.h,
+                      te.x,
+                      te.y,
+                      te.w,
+                      te.h,
+                      pe,
                       ue,
-                      ge,
-                      ee.w * c,
-                      ee.h * c,
+                      te.w * c,
+                      te.h * c,
                     ),
                     (0, m.drawText)(
                       C,
                       this.soulLvl.toString(),
                       "#e1f063",
                       8 * c,
-                      ue + 16 * c,
-                      ge + 14 * c,
+                      pe + 16 * c,
+                      ue + 14 * c,
                       24 * c,
                       "right",
                       1,
@@ -34693,8 +34760,8 @@
                       this.game.playingPlayer.name,
                       "#b9cc8d",
                       8 * c,
-                      ue + 20 * c,
-                      ge + 14 * c,
+                      pe + 20 * c,
+                      ue + 14 * c,
                       100 * c,
                       "left",
                       1,
@@ -34707,8 +34774,8 @@
                       this.game.playingPlayer.souls.toString(),
                       "#b4b7b8",
                       7 * c,
-                      ue + 18 * c,
-                      ge + 29 * c,
+                      pe + 18 * c,
+                      ue + 29 * c,
                       100 * c,
                       "left",
                       1,
@@ -34721,8 +34788,8 @@
                       this.abilityPoints.toString(),
                       "#5cc3ef",
                       7 * c,
-                      ue + 46 * c,
-                      ge + 29 * c,
+                      pe + 46 * c,
+                      ue + 29 * c,
                       100 * c,
                       "left",
                       1,
@@ -34736,8 +34803,8 @@
                       P.y,
                       P.w,
                       P.h,
-                      ue + 69 * c,
-                      ge + 5 * c,
+                      pe + 69 * c,
+                      ue + 5 * c,
                       73 * c * (this.soulsGot / this.soulsNeeded),
                       10 * c,
                     ),
@@ -34746,19 +34813,19 @@
                       this.soulsGot + " / " + this.soulsNeeded,
                       "#d0e661",
                       8 * c,
-                      ue + 106 * c,
-                      ge + 14 * c,
+                      pe + 106 * c,
+                      ue + 14 * c,
                       84 * c,
                       "center",
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      ye.x,
-                      ye.y,
-                      ye.w,
-                      ye.h,
-                      ue + 69 * c,
-                      ge + 20 * c,
+                      fe.x,
+                      fe.y,
+                      fe.w,
+                      fe.h,
+                      pe + 69 * c,
+                      ue + 20 * c,
                       73 *
                         c *
                         (this.game.playingPlayer.hp /
@@ -34772,8 +34839,8 @@
                         Math.ceil(this.game.playingPlayer.maxHP),
                       "white",
                       6 * c,
-                      ue + 106 * c,
-                      ge + 25 * c,
+                      pe + 106 * c,
+                      ue + 25 * c,
                       84 * c,
                       "center",
                       1,
@@ -34784,51 +34851,51 @@
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      fe.x,
-                      fe.y,
-                      fe.w,
-                      fe.h,
-                      ue + 69 * c,
-                      ge + 28 * c,
+                      xe.x,
+                      xe.y,
+                      xe.w,
+                      xe.h,
+                      pe + 69 * c,
+                      ue + 28 * c,
                       73 * c * (this.game.playingPlayerEnergy / 100),
                       2 * c,
                     ),
-                    (ee = g.imgCoords.newUpgFrame),
+                    (te = g.imgCoords.newUpgFrame),
                     (P = g.imgCoords.newUpgFrameWhite),
-                    (ye = g.imgCoords.newUpgFrameYellow),
-                    (ge -= (ee.h + 1) * c),
+                    (fe = g.imgCoords.newUpgFrameYellow),
+                    (ue -= (te.h + 1) * c),
                     this.game.playingPlayer.dieAt)
                   )
                     return;
                   if (this.upgNotificationStart > 0) {
-                    var xe = ((this.game.ticksCounter / 3) % 3) + 1;
-                    ee = g.imgCoords["newUps" + Math.floor(xe)];
-                    var we = a - this.upgNotificationStart,
-                      ve = Math.min(ee.h, (we / 400) * ee.h);
-                    ((C.globalAlpha = 1 - (xe % 1)),
+                    var we = ((this.game.ticksCounter / 3) % 3) + 1;
+                    te = g.imgCoords["newUps" + Math.floor(we)];
+                    var ve = a - this.upgNotificationStart,
+                      Se = Math.min(te.h, (ve / 400) * te.h);
+                    ((C.globalAlpha = 1 - (we % 1)),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        ee.x,
-                        ee.y,
-                        ee.w,
-                        ve,
+                        te.x,
+                        te.y,
+                        te.w,
+                        Se,
+                        pe,
                         ue,
-                        ge,
-                        ee.w * c,
-                        ve * c,
+                        te.w * c,
+                        Se * c,
                       ),
-                      (ee = g.imgCoords["newUps" + ((Math.floor(xe) % 3) + 1)]),
-                      (C.globalAlpha = xe % 1),
+                      (te = g.imgCoords["newUps" + ((Math.floor(we) % 3) + 1)]),
+                      (C.globalAlpha = we % 1),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        ee.x,
-                        ee.y,
-                        ee.w,
-                        ve,
+                        te.x,
+                        te.y,
+                        te.w,
+                        Se,
+                        pe,
                         ue,
-                        ge,
-                        ee.w * c,
-                        ve * c,
+                        te.w * c,
+                        Se * c,
                       ),
                       (C.globalAlpha = 1),
                       (0, m.drawText)(
@@ -34836,8 +34903,8 @@
                         v.lang.get("game.msg.choose_upgrade"),
                         "#4BA6FA",
                         8 * c,
-                        ue + 5 * c,
-                        ge + 10 * c,
+                        pe + 5 * c,
+                        ue + 10 * c,
                         200 * c,
                         "left",
                         1,
@@ -34854,8 +34921,8 @@
                         }),
                         "#4BA6FA",
                         6 * c,
-                        ue + 6 * c,
-                        ge + 21 * c,
+                        pe + 6 * c,
+                        ue + 21 * c,
                         200 * c,
                         "left",
                         1,
@@ -34863,89 +34930,89 @@
                         void 0,
                         100 * c,
                       ),
-                      u.Input.x <= ee.w * c &&
-                        u.Input.y >= ge &&
+                      u.Input.x <= te.w * c &&
+                        u.Input.y >= ue &&
                         ((this.upgNotificationHovered = !0),
-                        (xe = ((this.game.ticksCounter / 5) % 4) + 1),
-                        (ee = g.imgCoords["newUpsFrame" + Math.floor(xe)]),
-                        (C.globalAlpha = 1 - (xe % 1)),
+                        (we = ((this.game.ticksCounter / 5) % 4) + 1),
+                        (te = g.imgCoords["newUpsFrame" + Math.floor(we)]),
+                        (C.globalAlpha = 1 - (we % 1)),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          ee.x,
-                          ee.y,
-                          ee.w,
-                          ee.h,
-                          ue - 1 * c,
-                          ge - 2 * c,
-                          ee.w * c,
-                          ee.h * c,
+                          te.x,
+                          te.y,
+                          te.w,
+                          te.h,
+                          pe - 1 * c,
+                          ue - 2 * c,
+                          te.w * c,
+                          te.h * c,
                         ),
-                        (ee =
+                        (te =
                           g.imgCoords[
-                            "newUpsFrame" + ((Math.floor(xe) % 4) + 1)
+                            "newUpsFrame" + ((Math.floor(we) % 4) + 1)
                           ]),
-                        (C.globalAlpha = xe % 1),
+                        (C.globalAlpha = we % 1),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          ee.x,
-                          ee.y,
-                          ee.w,
-                          ee.h,
-                          ue - 1 * c,
-                          ge - 2 * c,
-                          ee.w * c,
-                          ee.h * c,
+                          te.x,
+                          te.y,
+                          te.w,
+                          te.h,
+                          pe - 1 * c,
+                          ue - 2 * c,
+                          te.w * c,
+                          te.h * c,
                         ),
                         (C.globalAlpha = 1)));
-                  } else if (pe.length > 0) {
+                  } else if (ye.length > 0) {
                     (this.currentUpgChoicesStart + 350 > a &&
-                      (ue -=
-                        (c * ee.w * (this.currentUpgChoicesStart + 350 - a)) /
+                      (pe -=
+                        (c * te.w * (this.currentUpgChoicesStart + 350 - a)) /
                         350),
                       this.currentUpgChoicesEnd < a &&
-                        (ue -=
-                          (c * ee.w * (a - this.currentUpgChoicesEnd)) / 350));
-                    for (d = 0; pe && d < pe.length; d++) {
-                      var Se = pe[d],
-                        be = Se.img,
-                        _e = (16 * c) / Math.max(be.w, be.h);
+                        (pe -=
+                          (c * te.w * (a - this.currentUpgChoicesEnd)) / 350));
+                    for (d = 0; ye && d < ye.length; d++) {
+                      var be = ye[d],
+                        _e = be.img,
+                        Ce = (16 * c) / Math.max(_e.w, _e.h);
                       (C.drawImage(
                         n.imgs.miscSheet,
-                        ee.x,
-                        ee.y,
-                        ee.w,
-                        ee.h,
+                        te.x,
+                        te.y,
+                        te.w,
+                        te.h,
+                        pe,
                         ue,
-                        ge,
-                        ee.w * c,
-                        ee.h * c,
+                        te.w * c,
+                        te.h * c,
                       ),
                         C.drawImage(
                           n.imgs.miscSheet,
-                          be.x,
-                          be.y,
-                          be.w,
-                          be.h,
-                          ue + (ee.h * c) / 2 - (be.w * _e) / 2 - 1 * c,
-                          ge + (ee.h * c) / 2 - (be.h * _e) / 2,
-                          be.w * _e,
-                          be.h * _e,
+                          _e.x,
+                          _e.y,
+                          _e.w,
+                          _e.h,
+                          pe + (te.h * c) / 2 - (_e.w * Ce) / 2 - 1 * c,
+                          ue + (te.h * c) / 2 - (_e.h * Ce) / 2,
+                          _e.w * Ce,
+                          _e.h * Ce,
                         ),
                         (0, m.drawText)(
                           C,
-                          Se.cost.toString(),
+                          be.cost.toString(),
                           "#5cc3ef",
                           7.5 * c,
-                          ue + 108 * c,
-                          ge + 18 * c,
+                          pe + 108 * c,
+                          ue + 18 * c,
                         ),
                         (0, m.drawText)(
                           C,
-                          Se.text,
+                          be.text,
                           "#FFFDC0",
                           6.5 * c,
-                          ue + 24 * c,
-                          ge + 22 * c,
+                          pe + 24 * c,
+                          ue + 22 * c,
                           150 * c,
                           "left",
                           1,
@@ -34953,12 +35020,12 @@
                           void 0,
                           70 * c,
                         ));
-                      for (var Ce = 0; Ce < Se.maxLvl; Ce++)
+                      for (var Ie = 0; Ie < be.maxLvl; Ie++)
                         ((C.fillStyle =
-                          Ce < Se.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
+                          Ie < be.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
                           C.fillRect(
-                            ue + 24 * c + 11 * Ce * c,
-                            ge + 4 * c,
+                            pe + 24 * c + 11 * Ie * c,
+                            ue + 4 * c,
                             10 * c,
                             2 * c,
                           ));
@@ -34968,46 +35035,46 @@
                           ((C.globalAlpha = 0.75),
                           C.drawImage(
                             n.imgs.miscSheet,
-                            ye.x,
-                            ye.y,
-                            ye.w,
-                            ye.h,
+                            fe.x,
+                            fe.y,
+                            fe.w,
+                            fe.h,
+                            pe,
                             ue,
-                            ge,
-                            ye.w * c,
-                            ye.h * c,
+                            fe.w * c,
+                            fe.h * c,
                           ),
                           (C.globalAlpha = 1))
-                        : u.Input.x <= ue + ee.w * c &&
-                          u.Input.y >= ge &&
-                          u.Input.y <= ge + ee.h * c &&
-                          ((this.hoverChoice = Se),
+                        : u.Input.x <= pe + te.w * c &&
+                          u.Input.y >= ue &&
+                          u.Input.y <= ue + te.h * c &&
+                          ((this.hoverChoice = be),
                           (C.globalAlpha = 0.4),
                           C.drawImage(
                             n.imgs.miscSheetWhite,
-                            ee.x,
-                            ee.y,
-                            ee.w,
-                            ee.h,
+                            te.x,
+                            te.y,
+                            te.w,
+                            te.h,
+                            pe,
                             ue,
-                            ge,
-                            ee.w * c,
-                            ee.h * c,
+                            te.w * c,
+                            te.h * c,
                           ),
                           (C.globalAlpha = 1)),
-                        (ge -= (ee.h + 1) * c));
+                        (ue -= (te.h + 1) * c));
                     }
                     ((P = g.imgCoords.upgSkip),
-                      (ue += 5 * c),
-                      (ge += (ee.h + 1) * c - P.h * c),
+                      (pe += 5 * c),
+                      (ue += (te.h + 1) * c - P.h * c),
                       C.drawImage(
                         n.imgs.miscSheet,
                         P.x,
                         P.y,
                         P.w,
                         P.h,
+                        pe,
                         ue,
-                        ge,
                         P.w * c,
                         P.h * c,
                       ),
@@ -35020,8 +35087,8 @@
                         }),
                         "#304420",
                         6.5 * c,
-                        ue + 17 * c,
-                        ge + 12 * c,
+                        pe + 17 * c,
+                        ue + 12 * c,
                         100 * c,
                         "left",
                         1,
@@ -35030,9 +35097,9 @@
                         62 * c,
                         "#688551",
                       ),
-                      ((u.Input.x <= ue + P.w * c &&
-                        u.Input.y >= ge &&
-                        u.Input.y <= ge + P.h * c) ||
+                      ((u.Input.x <= pe + P.w * c &&
+                        u.Input.y >= ue &&
+                        u.Input.y <= ue + P.h * c) ||
                         u.Input.keys[u.commandKeys[u.COMMAND.PICK_UPGRADE]]) &&
                         ((C.globalAlpha = 0.3),
                         C.drawImage(
@@ -35041,8 +35108,8 @@
                           P.y,
                           P.w,
                           P.h,
+                          pe,
                           ue,
-                          ge,
                           P.w * c,
                           P.h * c,
                         ),
@@ -35051,8 +35118,8 @@
                       this.currentUpgChoicesEnd + 200 < a &&
                         this.upgradeChoicesAvailable &&
                         ((P = g.imgCoords.upgUnskip),
-                        (ue = 5 * c),
-                        (ge =
+                        (pe = 5 * c),
+                        (ue =
                           window.innerHeight -
                           (g.imgCoords.newStatsFrame.h + 1) * c -
                           P.h * c),
@@ -35062,8 +35129,8 @@
                           P.y,
                           P.w,
                           P.h,
+                          pe,
                           ue,
-                          ge,
                           P.w * c,
                           P.h * c,
                         ),
@@ -35076,8 +35143,8 @@
                           }),
                           "#304420",
                           6.5 * c,
-                          ue + 17 * c,
-                          ge + 12 * c,
+                          pe + 17 * c,
+                          ue + 12 * c,
                           200 * c,
                           "left",
                           1,
@@ -35086,9 +35153,9 @@
                           64 * c,
                           "#688551",
                         ),
-                        ((u.Input.x <= ue + P.w * c &&
-                          u.Input.y >= ge &&
-                          u.Input.y <= ge + P.h * c) ||
+                        ((u.Input.x <= pe + P.w * c &&
+                          u.Input.y >= ue &&
+                          u.Input.y <= ue + P.h * c) ||
                           u.Input.keys[
                             u.commandKeys[u.COMMAND.PICK_UPGRADE]
                           ]) &&
@@ -35099,8 +35166,8 @@
                             P.y,
                             P.w,
                             P.h,
+                            pe,
                             ue,
-                            ge,
                             P.w * c,
                             P.h * c,
                           ),
@@ -35121,17 +35188,17 @@
                       S.width,
                       S.height,
                     ));
-                  ee = g.imgCoords.main_logo;
+                  te = g.imgCoords.main_logo;
                   (b.drawImage(
                     n.imgs.miscSheet,
-                    ee.x,
-                    ee.y,
-                    ee.w,
-                    ee.h,
+                    te.x,
+                    te.y,
+                    te.w,
+                    te.h,
                     2,
-                    S.height - 2 - ee.h,
-                    ee.w,
-                    ee.h,
+                    S.height - 2 - te.h,
+                    te.w,
+                    te.h,
                   ),
                     this.gif.addFrame(b, { delay: 50, copy: !0 }));
                 }
@@ -35143,21 +35210,21 @@
                     (this.game.cureTick = 0),
                   this.game.cureTick)
                 ) {
-                  ee = g.imgCoords.cureButton;
-                  var Ie = 2.08;
+                  te = g.imgCoords.cureButton;
+                  var Me = 2.08;
                   C.drawImage(
                     n.imgs.miscSheet,
-                    ee.x,
-                    ee.y,
-                    ee.w,
-                    ee.h,
+                    te.x,
+                    te.y,
+                    te.w,
+                    te.h,
                     208,
                     6.24,
-                    ee.w * Ie,
-                    ee.h * Ie,
+                    te.w * Me,
+                    te.h * Me,
                   );
-                  var Me = v.lang.get("game.buttons.cure");
-                  ((Me +=
+                  var Te = v.lang.get("game.buttons.cure");
+                  ((Te +=
                     " ( " +
                     Math.floor(
                       (this.game.cureTick - this.game.ticksCounter) / 20,
@@ -35165,29 +35232,29 @@
                     " )"),
                     (0, m.drawText)(
                       C,
-                      Me,
+                      Te,
                       "white",
                       8 * c,
-                      Ie * (100 + 0.5 * ee.w),
+                      Me * (100 + 0.5 * te.w),
                       49.92,
                       200 * c,
                       "center",
                     ),
                     u.Input.x >= 208 &&
-                      u.Input.x <= (ee.w + 100) * Ie &&
-                      u.Input.y <= ee.h * Ie &&
+                      u.Input.x <= (te.w + 100) * Me &&
+                      u.Input.y <= te.h * Me &&
                       ((this.cureButtonHovered = !0),
                       (C.globalAlpha = 0.5),
                       C.drawImage(
                         n.imgs.miscSheetWhite,
-                        ee.x,
-                        ee.y,
-                        ee.w,
-                        ee.h,
+                        te.x,
+                        te.y,
+                        te.w,
+                        te.h,
                         208,
                         6.24,
-                        ee.w * Ie,
-                        ee.h * Ie,
+                        te.w * Me,
+                        te.h * Me,
                       ),
                       (C.globalAlpha = 1)));
                 }
@@ -35197,20 +35264,20 @@
                   this.game.replayMode && this.replayLength)
                 ) {
                   c = 0.8 * this.game.SCALE_FACTOR_BASE;
-                  ((ee = g.imgCoords.replayBar), (P = g.imgCoords.replayPos));
-                  var Te = this.replayTimer / this.replayLength;
-                  le =
+                  ((te = g.imgCoords.replayBar), (P = g.imgCoords.replayPos));
+                  var Ee = this.replayTimer / this.replayLength;
+                  he =
                     " " +
                     (0, m.ticks2TimeStr)(this.replayTimer) +
                     " / " +
                     this.replayLengthStr;
                   (this.game.fastForward && this.fastForwardTo > 0
-                    ? (le +=
+                    ? (he +=
                         " (" + (0, m.ticks2TimeStr)(this.fastForwardTo) + ")")
                     : ((this.provisionalReplayPos = -1),
                       (this.provisionalReplayPerc = -1),
                       u.Input.x <= 90 * c &&
-                        u.Input.y >= window.innerHeight - (ee.h + 2) * c &&
+                        u.Input.y >= window.innerHeight - (te.h + 2) * c &&
                         ((this.provisionalReplayPerc = Math.min(
                           Math.max((u.Input.x / c - 5) / 78, 0),
                           1,
@@ -35218,17 +35285,17 @@
                         (this.provisionalReplayPos = Math.floor(
                           this.provisionalReplayPerc * this.replayLength,
                         )),
-                        (le +=
+                        (he +=
                           " (" +
                           (0, m.ticks2TimeStr)(this.provisionalReplayPos) +
                           ")"))),
                     (0, m.drawText)(
                       C,
-                      le,
+                      he,
                       "white",
                       6 * c,
                       4 * c,
-                      window.innerHeight - (ee.h + 6) * c,
+                      window.innerHeight - (te.h + 6) * c,
                       200 * c,
                       "left",
                       1,
@@ -35237,14 +35304,14 @@
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      ee.x,
-                      ee.y,
-                      ee.w,
-                      ee.h,
+                      te.x,
+                      te.y,
+                      te.w,
+                      te.h,
                       2 * c,
-                      window.innerHeight - (ee.h + 2) * c,
-                      ee.w * c,
-                      ee.h * c,
+                      window.innerHeight - (te.h + 2) * c,
+                      te.w * c,
+                      te.h * c,
                     ),
                     C.drawImage(
                       n.imgs.miscSheet,
@@ -35252,7 +35319,7 @@
                       P.y,
                       P.w,
                       P.h,
-                      c * (5 + 78 * Te),
+                      c * (5 + 78 * Ee),
                       window.innerHeight - (P.h + 2) * c,
                       P.w * c,
                       P.h * c,
@@ -35286,22 +35353,22 @@
                           P.h * c,
                         ),
                         (C.globalAlpha = 1)),
-                    (ee = g.imgCoords.replayPlusMinus),
+                    (te = g.imgCoords.replayPlusMinus),
                     C.drawImage(
                       n.imgs.miscSheet,
-                      ee.x,
-                      ee.y,
-                      ee.w,
-                      ee.h,
+                      te.x,
+                      te.y,
+                      te.w,
+                      te.h,
                       90 * c,
-                      window.innerHeight - (ee.h + 2) * c,
-                      ee.w * c,
-                      ee.h * c,
+                      window.innerHeight - (te.h + 2) * c,
+                      te.w * c,
+                      te.h * c,
                     ),
                     u.Input.x >= 90 * c &&
-                      u.Input.x <= (90 + ee.w) * c &&
-                      u.Input.y >= window.innerHeight - (ee.h + 2) * c &&
-                      u.Input.y <= window.innerHeight - (ee.h + 2 - 9) * c &&
+                      u.Input.x <= (90 + te.w) * c &&
+                      u.Input.y >= window.innerHeight - (te.h + 2) * c &&
+                      u.Input.y <= window.innerHeight - (te.h + 2 - 9) * c &&
                       ((this.replayPlusHover = !0),
                       (P = g.imgCoords.replayWhite),
                       (C.globalAlpha = 0.2),
@@ -35312,14 +35379,14 @@
                         P.w,
                         P.h,
                         90 * c,
-                        window.innerHeight - (ee.h + 2) * c,
+                        window.innerHeight - (te.h + 2) * c,
                         P.w * c,
                         P.h * c,
                       ),
                       (C.globalAlpha = 1)),
                     u.Input.x >= 90 * c &&
-                      u.Input.x <= (90 + ee.w) * c &&
-                      u.Input.y >= window.innerHeight - (ee.h + 2 - 9) * c &&
+                      u.Input.x <= (90 + te.w) * c &&
+                      u.Input.y >= window.innerHeight - (te.h + 2 - 9) * c &&
                       ((this.replayMinusHover = !0),
                       (P = g.imgCoords.replayWhite),
                       (C.globalAlpha = 0.2),
@@ -35330,7 +35397,7 @@
                         P.w,
                         P.h,
                         90 * c,
-                        window.innerHeight - (ee.h + 2 - 9) * c,
+                        window.innerHeight - (te.h + 2 - 9) * c,
                         P.w * c,
                         P.h * c,
                       ),
@@ -35351,36 +35418,36 @@
                             "rgba(0, 0, 0, 0.5)",
                             10 * c,
                           )
-                        : ((ee = this.recordGIF
+                        : ((te = this.recordGIF
                             ? g.imgCoords.stopGif
                             : g.imgCoords.startGif),
                           C.drawImage(
                             n.imgs.miscSheet,
-                            ee.x,
-                            ee.y,
-                            ee.w,
-                            ee.h,
+                            te.x,
+                            te.y,
+                            te.w,
+                            te.h,
                             2 * c,
-                            window.innerHeight - (34 + ee.h) * c,
-                            ee.w * c,
-                            ee.h * c,
+                            window.innerHeight - (34 + te.h) * c,
+                            te.w * c,
+                            te.h * c,
                           ),
-                          u.Input.x <= (ee.w + 2) * c &&
-                            u.Input.y >= window.innerHeight - (ee.h + 34) * c &&
+                          u.Input.x <= (te.w + 2) * c &&
+                            u.Input.y >= window.innerHeight - (te.h + 34) * c &&
                             u.Input.y <= window.innerHeight - 34 * c &&
                             ((this.gifButtonIsHovered = !0),
-                            (ee = g.imgCoords.whiteGif),
+                            (te = g.imgCoords.whiteGif),
                             (C.globalAlpha = 0.2),
                             C.drawImage(
                               n.imgs.miscSheet,
-                              ee.x,
-                              ee.y,
-                              ee.w,
-                              ee.h,
+                              te.x,
+                              te.y,
+                              te.w,
+                              te.h,
                               2 * c,
-                              window.innerHeight - (34 + ee.h) * c,
-                              ee.w * c,
-                              ee.h * c,
+                              window.innerHeight - (34 + te.h) * c,
+                              te.w * c,
+                              te.h * c,
                             ),
                             (C.globalAlpha = 1)),
                           this.recordGIF &&
@@ -35389,7 +35456,7 @@
                               " recording ...",
                               "white",
                               6 * c,
-                              (4 + ee.w) * c,
+                              (4 + te.w) * c,
                               window.innerHeight - 38 * c,
                               200 * c,
                               "left",
@@ -35399,40 +35466,40 @@
                             ))));
                 }
                 if (this.ladderEndAt > 0) {
-                  we = (Date.now() - this.ladderEndAt) / 1e3;
-                  var Ee = Math.min(20.8 * we, 500),
-                    ke = C.createLinearGradient(
+                  ve = (Date.now() - this.ladderEndAt) / 1e3;
+                  var ke = Math.min(20.8 * ve, 500),
+                    Le = C.createLinearGradient(
                       0,
                       0.2 * window.innerHeight,
                       0,
                       0.8 * window.innerHeight,
                     );
-                  (ke.addColorStop(0, "rgba(0, 0, 0, 0)"),
-                    ke.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
-                    ke.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
-                    ke.addColorStop(1, "rgba(0, 0, 0, 0)"),
-                    (C.fillStyle = ke),
+                  (Le.addColorStop(0, "rgba(0, 0, 0, 0)"),
+                    Le.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
+                    Le.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
+                    Le.addColorStop(1, "rgba(0, 0, 0, 0)"),
+                    (C.fillStyle = Le),
                     C.fillRect(
                       0,
                       0.5 * window.innerHeight -
-                        15 * this.game.SCALE_FACTOR_BASE * Ee,
+                        15 * this.game.SCALE_FACTOR_BASE * ke,
                       window.innerWidth,
-                      30 * this.game.SCALE_FACTOR_BASE * Ee,
+                      30 * this.game.SCALE_FACTOR_BASE * ke,
                     ));
-                  W = "rgba(100, 255, 100, " + Math.min(1, 2 * we) + ")";
+                  W = "rgba(100, 255, 100, " + Math.min(1, 2 * ve) + ")";
                   ("You lose!" === this.ladderEndMsg &&
-                    (W = "rgba(255, 100, 100, " + Math.min(1, 2 * we) + ")"),
+                    (W = "rgba(255, 100, 100, " + Math.min(1, 2 * ve) + ")"),
                     "Draw!" === this.ladderEndMsg &&
-                      (W = "rgba(255, 255, 100, " + Math.min(1, 2 * we) + ")"));
-                  var Le =
-                    "rgba(100, 255, 100, " + 0.6 * Math.min(1, 2 * we) + ")";
+                      (W = "rgba(255, 255, 100, " + Math.min(1, 2 * ve) + ")"));
+                  var Ae =
+                    "rgba(100, 255, 100, " + 0.6 * Math.min(1, 2 * ve) + ")";
                   ("You lose!" === this.ladderEndMsg &&
-                    (Le =
-                      "rgba(255, 100, 100, " + 0.6 * Math.min(1, 2 * we) + ")"),
+                    (Ae =
+                      "rgba(255, 100, 100, " + 0.6 * Math.min(1, 2 * ve) + ")"),
                     "Draw!" === this.ladderEndMsg &&
-                      (Le =
+                      (Ae =
                         "rgba(255, 255, 100, " +
-                        0.6 * Math.min(1, 2 * we) +
+                        0.6 * Math.min(1, 2 * ve) +
                         ")"),
                     (0, m.drawText)(
                       C,
@@ -35448,7 +35515,7 @@
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[0],
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * we) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * ve) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth -
                         14 * this.game.SCALE_FACTOR_BASE,
@@ -35460,7 +35527,7 @@
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[2],
-                      "rgba(255, 255, 100, " + Math.min(1, 2 * we) + ")",
+                      "rgba(255, 255, 100, " + Math.min(1, 2 * ve) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth -
                         1.9 * this.game.SCALE_FACTOR_BASE,
@@ -35472,7 +35539,7 @@
                     (0, m.drawText)(
                       C,
                       ":",
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * we) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * ve) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35483,7 +35550,7 @@
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[1],
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * we) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * ve) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth +
                         14 * this.game.SCALE_FACTOR_BASE,
@@ -35494,7 +35561,7 @@
                     (0, m.drawText)(
                       C,
                       this.ladderMsgArr[3],
-                      "rgba(255, 255, 100, " + Math.min(1, 2 * we) + ")",
+                      "rgba(255, 255, 100, " + Math.min(1, 2 * ve) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth +
                         2.9 * this.game.SCALE_FACTOR_BASE,
@@ -35506,7 +35573,7 @@
                       (0, m.drawText)(
                         C,
                         this.ladderMsgArr[4],
-                        Le,
+                        Ae,
                         3.5 * this.game.SCALE_FACTOR_BASE,
                         0.5 * window.innerWidth,
                         0.5 * window.innerHeight +
@@ -35514,69 +35581,69 @@
                         window.innerWidth,
                         "center",
                       ));
-                  var Ae = this.game.SCALE_FACTOR_BASE,
-                    Fe = 0.4 * this.game.SCALE_FACTOR_BASE;
+                  var Fe = this.game.SCALE_FACTOR_BASE,
+                    Pe = 0.4 * this.game.SCALE_FACTOR_BASE;
                   C.fillStyle = "white";
-                  ee =
+                  te =
                     "You lose!" === this.ladderEndMsg
                       ? g.imgCoords.light_red
                       : g.imgCoords.light_green;
-                  for (var Pe = 0.5 * window.innerWidth; Pe > 0; Pe -= 7 * Ae) {
+                  for (var Ne = 0.5 * window.innerWidth; Ne > 0; Ne -= 7 * Fe) {
                     C.globalAlpha = Math.max(
                       1 -
                         5 *
                           Math.abs(
-                            1 - (we - 0.4) - Pe / (0.5 * window.innerWidth),
+                            1 - (ve - 0.4) - Ne / (0.5 * window.innerWidth),
                           ),
                       0,
                     );
-                    var Ne =
+                    var De =
                       Math.pow(
                         Math.max(
                           1 -
                             5 *
                               Math.abs(
-                                1 - (we - 0.4) - Pe / (0.5 * window.innerWidth),
+                                1 - (ve - 0.4) - Ne / (0.5 * window.innerWidth),
                               ),
                           0,
                         ),
                         2,
                       ) *
-                      Ae *
+                      Fe *
                       2;
                     (C.drawImage(
                       n.imgs.miscSheet,
-                      ee.x,
-                      ee.y,
-                      ee.w,
-                      ee.h,
-                      Pe - 0.5 * ee.w * Fe,
-                      0.5 * window.innerHeight - 0.5 * ee.w * Fe,
-                      ee.w * Fe,
-                      ee.h * Fe,
+                      te.x,
+                      te.y,
+                      te.w,
+                      te.h,
+                      Ne - 0.5 * te.w * Pe,
+                      0.5 * window.innerHeight - 0.5 * te.w * Pe,
+                      te.w * Pe,
+                      te.h * Pe,
                     ),
                       C.drawImage(
                         n.imgs.miscSheet,
-                        ee.x,
-                        ee.y,
-                        ee.w,
-                        ee.h,
-                        window.innerWidth - Pe - 0.5 * ee.w * Fe,
-                        0.5 * window.innerHeight - 0.5 * ee.w * Fe,
-                        ee.w * Fe,
-                        ee.h * Fe,
+                        te.x,
+                        te.y,
+                        te.w,
+                        te.h,
+                        window.innerWidth - Ne - 0.5 * te.w * Pe,
+                        0.5 * window.innerHeight - 0.5 * te.w * Pe,
+                        te.w * Pe,
+                        te.h * Pe,
                       ),
                       C.fillRect(
-                        Pe - Ae,
-                        0.5 * window.innerHeight - Ne,
-                        2 * Ae,
-                        2 * Ne,
+                        Ne - Fe,
+                        0.5 * window.innerHeight - De,
+                        2 * Fe,
+                        2 * De,
                       ),
                       C.fillRect(
-                        window.innerWidth - Pe - Ae,
-                        0.5 * window.innerHeight - Ne,
-                        2 * Ae,
-                        2 * Ne,
+                        window.innerWidth - Ne - Fe,
+                        0.5 * window.innerHeight - De,
+                        2 * Fe,
+                        2 * De,
                       ));
                   }
                   C.globalAlpha = 1;
@@ -35586,9 +35653,9 @@
                   this.game.ticksCounter < 139 &&
                   this.ladderEndAt <= 0
                 ) {
-                  var De = 0;
+                  var Be = 0;
                   if (
-                    (le = ["5", "4", "3", "2", "1", "Go!"][
+                    (he = ["5", "4", "3", "2", "1", "Go!"][
                       Math.floor(this.game.ticksCounter / 20)
                     ])
                   ) {
@@ -35601,16 +35668,16 @@
                         40 * this.game.SCALE_FACTOR_BASE +
                           this.game.SCALE_FACTOR_BASE,
                       ),
-                      (De = 1));
+                      (Be = 1));
                     W =
                       "rgba(100, 255, 100, " +
-                      (1 - 0.3 * (we = (this.game.ticksCounter / 20) % 1)) +
+                      (1 - 0.3 * (ve = (this.game.ticksCounter / 20) % 1)) +
                       ")";
                     (0, m.drawText)(
                       C,
-                      le,
+                      he,
                       W,
-                      this.game.SCALE_FACTOR_BASE * (11 + 4 * we),
+                      this.game.SCALE_FACTOR_BASE * (11 + 4 * ve),
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight -
                         2 * this.game.SCALE_FACTOR_BASE,
@@ -35618,10 +35685,10 @@
                       "center",
                     );
                   } else {
-                    we = 1 - (this.game.ticksCounter % 20) / 20;
-                    ((De = Math.max(0.5 * we, 0)),
+                    ve = 1 - (this.game.ticksCounter % 20) / 20;
+                    ((Be = Math.max(0.5 * ve, 0)),
                       (C.fillStyle =
-                        "rgba(0, 0, 0, " + Math.max(0.5 * we, 0) + ")"),
+                        "rgba(0, 0, 0, " + Math.max(0.5 * ve, 0) + ")"),
                       C.fillRect(
                         0,
                         0.5 * window.innerHeight -
@@ -35635,7 +35702,7 @@
                     ((0, m.drawText)(
                       C,
                       this.game.players[0].name,
-                      "rgba(255, 255, 255, " + De + ")",
+                      "rgba(255, 255, 255, " + Be + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth - 8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerHeight +
@@ -35646,7 +35713,7 @@
                     (0, m.drawText)(
                       C,
                       "vs",
-                      "rgba(255, 255, 100, " + De + ")",
+                      "rgba(255, 255, 100, " + Be + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35657,7 +35724,7 @@
                     (0, m.drawText)(
                       C,
                       this.game.players[1].name,
-                      "rgba(255, 255, 255, " + De + ")",
+                      "rgba(255, 255, 255, " + Be + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth + 8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerHeight +
@@ -35667,7 +35734,7 @@
                     (0, m.drawText)(
                       C,
                       "First player who dies 5 times, loses.",
-                      "rgba(180, 180, 180, " + De + ")",
+                      "rgba(180, 180, 180, " + Be + ")",
                       3 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -41429,6 +41496,7 @@
         (Object.defineProperty(t, "__esModule", { value: !0 }),
           (t.imageTransforms =
             t.headsWhite =
+            t.headsBlink =
             t.headsBlack =
             t.heads =
             t.legsWhite =
@@ -41440,30 +41508,31 @@
             t.refreshHatCanvas =
               void 0));
         var a = i(8890),
-          n = i(5021),
-          o = i(262),
-          r = i(2399),
-          s = i(8166),
-          l = i(1554),
-          h = i(6409),
-          d = i(7028),
-          m = i(5572),
-          c = i(9178),
-          g = i(9216),
-          u = i(6214),
-          p = document.getElementById("canvas").getContext("2d"),
-          y = null,
-          f = Date.now(),
-          x = 0,
+          n = i(7602),
+          o = i(5021),
+          r = i(262),
+          s = i(2399),
+          l = i(8166),
+          h = i(1554),
+          d = i(6409),
+          m = i(7028),
+          c = i(5572),
+          g = i(9178),
+          u = i(9216),
+          p = i(6214),
+          y = document.getElementById("canvas").getContext("2d"),
+          f = null,
+          x = Date.now(),
           w = 0,
-          v =
+          v = 0,
+          S =
             window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             function (e) {
               window.setTimeout(e, 16);
             };
-        function S(e, i, a) {
+        function b(e, i, a) {
           var n = null !== a && void 0 !== a.frame ? a.frame : 0;
           ((e.width = e.offsetWidth), (e.height = e.offsetHeight));
           var o = "yes" === e.getAttribute("data-no-animate"),
@@ -41525,101 +41594,101 @@
               h,
             ));
         }
-        function b() {
-          if ((v(b), null !== m.root.game)) {
+        function _() {
+          if ((S(_), null !== c.root.game)) {
             var e = Date.now();
             if (
-              ((m.root.game.timeDiff = e - f),
-              (f = e),
-              (m.root.game.tickDiff = m.root.game.ticksCounter - x),
-              (x = m.root.game.ticksCounter),
-              (m.root.game.exactTickDiff =
-                m.root.game.ticksCounter +
+              ((c.root.game.timeDiff = e - x),
+              (x = e),
+              (c.root.game.tickDiff = c.root.game.ticksCounter - w),
+              (w = c.root.game.ticksCounter),
+              (c.root.game.exactTickDiff =
+                c.root.game.ticksCounter +
                 Math.min(
-                  (Date.now() - m.root.game.lastUpdate) /
-                    r.replaySettings.replayOption.tickTime,
+                  (Date.now() - c.root.game.lastUpdate) /
+                    s.replaySettings.replayOption.tickTime,
                   1,
                 ) -
-                w),
-              (w =
-                m.root.game.ticksCounter +
+                v),
+              (v =
+                c.root.game.ticksCounter +
                 Math.min(
-                  (Date.now() - m.root.game.lastUpdate) /
-                    r.replaySettings.replayOption.tickTime,
+                  (Date.now() - c.root.game.lastUpdate) /
+                    s.replaySettings.replayOption.tickTime,
                   1,
                 )),
-              m.root.game.map === h.map1)
+              c.root.game.map === d.map1)
             )
               if (
                 (Math.floor(e / 50) >
-                  Math.floor((e - m.root.game.timeDiff) / 50) &&
-                  m.root.game.receiveUpdate([]),
-                m.root.game.cameraX < 0 ||
-                  m.root.game.cameraY < 0 ||
-                  m.root.game.cameraX2 > m.root.game.map.x ||
-                  m.root.game.cameraY2 > m.root.game.map.y ||
-                  (0 === m.root.game.camFlyX && 0 === m.root.game.camFlyY))
+                  Math.floor((e - c.root.game.timeDiff) / 50) &&
+                  c.root.game.receiveUpdate([]),
+                c.root.game.cameraX < 0 ||
+                  c.root.game.cameraY < 0 ||
+                  c.root.game.cameraX2 > c.root.game.map.x ||
+                  c.root.game.cameraY2 > c.root.game.map.y ||
+                  (0 === c.root.game.camFlyX && 0 === c.root.game.camFlyY))
               ) {
                 var t = Math.random() * Math.PI * 2;
-                ((m.root.game.camFlyX = 0.001 * Math.cos(t)),
-                  (m.root.game.camFlyY = 0.001 * Math.sin(t)),
-                  (m.root.game.cameraX =
+                ((c.root.game.camFlyX = 0.001 * Math.cos(t)),
+                  (c.root.game.camFlyY = 0.001 * Math.sin(t)),
+                  (c.root.game.cameraX =
                     Math.random() *
-                    (m.root.game.map.x -
-                      window.innerWidth / m.root.game.FIELD_SIZE)),
-                  (m.root.game.cameraY =
+                    (c.root.game.map.x -
+                      window.innerWidth / c.root.game.FIELD_SIZE)),
+                  (c.root.game.cameraY =
                     Math.random() *
-                    (m.root.game.map.y -
-                      window.innerHeight / m.root.game.FIELD_SIZE)));
+                    (c.root.game.map.y -
+                      window.innerHeight / c.root.game.FIELD_SIZE)));
               } else
-                ((m.root.game.cameraX +=
-                  m.root.game.camFlyX * m.root.game.timeDiff),
-                  (m.root.game.cameraY +=
-                    m.root.game.camFlyY * m.root.game.timeDiff));
+                ((c.root.game.cameraX +=
+                  c.root.game.camFlyX * c.root.game.timeDiff),
+                  (c.root.game.cameraY +=
+                    c.root.game.camFlyY * c.root.game.timeDiff));
           } else
-            ((p.fillStyle = "black"),
-              p.fillRect(0, 0, window.innerWidth, window.innerHeight));
+            ((y.fillStyle = "black"),
+              y.fillRect(0, 0, window.innerWidth, window.innerHeight));
           if (
-            (null !== m.root.game &&
-              m.root.game.map === h.map1 &&
-              null !== c.UI.canvasChangeSkinsButton &&
-              S(
-                c.UI.canvasChangeSkinsButton,
-                o.playerData.skin,
-                o.playerData.favGun,
+            (null !== c.root.game &&
+              c.root.game.map === d.map1 &&
+              null !== g.UI.canvasChangeSkinsButton &&
+              b(
+                g.UI.canvasChangeSkinsButton,
+                r.playerData.skin,
+                r.playerData.favGun,
               ),
-            null !== c.UI.canvasProfileSkin &&
-              null !== c.UI.profileSkin &&
+            null !== g.UI.canvasProfileSkin &&
+              null !== g.UI.profileSkin &&
               null !== document.getElementById("profile_skin_div") &&
-              S(c.UI.canvasProfileSkin, c.UI.profileSkin, c.UI.profileWeapon),
-            null !== m.root.game &&
-              (y !== m.root.game &&
+              b(g.UI.canvasProfileSkin, g.UI.profileSkin, g.UI.profileWeapon),
+            null !== c.root.game &&
+              (f !== c.root.game &&
                 a.CONST.ENABLE_LIGHTMAP &&
-                ((y = m.root.game), (0, l.sendInitGrid)(m.root.game)),
-              m.root.game.draw(),
-              a.CONST.ENABLE_LIGHTMAP && (0, l.sendVisionRequest)(m.root.game)),
-            m.root.searchingLadder && null !== m.root.game)
+                ((f = c.root.game), (0, h.sendInitGrid)(c.root.game)),
+              c.root.game.draw(),
+              a.CONST.ENABLE_LIGHTMAP && (0, h.sendVisionRequest)(c.root.game)),
+            c.root.searchingLadder && null !== c.root.game)
           ) {
             for (
               var i = document.getElementById("ladderDivInner2"),
-                n = (f % 1e3) / 251,
-                s = "",
-                d = 0;
-              d < n;
-              d++
+                n = (x % 1e3) / 251,
+                o = "",
+                l = 0;
+              l < n;
+              l++
             )
-              s += ".";
-            i.innerHTML = s + " " + u.lang.get("ladder.searching") + " " + s;
+              o += ".";
+            i.innerHTML = o + " " + p.lang.get("ladder.searching") + " " + o;
           }
         }
-        ((t.refreshHatCanvas = S), (t.mainLoop = b));
-        var _ = 1;
-        function C(e) {
-          _++;
+        ((t.refreshHatCanvas = b), (t.mainLoop = _));
+        var C = 1;
+        function I(e) {
+          C++;
           var t = new Image();
           return (
             (t.onload = function () {
-              I(t);
+              M(t);
             }),
             (t.crossOrigin = "Anonymous"),
             (t.src = e),
@@ -41627,41 +41696,41 @@
             t
           );
         }
-        function I(e) {
+        function M(e) {
           if (e && (!e.complete || !(e.width > 0)))
             return ((e.src = ""), void (e.src = e.srcCpy));
-          0 === --_ &&
+          0 === --C &&
             (console.log("assets loaded"),
-            u.lang.initialize(function () {
-              ((m.root.langAndImgsLoaded = !0), u.lang.applyLocale(), M());
+            p.lang.initialize(function () {
+              ((c.root.langAndImgsLoaded = !0), p.lang.applyLocale(), T());
             }));
         }
-        function M() {
-          !m.root.gameHasBeenInited &&
-            m.root.langAndImgsLoaded &&
-            ((m.root.gameHasBeenInited = !0),
-            T(),
-            c.UI.renderMainMenu_(),
-            c.UI.refreshMenuButtons(),
-            g.homeScreen.render(),
-            (m.root.game = new s.Game(h.map1)),
-            (0, r.resize)(),
-            v(b),
-            (0, d.networkInit)());
-        }
         function T() {
+          !c.root.gameHasBeenInited &&
+            c.root.langAndImgsLoaded &&
+            ((c.root.gameHasBeenInited = !0),
+            E(),
+            g.UI.renderMainMenu_(),
+            g.UI.refreshMenuButtons(),
+            u.homeScreen.render(),
+            (c.root.game = new l.Game(d.map1)),
+            (0, s.resize)(),
+            S(_),
+            (0, m.networkInit)());
+        }
+        function E() {
           var e = document.createElement("canvas");
           ((e.height = t.imgs.miscSheet.height),
             (e.width = t.imgs.miscSheet.width));
           var i = e.getContext("2d");
           i.drawImage(t.imgs.miscSheet, 0, 0);
           for (
-            var a = i.getImageData(0, 0, e.width, e.height), o = 0;
-            o < a.data.length;
-            o += 4
+            var a = i.getImageData(0, 0, e.width, e.height), n = 0;
+            n < a.data.length;
+            n += 4
           ) {
-            var r = (a.data[o] + a.data[o + 1] + a.data[o + 2]) / 3;
-            ((a.data[o] = r), (a.data[o + 1] = r), (a.data[o + 2] = r));
+            var r = (a.data[n] + a.data[n + 1] + a.data[n + 2]) / 3;
+            ((a.data[n] = r), (a.data[n + 1] = r), (a.data[n + 2] = r));
           }
           (i.putImageData(a, 0, 0),
             (t.imgs.miscSheetGrey = e),
@@ -41670,8 +41739,8 @@
             (e.width = t.imgs.miscSheet.width),
             (i = e.getContext("2d")).drawImage(t.imgs.miscSheet, 0, 0),
             (a = i.getImageData(0, 0, e.width, e.height)));
-          for (o = 0; o < a.data.length; o += 4)
-            ((a.data[o] = 255), (a.data[o + 1] = 255), (a.data[o + 2] = 255));
+          for (n = 0; n < a.data.length; n += 4)
+            ((a.data[n] = 255), (a.data[n + 1] = 255), (a.data[n + 2] = 255));
           (i.putImageData(a, 0, 0), (t.imgs.miscSheetWhite = e));
           for (
             var s = [
@@ -41694,22 +41763,22 @@
               (e.width = h.width),
               i.drawImage(h, 0, 0),
               (a = i.getImageData(0, 0, e.width, e.height)));
-            for (o = 0; o < a.data.length; o += 4)
-              a.data[o + 3] > 0 &&
-                ((a.data[o] = 0), (a.data[o + 1] = 0), (a.data[o + 2] = 0));
+            for (n = 0; n < a.data.length; n += 4)
+              a.data[n + 3] > 0 &&
+                ((a.data[n] = 0), (a.data[n + 1] = 0), (a.data[n + 2] = 0));
             (i.putImageData(a, 0, 0),
               (t.imgs[s[l] + "Black"] = e),
               (i = (e = document.createElement("canvas")).getContext("2d")),
               (e.height = h.height),
               (e.width = h.width));
-            for (o = 0; o < a.data.length; o += 4)
-              a.data[o + 3] > 0 &&
-                ((a.data[o] = 255),
-                (a.data[o + 1] = 255),
-                (a.data[o + 2] = 255));
+            for (n = 0; n < a.data.length; n += 4)
+              a.data[n + 3] > 0 &&
+                ((a.data[n] = 255),
+                (a.data[n + 1] = 255),
+                (a.data[n + 2] = 255));
             (i.putImageData(a, 0, 0), (t.imgs[s[l] + "White"] = e));
           }
-          for (var d = 0, m = n.tileTypes; d < m.length; d++) {
+          for (var d = 0, m = o.tileTypes; d < m.length; d++) {
             var c = m[d];
             if (!c.isTorch) {
               h = c.img;
@@ -41749,39 +41818,40 @@
                   ")");
             }
           }
-          (E(), k());
+          (k(), L(), F());
         }
-        ((t.initGame = M),
+        ((t.initGame = T),
           (t.imgs = {
-            legs: C("imgs/legs.png"),
-            heads: C("imgs/heads.png"),
-            hands: C("imgs/hands.png"),
-            throwHands: C("imgs/throw_hands.png"),
-            shadow: C("imgs/shadow.png"),
-            miscSheet: C("imgs/miscSheet.png"),
-            tileSheet: C("imgs/tileSheet.png"),
-            normalMap: C("imgs/normalMap.png"),
-            weaponsPlus: C("imgs/weaponsPlus.png"),
-            weaponsMinus: C("imgs/weaponsMinus.png"),
-            weaponsBodyPlus: C("imgs/weaponsBodyPlus.png"),
-            weaponsBodyMinus: C("imgs/weaponsBodyMinus.png"),
-            zombieDeath: C("imgs/zombie-death.png"),
-            turnZombie: C("imgs/turn-zombie.png"),
-            rangedZombie: C("imgs/rangedZombie.png"),
-            crawler: C("imgs/spider.png"),
-            bug: C("imgs/bug.png"),
-            humanBoss: C("imgs/human_boss.png"),
-            zombieBoss: C("imgs/zombie_boss.png"),
+            legs: I("imgs/legs.png"),
+            heads: I("imgs/heads.png"),
+            hands: I("imgs/hands.png"),
+            throwHands: I("imgs/throw_hands.png"),
+            shadow: I("imgs/shadow.png"),
+            miscSheet: I("imgs/miscSheet.png"),
+            tileSheet: I("imgs/tileSheet.png"),
+            normalMap: I("imgs/normalMap.png"),
+            weaponsPlus: I("imgs/weaponsPlus.png"),
+            weaponsMinus: I("imgs/weaponsMinus.png"),
+            weaponsBodyPlus: I("imgs/weaponsBodyPlus.png"),
+            weaponsBodyMinus: I("imgs/weaponsBodyMinus.png"),
+            zombieDeath: I("imgs/zombie-death.png"),
+            turnZombie: I("imgs/turn-zombie.png"),
+            rangedZombie: I("imgs/rangedZombie.png"),
+            crawler: I("imgs/spider.png"),
+            bug: I("imgs/bug.png"),
+            humanBoss: I("imgs/human_boss.png"),
+            zombieBoss: I("imgs/zombie_boss.png"),
           }),
           (t.legs = []),
           (t.legsBlack = []),
           (t.legsWhite = []),
           (t.heads = []),
           (t.headsBlack = []),
+          (t.headsBlink = []),
           (t.headsWhite = []),
-          I(),
-          (t.imageTransforms = T));
-        var E = function () {
+          M(),
+          (t.imageTransforms = E));
+        var k = function () {
             ((t.legs.length = 0),
               (t.legsWhite.length = 0),
               (t.legsBlack.length = 0));
@@ -41839,7 +41909,7 @@
                 t.legsBlack.push(n));
             }
           },
-          k = function () {
+          L = function () {
             ((t.heads.length = 0),
               (t.headsWhite.length = 0),
               (t.headsBlack.length = 0));
@@ -41895,6 +41965,43 @@
                     32,
                   ),
                 t.headsBlack.push(n));
+            }
+          },
+          A = [
+            [255, 31, 0],
+            [176, 52, 34],
+          ],
+          F = function () {
+            t.headsBlink.length = 0;
+            var e = n.hats.find(function (e) {
+              return "Cyborg" === e.name;
+            });
+            if (e && t.heads[e.offset]) {
+              var i = t.heads[e.offset],
+                a = document.createElement("canvas");
+              ((a.width = i.width), (a.height = i.height));
+              var o,
+                r = a.getContext("2d");
+              r.drawImage(i, 0, 0);
+              try {
+                o = r.getImageData(0, 0, a.width, a.height);
+              } catch (e) {
+                return;
+              }
+              for (var s = o.data, l = 0; l < s.length; l += 4)
+                if (0 !== s[l + 3])
+                  for (var h = 0, d = A; h < d.length; h++) {
+                    var m = d[h];
+                    if (
+                      Math.abs(s[l] - m[0]) <= 24 &&
+                      Math.abs(s[l + 1] - m[1]) <= 24 &&
+                      Math.abs(s[l + 2] - m[2]) <= 24
+                    ) {
+                      ((s[l] = 0), (s[l + 1] = 0), (s[l + 2] = 0));
+                      break;
+                    }
+                  }
+              (r.putImageData(o, 0, 0), (t.headsBlink[e.offset] = a));
             }
           };
       },
