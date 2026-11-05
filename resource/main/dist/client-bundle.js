@@ -10,6 +10,181 @@ var c_hasPressedCtrlRKey = false;
 
 
   var __webpack_modules__ = {
+      212: (e, t, i) => {
+        "use strict";
+        (Object.defineProperty(t, "__esModule", { value: !0 }),
+          (t.Building = void 0));
+        var a = i(9994),
+          n = i(8890),
+          o = i(4425),
+          r = i(3085),
+          s = i(9085),
+          l = i(2677),
+          h = (function () {
+            function e(e, t, i, a) {
+              ((this.isAlive = !0),
+                (this.lastHit = -99999),
+                (this._fields = []),
+                (this._game = e),
+                (this.id = t),
+                (this.type = a),
+                (this.x = Math.floor(i.x)),
+                (this.y = Math.floor(i.y)),
+                (this.w = a.w),
+                (this.h = a.h),
+                (this.cx = this.x + this.w / 2),
+                (this.cy = this.y + this.h / 2),
+                (this.maxHP = a.hp),
+                (this.hp = a.hp),
+                (this.team = a.team),
+                e.addToObjectsToDraw(this));
+            }
+            return (
+              (e.prototype.occupy = function (e) {
+                for (var t = this.x; t < this.x + this.w; t++)
+                  for (var i = this.y; i < this.y + this.h; i++)
+                    e[t] &&
+                      void 0 !== e[t][i] &&
+                      (this._fields.push({ x: t, y: i, pathing: e[t][i] }),
+                      (e[t][i] = this.type.pathing));
+              }),
+              (e.prototype.covers = function (e, t) {
+                return (
+                  e >= this.x &&
+                  e < this.x + this.w &&
+                  t >= this.y &&
+                  t < this.y + this.h
+                );
+              }),
+              (e.prototype.getYDrawingOffset = function () {
+                return this.y + this.h - 1;
+              }),
+              (e.prototype.hpUpdate = function (e, t) {
+                (void 0 === t && (t = !0),
+                  (this.hp = e),
+                  t && (this.lastHit = this._game.ticksCounter),
+                  this.hp <= 0 && this.isAlive && this.die());
+              }),
+              (e.prototype.die = function () {
+                this.isAlive = !1;
+                for (var e = 0, t = this._fields; e < t.length; e++) {
+                  var i = t[e];
+                  this._game.pathingArray[i.x] &&
+                    void 0 !== this._game.pathingArray[i.x][i.y] &&
+                    (this._game.pathingArray[i.x][i.y] = i.pathing);
+                }
+                if (
+                  ((this._fields.length = 0),
+                  (0, o.deleteFromArray)(this._game.objectsToDraw, this),
+                  !this._game.fastForward)
+                ) {
+                  var a = 1.2 + 0.6 * Math.max(this.w, this.h);
+                  "green" === this.type.deathEffect
+                    ? this._game.createExplosionGreen(this.cx, this.cy, a)
+                    : (this._game.createExplosion(this.cx, this.cy, a, 0.1),
+                      s.Sound.playSound("explo", this.cx, this.cy));
+                  for (var n = 0; n < 6 + this.w * this.h * 2; n++)
+                    new l.Sprite(this._game, {
+                      x: this.x + Math.random() * this.w,
+                      y: this.y + Math.random() * this.h,
+                      img: r.imgCoords.dust1,
+                      scaleFunction: function (e) {
+                        return this.r1 - 0.01 * e;
+                      },
+                      r1: Math.random() + 1.25,
+                      alphaFunction: function (e) {
+                        return 0.35 * Math.max(0, 1 - e / this.ticksToLive);
+                      },
+                      age: 20 * (1.7 + Math.random()),
+                    });
+                }
+              }),
+              (e.prototype.draw = function (e, t, i, n, o) {
+                if (
+                  !(
+                    this.x + this.w + 2 < t ||
+                    this.x - 2 > n ||
+                    this.y + this.h + 2 < i ||
+                    this.y - 4 > o
+                  )
+                ) {
+                  var r = this._game,
+                    s = r.ctx,
+                    l = r.SCALE_FACTOR,
+                    h = this.type.img,
+                    d = (this.cx - r.cameraX) * r.FIELD_SIZE - (h.w / 2) * l,
+                    m = (this.y + this.h - r.cameraY) * r.FIELD_SIZE - h.h * l,
+                    c = h.w * l,
+                    g = h.h * l;
+                  (s.drawImage(
+                    a.imgs.miscSheet,
+                    h.x,
+                    h.y,
+                    h.w,
+                    h.h,
+                    d,
+                    m,
+                    c,
+                    g,
+                  ),
+                    r.ticksCounter > 0 &&
+                      this.lastHit + 1 >= r.ticksCounter &&
+                      ((s.globalAlpha = 0.7),
+                      s.drawImage(
+                        a.imgs.miscSheetWhite,
+                        h.x,
+                        h.y,
+                        h.w,
+                        h.h,
+                        d,
+                        m,
+                        c,
+                        g,
+                      ),
+                      (s.globalAlpha = 1)),
+                    this.hp < this.maxHP && this._drawHpBar(d + c / 2, m));
+                }
+              }),
+              (e.prototype._drawHpBar = function (e, t) {
+                var i = this._game,
+                  o = i.ctx,
+                  s = 0.55 * i.SCALE_FACTOR,
+                  l = 16 * this.w * 1.4,
+                  h = e - (l * s) / 2,
+                  d = t - 8 * s - 3 * i.SCALE_FACTOR,
+                  m = r.imgCoords.hpBar3;
+                ((o.fillStyle = "black"),
+                  o.fillRect(h, d, l * s, 8 * s),
+                  o.drawImage(
+                    a.imgs.miscSheet,
+                    m.x,
+                    m.y,
+                    m.w,
+                    m.h,
+                    h + 1 * s,
+                    d + 1 * s,
+                    (l - 2) * s * (this.hp / this.maxHP),
+                    6 * s,
+                  ),
+                  (o.strokeStyle = "rgba(0, 0, 0, 1)"),
+                  (o.lineWidth = s));
+                for (
+                  var c = n.CONST.HP_SEPERATOR_AMOUNT;
+                  c < this.maxHP && this.maxHP < n.CONST.HP_SEPERATOR_HIDE_FROM;
+                  c += n.CONST.HP_SEPERATOR_AMOUNT
+                ) {
+                  var g = h + 1 * s + (c / this.maxHP) * (l - 2) * s;
+                  (o.beginPath(),
+                    o.moveTo(g, d + 5 * s),
+                    o.lineTo(g, d + 7 * s),
+                    o.stroke());
+                }
+              }),
+              e
+            );
+          })();
+        t.Building = h;
+      },
       217: function (e, t, i) {
         "use strict";
         var a,
@@ -104,8 +279,8 @@ var c_hasPressedCtrlRKey = false;
               F,
               P,
               N,
-              D,
               B,
+              D,
               O,
             ) {
               var R = e.call(this, t, i) || this;
@@ -132,7 +307,8 @@ var c_hasPressedCtrlRKey = false;
                 (R.weaponCooldown = 0),
                 (R._nameCanvasBgColor = ""),
                 (R._nameCanvasAnimationFrame = 0),
-                (R.db_id = B),
+                (R.reviveProgress = 0),
+                (R.db_id = D),
                 o || (o = "Player"),
                 (R.name = (0, u.escapeHtml)(o.substr(0, 15))),
                 (R.authLevel = E),
@@ -170,17 +346,18 @@ var c_hasPressedCtrlRKey = false;
                 (R.clanTag = T || ""),
                 R.init(),
                 (R.isFakeCorpse = N),
-                (R.isBoss = !!D),
+                (R.isBoss = !!B),
                 R.hp <= 0 &&
                   ((R.dieAt = t.ticksCounter),
                   (R.finallyRemoveAt = t.ticksCounter + 50)),
                 t.addToObjectsToDraw(R),
                 (R.isInvisible = !!C),
                 R === t.playingPlayer &&
-                  (t.playingPlayerAbilities =
+                  (t.playingPlayerAbilities = (0, r.copyBuild)(
                     c.playerData && c.playerData.authLevel >= 6
                       ? c.playerData.abilities
-                      : (0, r.getDefaultAbilityObj)(r.abilities)),
+                      : (0, r.getDefaultAbilityObj)(r.abilities),
+                  )),
                 P && R.turnZombie(!0),
                 S.rankInGame.addPlayer(R),
                 R
@@ -251,7 +428,8 @@ var c_hasPressedCtrlRKey = false;
                       : 0;
               }),
               (t.prototype.respawn = function (e, t, i) {
-                (i && this.turnZombie(),
+                ((this.reviveProgress = 0),
+                  i && this.turnZombie(),
                   (this.x = e),
                   (this.y = t),
                   (this.x0 = this.x),
@@ -303,10 +481,11 @@ var c_hasPressedCtrlRKey = false;
                 (e && document.getElementById("statsTable1").appendChild(e),
                   this === this._game.playingPlayer &&
                     (this._game.resetPlayingPlayerStats(),
-                    (this._game.playingPlayerAbilities =
+                    (this._game.playingPlayerAbilities = (0, r.copyBuild)(
                       c.playerData && c.playerData.authLevel >= 6
                         ? c.playerData.abilities
-                        : (0, r.getDefaultAbilityObj)(r.abilities)),
+                        : (0, r.getDefaultAbilityObj)(r.abilities),
+                    )),
                     this._game.setActiveAbilities(),
                     (this._game.playingPlayerEnergy = s.CONST.START_ENERGY)));
               }),
@@ -356,10 +535,11 @@ var c_hasPressedCtrlRKey = false;
                 var e = document.getElementById("tr_" + this.id);
                 (e && document.getElementById("statsTable1").appendChild(e),
                   this === this._game.playingPlayer &&
-                    ((this._game.playingPlayerAbilities =
+                    ((this._game.playingPlayerAbilities = (0, r.copyBuild)(
                       c.playerData && c.playerData.authLevel >= 6
                         ? c.playerData.abilities
-                        : (0, r.getDefaultAbilityObj)(r.abilities)),
+                        : (0, r.getDefaultAbilityObj)(r.abilities),
+                    )),
                     this._game.setActiveAbilities()));
               }),
               (t.prototype.resetCooldowns = function () {
@@ -611,6 +791,7 @@ var c_hasPressedCtrlRKey = false;
                         this._lastKiller instanceof t
                           ? this._lastKiller.name
                           : "",
+                        !!this._game.type.noRespawn,
                       ),
                     this.flameDeath)
                   ) {
@@ -686,7 +867,11 @@ var c_hasPressedCtrlRKey = false;
                           },
                         })));
                   } else this.updateBounce();
-                  if (this.dieAt && this._game.playingPlayer === this) {
+                  if (
+                    this.dieAt &&
+                    this._game.playingPlayer === this &&
+                    !this._game.type.noRespawn
+                  ) {
                     var a =
                       Math.floor(
                         ((this.dieAt +
@@ -1167,8 +1352,8 @@ var c_hasPressedCtrlRKey = false;
                     F = 1,
                     P = this.isHumanZombie,
                     N = this.lastTickFire,
-                    D = this._hat,
-                    B = this.team,
+                    B = this._hat,
+                    D = this.team,
                     O =
                       !this.dieAt && this.z <= 0
                         ? -(
@@ -1359,13 +1544,13 @@ var c_hasPressedCtrlRKey = false;
                   (this.flameDeathAndNowBouncing && (L = 0.9),
                     this.hitUntil >= e &&
                       (A = Math.random() < 0.5 ? 0.95 : 0.1));
-                  var K = this.direction,
-                    V = this.direction2;
+                  var V = this.direction,
+                    K = this.direction2;
                   this.laserHitUntil >= e &&
                     ((A = 0.95),
                     (E = null),
-                    (K = this.lockDirection),
-                    (V = this.lockDirection2));
+                    (V = this.lockDirection),
+                    (K = this.lockDirection2));
                   var $ = this.getVanishingAlpha(),
                     J = 0,
                     Q = this.standTime,
@@ -1375,7 +1560,7 @@ var c_hasPressedCtrlRKey = false;
                       !this.dieAt &&
                       ((J = Math.min((Q + l) / ee, 1)),
                       (c = Math.floor(2 * J)),
-                      (K = 8),
+                      (V = 8),
                       (J *= 2 * this._game.SCALE_FACTOR)),
                     this.nextPlayer && this === this._game.playingPlayer)
                   ) {
@@ -1448,7 +1633,7 @@ var c_hasPressedCtrlRKey = false;
                     h.drawImage(o.imgs.shadow, v, S, 32 * d, 32 * d),
                     (h.globalAlpha = 1));
                   var ie = e - this.lastSpawnTick;
-                  if ((1 === B || 2 === B) && !this.isFakeCorpse) {
+                  if ((1 === D || 2 === D) && !this.isFakeCorpse) {
                     var ae =
                         1 === this.team
                           ? y.imgCoords.light_red
@@ -1480,8 +1665,8 @@ var c_hasPressedCtrlRKey = false;
                       var he = le[se];
                       this.updateAndDrawPillar(he, ie);
                     }
-                  var de = 1 === B ? this._game.blueFlag : this._game.redFlag,
-                    me = 1 === B ? y.imgCoords.blueFlag : y.imgCoords.redFlag;
+                  var de = 1 === D ? this._game.blueFlag : this._game.redFlag,
+                    me = 1 === D ? y.imgCoords.blueFlag : y.imgCoords.redFlag;
                   de &&
                     de.carriedBy === this &&
                     h.drawImage(
@@ -1604,12 +1789,12 @@ var c_hasPressedCtrlRKey = false;
                         (h.globalAlpha = 1),
                         (ue = !1),
                         (E = null),
-                        (D = this._originalHat),
+                        (B = this._originalHat),
                         (P = !1),
                         pe <= 5 &&
                           ((h.globalAlpha = (5 - pe) / 5),
                           h.drawImage(
-                            o.legs[D.legs],
+                            o.legs[B.legs],
                             32 * (this._legFrame + 3),
                             256,
                             32,
@@ -1619,7 +1804,7 @@ var c_hasPressedCtrlRKey = false;
                             32 * d,
                             32 * d,
                           ),
-                          D.hatOnly &&
+                          B.hatOnly &&
                             h.drawImage(
                               this.headImg(0),
                               512 + 32 * this._legFrame,
@@ -1632,7 +1817,7 @@ var c_hasPressedCtrlRKey = false;
                               32 * d,
                             ),
                           h.drawImage(
-                            this.headImg(D.offset),
+                            this.headImg(B.offset),
                             512 + 32 * this._legFrame,
                             0,
                             32,
@@ -1670,8 +1855,8 @@ var c_hasPressedCtrlRKey = false;
                         (h.globalAlpha = 1),
                         (ue = pe <= 4),
                         (E = null),
-                        (B = 1),
-                        (D = this._originalHat),
+                        (D = 1),
+                        (B = this._originalHat),
                         (P = !1));
                     } else if (this.lastZombieToHumanTransformation + 40 > e) {
                       pe = Math.max(
@@ -1699,8 +1884,8 @@ var c_hasPressedCtrlRKey = false;
                         (h.globalAlpha = 1),
                         (ue = pe <= 0),
                         (E = null),
-                        (B = 1),
-                        (D = this._originalHat),
+                        (D = 1),
+                        (B = this._originalHat),
                         (P = !1));
                     } else if (this.turnedBossAt + 40 > e) {
                       var fe = this.isHumanZombie
@@ -1733,7 +1918,7 @@ var c_hasPressedCtrlRKey = false;
                             ((h.globalAlpha = F),
                             h.drawImage(
                               o.imgs.weaponsMinus,
-                              32 * V + (ce ? 256 : 0),
+                              32 * K + (ce ? 256 : 0),
                               32 * X,
                               32,
                               32,
@@ -1744,7 +1929,7 @@ var c_hasPressedCtrlRKey = false;
                             ),
                             h.drawImage(
                               o.imgs.weaponsBodyMinus,
-                              32 * V + (ce ? 256 : 0),
+                              32 * K + (ce ? 256 : 0),
                               32 * X,
                               32,
                               32,
@@ -1753,13 +1938,13 @@ var c_hasPressedCtrlRKey = false;
                               32 * d,
                               32 * d,
                             ),
-                            ce && (3 === V || 4 === V || 5 === V))
+                            ce && (3 === K || 4 === K || 5 === K))
                           ) {
                             var we = Math.floor(e / 3) % 4;
                             h.drawImage(
                               o.imgs.hands,
                               32 * we + 256,
-                              32 * V,
+                              32 * K,
                               32,
                               32,
                               v,
@@ -1770,7 +1955,7 @@ var c_hasPressedCtrlRKey = false;
                           }
                           if (
                             E.muzzleFlash &&
-                            (3 === V || 4 === V || 5 === V) &&
+                            (3 === K || 4 === K || 5 === K) &&
                             N >= Math.floor(e) - 4
                           ) {
                             var ve = y.imgCoords[E.muzzleFlash],
@@ -1784,7 +1969,7 @@ var c_hasPressedCtrlRKey = false;
                               Se >= 0 &&
                                 h.drawImage(
                                   o.imgs.miscSheet,
-                                  ve.x + 52 * V,
+                                  ve.x + 52 * K,
                                   ve.y + 52 * Se,
                                   52,
                                   52,
@@ -1813,7 +1998,7 @@ var c_hasPressedCtrlRKey = false;
                           h.drawImage(
                             o.imgs.hands,
                             32 * c,
-                            32 * V + this.handsOffset,
+                            32 * K + this.handsOffset,
                             32,
                             32,
                             v,
@@ -1827,7 +2012,7 @@ var c_hasPressedCtrlRKey = false;
                             h.drawImage(
                               o.imgs.handsBlack,
                               32 * c,
-                              32 * V + this.handsOffset,
+                              32 * K + this.handsOffset,
                               32,
                               32,
                               v,
@@ -1841,7 +2026,7 @@ var c_hasPressedCtrlRKey = false;
                             h.drawImage(
                               o.imgs.handsWhite,
                               32 * c,
-                              32 * V + this.handsOffset,
+                              32 * K + this.handsOffset,
                               32,
                               32,
                               v,
@@ -1907,7 +2092,7 @@ var c_hasPressedCtrlRKey = false;
                               (h.globalAlpha = 1)));
                         } else {
                           var Ce = this.direction + c,
-                            Ie = 0 === D.legs && 2 === B ? 4 : D.legs;
+                            Ie = 0 === B.legs && 2 === D ? 4 : B.legs;
                           ((h.globalAlpha = $ * F),
                             h.drawImage(
                               o.legs[Ie],
@@ -1920,7 +2105,7 @@ var c_hasPressedCtrlRKey = false;
                               32 * d,
                               32 * d,
                             ),
-                            D.hatOnly &&
+                            B.hatOnly &&
                               h.drawImage(
                                 this.headImg(0),
                                 512 + 32 * Ce,
@@ -1933,7 +2118,7 @@ var c_hasPressedCtrlRKey = false;
                                 32 * d,
                               ),
                             h.drawImage(
-                              this.headImg(D.offset),
+                              this.headImg(B.offset),
                               512 + 32 * Ce,
                               0,
                               32,
@@ -1957,7 +2142,7 @@ var c_hasPressedCtrlRKey = false;
                                 32 * d,
                                 32 * d,
                               ),
-                              D.hatOnly &&
+                              B.hatOnly &&
                                 h.drawImage(
                                   o.headsBlack[0],
                                   512 + 32 * Ce,
@@ -1970,7 +2155,7 @@ var c_hasPressedCtrlRKey = false;
                                   32 * d,
                                 ),
                               h.drawImage(
-                                o.headsBlack[D.offset],
+                                o.headsBlack[B.offset],
                                 512 + 32 * Ce,
                                 0,
                                 32,
@@ -1994,7 +2179,7 @@ var c_hasPressedCtrlRKey = false;
                                 32 * d,
                                 32 * d,
                               ),
-                              D.hatOnly &&
+                              B.hatOnly &&
                                 h.drawImage(
                                   o.headsWhite[0],
                                   512 + 32 * Ce,
@@ -2007,7 +2192,7 @@ var c_hasPressedCtrlRKey = false;
                                   32 * d,
                                 ),
                               h.drawImage(
-                                o.headsWhite[D.offset],
+                                o.headsWhite[B.offset],
                                 512 + 32 * Ce,
                                 0,
                                 32,
@@ -2027,9 +2212,9 @@ var c_hasPressedCtrlRKey = false;
                         var Me = this._game.ticksCounter - N,
                           Te = Me < 4 ? 0 : 256;
                         (h.drawImage(
-                          o.legs[D.legs],
+                          o.legs[B.legs],
                           32 * c,
-                          32 * K,
+                          32 * V,
                           32,
                           32,
                           v,
@@ -2040,9 +2225,9 @@ var c_hasPressedCtrlRKey = false;
                           A > 0 &&
                             ((h.globalAlpha = A),
                             h.drawImage(
-                              o.legsWhite[D.legs],
+                              o.legsWhite[B.legs],
                               32 * c,
-                              32 * K,
+                              32 * V,
                               32,
                               32,
                               v,
@@ -2056,7 +2241,7 @@ var c_hasPressedCtrlRKey = false;
                               h.drawImage(
                                 o.imgs.zombieBoss,
                                 45 * Te,
-                                45 * V,
+                                45 * K,
                                 45,
                                 45,
                                 g - 22.5 * d,
@@ -2065,8 +2250,8 @@ var c_hasPressedCtrlRKey = false;
                                 45 * d,
                               ))
                             : (h.drawImage(
-                                this.headImg(D.offset + 1),
-                                32 * V + Te,
+                                this.headImg(B.offset + 1),
+                                32 * K + Te,
                                 0,
                                 32,
                                 32,
@@ -2078,8 +2263,8 @@ var c_hasPressedCtrlRKey = false;
                               A > 0 &&
                                 ((h.globalAlpha = A),
                                 h.drawImage(
-                                  o.headsWhite[D.offset + 1],
-                                  32 * V + Te,
+                                  o.headsWhite[B.offset + 1],
+                                  32 * K + Te,
                                   0,
                                   32,
                                   32,
@@ -2090,13 +2275,13 @@ var c_hasPressedCtrlRKey = false;
                                 ),
                                 (h.globalAlpha = 1))));
                       } else {
-                        Ie = 0 === D.legs && 2 === B ? 4 : D.legs;
+                        Ie = 0 === B.legs && 2 === D ? 4 : B.legs;
                         if (
                           ((h.globalAlpha = F),
                           h.drawImage(
                             o.legs[Ie],
                             32 * c,
-                            32 * K,
+                            32 * V,
                             32,
                             32,
                             v,
@@ -2110,7 +2295,7 @@ var c_hasPressedCtrlRKey = false;
                             h.drawImage(
                               o.legsBlack[Ie],
                               32 * c,
-                              32 * K,
+                              32 * V,
                               32,
                               32,
                               v,
@@ -2124,7 +2309,7 @@ var c_hasPressedCtrlRKey = false;
                             h.drawImage(
                               o.legsWhite[Ie],
                               32 * c,
-                              32 * K,
+                              32 * V,
                               32,
                               32,
                               v,
@@ -2142,7 +2327,7 @@ var c_hasPressedCtrlRKey = false;
                             h.drawImage(
                               fe,
                               0,
-                              45 * V,
+                              45 * K,
                               45,
                               45,
                               g - 22.5 * d,
@@ -2152,11 +2337,11 @@ var c_hasPressedCtrlRKey = false;
                             ),
                             (h.globalAlpha = 1));
                         } else
-                          (D.hatOnly &&
+                          (B.hatOnly &&
                             ((h.globalAlpha = F),
                             h.drawImage(
                               this.headImg(0),
-                              32 * V + (ce ? 256 : 0),
+                              32 * K + (ce ? 256 : 0),
                               0,
                               32,
                               32,
@@ -2170,7 +2355,7 @@ var c_hasPressedCtrlRKey = false;
                               ((h.globalAlpha = L * F),
                               h.drawImage(
                                 o.headsBlack[0],
-                                32 * V + (ce ? 256 : 0),
+                                32 * K + (ce ? 256 : 0),
                                 0,
                                 32,
                                 32,
@@ -2184,7 +2369,7 @@ var c_hasPressedCtrlRKey = false;
                               ((h.globalAlpha = A),
                               h.drawImage(
                                 o.headsWhite[0],
-                                32 * V + (ce ? 256 : 0),
+                                32 * K + (ce ? 256 : 0),
                                 0,
                                 32,
                                 32,
@@ -2196,8 +2381,8 @@ var c_hasPressedCtrlRKey = false;
                               (h.globalAlpha = 1))),
                             (h.globalAlpha = F),
                             h.drawImage(
-                              this.headImg(D.offset),
-                              32 * V + (ce ? 256 : 0),
+                              this.headImg(B.offset),
+                              32 * K + (ce ? 256 : 0),
                               0,
                               32,
                               32,
@@ -2210,8 +2395,8 @@ var c_hasPressedCtrlRKey = false;
                             this.flameDeath &&
                               ((h.globalAlpha = L * F),
                               h.drawImage(
-                                o.headsBlack[D.offset],
-                                32 * V + (ce ? 256 : 0),
+                                o.headsBlack[B.offset],
+                                32 * K + (ce ? 256 : 0),
                                 0,
                                 32,
                                 32,
@@ -2225,7 +2410,7 @@ var c_hasPressedCtrlRKey = false;
                               ((h.globalAlpha = A),
                               h.drawImage(
                                 o.headsWhite[0],
-                                32 * V + (ce ? 256 : 0),
+                                32 * K + (ce ? 256 : 0),
                                 0,
                                 32,
                                 32,
@@ -2248,7 +2433,7 @@ var c_hasPressedCtrlRKey = false;
                         (h.drawImage(
                           o.imgs.throwHands,
                           32 * Ee,
-                          32 * V,
+                          32 * K,
                           32,
                           32,
                           v,
@@ -2260,13 +2445,13 @@ var c_hasPressedCtrlRKey = false;
                       } else if (E) {
                         if (
                           ((h.globalAlpha = F),
-                          ce && 3 !== V && 4 !== V && 5 !== V)
+                          ce && 3 !== K && 4 !== K && 5 !== K)
                         ) {
                           we = Math.floor(e / 3) % 4;
                           h.drawImage(
                             o.imgs.hands,
                             32 * we + 256,
-                            32 * V,
+                            32 * K,
                             32,
                             32,
                             v,
@@ -2278,7 +2463,7 @@ var c_hasPressedCtrlRKey = false;
                         if (
                           (h.drawImage(
                             o.imgs.weaponsPlus,
-                            32 * V + (ce ? 256 : 0),
+                            32 * K + (ce ? 256 : 0),
                             32 * X,
                             32,
                             32,
@@ -2289,7 +2474,7 @@ var c_hasPressedCtrlRKey = false;
                           ),
                           h.drawImage(
                             o.imgs.weaponsBodyPlus,
-                            32 * V + (ce ? 256 : 0),
+                            32 * K + (ce ? 256 : 0),
                             32 * X,
                             32,
                             32,
@@ -2299,9 +2484,9 @@ var c_hasPressedCtrlRKey = false;
                             32 * d,
                           ),
                           E.muzzleFlash &&
-                            3 !== V &&
-                            4 !== V &&
-                            5 !== V &&
+                            3 !== K &&
+                            4 !== K &&
+                            5 !== K &&
                             N >= Math.floor(e) - 4)
                         ) {
                           ((ve = y.imgCoords[E.muzzleFlash]), (Se = -1));
@@ -2314,7 +2499,7 @@ var c_hasPressedCtrlRKey = false;
                             Se >= 0 &&
                               h.drawImage(
                                 o.imgs.miscSheet,
-                                ve.x + 52 * V,
+                                ve.x + 52 * K,
                                 ve.y + 52 * Se,
                                 52,
                                 52,
@@ -2345,7 +2530,7 @@ var c_hasPressedCtrlRKey = false;
                         h.drawImage(
                           o.imgs.hands,
                           32 * c,
-                          32 * V + this.handsOffset,
+                          32 * K + this.handsOffset,
                           32,
                           32,
                           v,
@@ -2359,7 +2544,7 @@ var c_hasPressedCtrlRKey = false;
                           h.drawImage(
                             o.imgs.handsBlack,
                             32 * c,
-                            32 * V + this.handsOffset,
+                            32 * K + this.handsOffset,
                             32,
                             32,
                             v,
@@ -2373,7 +2558,7 @@ var c_hasPressedCtrlRKey = false;
                           h.drawImage(
                             o.imgs.handsWhite,
                             32 * c,
-                            32 * V + this.handsOffset,
+                            32 * K + this.handsOffset,
                             32,
                             32,
                             v,
@@ -2553,10 +2738,10 @@ var c_hasPressedCtrlRKey = false;
                         this.lastShieldHit <= e && this.lastShieldHit + 10 >= e)
                       ) {
                         Ae = 1;
-                        var De = 1.1 * d;
+                        var Be = 1.1 * d;
                         ((Ne =
                           Math.min(Math.max(e - this.lastShieldHit, 0), 10) /
-                          10) < 0.1 && ((Ae = 10 * Ne), (De = d + d * Ne * 1)),
+                          10) < 0.1 && ((Ae = 10 * Ne), (Be = d + d * Ne * 1)),
                           Ne > 0.5 && (Ae = 0.66 * (1 - Ne)),
                           (Fe = y.imgCoords.refShield3),
                           (h.globalAlpha = Ae),
@@ -2577,19 +2762,19 @@ var c_hasPressedCtrlRKey = false;
                             Fe.y,
                             Fe.w,
                             Fe.h,
-                            g - (Fe.w / 2) * De,
-                            p - x - (Fe.h / 2 + 6) * De,
-                            Fe.w * De,
-                            Fe.h * De,
+                            g - (Fe.w / 2) * Be,
+                            p - x - (Fe.h / 2 + 6) * Be,
+                            Fe.w * Be,
+                            Fe.h * Be,
                           ),
                           (h.globalAlpha = 1));
                       }
                     }
                     if (this.zombieSense && !this.isFakeCorpse && this.hp > 0) {
-                      var Be = (e % 16) / 15,
+                      var De = (e % 16) / 15,
                         Oe = y.imgCoords.zombieSenseCircle,
-                        Re = d * (0.25 + 1.5 * Be);
-                      ((h.globalAlpha = Math.max(0.8 - Be, 0.01)),
+                        Re = d * (0.25 + 1.5 * De);
+                      ((h.globalAlpha = Math.max(0.8 - De, 0.01)),
                         h.drawImage(
                           o.imgs.miscSheet,
                           Oe.x,
@@ -2613,226 +2798,210 @@ var c_hasPressedCtrlRKey = false;
                         this.updateAndDrawPillar(he, ie);
                       }
                     if (
-                      (!R ||
-                        !this._game.playingPlayer ||
-                        this.isAlliedWith(this._game.playingPlayer)) &&
-                      ((g =
-                        (this.x0 +
-                          l * (this.x - this.x0) -
-                          this._game.cameraX) *
-                        this._game.FIELD_SIZE),
-                      (p =
-                        (this.y0 +
-                          l * (this.y - this.y0) -
-                          this._game.cameraY) *
-                        this._game.FIELD_SIZE),
-                      !this.dieAt)
+                      !R ||
+                      !this._game.playingPlayer ||
+                      this.isAlliedWith(this._game.playingPlayer)
                     ) {
-                      var Ge = 0.55 * this._game.SCALE_FACTOR,
-                        We = 42,
-                        ze = this._game.playingPlayer === this ? 13 : 9,
-                        Ye = 0.45 * this._game.FIELD_SIZE;
-                      ((a = g - (We * Ge + Ye) / 2),
-                        (n = p - 1.85 * this._game.FIELD_SIZE - x),
-                        this.isBoss &&
-                          (n -=
-                            (this.isHumanZombie ? 1 : 0.5) *
-                            this._game.FIELD_SIZE),
-                        this._game.type.souls
-                          ? ((h.fillStyle = "rgba(22, 22, 22, 0.8)"),
-                            h.fillRect(a, n, Ye, Ye),
-                            (0, u.drawText)(
-                              h,
-                              this.soulLvl.toString(),
-                              "white",
-                              4 * this._game.SCALE_FACTOR,
-                              a + Ye / 2,
-                              n + 0.75 * Ye,
-                              this._game.FIELD_SIZE,
-                              "center",
-                            ),
-                            (a += Ye))
-                          : (a += 0.5 * Ye),
-                        (n += Ye - ze * Ge),
-                        (h.fillStyle = "black"),
-                        h.fillRect(a, n, We * Ge, ze * Ge));
-                      var qe = this._game.botDebugs[this.id];
-                      (qe &&
-                        qe.short &&
-                        qe.at + 3e3 > Date.now() &&
-                        (0, u.drawText)(
-                          h,
-                          qe.short,
-                          this._game.botDebugHoverId === this.id
-                            ? "#FFD155"
-                            : "rgba(212, 212, 212, 0.85)",
-                          0.2 * this._game.FIELD_SIZE,
-                          a + (We * Ge) / 2,
-                          n - 0.34 * this._game.FIELD_SIZE,
-                          void 0,
-                          "center",
-                        ),
-                        this.updateNameCanvasAnimation(),
-                        h.drawImage(
-                          this._nameCanvas,
-                          0,
-                          0,
-                          this._nameCanvas.width,
-                          this._nameCanvas.height,
-                          a,
-                          n -
-                            0.27 * this._game.FIELD_SIZE +
-                            0.5 * this._game.SCALE_FACTOR,
-                          We * Ge,
-                          0.26 * this._game.FIELD_SIZE,
-                        ));
-                      var je = Math.min(
-                          this.hp -
-                            (this.hpGlideEnd >= e
-                              ? (this.hpGlideAmount * (this.hpGlideEnd - e)) /
-                                (this.hpGlideEnd - this.hpGlideStart)
-                              : 0),
-                          this.maxHP,
-                        ),
-                        Ze =
-                          !this._game.playingPlayer ||
-                          this.isAlliedWith(this._game.playingPlayer)
-                            ? y.imgCoords.hpBar1
-                            : y.imgCoords.hpBar3,
-                        Xe = 40 * Ge * (je / this.maxHP);
-                      (h.drawImage(
-                        o.imgs.miscSheet,
-                        Ze.x,
-                        Ze.y,
-                        Ze.w,
-                        Ze.h,
-                        a + 1 * Ge,
-                        n + 1 * Ge,
-                        Xe,
-                        7 * Ge,
-                      ),
-                        (h.strokeStyle = "rgba(0, 0, 0, 1)"),
-                        (h.lineWidth = Ge));
-                      for (
-                        var Ke = s.CONST.HP_SEPERATOR_AMOUNT;
-                        Ke < this.maxHP;
-                        Ke += s.CONST.HP_SEPERATOR_AMOUNT
-                      )
-                        (h.beginPath(),
-                          h.moveTo(
-                            a + 1 * Ge + (Ke / this.maxHP) * 40 * Ge,
-                            n + 6 * Ge,
-                          ),
-                          h.lineTo(
-                            a + 1 * Ge + (Ke / this.maxHP) * 40 * Ge,
-                            n + 8 * Ge,
-                          ),
-                          h.stroke());
-                      if (this.armor > 0) {
-                        var Ve = (this.armor / s.CONST.MAX_ARMOR) * 40;
-                        (h.drawImage(
-                          o.imgs.miscSheet,
-                          this._armorBar.x,
-                          this._armorBar.y,
-                          0.7 * Ve,
-                          this._armorBar.h,
-                          a + 1 * Ge,
-                          n + 1 * Ge,
-                          Ve * Ge,
-                          7 * Ge,
-                        ),
-                          (h.strokeStyle = "#CFD2E0"),
-                          (h.lineWidth = Ge),
-                          h.strokeRect(
-                            a + 0.5 * Ge,
-                            n + 0.5 * Ge,
-                            41 * Ge,
-                            8 * Ge,
-                          ));
-                      }
-                      if (this._game.playingPlayer === this) {
-                        var $e =
-                          this._game.pl_active_abilities[this.hoverAbility];
-                        (f.Input.keys[f.commandKeys[f.COMMAND.ABILITY1]] &&
-                          ($e = this._game.pl_active_abilities[0]),
-                          f.Input.keys[f.commandKeys[f.COMMAND.ABILITY2]] &&
-                            ($e = this._game.pl_active_abilities[1]),
-                          !$e &&
-                            f.Input.activeAbility &&
-                            ($e = f.Input.activeAbility),
-                          $e &&
-                            ((Ze = y.imgCoords.barBlue),
-                            (Xe = ($e.energy / 100) * 40 * Ge),
-                            (h.globalAlpha = 0.6),
-                            h.drawImage(
-                              o.imgs.miscSheet,
-                              Ze.x,
-                              Ze.y,
-                              Ze.w,
-                              Ze.h,
-                              a + 1 * Ge,
-                              n + 9 * Ge,
-                              Xe,
-                              3 * Ge,
-                            ),
-                            (h.globalAlpha = 1)),
-                          (Ze = y.imgCoords.energyBar),
-                          (Xe =
-                            (this._game.playingPlayerEnergy / 100) * 40 * Ge),
+                      if (
+                        ((g =
+                          (this.x0 +
+                            l * (this.x - this.x0) -
+                            this._game.cameraX) *
+                          this._game.FIELD_SIZE),
+                        (p =
+                          (this.y0 +
+                            l * (this.y - this.y0) -
+                            this._game.cameraY) *
+                          this._game.FIELD_SIZE),
+                        this.dieAt && this.reviveProgress > 0)
+                      ) {
+                        var Ge = 0.55 * this._game.SCALE_FACTOR,
+                          We = 42 * Ge,
+                          ze = g - We / 2,
+                          Ye = p - 1.2 * this._game.FIELD_SIZE;
+                        ((h.fillStyle = "black"),
+                          h.fillRect(ze, Ye, We, 8 * Ge),
                           h.drawImage(
                             o.imgs.miscSheet,
-                            Ze.x,
-                            Ze.y,
-                            Ze.w,
-                            Ze.h,
-                            a + 1 * Ge,
-                            n + 9 * Ge,
-                            Xe,
-                            3 * Ge,
+                            y.imgCoords.hpBar1.x,
+                            y.imgCoords.hpBar1.y,
+                            y.imgCoords.hpBar1.w,
+                            y.imgCoords.hpBar1.h,
+                            ze + Ge,
+                            Ye + Ge,
+                            (We - 2 * Ge) * Math.min(1, this.reviveProgress),
+                            6 * Ge,
                           ));
                       }
-                      ((n += 0.05 * this._game.FIELD_SIZE),
-                        (a = g - (1.56 * this._game.FIELD_SIZE) / 2),
-                        this === this._game.playingPlayer &&
-                          (this.switchWeaponUntil > e
-                            ? ((n -= 0.75 * this._game.FIELD_SIZE),
-                              (h.fillStyle = "black"),
-                              h.fillRect(
-                                a - 0.03 * this._game.FIELD_SIZE,
-                                n - 0.03 * this._game.FIELD_SIZE,
-                                1.56 * this._game.FIELD_SIZE,
-                                0.3 * this._game.FIELD_SIZE,
-                              ),
-                              (Xe =
-                                24 *
-                                (1 +
-                                  (e - this.switchWeaponUntil) /
-                                    s.CONST.WPN_SWITCH_TICKS)) >= 0 &&
-                                h.drawImage(
-                                  o.imgs.miscSheet,
-                                  y.imgCoords.barGrey.x,
-                                  y.imgCoords.barGrey.y,
-                                  Xe,
-                                  4,
-                                  a,
-                                  n,
-                                  this._game.SCALE_FACTOR * Xe,
-                                  0.24 * this._game.FIELD_SIZE,
-                                ),
+                      if (!this.dieAt) {
+                        var qe = 0.55 * this._game.SCALE_FACTOR,
+                          je = 42,
+                          Ze = this._game.playingPlayer === this ? 13 : 9,
+                          Xe = 0.45 * this._game.FIELD_SIZE;
+                        ((a = g - (je * qe + Xe) / 2),
+                          (n = p - 1.85 * this._game.FIELD_SIZE - x),
+                          this.isBoss &&
+                            (n -=
+                              (this.isHumanZombie ? 1 : 0.5) *
+                              this._game.FIELD_SIZE),
+                          this._game.type.souls
+                            ? ((h.fillStyle = "rgba(22, 22, 22, 0.8)"),
+                              h.fillRect(a, n, Xe, Xe),
                               (0, u.drawText)(
                                 h,
-                                T.lang.get("game.msg.switching_weapon"),
-                                "rgba(255, 255, 255, 0.75)",
-                                3 * this._game.SCALE_FACTOR,
-                                a + (1.56 * this._game.FIELD_SIZE) / 2,
-                                n + 3 * this._game.SCALE_FACTOR,
-                                500,
+                                this.soulLvl.toString(),
+                                "white",
+                                4 * this._game.SCALE_FACTOR,
+                                a + Xe / 2,
+                                n + 0.75 * Xe,
+                                this._game.FIELD_SIZE,
                                 "center",
-                              ))
-                            : this.weapon &&
-                                this.weaponCooldown > 0 &&
-                                this.weapon.cooldown > 7 &&
-                                0 === this.bouncePoints.length
+                              ),
+                              (a += Xe))
+                            : (a += 0.5 * Xe),
+                          (n += Xe - Ze * qe),
+                          (h.fillStyle = "black"),
+                          h.fillRect(a, n, je * qe, Ze * qe));
+                        var Ve = this._game.botDebugs[this.id];
+                        (Ve &&
+                          Ve.short &&
+                          Ve.at + 3e3 > Date.now() &&
+                          (0, u.drawText)(
+                            h,
+                            Ve.short,
+                            this._game.botDebugHoverId === this.id
+                              ? "#FFD155"
+                              : "rgba(212, 212, 212, 0.85)",
+                            0.2 * this._game.FIELD_SIZE,
+                            a + (je * qe) / 2,
+                            n - 0.34 * this._game.FIELD_SIZE,
+                            void 0,
+                            "center",
+                          ),
+                          this.updateNameCanvasAnimation(),
+                          h.drawImage(
+                            this._nameCanvas,
+                            0,
+                            0,
+                            this._nameCanvas.width,
+                            this._nameCanvas.height,
+                            a,
+                            n -
+                              0.27 * this._game.FIELD_SIZE +
+                              0.5 * this._game.SCALE_FACTOR,
+                            je * qe,
+                            0.26 * this._game.FIELD_SIZE,
+                          ));
+                        var Ke = Math.min(
+                            this.hp -
+                              (this.hpGlideEnd >= e
+                                ? (this.hpGlideAmount * (this.hpGlideEnd - e)) /
+                                  (this.hpGlideEnd - this.hpGlideStart)
+                                : 0),
+                            this.maxHP,
+                          ),
+                          $e =
+                            !this._game.playingPlayer ||
+                            this.isAlliedWith(this._game.playingPlayer)
+                              ? y.imgCoords.hpBar1
+                              : y.imgCoords.hpBar3,
+                          Je = 40 * qe * (Ke / this.maxHP);
+                        (h.drawImage(
+                          o.imgs.miscSheet,
+                          $e.x,
+                          $e.y,
+                          $e.w,
+                          $e.h,
+                          a + 1 * qe,
+                          n + 1 * qe,
+                          Je,
+                          7 * qe,
+                        ),
+                          (h.strokeStyle = "rgba(0, 0, 0, 1)"),
+                          (h.lineWidth = qe));
+                        for (
+                          var Qe = s.CONST.HP_SEPERATOR_AMOUNT;
+                          Qe < this.maxHP &&
+                          this.maxHP < s.CONST.HP_SEPERATOR_HIDE_FROM;
+                          Qe += s.CONST.HP_SEPERATOR_AMOUNT
+                        )
+                          (h.beginPath(),
+                            h.moveTo(
+                              a + 1 * qe + (Qe / this.maxHP) * 40 * qe,
+                              n + 6 * qe,
+                            ),
+                            h.lineTo(
+                              a + 1 * qe + (Qe / this.maxHP) * 40 * qe,
+                              n + 8 * qe,
+                            ),
+                            h.stroke());
+                        if (this.armor > 0) {
+                          var et = (this.armor / s.CONST.MAX_ARMOR) * 40;
+                          (h.drawImage(
+                            o.imgs.miscSheet,
+                            this._armorBar.x,
+                            this._armorBar.y,
+                            0.7 * et,
+                            this._armorBar.h,
+                            a + 1 * qe,
+                            n + 1 * qe,
+                            et * qe,
+                            7 * qe,
+                          ),
+                            (h.strokeStyle = "#CFD2E0"),
+                            (h.lineWidth = qe),
+                            h.strokeRect(
+                              a + 0.5 * qe,
+                              n + 0.5 * qe,
+                              41 * qe,
+                              8 * qe,
+                            ));
+                        }
+                        if (this._game.playingPlayer === this) {
+                          var tt =
+                            this._game.pl_active_abilities[this.hoverAbility];
+                          (f.Input.keys[f.commandKeys[f.COMMAND.ABILITY1]] &&
+                            (tt = this._game.pl_active_abilities[0]),
+                            f.Input.keys[f.commandKeys[f.COMMAND.ABILITY2]] &&
+                              (tt = this._game.pl_active_abilities[1]),
+                            !tt &&
+                              f.Input.activeAbility &&
+                              (tt = f.Input.activeAbility),
+                            tt &&
+                              (($e = y.imgCoords.barBlue),
+                              (Je = (tt.energy / 100) * 40 * qe),
+                              (h.globalAlpha = 0.6),
+                              h.drawImage(
+                                o.imgs.miscSheet,
+                                $e.x,
+                                $e.y,
+                                $e.w,
+                                $e.h,
+                                a + 1 * qe,
+                                n + 9 * qe,
+                                Je,
+                                3 * qe,
+                              ),
+                              (h.globalAlpha = 1)),
+                            ($e = y.imgCoords.energyBar),
+                            (Je =
+                              (this._game.playingPlayerEnergy / 100) * 40 * qe),
+                            h.drawImage(
+                              o.imgs.miscSheet,
+                              $e.x,
+                              $e.y,
+                              $e.w,
+                              $e.h,
+                              a + 1 * qe,
+                              n + 9 * qe,
+                              Je,
+                              3 * qe,
+                            ));
+                        }
+                        ((n += 0.05 * this._game.FIELD_SIZE),
+                          (a = g - (1.56 * this._game.FIELD_SIZE) / 2),
+                          this === this._game.playingPlayer &&
+                            (this.switchWeaponUntil > e
                               ? ((n -= 0.75 * this._game.FIELD_SIZE),
                                 (h.fillStyle = "black"),
                                 h.fillRect(
@@ -2841,25 +3010,35 @@ var c_hasPressedCtrlRKey = false;
                                   1.56 * this._game.FIELD_SIZE,
                                   0.3 * this._game.FIELD_SIZE,
                                 ),
-                                (Xe =
-                                  ((this.weaponCooldown - l) /
-                                    this.weapon.cooldown) *
-                                  24) >= 0 &&
+                                (Je =
+                                  24 *
+                                  (1 +
+                                    (e - this.switchWeaponUntil) /
+                                      s.CONST.WPN_SWITCH_TICKS)) >= 0 &&
                                   h.drawImage(
                                     o.imgs.miscSheet,
-                                    y.imgCoords.barBlue.x,
-                                    y.imgCoords.barBlue.y,
-                                    Xe,
+                                    y.imgCoords.barGrey.x,
+                                    y.imgCoords.barGrey.y,
+                                    Je,
                                     4,
                                     a,
                                     n,
-                                    this._game.SCALE_FACTOR * Xe,
+                                    this._game.SCALE_FACTOR * Je,
                                     0.24 * this._game.FIELD_SIZE,
-                                  ))
+                                  ),
+                                (0, u.drawText)(
+                                  h,
+                                  T.lang.get("game.msg.switching_weapon"),
+                                  "rgba(255, 255, 255, 0.75)",
+                                  3 * this._game.SCALE_FACTOR,
+                                  a + (1.56 * this._game.FIELD_SIZE) / 2,
+                                  n + 3 * this._game.SCALE_FACTOR,
+                                  500,
+                                  "center",
+                                ))
                               : this.weapon &&
-                                  this.weaponCooldowns2[this.weapon.id] > 0 &&
-                                  this.weaponCooldowns2[this.weapon.id] <
-                                    this.weapon.cooldown2 &&
+                                  this.weaponCooldown > 0 &&
+                                  this.weapon.cooldown > 7 &&
                                   0 === this.bouncePoints.length
                                 ? ((n -= 0.75 * this._game.FIELD_SIZE),
                                   (h.fillStyle = "black"),
@@ -2869,104 +3048,137 @@ var c_hasPressedCtrlRKey = false;
                                     1.56 * this._game.FIELD_SIZE,
                                     0.3 * this._game.FIELD_SIZE,
                                   ),
-                                  (Xe =
-                                    ((this.weaponCooldowns2[this.weapon.id] -
-                                      l) /
-                                      this.weapon.cooldown2) *
+                                  (Je =
+                                    ((this.weaponCooldown - l) /
+                                      this.weapon.cooldown) *
                                     24) >= 0 &&
                                     h.drawImage(
                                       o.imgs.miscSheet,
                                       y.imgCoords.barBlue.x,
                                       y.imgCoords.barBlue.y,
-                                      Xe,
+                                      Je,
                                       4,
                                       a,
                                       n,
-                                      this._game.SCALE_FACTOR * Xe,
+                                      this._game.SCALE_FACTOR * Je,
                                       0.24 * this._game.FIELD_SIZE,
+                                    ))
+                                : this.weapon &&
+                                    this.weaponCooldowns2[this.weapon.id] > 0 &&
+                                    this.weaponCooldowns2[this.weapon.id] <
+                                      this.weapon.cooldown2 &&
+                                    0 === this.bouncePoints.length
+                                  ? ((n -= 0.75 * this._game.FIELD_SIZE),
+                                    (h.fillStyle = "black"),
+                                    h.fillRect(
+                                      a - 0.03 * this._game.FIELD_SIZE,
+                                      n - 0.03 * this._game.FIELD_SIZE,
+                                      1.56 * this._game.FIELD_SIZE,
+                                      0.3 * this._game.FIELD_SIZE,
                                     ),
-                                  (0, u.drawText)(
-                                    h,
-                                    T.lang.get("game.msg.reloading"),
-                                    "rgba(255, 255, 255, 0.75)",
-                                    3 * this._game.SCALE_FACTOR,
-                                    a + (1.56 * this._game.FIELD_SIZE) / 2,
-                                    n + 3 * this._game.SCALE_FACTOR,
-                                    500,
-                                    "center",
-                                  ))
-                                : this._game.noShootUntil > e &&
-                                  ((n -= 0.75 * this._game.FIELD_SIZE),
-                                  (h.fillStyle = "white"),
-                                  h.fillRect(
-                                    a - 0.03 * this._game.FIELD_SIZE,
-                                    n - 0.03 * this._game.FIELD_SIZE,
-                                    1.56 * this._game.FIELD_SIZE,
-                                    0.3 * this._game.FIELD_SIZE,
-                                  ),
-                                  (Xe =
-                                    ((e -
-                                      (this._game.noShootUntil -
-                                        s.CONST.NO_SHOOT_AFTER_BLINK_TICKS)) /
-                                      s.CONST.NO_SHOOT_AFTER_BLINK_TICKS) *
-                                    24) >= 0 &&
-                                    h.drawImage(
-                                      o.imgs.miscSheet,
-                                      y.imgCoords.barGrey.x,
-                                      y.imgCoords.barGrey.y,
-                                      Xe,
-                                      4,
-                                      a,
-                                      n,
-                                      this._game.SCALE_FACTOR * Xe,
-                                      0.24 * this._game.FIELD_SIZE,
-                                    ))));
-                      var Je = Date.now();
-                      if (this.showEmoteUntil > Je && null !== this.lastEmote) {
-                        var Qe =
-                            Je - (this.showEmoteUntil - s.CONST.EMOTE_DURATION),
-                          et = 1;
-                        Qe < 500
-                          ? (et = 0.002 * Qe)
-                          : Qe > s.CONST.EMOTE_DURATION - 500 &&
-                            (et = 0.002 * (s.CONST.EMOTE_DURATION - Qe));
-                        var tt = this._game.SCALE_FACTOR,
-                          it = p - 3.5 * this._game.FIELD_SIZE,
-                          at = y.imgCoords.emotesBubble;
-                        ((h.globalAlpha = 0.8 * et),
-                          h.drawImage(
-                            o.imgs.miscSheet,
-                            at.x,
-                            at.y,
-                            at.w,
-                            at.h,
-                            g - 0.5 * at.w * tt,
-                            it,
-                            tt * at.w,
-                            tt * at.h,
-                          ));
-                        oe = (10 * tt) / (at = this.lastEmote.img).h;
-                        ((h.globalAlpha = 1 * et),
-                          h.drawImage(
-                            o.imgs.miscSheet,
-                            at.x,
-                            at.y,
-                            at.w,
-                            at.h,
-                            g - 0.5 * at.w * oe,
-                            it + 2 * tt,
-                            oe * at.w,
-                            oe * at.h,
-                          ),
-                          (h.globalAlpha = 1));
+                                    (Je =
+                                      ((this.weaponCooldowns2[this.weapon.id] -
+                                        l) /
+                                        this.weapon.cooldown2) *
+                                      24) >= 0 &&
+                                      h.drawImage(
+                                        o.imgs.miscSheet,
+                                        y.imgCoords.barBlue.x,
+                                        y.imgCoords.barBlue.y,
+                                        Je,
+                                        4,
+                                        a,
+                                        n,
+                                        this._game.SCALE_FACTOR * Je,
+                                        0.24 * this._game.FIELD_SIZE,
+                                      ),
+                                    (0, u.drawText)(
+                                      h,
+                                      T.lang.get("game.msg.reloading"),
+                                      "rgba(255, 255, 255, 0.75)",
+                                      3 * this._game.SCALE_FACTOR,
+                                      a + (1.56 * this._game.FIELD_SIZE) / 2,
+                                      n + 3 * this._game.SCALE_FACTOR,
+                                      500,
+                                      "center",
+                                    ))
+                                  : this._game.noShootUntil > e &&
+                                    ((n -= 0.75 * this._game.FIELD_SIZE),
+                                    (h.fillStyle = "white"),
+                                    h.fillRect(
+                                      a - 0.03 * this._game.FIELD_SIZE,
+                                      n - 0.03 * this._game.FIELD_SIZE,
+                                      1.56 * this._game.FIELD_SIZE,
+                                      0.3 * this._game.FIELD_SIZE,
+                                    ),
+                                    (Je =
+                                      ((e -
+                                        (this._game.noShootUntil -
+                                          s.CONST.NO_SHOOT_AFTER_BLINK_TICKS)) /
+                                        s.CONST.NO_SHOOT_AFTER_BLINK_TICKS) *
+                                      24) >= 0 &&
+                                      h.drawImage(
+                                        o.imgs.miscSheet,
+                                        y.imgCoords.barGrey.x,
+                                        y.imgCoords.barGrey.y,
+                                        Je,
+                                        4,
+                                        a,
+                                        n,
+                                        this._game.SCALE_FACTOR * Je,
+                                        0.24 * this._game.FIELD_SIZE,
+                                      ))));
+                        var it = Date.now();
+                        if (
+                          this.showEmoteUntil > it &&
+                          null !== this.lastEmote
+                        ) {
+                          var at =
+                              it -
+                              (this.showEmoteUntil - s.CONST.EMOTE_DURATION),
+                            nt = 1;
+                          at < 500
+                            ? (nt = 0.002 * at)
+                            : at > s.CONST.EMOTE_DURATION - 500 &&
+                              (nt = 0.002 * (s.CONST.EMOTE_DURATION - at));
+                          var ot = this._game.SCALE_FACTOR,
+                            rt = p - 3.5 * this._game.FIELD_SIZE,
+                            st = y.imgCoords.emotesBubble;
+                          ((h.globalAlpha = 0.8 * nt),
+                            h.drawImage(
+                              o.imgs.miscSheet,
+                              st.x,
+                              st.y,
+                              st.w,
+                              st.h,
+                              g - 0.5 * st.w * ot,
+                              rt,
+                              ot * st.w,
+                              ot * st.h,
+                            ));
+                          oe = (10 * ot) / (st = this.lastEmote.img).h;
+                          ((h.globalAlpha = 1 * nt),
+                            h.drawImage(
+                              o.imgs.miscSheet,
+                              st.x,
+                              st.y,
+                              st.w,
+                              st.h,
+                              g - 0.5 * st.w * oe,
+                              rt + 2 * ot,
+                              oe * st.w,
+                              oe * st.h,
+                            ),
+                            (h.globalAlpha = 1));
+                        }
+                        this === this._game.playingPlayer &&
+                          this.weapon &&
+                          this.weapon.hasLine &&
+                          this.standTime >= this.weapon.requiredStandTime &&
+                          ((this.aimX = (0, u.getMouseGamePlayX)()),
+                          (this.aimY = (0, u.getMouseGamePlayY)()),
+                          this.drawSniperLine(e));
                       }
-                      this === this._game.playingPlayer &&
-                        this.weapon &&
-                        this.weapon.hasLine &&
-                        this.standTime >= this.weapon.requiredStandTime &&
-                        ((this.aimX = (0, u.getMouseGamePlayX)()),
-                        (this.aimY = (0, u.getMouseGamePlayY)()),
-                        this.drawSniperLine(e));
                     }
                   }
                 }
@@ -3580,6 +3792,94 @@ var c_hasPressedCtrlRKey = false;
             torchEmitTime: 5,
             spawnBullets: !0,
             additionalFTFire: !0,
+          }));
+      },
+      306: (e, t, i) => {
+        "use strict";
+        (Object.defineProperty(t, "__esModule", { value: !0 }),
+          (t.setTheme =
+            t.registerStartupSheet =
+            t.currentTheme =
+            t.getTheme =
+            t.themes =
+            t.STOCK_TILE_SHEET =
+              void 0));
+        var a = i(9994),
+          n = i(5572);
+        t.STOCK_TILE_SHEET = "imgs/tileSheet.png";
+        var o = function (e, t, i) {
+          return {
+            id: e,
+            name: t,
+            author: i,
+            file: "imgs/themes/tileSheet-" + e + ".png",
+          };
+        };
+        t.themes = [
+          {
+            id: "default",
+            name: "Default",
+            author: "",
+            file: t.STOCK_TILE_SHEET,
+          },
+          o("oasis", "Oasis", "ARK77"),
+          o("saturation100", "Saturation 100", "ARK77"),
+          o("exoplanet", "Exoplanet", "ARK77"),
+          o("low_quality", "Low Quality", "Mazlista"),
+          o("night", "Night", "Flash"),
+          o("saturation000", "Saturation 0", "ARK77"),
+          o("culled", "Culled", "ARK77"),
+        ];
+        var r = "theme";
+        function s(e) {
+          var i;
+          return null !==
+            (i = t.themes.find(function (t) {
+              return t.id === e;
+            })) && void 0 !== i
+            ? i
+            : t.themes[0];
+        }
+        t.getTheme = s;
+        var l = s(localStorage.getItem(r));
+        t.currentTheme = function () {
+          return l;
+        };
+        var h = {};
+        ((t.registerStartupSheet = function () {
+          var e = a.imgs.tileSheet,
+            i = e.srcCpy;
+          ((h[i] = e), i !== l.file && (l = t.themes[0]));
+        }),
+          (t.setTheme = function (e) {
+            var t = s(e);
+            ((l = t),
+              localStorage.setItem(r, t.id),
+              (function (e, t) {
+                var i = h[e];
+                if (void 0 !== i)
+                  return void (i.complete && i.width > 0
+                    ? t(i)
+                    : i.addEventListener("load", function () {
+                        return t(i);
+                      }));
+                var a = new Image();
+                ((h[e] = a),
+                  (a.crossOrigin = "Anonymous"),
+                  (a.onload = function () {
+                    return t(a);
+                  }),
+                  (a.onerror = function () {
+                    (delete h[e],
+                      console.error("theme sheet failed to load: " + e));
+                  }),
+                  (a.src = e));
+              })(t.file, function (e) {
+                l === t &&
+                  ((a.imgs.tileSheet = e),
+                  (0, a.rebuildTileSheetDerivatives)(),
+                  null !== n.root.game && n.root.game.refreshTileCanvasses());
+              }));
           }));
       },
       434: (e, t, i) => {
@@ -4447,8 +4747,15 @@ var c_hasPressedCtrlRKey = false;
             t.getRndBotBuild =
             t.getAbByName =
             t.getDefaultAbilityObj =
+            t.copyBuild =
             t.MULTI_BUILD_SLOTS =
             t.abilities =
+            t.zapChainFactor =
+            t.zapStunTicks =
+            t.zapDmgFactor =
+            t.zapRange =
+            t.zapChance =
+            t.ZAP =
             t.AbilityType =
             t.ZombieSpecialType =
               void 0));
@@ -4460,7 +4767,8 @@ var c_hasPressedCtrlRKey = false;
             (e[(e.Crawler = 1)] = "Crawler"),
             (e[(e.Ranged = 2)] = "Ranged"),
             (e[(e.None = 3)] = "None"),
-            (e[(e.Bug = 4)] = "Bug"));
+            (e[(e.Bug = 4)] = "Bug"),
+            (e[(e.Boss = 5)] = "Boss"));
         })((a = t.ZombieSpecialType || (t.ZombieSpecialType = {}))),
           (function (e) {
             ((e[(e.Place = 0)] = "Place"),
@@ -4473,6 +4781,41 @@ var c_hasPressedCtrlRKey = false;
               (e[(e.Playdead = 7)] = "Playdead"),
               (e[(e.Summon = 8)] = "Summon"));
           })((n = t.AbilityType || (t.AbilityType = {}))),
+          (t.ZAP = {
+            maxLvl: 8,
+            chance: 0.2,
+            chancePerLvl: 0.1,
+            range: 3,
+            rangePerLvl: 0.5,
+            dmg: 0.4,
+            dmgPerLvl: 0.15,
+            stunSec: 0.75,
+            stunSecPerLvl: 0.15,
+            chain: 0.3,
+            chainPerLvl: 0.05,
+            chainMax: 1,
+            flameRollSec: 1,
+          }));
+        t.zapChance = function (e) {
+          return t.ZAP.chance + t.ZAP.chancePerLvl * (e - 1);
+        };
+        t.zapRange = function (e) {
+          return t.ZAP.range + t.ZAP.rangePerLvl * (e - 1);
+        };
+        t.zapDmgFactor = function (e) {
+          return t.ZAP.dmg + t.ZAP.dmgPerLvl * (e - 1);
+        };
+        t.zapStunTicks = function (e) {
+          return Math.round(
+            20 * (t.ZAP.stunSec + t.ZAP.stunSecPerLvl * (e - 1)),
+          );
+        };
+        ((t.zapChainFactor = function (e) {
+          return Math.min(
+            t.ZAP.chainMax,
+            t.ZAP.chain + t.ZAP.chainPerLvl * (e - 1),
+          );
+        }),
           (t.abilities = [
             {
               name: "Heal Aura",
@@ -4983,6 +5326,61 @@ var c_hasPressedCtrlRKey = false;
               cost: 100,
               maxLvl: 1,
             },
+            {
+              name: "Zap",
+              type: n.Passive,
+              field: "zap",
+              icon: "zap",
+              humanOnly: !0,
+              survivalOnly: !0,
+              description:
+                "Your hits have a " +
+                Math.round(100 * t.ZAP.chance) +
+                "% chance to zap a nearby enemy: both take " +
+                Math.round(100 * t.ZAP.dmg) +
+                "% of the hit as extra damage and are stunned for " +
+                t.ZAP.stunSec +
+                " sec. A zap can chain on to another enemy at " +
+                Math.round(100 * t.ZAP.chain) +
+                "% of the previous chance, never hitting the same enemy twice. Each level adds " +
+                Math.round(100 * t.ZAP.chancePerLvl) +
+                "% chance, " +
+                t.ZAP.rangePerLvl +
+                " range, " +
+                Math.round(100 * t.ZAP.dmgPerLvl) +
+                "% damage, " +
+                t.ZAP.stunSecPerLvl +
+                " sec stun and " +
+                Math.round(100 * t.ZAP.chainPerLvl) +
+                "% chain. Survival only.",
+              cost: 100,
+              maxLvl: t.ZAP.maxLvl,
+            },
+            {
+              name: "Mine",
+              object: "mine",
+              launches: 19,
+              cooldown: 2,
+              energy: 35,
+              range: 4,
+              icon: "mine2",
+              humanOnly: !0,
+              survivalOnly: !0,
+              type: n.Throw,
+              description:
+                "Throw a mine. It arms when an enemy comes close and goes off a moment later. Survival only.",
+              activeMsg: "Left click to throw",
+              levelUpFields: ["dmg", "aoe", "energy"],
+              levelUpFieldsName: ["Damage", "Radius", "Energy Cost"],
+              levelUpValues: [20, 0.4, 0],
+              levelUpFactor: [0, 0, 0.8],
+              levelUpCost: [100, 100, 100],
+              levelUpMaxLvl: [5, 5, 5],
+              levelUpMaxUpgLvl: [5, 5, 5],
+              cost: 100,
+              maxLvl: 1,
+              causesAbilityUpdate: !0,
+            },
           ]));
         for (var r = 0; r < t.abilities.length; r++) t.abilities[r].id = r;
         function s(e) {
@@ -4997,7 +5395,19 @@ var c_hasPressedCtrlRKey = false;
           }
           return t;
         }
-        ((t.MULTI_BUILD_SLOTS = 3), (t.getDefaultAbilityObj = s));
+        ((t.MULTI_BUILD_SLOTS = 3),
+          (t.copyBuild = function (e) {
+            if (!e) return s(t.abilities);
+            for (var i = [], a = 0, n = e; a < n.length; a++) {
+              var o = n[a],
+                r = { lvl: o.lvl };
+              (void 0 !== o.id && (r.id = o.id),
+                o.attributes && (r.attributes = o.attributes.slice()),
+                i.push(r));
+            }
+            return i;
+          }),
+          (t.getDefaultAbilityObj = s));
         var l = function (e) {
           for (var i = 0; i < t.abilities.length; i++)
             if (t.abilities[i].field === e) return t.abilities[i];
@@ -5108,6 +5518,7 @@ var c_hasPressedCtrlRKey = false;
               var h = l.lvl ? Math.floor(l.lvl) : 0;
               ((isNaN(h) || h < 0) && (h = 0),
                 r.maxLvl && h > r.maxLvl && (h = r.maxLvl),
+                r.survivalOnly && (h = 0),
                 (a += r.cost * h));
               var d = { lvl: h };
               if ((i.push(d), r.levelUpFields)) {
@@ -5121,37 +5532,42 @@ var c_hasPressedCtrlRKey = false;
                     r.levelUpMaxLvl &&
                       c > r.levelUpMaxLvl[m] &&
                       (c = r.levelUpMaxLvl[m]),
+                    r.survivalOnly && (c = 0),
                     r.levelUpCost && (a += c * r.levelUpCost[m]),
                     d.attributes.push(c));
                 }
               }
+            } else {
+              d = { lvl: 0 };
+              (r.levelUpFields &&
+                (d.attributes = r.levelUpFields.map(function () {
+                  return 0;
+                })),
+                i.push(d));
             }
           }
           return a <= 100 * o.CONST.MAX_ABILITY_POINTS ? i : s(t.abilities);
         }
-        ((t.getStrongAIAbilityObj = function (e, t) {
-          for (var i = [], a = 0; a < e.length; a++) {
-            var n = e[a],
-              o = { lvl: 0 };
+        ((t.getStrongAIAbilityObj = function (e) {
+          for (var t = [], i = 0; i < e.length; i++) {
+            var a = e[i],
+              n = { lvl: 0 };
             if (
-              (i.push(o),
-              "maxHP" === n.field
-                ? (o.lvl = t ? 0 : 5)
-                : "movementSpeed" === n.field
-                  ? (o.lvl = t ? 7 : 4)
-                  : "lifesteal" === n.field
-                    ? (o.lvl = 2)
-                    : "hpRegeneration" === n.field
-                      ? (o.lvl = t ? 3 : 2)
-                      : "energyRegeneration" === n.field && (o.lvl = t ? 1 : 0),
-              void 0 !== n.levelUpFields)
+              (t.push(n),
+              "maxHP" === a.field
+                ? (n.lvl = 5)
+                : "movementSpeed" === a.field
+                  ? (n.lvl = 4)
+                  : ("lifesteal" === a.field || "hpRegeneration" === a.field) &&
+                    (n.lvl = 2),
+              void 0 !== a.levelUpFields)
             ) {
-              o.attributes = [];
-              for (var r = 0; r < n.levelUpFields.length; r++)
-                o.attributes.push(0);
+              n.attributes = [];
+              for (var o = 0; o < a.levelUpFields.length; o++)
+                n.attributes.push(0);
             }
           }
-          return ((i[m[Math.floor(Math.random() * m.length)].id].lvl = 1), i);
+          return ((t[m[Math.floor(Math.random() * m.length)].id].lvl = 1), t);
         }),
           (t.getDefaultZombieAbilityObj = function (e, t) {
             for (var i = [], a = 0, n = t; a < n.length; a++) {
@@ -5274,6 +5690,81 @@ var c_hasPressedCtrlRKey = false;
                     "dot dot" + ((4 - i.dotOffset + e) % 4).toString();
               }),
               i
+            );
+          }));
+      },
+      772: (e, t) => {
+        "use strict";
+        var i;
+        (Object.defineProperty(t, "__esModule", { value: !0 }),
+          (t.survivalEnemyHpMod =
+            t.isSurvivalDifficulty =
+            t.isSurvivalAttribute =
+            t.SURVIVAL_ATTRIBUTE_PIPS =
+            t.SURVIVAL_ATTRIBUTE_MAX_LVL =
+            t.SURVIVAL_LEVELS_PER_PICK =
+            t.SURVIVAL_ATTRIBUTES =
+            t.SURVIVAL_SOUL_BONUS =
+            t.SURVIVAL_HP_PER_EXTRA_PLAYER =
+            t.SURVIVAL_DIFFICULTIES =
+            t.SURVIVAL_DIFFICULTY =
+              void 0),
+          (function (e) {
+            ((e[(e.EASY = 0)] = "EASY"),
+              (e[(e.NORMAL = 1)] = "NORMAL"),
+              (e[(e.HARD = 2)] = "HARD"),
+              (e[(e.NIGHTMARE = 3)] = "NIGHTMARE"));
+          })((i = t.SURVIVAL_DIFFICULTY || (t.SURVIVAL_DIFFICULTY = {}))),
+          (t.SURVIVAL_DIFFICULTIES = [
+            {
+              id: i.EASY,
+              langLabel: "rankInGame.survival.easy",
+              enemyHp: 0.75,
+              enemyDmg: 0.75,
+              shrineRegen: 1.5,
+            },
+            {
+              id: i.NORMAL,
+              langLabel: "rankInGame.survival.normal",
+              enemyHp: 1,
+              enemyDmg: 1,
+              shrineRegen: 1,
+            },
+            {
+              id: i.HARD,
+              langLabel: "rankInGame.survival.hard",
+              enemyHp: 1.3,
+              enemyDmg: 1.2,
+              shrineRegen: 0.9,
+            },
+            {
+              id: i.NIGHTMARE,
+              langLabel: "rankInGame.survival.nightmare",
+              enemyHp: 2,
+              enemyDmg: 1.6,
+              shrineRegen: 0.75,
+            },
+          ]),
+          (t.SURVIVAL_HP_PER_EXTRA_PLAYER = 0.8),
+          (t.SURVIVAL_SOUL_BONUS = 1.3),
+          (t.SURVIVAL_ATTRIBUTES = [11, 12, 13, 14, 15]),
+          (t.SURVIVAL_LEVELS_PER_PICK = 2),
+          (t.SURVIVAL_ATTRIBUTE_MAX_LVL = 9999),
+          (t.SURVIVAL_ATTRIBUTE_PIPS = 10),
+          (t.isSurvivalAttribute = function (e) {
+            return t.SURVIVAL_ATTRIBUTES.indexOf(e) >= 0;
+          }),
+          (t.isSurvivalDifficulty = function (e) {
+            return (
+              Number.isInteger(e) &&
+              e >= 0 &&
+              e < t.SURVIVAL_DIFFICULTIES.length
+            );
+          }),
+          (t.survivalEnemyHpMod = function (e, i) {
+            return (
+              t.SURVIVAL_DIFFICULTIES[e].enemyHp *
+              (1 + t.SURVIVAL_HP_PER_EXTRA_PLAYER * Math.max(0, i - 1))
             );
           }));
       },
@@ -5547,53 +6038,55 @@ var c_hasPressedCtrlRKey = false;
           m = i(1893),
           c = i(5572),
           g = i(6409),
-          u = document.getElementById("popupBG"),
-          p = document.getElementById("langDropdown"),
-          y = document.getElementById("serverDropdown"),
-          f = document.getElementById("lowEffectsCheckbox"),
-          x = document.getElementById("noChatCheckbox"),
-          w = document.getElementById("wpnBarNotClickableCheckbox"),
-          v = document.getElementById("hideMinimapCheckbox"),
-          S = document.getElementById("yellowNamesCheckbox"),
-          b = document.getElementById("showPingCheckbox"),
-          _ = document.getElementById("showFPSCheckbox"),
-          C = document.getElementById("hideEmotesCheckbox"),
-          I = document.getElementById("hideFullscreenCheckbox"),
-          M = document.getElementById("noPickupFlashCheckbox"),
-          T = document.getElementById("soundRange"),
-          E = document.getElementById("mapSize"),
-          k = document.getElementById("chatDisplayDiv");
+          u = i(306),
+          p = document.getElementById("popupBG"),
+          y = document.getElementById("langDropdown"),
+          f = document.getElementById("serverDropdown"),
+          x = document.getElementById("themeDropdown"),
+          w = document.getElementById("lowEffectsCheckbox"),
+          v = document.getElementById("noChatCheckbox"),
+          S = document.getElementById("wpnBarNotClickableCheckbox"),
+          b = document.getElementById("hideMinimapCheckbox"),
+          _ = document.getElementById("yellowNamesCheckbox"),
+          C = document.getElementById("showPingCheckbox"),
+          I = document.getElementById("showFPSCheckbox"),
+          M = document.getElementById("hideEmotesCheckbox"),
+          T = document.getElementById("hideFullscreenCheckbox"),
+          E = document.getElementById("noPickupFlashCheckbox"),
+          k = document.getElementById("soundRange"),
+          L = document.getElementById("mapSize"),
+          A = document.getElementById("chatDisplayDiv");
         ((document.getElementById("lowEffectLb").onclick = function () {
-          ((f.style.display = "block" === f.style.display ? "none" : "block"),
-            (n.options.graphicSettings = "block" === f.style.display ? 0 : 10),
+          ((w.style.display = "block" === w.style.display ? "none" : "block"),
+            (n.options.graphicSettings = "block" === w.style.display ? 0 : 10),
             window.localStorage.setItem(
               "graphicSettings",
               n.options.graphicSettings.toString(),
             ));
         }),
           (document.getElementById("noChatLb").onclick = function () {
-            ((x.style.display = "block" === x.style.display ? "none" : "block"),
-              (n.options.hideChat = "block" === x.style.display),
+            ((v.style.display = "block" === v.style.display ? "none" : "block"),
+              (n.options.hideChat = "block" === v.style.display),
               window.localStorage.setItem(
                 "hideChat",
-                "block" === x.style.display ? "1" : "0",
+                "block" === v.style.display ? "1" : "0",
               ),
-              (k.style.display =
-                "block" === x.style.display ? "none" : "block"));
+              (A.style.display =
+                "block" === v.style.display ? "none" : "block"));
           }),
           (document.getElementById("wpnBarNotClickableLb").onclick =
             function () {
-              ((w.style.display =
-                "block" === w.style.display ? "none" : "block"),
-                (n.options.weaponsUnclickable = "block" === w.style.display),
+              ((S.style.display =
+                "block" === S.style.display ? "none" : "block"),
+                (n.options.weaponsUnclickable = "block" === S.style.display),
                 window.localStorage.setItem(
                   "weaponsUnclickable",
                   n.options.weaponsUnclickable ? "1" : "0",
                 ));
             }),
           (document.getElementById("hideMinimapLb").onclick = function () {
-            ((v.style.display = "block" === v.style.display ? "none" : "block"),
-              (n.options.hideMinimap = "block" === v.style.display),
+            ((b.style.display = "block" === b.style.display ? "none" : "block"),
+              (n.options.hideMinimap = "block" === b.style.display),
               window.localStorage.setItem(
                 "hideMinimap",
                 n.options.hideMinimap ? "1" : "0",
@@ -5606,118 +6099,136 @@ var c_hasPressedCtrlRKey = false;
                   : "block"));
           }),
           (document.getElementById("yellowNamesLb").onclick = function () {
-            ((S.style.display = "block" === S.style.display ? "none" : "block"),
-              (n.options.forcePlayerNameColor = "block" === S.style.display),
+            ((_.style.display = "block" === _.style.display ? "none" : "block"),
+              (n.options.forcePlayerNameColor = "block" === _.style.display),
               window.localStorage.setItem(
                 "forcePlayerNameColor",
                 n.options.forcePlayerNameColor ? "1" : "0",
               ));
           }),
           (document.getElementById("hideEmotesLb").onclick = function () {
-            ((C.style.display = "block" === C.style.display ? "none" : "block"),
-              (n.options.hideIngameEmotesButton = "block" === C.style.display),
+            ((M.style.display = "block" === M.style.display ? "none" : "block"),
+              (n.options.hideIngameEmotesButton = "block" === M.style.display),
               window.localStorage.setItem(
                 "hideIngameEmotesButton",
                 n.options.hideIngameEmotesButton ? "1" : "0",
               ));
           }),
           (document.getElementById("hideFullscreenLb").onclick = function () {
-            ((I.style.display = "block" === I.style.display ? "none" : "block"),
-              (n.options.hideFullscreenButton = "block" === I.style.display),
+            ((T.style.display = "block" === T.style.display ? "none" : "block"),
+              (n.options.hideFullscreenButton = "block" === T.style.display),
               window.localStorage.setItem(
                 "hideFullscreenButton",
                 n.options.hideFullscreenButton ? "1" : "0",
               ));
           }),
           (document.getElementById("noPickupFlashLb").onclick = function () {
-            ((M.style.display = "block" === M.style.display ? "none" : "block"),
-              (n.options.noPickupFlash = "block" === M.style.display),
+            ((E.style.display = "block" === E.style.display ? "none" : "block"),
+              (n.options.noPickupFlash = "block" === E.style.display),
               window.localStorage.setItem(
                 "noPickupFlash",
                 n.options.noPickupFlash ? "1" : "0",
               ));
           }),
           (document.getElementById("showPingLb").onclick = function () {
-            ((b.style.display = "block" === b.style.display ? "none" : "block"),
-              (n.options.showPing = "block" === b.style.display),
+            ((C.style.display = "block" === C.style.display ? "none" : "block"),
+              (n.options.showPing = "block" === C.style.display),
               window.localStorage.setItem(
                 "showPing",
                 n.options.showPing ? "1" : "0",
               ));
           }),
           (document.getElementById("showFPSLb").onclick = function () {
-            ((_.style.display = "block" === _.style.display ? "none" : "block"),
-              (n.options.showFPS = "block" === _.style.display),
+            ((I.style.display = "block" === I.style.display ? "none" : "block"),
+              (n.options.showFPS = "block" === I.style.display),
               window.localStorage.setItem(
                 "showFPS",
                 n.options.showFPS ? "1" : "0",
               ));
           }),
-          (T.onchange = function () {
+          (k.onchange = function () {
             ((n.options.sound_volume = parseFloat(this.value)),
               window.localStorage.setItem(
                 "sound_volume",
                 n.options.sound_volume.toString(),
               ));
           }),
-          (E.onchange = function () {
+          (L.onchange = function () {
             ((n.options.minimapSizeFactor = parseFloat(this.value)),
               window.localStorage.setItem(
                 "minimapSizeFactor",
                 n.options.minimapSizeFactor.toString(),
               ));
           }),
+          (x.onchange = function () {
+            (0, u.setTheme)(x.value);
+          }),
           (t.optionsScreen = {
             renderLanguageSwitch: function () {
-              for (; null !== p.firstChild; ) p.removeChild(p.firstChild);
+              for (; null !== y.firstChild; ) y.removeChild(y.firstChild);
               for (var e in h.lang.supportedLocales) {
                 var t = document.createElement("option");
                 ((t.innerText = h.lang.supportedLocales[e]),
                   (t.value = e),
-                  p.appendChild(t),
-                  h.lang.locale === e && (p.value = e));
+                  y.appendChild(t),
+                  h.lang.locale === e && (y.value = e));
               }
             },
             renderServerSwitch: function () {
-              for (; null !== y.firstChild; ) y.removeChild(y.firstChild);
+              for (; null !== f.firstChild; ) f.removeChild(f.firstChild);
               for (var e = 0; e < a.SERVERS.length; e++) {
                 var t = document.createElement("option");
                 ((t.innerText = a.SERVERS[e].name),
                   (t.value = e.toString()),
-                  y.appendChild(t),
+                  f.appendChild(t),
                   r.Network.connectedServerIndex === e &&
-                    (y.value = e.toString()));
+                    (f.value = e.toString()));
               }
+            },
+            renderThemeSwitch: function () {
+              for (; null !== x.firstChild; ) x.removeChild(x.firstChild);
+              for (var e = 0, t = u.themes; e < t.length; e++) {
+                var i = t[e],
+                  a = document.createElement("option");
+                ((a.innerText =
+                  "" === i.author
+                    ? h.lang.get("options.theme.default")
+                    : i.name + " (" + i.author + ")"),
+                  (a.value = i.id),
+                  x.appendChild(a));
+              }
+              x.value = (0, u.currentTheme)().id;
             },
             showWindow: function () {
               (s.Skin_.close(),
                 t.optionsScreen.renderServerSwitch(),
                 t.optionsScreen.renderLanguageSwitch(),
-                (f.style.display =
+                t.optionsScreen.renderThemeSwitch(),
+                (w.style.display =
                   0 === n.options.graphicSettings ? "block" : "none"),
-                (x.style.display = n.options.hideChat ? "block" : "none"),
-                (w.style.display = n.options.weaponsUnclickable
+                (v.style.display = n.options.hideChat ? "block" : "none"),
+                (S.style.display = n.options.weaponsUnclickable
                   ? "block"
                   : "none"),
-                (v.style.display = n.options.hideMinimap ? "block" : "none"),
-                (S.style.display = n.options.forcePlayerNameColor
+                (b.style.display = n.options.hideMinimap ? "block" : "none"),
+                (_.style.display = n.options.forcePlayerNameColor
                   ? "block"
                   : "none"),
-                (b.style.display = n.options.showPing ? "block" : "none"),
-                (_.style.display = n.options.showFPS ? "block" : "none"),
-                (C.style.display = n.options.hideIngameEmotesButton
+                (C.style.display = n.options.showPing ? "block" : "none"),
+                (I.style.display = n.options.showFPS ? "block" : "none"),
+                (M.style.display = n.options.hideIngameEmotesButton
                   ? "block"
                   : "none"),
-                (I.style.display = n.options.hideFullscreenButton
+                (T.style.display = n.options.hideFullscreenButton
                   ? "block"
                   : "none"),
-                (M.style.display = n.options.noPickupFlash ? "block" : "none"),
-                (T.value = n.options.sound_volume.toString()),
-                (E.value = n.options.minimapSizeFactor.toString()),
-                (u.style.display = ""));
+                (E.style.display = n.options.noPickupFlash ? "block" : "none"),
+                (k.value = n.options.sound_volume.toString()),
+                (L.value = n.options.minimapSizeFactor.toString()),
+                (p.style.display = ""));
             },
             hideWindow: function () {
-              u.style.display = "none";
+              p.style.display = "none";
             },
           }),
           (document.getElementById("optionsFullScreenButton").onclick =
@@ -5737,7 +6248,7 @@ var c_hasPressedCtrlRKey = false;
             function () {
               d.hotkeyScreen.showWindow({});
             }),
-          (y.onchange = function () {
+          (f.onchange = function () {
             if ((0, o.isInGame)())
               (0, l.floatTip)(
                 "error",
@@ -5762,7 +6273,7 @@ var c_hasPressedCtrlRKey = false;
                 },
               });
           }),
-          (p.onchange = function () {
+          (y.onchange = function () {
             if ((0, o.isInGame)())
               (0, l.floatTip)(
                 "error",
@@ -5911,27 +6422,28 @@ var c_hasPressedCtrlRKey = false;
           n = i(8890),
           o = i(4799),
           r = i(4425),
-          s = i(4902),
-          l = i(5273),
-          h = i(262),
-          d = i(2399),
-          m = i(6409),
-          c = i(7028),
-          g = i(1799),
-          u = i(5572),
-          p = i(9085),
-          y = i(9178),
-          f = i(7492),
-          x = i(6214),
-          w = document.getElementById("canvas"),
-          v = document.getElementById("ingameEmotesDiv"),
-          S = document.getElementById("chatInputDiv"),
-          b = document.getElementById("chatInput");
-        (0, f.attachEmoteAutocomplete)(b);
-        var _,
-          C,
-          I = document.getElementById("chatlog"),
-          M = document.getElementById("chatloginner");
+          s = i(3599),
+          l = i(4902),
+          h = i(5273),
+          d = i(262),
+          m = i(2399),
+          c = i(6409),
+          g = i(7028),
+          u = i(1799),
+          p = i(5572),
+          y = i(9085),
+          f = i(9178),
+          x = i(7492),
+          w = i(6214),
+          v = document.getElementById("canvas"),
+          S = document.getElementById("ingameEmotesDiv"),
+          b = document.getElementById("chatInputDiv"),
+          _ = document.getElementById("chatInput");
+        (0, x.attachEmoteAutocomplete)(_);
+        var C,
+          I,
+          M = document.getElementById("chatlog"),
+          T = document.getElementById("chatloginner");
         (!(function (e) {
           ((e[(e.UP = 38)] = "UP"),
             (e[(e.DOWN = 40)] = "DOWN"),
@@ -5999,7 +6511,7 @@ var c_hasPressedCtrlRKey = false;
             (e[(e.CAPSLOCK = 20)] = "CAPSLOCK"),
             (e[(e.AE = 192)] = "AE"),
             (e[(e.RIGHTMOUSE = 1002)] = "RIGHTMOUSE"));
-        })((_ = t.KEY || (t.KEY = {}))),
+        })((C = t.KEY || (t.KEY = {}))),
           (function (e) {
             ((e[(e.UP = 1)] = "UP"),
               (e[(e.DOWN = 2)] = "DOWN"),
@@ -6028,68 +6540,79 @@ var c_hasPressedCtrlRKey = false;
               (e[(e.PICK_UPGRADE = 101)] = "PICK_UPGRADE"),
               (e[(e.FIRE_2 = 102)] = "FIRE_2"),
               (e[(e.SHOW_EMOTES = 103)] = "SHOW_EMOTES"),
-              (e[(e.DROP_FLAG = 104)] = "DROP_FLAG"));
-          })((C = t.COMMAND || (t.COMMAND = {}))),
+              (e[(e.DROP_FLAG = 104)] = "DROP_FLAG"),
+              (e[(e.REVIVE = 105)] = "REVIVE"),
+              (e[(e.ABILITY3 = 106)] = "ABILITY3"));
+          })((I = t.COMMAND || (t.COMMAND = {}))),
           (t.commandNames = []),
-          (t.commandNames[C.UP] = "Move Up"),
-          (t.commandNames[C.DOWN] = "Move down"),
-          (t.commandNames[C.LEFT] = "Move left"),
-          (t.commandNames[C.RIGHT] = "Move right"),
-          (t.commandNames[C.RELOAD] = "Reload"),
-          (t.commandNames[C.STAND] = "Stand / aim with sniper"),
-          (t.commandNames[C.ABILITY1] = "Use ability 1"),
-          (t.commandNames[C.ABILITY2] = "Use ability 2"),
-          (t.commandNames[C.JUMP] = "Jump"),
-          (t.commandNames[C.PICK_UPGRADE] = "Pick upgrade"),
-          (t.commandNames[C.FIRE_2] = "2nd fire mode"),
-          (t.commandNames[C.SHOW_EMOTES] = "Emote"),
-          (t.commandNames[C.DROP_FLAG] = "Drop flag"),
+          (t.commandNames[I.UP] = "Move Up"),
+          (t.commandNames[I.DOWN] = "Move down"),
+          (t.commandNames[I.LEFT] = "Move left"),
+          (t.commandNames[I.RIGHT] = "Move right"),
+          (t.commandNames[I.RELOAD] = "Reload"),
+          (t.commandNames[I.STAND] = "Stand / aim with sniper"),
+          (t.commandNames[I.ABILITY1] = "Use ability 1"),
+          (t.commandNames[I.ABILITY2] = "Use ability 2"),
+          (t.commandNames[I.JUMP] = "Jump"),
+          (t.commandNames[I.PICK_UPGRADE] = "Pick upgrade"),
+          (t.commandNames[I.FIRE_2] = "2nd fire mode"),
+          (t.commandNames[I.SHOW_EMOTES] = "Emote"),
+          (t.commandNames[I.DROP_FLAG] = "Drop flag"),
+          (t.commandNames[I.REVIVE] = "Revive ally (hold)"),
+          (t.commandNames[I.ABILITY3] = "Use ability 3"),
           (t.commandKeys = []),
-          (t.commandKeys[C.UP] = _.W),
-          (t.commandKeys[C.DOWN] = _.S),
-          (t.commandKeys[C.LEFT] = _.A),
-          (t.commandKeys[C.RIGHT] = _.D),
-          (t.commandKeys[C.RELOAD] = _.R),
-          (t.commandKeys[C.STAND] = _.F),
-          (t.commandKeys[C.FIRE_2] = _.Y),
-          (t.commandKeys[C.ABILITY1] = _.Q),
-          (t.commandKeys[C.ABILITY2] = _.E),
-          (t.commandKeys[C.JUMP] = _.RIGHTMOUSE),
-          (t.commandKeys[C.PICK_UPGRADE] = _.SPACE),
-          (t.commandKeys[C.WPN1] = _.NUM1),
-          (t.commandKeys[C.WPN2] = _.NUM2),
-          (t.commandKeys[C.WPN3] = _.NUM3),
-          (t.commandKeys[C.WPN4] = _.NUM4),
-          (t.commandKeys[C.WPN5] = _.NUM5),
-          (t.commandKeys[C.WPN6] = _.NUM6),
-          (t.commandKeys[C.WPN7] = _.NUM7),
-          (t.commandKeys[C.WPN8] = _.NUM8),
-          (t.commandKeys[C.WPN9] = _.NUM9),
-          (t.commandKeys[C.WPN10] = _.NUM0),
-          (t.commandKeys[C.WPN11] = _.N),
-          (t.commandKeys[C.WPN12] = _.M),
-          (t.commandKeys[C.WPN16] = _.H),
-          (t.commandKeys[C.WPN17] = _.J),
-          (t.commandKeys[C.WPN19] = _.L),
-          (t.commandKeys[C.DROP_FLAG] = _.K));
-        var T = localStorage.getItem("hotkeys");
-        if (null !== T && T.length > 0)
-          for (var E = T.split("_"), k = 0; k < E.length; k++) {
-            var L = E[k].split(":");
-            L[0] && L[1] && (t.commandKeys[parseInt(L[0])] = parseInt(L[1]));
+          (t.commandKeys[I.UP] = C.W),
+          (t.commandKeys[I.DOWN] = C.S),
+          (t.commandKeys[I.LEFT] = C.A),
+          (t.commandKeys[I.RIGHT] = C.D),
+          (t.commandKeys[I.RELOAD] = C.R),
+          (t.commandKeys[I.STAND] = C.F),
+          (t.commandKeys[I.FIRE_2] = C.Y),
+          (t.commandKeys[I.ABILITY1] = C.Q),
+          (t.commandKeys[I.ABILITY2] = C.E),
+          (t.commandKeys[I.ABILITY3] = C.C),
+          (t.commandKeys[I.JUMP] = C.RIGHTMOUSE),
+          (t.commandKeys[I.PICK_UPGRADE] = C.SPACE),
+          (t.commandKeys[I.WPN1] = C.NUM1),
+          (t.commandKeys[I.WPN2] = C.NUM2),
+          (t.commandKeys[I.WPN3] = C.NUM3),
+          (t.commandKeys[I.WPN4] = C.NUM4),
+          (t.commandKeys[I.WPN5] = C.NUM5),
+          (t.commandKeys[I.WPN6] = C.NUM6),
+          (t.commandKeys[I.WPN7] = C.NUM7),
+          (t.commandKeys[I.WPN8] = C.NUM8),
+          (t.commandKeys[I.WPN9] = C.NUM9),
+          (t.commandKeys[I.WPN10] = C.NUM0),
+          (t.commandKeys[I.WPN11] = C.N),
+          (t.commandKeys[I.WPN12] = C.M),
+          (t.commandKeys[I.WPN16] = C.H),
+          (t.commandKeys[I.WPN17] = C.J),
+          (t.commandKeys[I.WPN19] = C.L),
+          (t.commandKeys[I.DROP_FLAG] = C.K),
+          (t.commandKeys[I.REVIVE] = C.G));
+        var E = localStorage.getItem("hotkeys");
+        if (null !== E && E.length > 0)
+          for (var k = E.split("_"), L = 0; L < k.length; L++) {
+            var A = k[L].split(":");
+            A[0] && A[1] && (t.commandKeys[parseInt(A[0])] = parseInt(A[1]));
           }
-        function A() {
+        if (!s.SURVIVAL_ENABLED)
+          for (var F = 0, P = [I.REVIVE, I.ABILITY3]; F < P.length; F++) {
+            var N = P[F];
+            (delete t.commandNames[N], delete t.commandKeys[N]);
+          }
+        function B() {
           ((t.keyCodes.length = 0),
-            (t.keyCodes[_.UP] = 1),
-            (t.keyCodes[_.DOWN] = 2),
-            (t.keyCodes[_.LEFT] = 3),
-            (t.keyCodes[_.RIGHT] = 4));
+            (t.keyCodes[C.UP] = 1),
+            (t.keyCodes[C.DOWN] = 2),
+            (t.keyCodes[C.LEFT] = 3),
+            (t.keyCodes[C.RIGHT] = 4));
           for (var e = 1; e < t.commandKeys.length; e++)
             t.keyCodes[t.commandKeys[e]] = e;
         }
         ((t.keyCodes = []),
-          (t.refreshKeyCodes = A),
-          A(),
+          (t.refreshKeyCodes = B),
+          B(),
           (t.keyNames = []),
           (t.keyNames[9] = "TAB"),
           (t.keyNames[16] = "SHIFT"),
@@ -6156,7 +6679,7 @@ var c_hasPressedCtrlRKey = false;
           (t.keyNames[window.chrome ? 220 : 160] = "^"),
           (t.keyNames[1002] = "Right Mouse"));
         ((t.getKeyName = function (e) {
-          return x.lang.get("keys." + e) || t.keyNames[e] || "";
+          return w.lang.get("keys." + e) || t.keyNames[e] || "";
         }),
           (t.Input = {
             x: 0,
@@ -6168,60 +6691,60 @@ var c_hasPressedCtrlRKey = false;
               return e.which || e.keyCode;
             },
             MouseWheelHandler: function (e) {
-              if ("inline" !== S.style.display) {
+              if ("inline" !== b.style.display) {
                 if (
                   ((e = (e = window.event || e).wheelDelta || -e.detail),
-                  u.root.game && u.root.game.iAmSpec)
+                  p.root.game && p.root.game.iAmSpec)
                 )
                   return (
                     t.Input.zoom(e > 0 ? 1.1 : 1 / 1.1, 0.035),
-                    (u.root.game.specX = u.root.game.cameraX),
-                    void (u.root.game.specY = u.root.game.cameraY)
+                    (p.root.game.specX = p.root.game.cameraX),
+                    void (p.root.game.specY = p.root.game.cameraY)
                   );
                 if (
-                  u.root.game &&
-                  u.root.game.playingPlayer &&
-                  u.root.game.playingPlayer.weapon &&
-                  !u.root.game.playingPlayer.dieAt
+                  p.root.game &&
+                  p.root.game.playingPlayer &&
+                  p.root.game.playingPlayer.weapon &&
+                  !p.root.game.playingPlayer.dieAt
                 ) {
                   for (
                     var i = Math.sign(-e),
                       a =
-                        (((u.root.game.playingPlayer.weapon.id +
-                          l.weapons.length) %
-                          l.weapons.length) +
-                          l.weapons.length +
+                        (((p.root.game.playingPlayer.weapon.id +
+                          h.weapons.length) %
+                          h.weapons.length) +
+                          h.weapons.length +
                           i) %
-                        l.weapons.length;
-                    l.weapons[a].noWeapon ||
-                    (u.root.game.playingPlayerClips[a] +
-                      u.root.game.playingPlayerAmmo[a] <=
+                        h.weapons.length;
+                    h.weapons[a].noWeapon ||
+                    (p.root.game.playingPlayerClips[a] +
+                      p.root.game.playingPlayerAmmo[a] <=
                       0 &&
                       0 !== a);
                   )
-                    a = (a + i) % l.weapons.length;
-                  u.root.game.switchWeapon(a);
+                    a = (a + i) % h.weapons.length;
+                  p.root.game.switchWeapon(a);
                 }
               }
             },
             zoom: function (e, t) {
-              if (null !== u.root.game) {
+              if (null !== p.root.game) {
                 var i =
-                    u.root.game.cameraX +
-                    window.innerWidth / 2 / u.root.game.FIELD_SIZE,
+                    p.root.game.cameraX +
+                    window.innerWidth / 2 / p.root.game.FIELD_SIZE,
                   a =
-                    u.root.game.cameraY +
-                    window.innerHeight / 2 / u.root.game.FIELD_SIZE;
-                ((u.root.game.SCALE_CONST *= e),
-                  (u.root.game.SCALE_CONST = Math.min(
-                    Math.max(u.root.game.SCALE_CONST, t || 0.009),
+                    p.root.game.cameraY +
+                    window.innerHeight / 2 / p.root.game.FIELD_SIZE;
+                ((p.root.game.SCALE_CONST *= e),
+                  (p.root.game.SCALE_CONST = Math.min(
+                    Math.max(p.root.game.SCALE_CONST, t || 0.009),
                     0.3,
                   )),
-                  (0, d.resize)(),
-                  (u.root.game.cameraX =
-                    i - window.innerWidth / 2 / u.root.game.FIELD_SIZE),
-                  (u.root.game.cameraY =
-                    a - window.innerHeight / 2 / u.root.game.FIELD_SIZE));
+                  (0, m.resize)(),
+                  (p.root.game.cameraX =
+                    i - window.innerWidth / 2 / p.root.game.FIELD_SIZE),
+                  (p.root.game.cameraY =
+                    a - window.innerHeight / 2 / p.root.game.FIELD_SIZE));
               }
             },
             handleInput: function (e, i) {
@@ -6230,188 +6753,196 @@ var c_hasPressedCtrlRKey = false;
                 r = t.Input.keys[e];
               if (
                 ((t.Input.keys[e] = !0),
-                ("inline" !== S.style.display || e === _.ENTER) && !c_hasSocialUICoveredInGame)
+                ("inline" !== b.style.display || e === C.ENTER) && !c_hasSocialUICoveredInGame)
               ) {
-                if (e === _.F7)
+                if (e === C.F7)
                   return (
                     (t.Input.x = window.innerWidth / 2),
                     void (t.Input.y = window.innerHeight / 2)
                   );
-                if (e !== _.ESC) {
-                  if (e === _.F8)
+                if (e !== C.ESC) {
+                  if (e === C.F8)
                     return (
-                      p.Sound.playSound("click"),
-                      void (0, d.toggleFullscreen)(document.documentElement)
+                      y.Sound.playSound("click"),
+                      void (0, m.toggleFullscreen)(document.documentElement)
                     );
-                  if (e === _.F10)
+                  if (e === C.F10)
                     return (
-                      p.Sound.playSound("click"),
-                      void y.UI.toggleOptionsMenu()
-                    );
-                  if (
-                    (e === _.PLUS || e === _.Y) &&
-                    u.root.game &&
-                    u.root.game.replayMode
-                  )
-                    return (
-                      p.Sound.playSound("click"),
-                      void (0, d.changeReplaySpeed)(1)
+                      y.Sound.playSound("click"),
+                      void f.UI.toggleOptionsMenu()
                     );
                   if (
-                    (e === _.MINUS || e === _.X) &&
-                    u.root.game &&
-                    u.root.game.replayMode
+                    (e === C.PLUS || e === C.Y) &&
+                    p.root.game &&
+                    p.root.game.replayMode
                   )
                     return (
-                      p.Sound.playSound("click"),
-                      void (0, d.changeReplaySpeed)(-1)
+                      y.Sound.playSound("click"),
+                      void (0, m.changeReplaySpeed)(1)
+                    );
+                  if (
+                    (e === C.MINUS || e === C.X) &&
+                    p.root.game &&
+                    p.root.game.replayMode
+                  )
+                    return (
+                      y.Sound.playSound("click"),
+                      void (0, m.changeReplaySpeed)(-1)
                     );
                   if (
                     document.getElementById("hotkeyScreen") &&
                     "none" !==
                       document.getElementById("hotkeyScreen").style.display
                   ) {
-                    var f = document.getElementsByClassName(
+                    var s = document.getElementsByClassName(
                       "hotkey_button_active",
                     );
-                    if (f.length > 0) {
-                      var x = f[0];
+                    if (s.length > 0) {
+                      var x = s[0];
                       ((x.style.color = ""),
                         (x.className = "hotkey_button"),
                         (x.innerHTML = (0, t.getKeyName)(e)),
                         (t.commandKeys[parseInt(x.getAttribute("data-key"))] =
                           e),
-                        p.Sound.playSound("click"),
-                        A());
+                        y.Sound.playSound("click"),
+                        B());
                       var w = "";
                       for (var v in t.commandNames)
                         t.commandNames.hasOwnProperty(v) &&
                           (w += v + ":" + t.commandKeys[v] + "_");
                       return (localStorage.setItem("hotkeys", w), !1);
                     }
-                  } else if (u.root.game && u.root.game.map !== m.map1)
-                    if (e === t.commandKeys[C.JUMP])
-                      (c.Network.send("m2"),
+                  } else if (p.root.game && p.root.game.map !== c.map1)
+                    if (e === t.commandKeys[I.JUMP])
+                      (g.Network.send("m2"),
                         null !== t.Input.activeAbility &&
-                          (p.Sound.playSound("switch"),
+                          (y.Sound.playSound("switch"),
                           (t.Input.activeAbility = null)));
                     else if (
-                      e === t.commandKeys[C.FIRE_2] &&
-                      null !== u.root.game.playingPlayer &&
-                      u.root.game.playingPlayer.weapon.mode2Weapon
+                      e === t.commandKeys[I.FIRE_2] &&
+                      null !== p.root.game.playingPlayer &&
+                      p.root.game.playingPlayer.weapon.mode2Weapon
                     )
-                      u.root.game.fire2Down();
+                      p.root.game.fire2Down();
                     else if (
-                      e === t.commandKeys[C.SHOW_EMOTES] &&
-                      null !== u.root.game.playingPlayer
+                      e === t.commandKeys[I.SHOW_EMOTES] &&
+                      null !== p.root.game.playingPlayer
                     )
                       i.repeat ||
-                        (0, y.toggleEmotesQuickUseWindow)(t.Input.x, t.Input.y);
+                        (0, f.toggleEmotesQuickUseWindow)(t.Input.x, t.Input.y);
                     else {
-                      if (e === _.TAB)
-                        return (g.rankInGame.show(), i.preventDefault(), !1);
+                      if (e === C.TAB)
+                        return (u.rankInGame.show(), i.preventDefault(), !1);
                       if (
-                        e === t.commandKeys[C.PICK_UPGRADE] &&
-                        u.root.game.interface_.upgradeChoicesAvailable &&
-                        (u.root.game.interface_.upgNotificationStart > 0 ||
-                          u.root.game.interface_.currentUpgChoicesEnd < a)
+                        e === t.commandKeys[I.PICK_UPGRADE] &&
+                        p.root.game.interface_.upgradeChoicesAvailable &&
+                        (p.root.game.interface_.upgNotificationStart > 0 ||
+                          p.root.game.interface_.currentUpgChoicesEnd < a)
                       )
-                        u.root.game.interface_.shopUpgrades();
+                        p.root.game.interface_.shopUpgrades();
                       else if (
-                        e === t.commandKeys[C.PICK_UPGRADE] &&
-                        u.root.game.interface_.upgNotificationStart < 0 &&
-                        u.root.game.interface_.currentUpgChoices.length > 0 &&
-                        u.root.game.interface_.currentUpgChoicesEnd > a
+                        e === t.commandKeys[I.PICK_UPGRADE] &&
+                        p.root.game.interface_.upgNotificationStart < 0 &&
+                        p.root.game.interface_.currentUpgChoices.length > 0 &&
+                        p.root.game.interface_.currentUpgChoicesEnd > a
                       )
-                        u.root.game.interface_.hideUpgrades();
-                      else if (e === _.ENTER)
-                        if ("inline" !== S.style.display)
-                          ((S.style.display = "inline"),
-                            (I.style.display = "inline"),
-                            (M.scrollTop = M.scrollHeight),
-                            b.focus());
+                        p.root.game.interface_.hideUpgrades();
+                      else if (e === C.ENTER)
+                        if ("inline" !== b.style.display)
+                          ((b.style.display = "inline"),
+                            (M.style.display = "inline"),
+                            (T.scrollTop = T.scrollHeight),
+                            _.focus());
                         else {
-                          var T = b.value;
-                          (h.playerData.authLevel < n.AUTH_LEVEL.PLAYER
-                            ? u.root.game.interface_.addMsg(
+                          var S = _.value;
+                          (d.playerData.authLevel < n.AUTH_LEVEL.PLAYER
+                            ? p.root.game.interface_.addMsg(
                                 "You need to log in to chat.",
                                 "red",
                               )
-                            : T && T.length > 0 && F(T),
-                            (b.value = ""),
-                            (S.style.display = "none"),
-                            (I.style.display = "none"));
+                            : S && S.length > 0 && D(S),
+                            (_.value = ""),
+                            (b.style.display = "none"),
+                            (M.style.display = "none"));
                         }
-                      else if (t.commandKeys[C.ABILITY1] === e)
-                        u.root.game.interface_.initAbility(
-                          u.root.game.pl_active_abilities[0],
+                      else if (t.commandKeys[I.ABILITY1] === e)
+                        p.root.game.interface_.initAbility(
+                          p.root.game.pl_active_abilities[0],
                           0,
                         );
-                      else if (t.commandKeys[C.ABILITY2] === e)
-                        u.root.game.interface_.initAbility(
-                          u.root.game.pl_active_abilities[1],
+                      else if (t.commandKeys[I.ABILITY2] === e)
+                        p.root.game.interface_.initAbility(
+                          p.root.game.pl_active_abilities[1],
                           1,
                         );
+                      else if (t.commandKeys[I.ABILITY3] === e)
+                        p.root.game.interface_.initAbility(
+                          p.root.game.pl_active_abilities[2],
+                          2,
+                        );
                       else if (
-                        t.commandKeys[C.DROP_FLAG] === e &&
-                        u.root.game.playingPlayer &&
-                        u.root.game.playingPlayer.carriesFlag()
+                        t.commandKeys[I.DROP_FLAG] === e &&
+                        p.root.game.playingPlayer &&
+                        p.root.game.playingPlayer.carriesFlag()
                       )
-                        c.Network.send(s.NetworkCmd.DropFlag);
+                        g.Network.send(l.NetworkCmd.DropFlag);
+                      else if (t.commandKeys[I.REVIVE] === e)
+                        r !== t.Input.keys[e] &&
+                          g.Network.send(l.NetworkCmd.KeyDown + "$" + I.REVIVE);
                       else if (
-                        t.commandKeys[C.UP] === e ||
-                        t.commandKeys[C.DOWN] === e ||
-                        t.commandKeys[C.LEFT] === e ||
-                        t.commandKeys[C.RIGHT] === e ||
-                        t.commandKeys[C.RELOAD] === e ||
-                        (t.commandKeys[C.STAND] === e &&
-                          u.root.game.playingPlayer &&
-                          u.root.game.playingPlayer.weapon &&
-                          u.root.game.playingPlayer.weapon.requiredStandTime)
+                        t.commandKeys[I.UP] === e ||
+                        t.commandKeys[I.DOWN] === e ||
+                        t.commandKeys[I.LEFT] === e ||
+                        t.commandKeys[I.RIGHT] === e ||
+                        t.commandKeys[I.RELOAD] === e ||
+                        (t.commandKeys[I.STAND] === e &&
+                          p.root.game.playingPlayer &&
+                          p.root.game.playingPlayer.weapon &&
+                          p.root.game.playingPlayer.weapon.requiredStandTime)
                       )
                         r !== t.Input.keys[e] &&
-                          (t.commandKeys[C.STAND] === e
-                            ? c.Network.send(
-                                s.NetworkCmd.KeyDown + "$" + C.STAND,
+                          (t.commandKeys[I.STAND] === e
+                            ? g.Network.send(
+                                l.NetworkCmd.KeyDown + "$" + I.STAND,
                               )
-                            : c.Network.send(s.NetworkCmd.KeyDown + "$" + o));
+                            : g.Network.send(l.NetworkCmd.KeyDown + "$" + o));
                       else if (
-                        u.root.game.playingPlayer &&
-                        !u.root.game.playingPlayer.isHumanZombie
+                        p.root.game.playingPlayer &&
+                        !p.root.game.playingPlayer.isHumanZombie
                       )
-                        for (var E = 0; E < l.weapons.length; E++)
-                          l.weapons[E].noWeapon ||
-                            e !== t.commandKeys[C["WPN" + (E + 1)]] ||
-                            (u.root.game.playingPlayerClips[E] +
-                              u.root.game.playingPlayerAmmo[E] >
+                        for (var E = 0; E < h.weapons.length; E++)
+                          h.weapons[E].noWeapon ||
+                            e !== t.commandKeys[I["WPN" + (E + 1)]] ||
+                            (p.root.game.playingPlayerClips[E] +
+                              p.root.game.playingPlayerAmmo[E] >
                               0 ||
-                            u.root.game.playingPlayer.weapon === l.weapons[E]
-                              ? u.root.game.switchWeapon(E)
-                              : (u.root.game.interface_.setMainKillMsg(
+                            p.root.game.playingPlayer.weapon === h.weapons[E]
+                              ? p.root.game.switchWeapon(E)
+                              : (p.root.game.interface_.setMainKillMsg(
                                   "you don't have this weapon",
                                   "grey",
                                   "textInGrey",
                                 ),
-                                p.Sound.playSound(
+                                y.Sound.playSound(
                                   "empty_clip",
-                                  u.root.game.playingPlayer.x,
-                                  u.root.game.playingPlayer.y,
+                                  p.root.game.playingPlayer.x,
+                                  p.root.game.playingPlayer.y,
                                   0.75,
                                 )),
-                            (E = l.weapons.length));
+                            (E = h.weapons.length));
                     }
                 }
               }
             },
           }));
-        var F = function (e) {
+        var D = function (e) {
           for (var t = 0; t < o.emotes.length; t++)
             if (
               e.trim() === o.emotes[t].code &&
-              (0, r.arrayContains)(h.playerData.emotes, t)
+              (0, r.arrayContains)(d.playerData.emotes, t)
             )
-              return void c.Network.send(s.NetworkCmd.Emote + "$" + t);
-          c.Network.send("chat" + e);
+              return void g.Network.send(l.NetworkCmd.Emote + "$" + t);
+          g.Network.send("chat" + e);
         };
         (document.addEventListener("contextmenu", function (e) {
           e.preventDefault();
@@ -6421,14 +6952,14 @@ var c_hasPressedCtrlRKey = false;
               a = t.keyCodes[i];
             return (
               (t.Input.keys[i] = !1),
-              i === _.TAB
-                ? g.rankInGame.hide()
-                : i === t.commandKeys[C.FIRE_2] && null !== u.root.game
-                  ? u.root.game.fire2Up()
+              i === C.TAB
+                ? u.rankInGame.hide()
+                : i === t.commandKeys[I.FIRE_2] && null !== p.root.game
+                  ? p.root.game.fire2Up()
                   : a &&
-                    (t.commandKeys[C.STAND] === i
-                      ? c.Network.send(s.NetworkCmd.KeyUp + "$" + C.STAND)
-                      : c.Network.send(s.NetworkCmd.KeyUp + "$" + a)),
+                    (t.commandKeys[I.STAND] === i
+                      ? g.Network.send(l.NetworkCmd.KeyUp + "$" + I.STAND)
+                      : g.Network.send(l.NetworkCmd.KeyUp + "$" + a)),
               !1
             );
           }),
@@ -6449,16 +6980,16 @@ var c_hasPressedCtrlRKey = false;
             !1,
           ),
           (document.documentElement.onmousedown = function (e) {
-            if ((window.focus(), e.currentTarget !== w)) {
+            if ((window.focus(), e.currentTarget !== v)) {
               var i = t.Input.getKeyCode(e);
               if (1 !== i || !t.Input.leftMouse) {
                 if (1 === i) t.Input.leftMouse = !0;
                 else if (3 === i)
                   return (
                     e.preventDefault(),
-                    t.Input.handleInput(_.RIGHTMOUSE, e)
+                    t.Input.handleInput(C.RIGHTMOUSE, e)
                   );
-                if (u.root.game && u.root.game.map !== m.map1) {
+                if (p.root.game && p.root.game.map !== c.map1) {
                   var a = e.target;
                   if (
                     !a ||
@@ -6475,8 +7006,8 @@ var c_hasPressedCtrlRKey = false;
                   )
                     return (
                       !!(
-                        !u.root.game ||
-                        u.root.game.map === m.map1 ||
+                        !p.root.game ||
+                        p.root.game.map === c.map1 ||
                         (e.target &&
                           ("gameLink" === e.target.id ||
                             e.target.className.indexOf("clickableDuringGame") >=
@@ -6490,10 +7021,10 @@ var c_hasPressedCtrlRKey = false;
           (document.documentElement.onmouseup = function (e) {
             var i = t.Input.getKeyCode(e);
             (1 === i && (t.Input.leftMouse = !1),
-              u.root.game &&
-                u.root.game.playingPlayer &&
+              p.root.game &&
+                p.root.game.playingPlayer &&
                 1 === i &&
-                u.root.game.mouseUp());
+                p.root.game.mouseUp());
           }),
           (document.documentElement.onclick = function (e) {
             var i = t.Input.getKeyCode(e);
@@ -6502,59 +7033,58 @@ var c_hasPressedCtrlRKey = false;
               (e.preventDefault(), e.stopPropagation(), !1)
             );
           }),
-          (w.onclick = function (e) {
+          (v.onclick = function (e) {
             return (e.preventDefault(), e.stopPropagation(), !1);
           }),
-          w.addEventListener("mousedown", function (e) {
-            if (null !== u.root.game) {
-              var i = (0, d.getMouseGamePlayX)(),
-                n = (0, d.getMouseGamePlayY)(),
+          v.addEventListener("mousedown", function (e) {
+            if (null !== p.root.game) {
+              var i = (0, m.getMouseGamePlayX)(),
+                n = (0, m.getMouseGamePlayY)(),
                 o = t.Input.getKeyCode(e);
               if (
-                ("none" !== v.style.display && (v.style.display = "none"),
+                ("none" !== S.style.display && (S.style.display = "none"),
                 1 === o)
               ) {
-                if (u.root.game.interface_.click()) return;
-                if (u.root.game.iAmSpec) return void u.root.game.switchSpec(1);
+                if (p.root.game.interface_.click()) return;
+                if (p.root.game.iAmSpec) return void p.root.game.switchSpec(1);
                 if (
-                  u.root.game.playingPlayer &&
+                  p.root.game.playingPlayer &&
                   null !== t.Input.activeAbility
                 ) {
                   var r = null;
-                  (void 0 !== t.Input.activeAbility.energy &&
-                  t.Input.activeAbility.energy > u.root.game.playingPlayerEnergy
-                    ? (u.root.game.interface_.addMsg(
-                        x.lang.get("game.msg.no_energy"),
+                  (p.root.game.getAbilityFieldValue(
+                    t.Input.activeAbility,
+                    "energy",
+                  ) > p.root.game.playingPlayerEnergy
+                    ? (p.root.game.interface_.addMsg(
+                        w.lang.get("game.msg.no_energy"),
                         "red",
                       ),
-                      p.Sound.playSound("negative", void 0, void 0, 0.8))
-                    : u.root.game.lastAbilityUses[
-                          u.root.game.pl_active_abilities[0] ===
-                          t.Input.activeAbility
-                            ? 0
-                            : 1
+                      y.Sound.playSound("negative", void 0, void 0, 0.8))
+                    : p.root.game.lastAbilityUses[
+                          p.root.game.abilitySlot(t.Input.activeAbility)
                         ] +
                           t.Input.activeAbility.cooldown >
-                        u.root.game.ticksCounter
-                      ? (u.root.game.interface_.addMsg(
-                          x.lang.get("game.msg.no_cooldown"),
+                        p.root.game.ticksCounter
+                      ? (p.root.game.interface_.addMsg(
+                          w.lang.get("game.msg.no_cooldown"),
                           "red",
                         ),
-                        p.Sound.playSound("negative", void 0, void 0, 0.8))
+                        y.Sound.playSound("negative", void 0, void 0, 0.8))
                       : t.Input.activeAbility.type === a.AbilityType.Blink &&
-                          u.root.game.playingPlayer.carriesFlag()
-                        ? (u.root.game.interface_.addMsg(
-                            x.lang.get("game.skills.teleport.disabled_in_ctf"),
+                          p.root.game.playingPlayer.carriesFlag()
+                        ? (p.root.game.interface_.addMsg(
+                            w.lang.get("game.skills.teleport.disabled_in_ctf"),
                             "red",
                           ),
-                          p.Sound.playSound("negative", void 0, void 0, 0.8))
+                          y.Sound.playSound("negative", void 0, void 0, 0.8))
                         : ((r =
                             t.Input.activeAbility.type === a.AbilityType.Place
-                              ? u.root.game.getPotentialPlaceTarget(
+                              ? p.root.game.getPotentialPlaceTarget(
                                   t.Input.activeAbility,
                                 )
                               : { x: i, y: n }),
-                          c.Network.send(
+                          g.Network.send(
                             "ab$" +
                               t.Input.activeAbility.id +
                               "$" +
@@ -6564,24 +7094,24 @@ var c_hasPressedCtrlRKey = false;
                           )),
                     (t.Input.activeAbility = null));
                 } else
-                  u.root.game.playingPlayer &&
-                    u.root.game.playingPlayer.weapon &&
-                    (u.root.game.playingPlayer.weapon.requiredStandTime &&
-                    u.root.game.playingPlayer.standTime <= 0
-                      ? u.root.game.playingPlayerClips[
-                          u.root.game.playingPlayer.weapon.id
+                  p.root.game.playingPlayer &&
+                    p.root.game.playingPlayer.weapon &&
+                    (p.root.game.playingPlayer.weapon.requiredStandTime &&
+                    p.root.game.playingPlayer.standTime <= 0
+                      ? p.root.game.playingPlayerClips[
+                          p.root.game.playingPlayer.weapon.id
                         ] &&
-                        (u.root.game.interface_.setMainKillMsg(
-                          x.lang.get("game.msg.stand_required", {
-                            keyName: (0, t.getKeyName)(t.commandKeys[C.STAND]),
+                        (p.root.game.interface_.setMainKillMsg(
+                          w.lang.get("game.msg.stand_required", {
+                            keyName: (0, t.getKeyName)(t.commandKeys[I.STAND]),
                           }),
                           "grey",
                           "textInGrey",
                         ),
-                        p.Sound.playSound("negative", void 0, void 0, 0.8))
-                      : u.root.game.mouseDown());
-              } else if (3 === o && u.root.game.iAmSpec)
-                return void u.root.game.switchSpec(-1);
+                        y.Sound.playSound("negative", void 0, void 0, 0.8))
+                      : p.root.game.mouseDown());
+              } else if (3 === o && p.root.game.iAmSpec)
+                return void p.root.game.switchSpec(-1);
             }
           }),
           (document.documentElement.onmousemove = function (e) {
@@ -6818,7 +7348,7 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e._drawAb = function (e) {
                 var t = this;
-                if (e.zombieOnly) return null;
+                if (e.zombieOnly || e.survivalOnly) return null;
                 var i = document.createElement("div");
                 ((i.className = "checkbox"),
                   (i.onclick = function () {
@@ -7173,82 +7703,93 @@ var c_hasPressedCtrlRKey = false;
         (Object.defineProperty(t, "__esModule", { value: !0 }),
           (t.initBanGuest = t.rankInGame_mapList = t.rankInGame = void 0));
         var a = i(8890),
-          n = i(262),
-          o = i(2399),
-          r = i(9622),
-          s = i(7028),
-          l = i(5572),
-          h = i(9178),
-          d = i(434),
-          m = i(8117),
-          c = i(6214),
-          g = {},
-          u = [[], [], []],
-          p = document.getElementById("rankInGame"),
-          y = p.querySelector(".redTeamSummary .teamScore"),
-          f = p.querySelector(".blueTeamSummary .teamScore"),
-          x = p.querySelector(".redTeamSummary .teamName"),
-          w = p.querySelector(".blueTeamSummary .teamName"),
-          v = p.querySelector(".vote .timeToNext"),
-          S = p.querySelector(".victory"),
-          b = p.querySelector(".voteTitle"),
-          _ = p.querySelector(".rankArea"),
-          C = document.getElementById("rankInGame_mapList"),
-          I = p.querySelector("#rankInGame_normalList"),
-          M = p.querySelector("#rankInGame_redList"),
-          T = p.querySelector("#rankInGame_blueList"),
-          E = [I, M, T],
-          k = [];
-        function L(e) {
+          n = i(772),
+          o = i(262),
+          r = i(2399),
+          s = i(9622),
+          l = i(7028),
+          h = i(5572),
+          d = i(9178),
+          m = i(434),
+          c = i(8117),
+          g = i(6214),
+          u = {},
+          p = [[], [], []],
+          y = document.getElementById("rankInGame"),
+          f = y.querySelector(".redTeamSummary .teamScore"),
+          x = y.querySelector(".blueTeamSummary .teamScore"),
+          w = y.querySelector(".redTeamSummary .teamName"),
+          v = y.querySelector(".blueTeamSummary .teamName"),
+          S = y.querySelector(".vote .timeToNext"),
+          b = y.querySelector(".victory"),
+          _ = y.querySelector(".voteTitle"),
+          C = y.querySelector(".rankArea"),
+          I = document.getElementById("rankInGame_mapList"),
+          M = y.querySelector("#rankInGame_normalList"),
+          T = y.querySelector("#rankInGame_redList"),
+          E = y.querySelector("#rankInGame_blueList"),
+          k = [M, T, E],
+          L = Array.prototype.slice.call(
+            y.querySelectorAll(".svCtrl .F-Button.diff"),
+          ),
+          A = y.querySelector(".svCtrl .svMods"),
+          F = y.querySelector(".svCtrl .svLobbyList"),
+          P = y.querySelector(".svCtrl .svWait"),
+          N = [];
+        function B(e) {
           var t = e.currentTarget,
             i = "1" === t.getAttribute("data-isGuest"),
             a = t.getAttribute("data-playerId"),
-            o =
-              null !== l.root.game
-                ? l.root.game.getPlayerFromID(parseInt(a))
+            n =
+              null !== h.root.game
+                ? h.root.game.getPlayerFromID(parseInt(a))
                 : null;
-          if (null !== o) {
-            var r = o.name.toLowerCase(),
-              s = n.options.ignoreList.indexOf(r);
+          if (null !== n) {
+            var r = n.name.toLowerCase(),
+              s = o.options.ignoreList.indexOf(r);
             if (s >= 0)
               return (
-                n.options.ignoreList.splice(s, 1),
-                (localStorage.ignoreList = n.options.ignoreList.join(";")),
+                o.options.ignoreList.splice(s, 1),
+                (localStorage.ignoreList = o.options.ignoreList.join(";")),
                 t.classList.remove("muted"),
-                void l.root.game.interface_.addMsg(
-                  c.lang.get("game.msg.ignore.off", { playerName: r }),
+                void h.root.game.interface_.addMsg(
+                  g.lang.get("game.msg.ignore.off", { playerName: r }),
                   "white",
                 )
               );
-            if ((s = n.options.ignoreListTemp.indexOf(r)) >= 0)
+            if ((s = o.options.ignoreListTemp.indexOf(r)) >= 0)
               return (
-                n.options.ignoreListTemp.splice(s, 1),
-                l.root.game.interface_.addMsg(
-                  c.lang.get("game.msg.ignore.off", { playerName: r }),
+                o.options.ignoreListTemp.splice(s, 1),
+                h.root.game.interface_.addMsg(
+                  g.lang.get("game.msg.ignore.off", { playerName: r }),
                   "white",
                 ),
                 void t.classList.remove("muted")
               );
-            ((i ? n.options.ignoreListTemp : n.options.ignoreList).push(r),
-              (localStorage.ignoreList = n.options.ignoreList.join(";")),
+            ((i ? o.options.ignoreListTemp : o.options.ignoreList).push(r),
+              (localStorage.ignoreList = o.options.ignoreList.join(";")),
               t.classList.add("muted"),
-              l.root.game.interface_.addMsg(
-                c.lang.get("game.msg.ignore.on", { playerName: r }),
+              h.root.game.interface_.addMsg(
+                g.lang.get("game.msg.ignore.on", { playerName: r }),
                 "white",
               ));
           }
         }
-        function A(e) {
-          if (-1 === e)
-            return (
-              (l.root.game.iAmSpec = !0),
-              s.Network.send("spectate"),
-              void t.rankInGame.hide()
-            );
-          ((l.root.game.iAmSpec = !1), s.Network.send("joinTeam$" + e));
+        function D(e) {
+          if (h.root.game && h.root.game.type.hostStarts)
+            -1 !== e && l.Network.send("svStart");
+          else {
+            if (-1 === e)
+              return (
+                (h.root.game.iAmSpec = !0),
+                l.Network.send("spectate"),
+                void t.rankInGame.hide()
+              );
+            ((h.root.game.iAmSpec = !1), l.Network.send("joinTeam$" + e));
+          }
         }
-        function F(e) {
-          if (l.root.game) {
+        function O(e) {
+          if (h.root.game) {
             var t = document.getElementById("chatInputDiv"),
               i = document.getElementById("chatInput"),
               a = document.getElementById("chatlog"),
@@ -7259,98 +7800,126 @@ var c_hasPressedCtrlRKey = false;
               (n.scrollTop = n.scrollHeight)),
               (i.value = "/banguest " + e + " "),
               i.focus());
-          } else (0, m.floatTip)("success", "Only works ingame", 2e3);
+          } else (0, c.floatTip)("success", "Only works ingame", 2e3);
         }
         ((t.rankInGame = {
           timeToNext: function (e) {
-            v.innerHTML = e;
+            S.innerHTML = e;
           },
           hideRank: function () {
-            _.style.display = "none";
+            C.style.display = "none";
           },
           showRank: function () {
-            _.style.display = "";
+            C.style.display = "";
           },
           showOrHideVoteTitle: function () {
-            k.length > 0 ? (b.style.display = "") : (b.style.display = "none");
+            N.length > 0 ? (_.style.display = "") : (_.style.display = "none");
           },
           show: function (e) {
-            ((p.style.display = ""),
+            ((y.style.display = ""),
               t.rankInGame.refreshPlaying(),
               e ? t.rankInGame.hideRank() : t.rankInGame.showRank(),
               document.addEventListener("wheel", t.rankInGame.scrollList));
           },
           scrollList: function (e) {
-            for (var t = 0, i = E; t < i.length; t++) {
+            for (var t = 0, i = k; t < i.length; t++) {
               var a = i[t];
-              if ((0, o.containsMouse)(a)) {
+              if ((0, r.containsMouse)(a)) {
                 a.scrollTop += e.deltaY;
                 break;
               }
             }
           },
           hide: function () {
-            l.root.game &&
-              l.root.game.ticksCounter >= -1 &&
+            h.root.game &&
+              h.root.game.ticksCounter >= -1 &&
               t.rankInGame.doHide();
           },
           doHide: function () {
             (document.removeEventListener("wheel", t.rankInGame.scrollList),
-              (p.style.display = "none"));
+              (y.style.display = "none"));
           },
           setVictoryMessage: function (e) {
-            S.innerHTML = e;
+            b.innerHTML = e;
+          },
+          setSurvivalState: function (e, t, i, a, o) {
+            (y.classList.toggle("svLobby", e), y.classList.toggle("svHost", i));
+            for (var r = 0, s = L; r < s.length; r++) {
+              var l = s[r];
+              l.classList.toggle(
+                "selected",
+                l.getAttribute("data-diff") === t.toString(),
+              );
+            }
+            var d = n.SURVIVAL_DIFFICULTIES[t];
+            if (d) {
+              var m = e
+                ? (0, n.survivalEnemyHpMod)(d.id, o.length)
+                : h.root.game.enemyHpMod;
+              A.innerText = g.lang.get("rankInGame.survival.mods", {
+                hp: Math.round(100 * m),
+                dmg: Math.round(100 * d.enemyDmg),
+                reg: Math.round(100 * d.shrineRegen),
+              });
+            }
+            ((F.innerText = g.lang.get("rankInGame.survival.lobby", {
+              count: o.length,
+              names: o.join(", "),
+            })),
+              (P.innerText = g.lang.get("rankInGame.survival.waitHost", {
+                hostName: a,
+              })));
           },
           refreshTime: function (e, t) {
             (e
-              ? (p.classList.remove("waiting"), p.classList.add("ongoing"))
-              : (p.classList.remove("ongoing"), p.classList.add("waiting")),
-              v && (v.innerHTML = t));
+              ? (y.classList.remove("waiting"), y.classList.add("ongoing"))
+              : (y.classList.remove("ongoing"), y.classList.add("waiting")),
+              S && (S.innerHTML = t));
           },
           refreshTeamScore: function () {
-            ((y.innerText = c.lang.get("rankInGame.summary.score", {
-              score: l.root.game.scoreTeam1,
+            ((f.innerText = g.lang.get("rankInGame.summary.score", {
+              score: h.root.game.scoreTeam1,
             })),
-              (f.innerText = c.lang.get("rankInGame.summary.score", {
-                score: l.root.game.scoreTeam2,
+              (x.innerText = g.lang.get("rankInGame.summary.score", {
+                score: h.root.game.scoreTeam2,
               })));
           },
           refreshPlaying: function () {
-            l.root.game.playingPlayerID > 0 ||
-            l.root.game.iAmSpec ||
-            l.root.game.replayMode
-              ? (p.classList.remove("start"), p.classList.remove("spectate"))
-              : (p.classList.add("start"),
-                "spectate" === l.root.joinGamePurpose
-                  ? p.classList.add("spectate")
-                  : p.classList.remove("spectate"));
+            h.root.game.playingPlayerID > 0 ||
+            h.root.game.iAmSpec ||
+            h.root.game.replayMode
+              ? (y.classList.remove("start"), y.classList.remove("spectate"))
+              : (y.classList.add("start"),
+                "spectate" === h.root.joinGamePurpose
+                  ? y.classList.add("spectate")
+                  : y.classList.remove("spectate"));
           },
           getListFromTeam: function (e) {
-            return 1 === e ? M : 2 === e ? T : I;
+            return 1 === e ? T : 2 === e ? E : M;
           },
           addPlayer: function (e) {
             var i = document.createElement("tr");
             ((i.className = "F-ItemRenderer"),
               (i.id = "Rank_Player_" + e.id),
               t.rankInGame.getListFromTeam(e.team).appendChild(i));
-            var s = document.createElement("td");
-            (i.appendChild(s),
-              (s.className = "name"),
-              r.NameColorUI.setStyleFromColorIndex(e.name, s, e.nameColor),
+            var n = document.createElement("td");
+            (i.appendChild(n),
+              (n.className = "name"),
+              s.NameColorUI.setStyleFromColorIndex(e.name, n, e.nameColor),
               e.authLevel >= a.AUTH_LEVEL.PLAYER
-                ? (s.setAttribute("data-playerId", e.db_id.toString()),
-                  (s.onclick = h.UI.showPlayerInfoById0))
-                : n.playerData.authLevel >= a.AUTH_LEVEL.MOD2 &&
-                  (s.onclick = function () {
-                    return F(e.name);
+                ? (n.setAttribute("data-playerId", e.db_id.toString()),
+                  (n.onclick = d.UI.showPlayerInfoById0))
+                : o.playerData.authLevel >= a.AUTH_LEVEL.MOD2 &&
+                  (n.onclick = function () {
+                    return O(e.name);
                   }));
-            var d = document.createElement("td");
-            (i.appendChild(d),
-              (d.className = "clan"),
+            var l = document.createElement("td");
+            (i.appendChild(l),
+              (l.className = "clan"),
               e.clanTag.length > 0 &&
-                ((d.innerText = "[" + e.clanTag + "]"),
-                d.setAttribute("data-clanTag", e.clanTag),
-                (d.onclick = h.UI.requestMyClanInfo0)));
+                ((l.innerText = "[" + e.clanTag + "]"),
+                l.setAttribute("data-clanTag", e.clanTag),
+                (l.onclick = d.UI.requestMyClanInfo0)));
             var m = document.createElement("td");
             (i.appendChild(m),
               (m.className = "score"),
@@ -7359,10 +7928,10 @@ var c_hasPressedCtrlRKey = false;
             (i.appendChild(c),
               (c.className = "souls"),
               (c.innerText = e.souls.toString()));
-            var p = document.createElement("td");
-            (i.appendChild(p),
-              (p.className = "kill"),
-              (p.innerText = e.kills.toString()));
+            var g = document.createElement("td");
+            (i.appendChild(g),
+              (g.className = "kill"),
+              (g.innerText = e.kills.toString()));
             var y = document.createElement("td");
             (i.appendChild(y),
               (y.className = "death"),
@@ -7371,9 +7940,9 @@ var c_hasPressedCtrlRKey = false;
             if (
               (i.appendChild(f),
               (f.className = "muteCell"),
-              null !== l.root.game &&
-                e.id !== l.root.game.playingPlayerID &&
-                e.name !== n.playerData.name &&
+              null !== h.root.game &&
+                e.id !== h.root.game.playingPlayerID &&
+                e.name !== o.playerData.name &&
                 e.authLevel >= a.AUTH_LEVEL.GUEST)
             ) {
               var x = document.createElement("div");
@@ -7384,20 +7953,20 @@ var c_hasPressedCtrlRKey = false;
                   "data-isGuest",
                   e.authLevel < a.AUTH_LEVEL.PLAYER ? "1" : "0",
                 ),
-                (x.onclick = L));
+                (x.onclick = B));
               var w = document.createElement("div");
               (x.appendChild(w), (w.className = "hover lite"));
               var v = document.createElement("div");
               (x.appendChild(v),
                 (v.className = "label"),
-                (0, o.playerIsBeeingIgnored)(e.name)
+                (0, r.playerIsBeeingIgnored)(e.name)
                   ? x.classList.add("muted")
                   : x.classList.remove("muted"));
             }
             if (
-              null !== l.root.game &&
+              null !== h.root.game &&
               e.authLevel >= a.AUTH_LEVEL.GUEST &&
-              n.playerData.authLevel >= a.AUTH_LEVEL.ADMIN
+              o.playerData.authLevel >= a.AUTH_LEVEL.ADMIN
             ) {
               x = document.createElement("div");
               (f.appendChild(x),
@@ -7408,15 +7977,15 @@ var c_hasPressedCtrlRKey = false;
                   "data-isGuest",
                   e.authLevel < a.AUTH_LEVEL.PLAYER ? "1" : "0",
                 ),
-                (x.onclick = o.lpd2));
+                (x.onclick = r.lpd2));
               w = document.createElement("div");
               (x.appendChild(w), (w.className = "hover lite"));
             }
-            var S = (g[e.id] = {
+            var S = (u[e.id] = {
               id: e.id,
               tr: i,
               kills: e.kills,
-              killsTD: p,
+              killsTD: g,
               deaths: e.deaths,
               deathsTD: y,
               elo: e.elo,
@@ -7425,17 +7994,17 @@ var c_hasPressedCtrlRKey = false;
               soulsTD: c,
               team: e.team,
             });
-            return (u[e.team].push(S), t.rankInGame.sortPlayers(), S);
+            return (p[e.team].push(S), t.rankInGame.sortPlayers(), S);
           },
           setPlayingPlayer: function (e) {
-            var t = g[e.id];
+            var t = u[e.id];
             void 0 !== t && t.tr.classList.add("me");
           },
           sortPlayers: function () {
-            var e = l.root.game.type.winningCondition;
+            var e = h.root.game.type.winningCondition;
             if (void 0 !== e) {
-              for (var t = 0; t < u.length; t++) {
-                var i = u[t];
+              for (var t = 0; t < p.length; t++) {
+                var i = p[t];
                 if (i.length > 0) {
                   i.sort(function (t, i) {
                     return i[e] - t[e];
@@ -7445,16 +8014,16 @@ var c_hasPressedCtrlRKey = false;
                   }
                   for (var o = 0, r = i; o < r.length; o++) {
                     var s = r[o];
-                    E[t].appendChild(s.tr);
+                    k[t].appendChild(s.tr);
                   }
                 }
               }
-              l.root.game.miniMap.refreshTop3();
+              h.root.game.miniMap.refreshTop3();
             }
           },
           refreshPlayer: function (e) {
             var i,
-              a = g[e.id] || t.rankInGame.addPlayer(e);
+              a = u[e.id] || t.rankInGame.addPlayer(e);
             (a.kills !== e.kills &&
               ((a.kills = e.kills), (a.killsTD.innerText = e.kills.toString())),
               a.deaths !== e.deaths &&
@@ -7474,50 +8043,53 @@ var c_hasPressedCtrlRKey = false;
               t.rankInGame.sortPlayers());
           },
           removePlayer: function (e) {
-            var t = g[e.id];
+            var t = u[e.id];
             if (void 0 !== t) {
-              (delete g[e.id], t.tr.parentNode.removeChild(t.tr));
-              for (var i = 0; i < u[e.team].length; i++)
-                u[e.team][i] === t &&
-                  (u[e.team].splice(i, 1), (i = u[e.team].length));
+              (delete u[e.id], t.tr.parentNode.removeChild(t.tr));
+              for (var i = 0; i < p[e.team].length; i++)
+                p[e.team][i] === t &&
+                  (p[e.team].splice(i, 1), (i = p[e.team].length));
             }
-            l.root.game.miniMap.refreshTop3();
+            h.root.game.miniMap.refreshTop3();
           },
           init: function () {
-            for (var e in g)
-              (g[e].tr.parentNode.removeChild(g[e].tr), delete g[e]);
-            ((u[0].length = 0),
-              (u[1].length = 0),
-              (u[2].length = 0),
-              l.root.game.type.team || l.root.game.type.showZombiesAndHumans
-                ? (p.classList.add("team"),
-                  (x.innerText = l.root.game.type.showZombiesAndHumans
-                    ? c.lang.get("rankInGame.team.humans")
-                    : c.lang.get("rankInGame.team.red")),
-                  (w.innerText = l.root.game.type.showZombiesAndHumans
-                    ? c.lang.get("rankInGame.team.zombies")
-                    : c.lang.get("rankInGame.team.blue")),
-                  (y.innerText = l.root.game.scoreTeam1.toString()),
-                  (f.innerText = l.root.game.scoreTeam2.toString()),
-                  l.root.game.type.showZombiesAndHumans &&
-                    ((y.innerHTML = ""), (f.innerHTML = "")))
-                : p.classList.remove("team"),
-              (!l.root.game.type.team && l.root.game.type.zombies) ||
-              l.root.game.type.coopZombieMode
-                ? p.classList.add("zombies")
-                : p.classList.remove("zombies"),
-              l.root.game.type.ingameElo
-                ? p.classList.add("ingameElo")
-                : p.classList.remove("ingameElo"),
-              l.root.game.type.lives
-                ? ((p.querySelector(".kill").style.display = "none"),
-                  (p.querySelector(".score").style.display = "none"),
-                  (p.querySelector(".death").innerHTML = c.lang.get(
+            for (var e in u)
+              (u[e].tr.parentNode.removeChild(u[e].tr), delete u[e]);
+            ((p[0].length = 0),
+              (p[1].length = 0),
+              (p[2].length = 0),
+              h.root.game.type.team || h.root.game.type.showZombiesAndHumans
+                ? (y.classList.add("team"),
+                  (w.innerText = h.root.game.type.showZombiesAndHumans
+                    ? g.lang.get("rankInGame.team.humans")
+                    : g.lang.get("rankInGame.team.red")),
+                  (v.innerText = h.root.game.type.showZombiesAndHumans
+                    ? g.lang.get("rankInGame.team.zombies")
+                    : g.lang.get("rankInGame.team.blue")),
+                  (f.innerText = h.root.game.scoreTeam1.toString()),
+                  (x.innerText = h.root.game.scoreTeam2.toString()),
+                  h.root.game.type.showZombiesAndHumans &&
+                    ((f.innerHTML = ""), (x.innerHTML = "")))
+                : y.classList.remove("team"),
+              (!h.root.game.type.team && h.root.game.type.zombies) ||
+              h.root.game.type.coopZombieMode
+                ? y.classList.add("zombies")
+                : y.classList.remove("zombies"),
+              y.classList.toggle("survival", !!h.root.game.type.hostStarts),
+              y.classList.remove("svLobby"),
+              y.classList.remove("svHost"),
+              h.root.game.type.ingameElo
+                ? y.classList.add("ingameElo")
+                : y.classList.remove("ingameElo"),
+              h.root.game.type.lives
+                ? ((y.querySelector(".kill").style.display = "none"),
+                  (y.querySelector(".score").style.display = "none"),
+                  (y.querySelector(".death").innerHTML = g.lang.get(
                     "rankInGame.thead.lives",
                   )))
-                : ((p.querySelector(".kill").style.display = ""),
-                  (p.querySelector(".score").style.display = ""),
-                  (p.querySelector(".death").innerHTML = c.lang.get(
+                : ((y.querySelector(".kill").style.display = ""),
+                  (y.querySelector(".score").style.display = ""),
+                  (y.querySelector(".death").innerHTML = g.lang.get(
                     "rankInGame.thead.death",
                   ))),
               t.rankInGame.sortPlayers());
@@ -7525,7 +8097,7 @@ var c_hasPressedCtrlRKey = false;
         }),
           (t.rankInGame_mapList = {
             setMaps: function (e) {
-              ((k = e), (C.innerHTML = ""));
+              ((N = e), (I.innerHTML = ""));
               for (var t = 0, i = e; t < i.length; t++) {
                 var a = i[t],
                   n = document.createElement("li");
@@ -7538,22 +8110,22 @@ var c_hasPressedCtrlRKey = false;
                   (n.onclick = function (e) {
                     var t = e.currentTarget;
                     t.classList.contains("voted") ||
-                      s.Network.send(
+                      l.Network.send(
                         "map-vote$" + t.getAttribute("data-mapId"),
                       );
                   }),
-                  C.appendChild(n));
+                  I.appendChild(n));
                 var o = document.createElement("div");
                 ((o.className = "hover"), n.appendChild(o));
                 var r = document.createElement("div");
                 ((r.className = "checkbox"), n.appendChild(r));
-                var l = document.createElement("div");
-                ((l.className = "name"),
-                  (l.innerText = a.name),
-                  n.appendChild(l));
+                var s = document.createElement("div");
+                ((s.className = "name"),
+                  (s.innerText = a.name),
+                  n.appendChild(s));
                 var h = document.createElement("div");
                 ((h.className = "voteLabel"),
-                  (h.innerText = c.lang.get("rankInGame.title.voteLabel")),
+                  (h.innerText = g.lang.get("rankInGame.title.voteLabel")),
                   n.appendChild(h));
                 var d = document.createElement("div");
                 ((d.className = "voteValue"),
@@ -7563,8 +8135,8 @@ var c_hasPressedCtrlRKey = false;
                 ((m.className = "F-Tooltip tooltipMap"),
                   m.setAttribute("data-modal", "false"),
                   n.appendChild(m));
-                var g = document.createElement("h2");
-                (m.appendChild(g), (g.innerText = a.name));
+                var c = document.createElement("h2");
+                (m.appendChild(c), (c.innerText = a.name));
                 var u = document.createElement("div");
                 ((u.className = "summary"), m.appendChild(u));
                 var p = document.createElement("div");
@@ -7582,17 +8154,33 @@ var c_hasPressedCtrlRKey = false;
                 e.voted && t.classList.add("voted"));
             },
             getVoted: function () {
-              return C.classList.contains("voted");
+              return I.classList.contains("voted");
             },
           }),
-          (t.initBanGuest = F),
+          (t.initBanGuest = O),
           t.rankInGame.showOrHideVoteTitle(),
-          (p.querySelector(".F-Button.spectate").onclick = A.bind(null, -1)),
-          (p.querySelector(".F-Button.play").onclick = A.bind(null, 1)),
-          (p.querySelector(".F-Button.red").onclick = A.bind(null, 1)),
-          (p.querySelector(".F-Button.blue").onclick = A.bind(null, 2)),
-          (p.querySelector(".F-Button.invite").onclick = d.gameShare.show),
-          (p.querySelector(".F-Button.close").onclick = t.rankInGame.hide));
+          (y.querySelector(".F-Button.spectate").onclick = D.bind(null, -1)),
+          (y.querySelector(".F-Button.play").onclick = D.bind(null, 1)),
+          (y.querySelector(".F-Button.red").onclick = D.bind(null, 1)),
+          (y.querySelector(".F-Button.blue").onclick = D.bind(null, 2)),
+          (y.querySelector(".F-Button.invite").onclick = m.gameShare.show),
+          (y.querySelector(".F-Button.close").onclick = t.rankInGame.hide));
+        for (
+          var R = function (e) {
+              e.onclick = function () {
+                h.root.game &&
+                  h.root.game.survivalWaiting &&
+                  h.root.game.survivalHost &&
+                  l.Network.send("svDiff$" + e.getAttribute("data-diff"));
+              };
+            },
+            H = 0,
+            U = L;
+          H < U.length;
+          H++
+        ) {
+          R(U[H]);
+        }
       },
       1893: (e, t, i) => {
         "use strict";
@@ -8165,6 +8753,7 @@ var c_hasPressedCtrlRKey = false;
                   elo: t.elo,
                   elo2: t.elo2,
                   elo3: t.elo3,
+                  eloDM: t.elo_dm,
                   clanName: t.clan_tag,
                   numKills: t.kills,
                   numDeaths: t.deaths,
@@ -8761,7 +9350,7 @@ var c_hasPressedCtrlRKey = false;
               h.playerData.authLevel >= o.AUTH_LEVEL.PLAYER &&
                 b.resourceBar.show(),
               (f.root.game = new c.Game(u.map1)),
-              V(),
+              K(),
               y.rankInGame.hide(),
               w.UI.refreshMenuButtons(),
               w.UI.showMainScene());
@@ -8876,7 +9465,7 @@ var c_hasPressedCtrlRKey = false;
                     (document.webkitIsFullScreen
                       ? document.webkitCancelFullScreen()
                       : e.webkitRequestFullScreen(e.ALLOW_KEYBOARD_INPUT)),
-              V());
+              K());
           }),
           (t.acceptAGB = function () {
             (p.Network.send("i-accept-agb"), x.Sound.playSound("click"));
@@ -8890,8 +9479,8 @@ var c_hasPressedCtrlRKey = false;
           F = document.getElementById("resourceBar"),
           P = document.getElementById("unlockDivInner"),
           N = document.getElementById("menuButtonContainer"),
-          D = document.getElementById("friendsContainer"),
-          B = document.getElementById("levelUp"),
+          B = document.getElementById("friendsContainer"),
+          D = document.getElementById("levelUp"),
           O = document.getElementById("openChest"),
           R = document.getElementById("ladderDiv"),
           H = document.getElementById("result"),
@@ -8904,8 +9493,8 @@ var c_hasPressedCtrlRKey = false;
           j = document.getElementById("emotes"),
           Z = document.getElementById("buyEmote"),
           X = document.getElementById("accDivInner"),
-          K = document.getElementById("realOptionsDiv");
-        function V() {
+          V = document.getElementById("realOptionsDiv");
+        function K() {
           var e = window.innerWidth,
             t = window.innerHeight;
           ((I.width = e),
@@ -8918,9 +9507,9 @@ var c_hasPressedCtrlRKey = false;
             (E.style.transform = "scale(".concat(t / 800, ")")),
             (P.style.transform = "scale(".concat(t / 600, ")")),
             (N.style.transform = "scale(".concat(t / 1e3, ")")),
-            (D.style.transform = "scale(".concat(t / 700, ")")),
+            (B.style.transform = "scale(".concat(t / 700, ")")),
             (O.style.transform = "scale(".concat(t / 600, ")")),
-            (B.style.transform = "translate(-50%, -50%) scale(".concat(
+            (D.style.transform = "translate(-50%, -50%) scale(".concat(
               t / 600,
               ")",
             )),
@@ -8965,7 +9554,7 @@ var c_hasPressedCtrlRKey = false;
               Math.min(t, 0.7 * e) / 700,
               ")",
             )),
-            (K.style.transform = "translate(-50%, -50%) scale(".concat(
+            (V.style.transform = "translate(-50%, -50%) scale(".concat(
               t / 800,
               ")",
             )));
@@ -9034,9 +9623,9 @@ var c_hasPressedCtrlRKey = false;
               : te(t.mapId, t)
             : (0, _.floatTip)("error", "This replay could not be read.");
         }
-        ((t.resize = V),
-          V(),
-          (window.onresize = V),
+        ((t.resize = K),
+          K(),
+          (window.onresize = K),
           (t.ban = function (e) {
             p.Network.send("ban$" + e);
           }),
@@ -9132,7 +9721,7 @@ var c_hasPressedCtrlRKey = false;
             (f.root.game.playingReplayVersion = n),
             (f.root.game.replayFormat = e),
             (f.root.game.replayIndex = e.initIndex + 1),
-            V(),
+            K(),
             (f.root.game.replayMode = !0),
             (f.root.game.iAmSpec = !0),
             f.root.game.init(a.split("$"), a),
@@ -9687,97 +10276,106 @@ var c_hasPressedCtrlRKey = false;
           p = i(2677),
           y = [17],
           f = (function (e) {
-            function t(t, i, a, n, r, s, h, d, m, c, u, p, f) {
-              var x = e.call(this, t, i) || this;
+            function t(t, i, a, n, r, s, h, d, m, c, u, p, f, x) {
+              void 0 === x && (x = 0);
+              var w = e.call(this, t, i) || this;
               return (
-                (x.isZombie = !0),
-                (x.legFrame = 0),
-                (x.isBug = !1),
-                (x._bugFacingLeft = !1),
-                (x.specialScale = 1),
-                (x.name = f),
-                (x.team = -1),
-                (x.x = a),
-                (x.y = n),
-                (x.x0 = s || a),
-                (x.y0 = h || n),
-                (x.x00 = s),
-                (x.y00 = h),
-                (x.masterId = p),
-                (x.hp = r),
-                (x.maxHP = d),
-                (x.hpRegeneration = m),
-                (x._nameCanvas = g.NameColorUI.makeCanvasFromColorIndex(
-                  x.name,
+                (w.isZombie = !0),
+                (w.legFrame = 0),
+                (w.isBug = !1),
+                (w._bugFacingLeft = !1),
+                (w.specialScale = 1),
+                (w.level = x),
+                (w.name = f && "null" !== f && "undefined" !== f ? f : ""),
+                (w.team = -1),
+                (w.isBoss = 7 === c),
+                (w.x = a),
+                (w.y = n),
+                (w.x0 = s || a),
+                (w.y0 = h || n),
+                (w.x00 = s),
+                (w.y00 = h),
+                (w.masterId = p),
+                (w.hp = r),
+                (w.maxHP = d),
+                (w.hpRegeneration = m),
+                (w._nameCanvas = g.NameColorUI.makeCanvasFromColorIndex(
+                  w.name,
                   50,
                 )),
                 3 === c
-                  ? ((x.head = 36),
-                    (x.hat = null),
-                    (x.legs = 9),
-                    (x.imgScale = 1),
-                    (x.handsOffset = 512),
-                    (x.isDarkZombie = !0))
+                  ? ((w.head = 36),
+                    (w.hat = null),
+                    (w.legs = 9),
+                    (w.imgScale = u),
+                    (w.handsOffset = 512),
+                    (w.isDarkZombie = !0))
                   : 4 === c
-                    ? ((x.head = 23),
-                      (x.hat = null),
-                      (x.legs = 10),
-                      (x.imgScale = 1),
-                      (x.handsOffset = 256),
-                      (x.isRangedZombie = !0),
-                      (x._specialImg = o.imgs.rangedZombie),
-                      (x._specialImgWhite = o.imgs.rangedZombieWhite),
-                      (x.frameOffset = 48),
-                      (x.frameW = 24),
-                      (x.moveFrames = 7),
-                      (x.specialScale = 1),
-                      (x.specialHight = 8))
+                    ? ((w.head = 23),
+                      (w.hat = null),
+                      (w.legs = 10),
+                      (w.imgScale = u),
+                      (w.handsOffset = 256),
+                      (w.isRangedZombie = !0),
+                      (w._specialImg = o.imgs.rangedZombie),
+                      (w._specialImgWhite = o.imgs.rangedZombieWhite),
+                      (w.frameOffset = 48),
+                      (w.frameW = 24),
+                      (w.moveFrames = 7),
+                      (w.specialScale = 1),
+                      (w.specialHight = 8))
                     : 5 === c
-                      ? ((x.head = 23),
-                        (x.hat = null),
-                        (x.legs = 10),
-                        (x.imgScale = 1),
-                        (x.handsOffset = 256),
-                        (x.isCrawler = !0),
-                        (x.frameOffset = 0),
-                        (x._specialImg = o.imgs.crawler),
-                        (x._specialImgWhite = o.imgs.crawlerWhite),
-                        (x.frameW = 30),
-                        (x.specialHight = 11),
-                        (x.moveFrames = 3),
-                        (x.specialScale = 0.85))
-                      : 6 === c
-                        ? ((x.head = 23),
-                          (x.hat = null),
-                          (x.legs = 10),
-                          (x.imgScale = u),
-                          (x.handsOffset = 256),
-                          (x.isCrawler = !0),
-                          (x.isBug = !0),
-                          (x.frameOffset = 0),
-                          (x._specialImg = o.imgs.bug),
-                          (x._specialImgWhite = o.imgs.bugWhite),
-                          (x.frameW = 32),
-                          (x.specialHight = 16),
-                          (x.moveFrames = 6),
-                          (x.specialScale = 1))
-                        : ((x.head = 23),
-                          (x.hat =
-                            c < 0.2
-                              ? l.hats[y[Math.floor(5 * c * y.length)]]
-                              : null),
-                          (x.legs = x.hat ? x.hat.legs : 10),
-                          (x.imgScale = u),
-                          (x.handsOffset = 256)),
-                (x.targetX = 0),
-                (x.targetY = 0),
-                (x.playSpawnAnimation = p > 0 && !x.isBug),
-                (x.tickOfSpawn = t.ticksCounter),
-                x.hp <= 0 &&
-                  ((x.dieAt = t.ticksCounter),
-                  (x.finallyRemoveAt = t.ticksCounter + 50)),
-                t.addToObjectsToDraw(x),
-                x
+                      ? ((w.head = 23),
+                        (w.hat = null),
+                        (w.legs = 10),
+                        (w.imgScale = u),
+                        (w.handsOffset = 256),
+                        (w.isCrawler = !0),
+                        (w.frameOffset = 0),
+                        (w._specialImg = o.imgs.crawler),
+                        (w._specialImgWhite = o.imgs.crawlerWhite),
+                        (w.frameW = 30),
+                        (w.specialHight = 11),
+                        (w.moveFrames = 3),
+                        (w.specialScale = 0.85))
+                      : 7 === c
+                        ? ((w.head = 23),
+                          (w.hat = null),
+                          (w.legs = 10),
+                          (w.imgScale = u),
+                          (w.handsOffset = 256))
+                        : 6 === c
+                          ? ((w.head = 23),
+                            (w.hat = null),
+                            (w.legs = 10),
+                            (w.imgScale = u),
+                            (w.handsOffset = 256),
+                            (w.isCrawler = !0),
+                            (w.isBug = !0),
+                            (w.frameOffset = 0),
+                            (w._specialImg = o.imgs.bug),
+                            (w._specialImgWhite = o.imgs.bugWhite),
+                            (w.frameW = 32),
+                            (w.specialHight = 16),
+                            (w.moveFrames = 6),
+                            (w.specialScale = 1))
+                          : ((w.head = 23),
+                            (w.hat =
+                              c < 0.2
+                                ? l.hats[y[Math.floor(5 * c * y.length)]]
+                                : null),
+                            (w.legs = w.hat ? w.hat.legs : 10),
+                            (w.imgScale = u),
+                            (w.handsOffset = 256)),
+                (w.targetX = 0),
+                (w.targetY = 0),
+                (w.playSpawnAnimation = p > 0 && !w.isBug),
+                (w.tickOfSpawn = t.ticksCounter),
+                w.hp <= 0 &&
+                  ((w.dieAt = t.ticksCounter),
+                  (w.finallyRemoveAt = t.ticksCounter + 50)),
+                t.addToObjectsToDraw(w),
+                w
               );
             }
             return (
@@ -9967,6 +10565,37 @@ var c_hasPressedCtrlRKey = false;
               (t.prototype.isAlliedWith = function (e) {
                 return e.isHumanZombie || e.id === this.masterId;
               }),
+              (t.prototype._drawBossBody = function (e, t, i, a, n, r, s, l) {
+                var h = a - 22.5 * s,
+                  d = n - 38 * s - r;
+                (e.drawImage(
+                  o.imgs.zombieBoss,
+                  45 * t,
+                  45 * i,
+                  45,
+                  45,
+                  h,
+                  d,
+                  45 * s,
+                  45 * s,
+                ),
+                  l > 0 &&
+                    (e.save(),
+                    (e.globalAlpha = 0.8 * l),
+                    (e.globalCompositeOperation = "lighter"),
+                    e.drawImage(
+                      o.imgs.zombieBoss,
+                      45 * t,
+                      45 * i,
+                      45,
+                      45,
+                      h,
+                      d,
+                      45 * s,
+                      45 * s,
+                    ),
+                    e.restore()));
+              }),
               (t.prototype.performPreHit = function (e) {
                 ((this.lastTickFire = this._game.ticksCounter),
                   (this.targetX = e.x),
@@ -9977,7 +10606,11 @@ var c_hasPressedCtrlRKey = false;
                     this.y + 3 >= this._game.cameraY &&
                     this.x - 3 <= this._game.cameraX2 &&
                     this.y - 3 <= this._game.cameraY2 &&
-                    u.Sound.playSound("zombie_att", e.x, e.y));
+                    u.Sound.playSound(
+                      this.isBoss ? "zombie_boss_hit" : "zombie_att",
+                      e.x,
+                      e.y,
+                    ));
               }),
               (t.prototype.draw = function (e, t, i, a, n, s) {
                 if (
@@ -10092,8 +10725,25 @@ var c_hasPressedCtrlRKey = false;
                     }
                   if (w)
                     if (this.isBug);
-                    else if (this._specialImg) {
+                    else if (this.isBoss) {
                       var P = Math.floor(
+                        Math.min(Math.max(0.25 * (e - this.dieAt), 0), 6),
+                      );
+                      ((l.globalAlpha = E),
+                        l.drawImage(
+                          o.imgs.zombieBoss,
+                          45 * P,
+                          360,
+                          45,
+                          45,
+                          g - 22.5 * h,
+                          u - 38 * h - y,
+                          45 * h,
+                          45 * h,
+                        ),
+                        (l.globalAlpha = 1));
+                    } else if (this._specialImg) {
+                      var N = Math.floor(
                         Math.min(Math.max(0.35 * (e - this.dieAt - 2), 0), 8),
                       );
                       ((f = g - (this.frameW / 2) * h * this.specialScale),
@@ -10104,7 +10754,7 @@ var c_hasPressedCtrlRKey = false;
                             this.specialScale),
                         l.drawImage(
                           this._specialImg,
-                          P * this.frameW,
+                          N * this.frameW,
                           8 * this.frameW,
                           this.frameW,
                           this.frameW,
@@ -10114,16 +10764,16 @@ var c_hasPressedCtrlRKey = false;
                           this.frameW * h * this.specialScale,
                         ));
                     } else {
-                      var N = this.direction;
-                      N >= 1 && (N = 1);
-                      var D = Math.floor(
+                      var B = this.direction;
+                      B >= 1 && (B = 1);
+                      P = Math.floor(
                         Math.min(Math.max(0.25 * (e - this.dieAt), 0), 7),
                       );
                       ((l.globalAlpha = E),
                         l.drawImage(
                           o.imgs.zombieDeath,
-                          32 * D,
-                          32 * N,
+                          32 * P,
+                          32 * B,
                           32,
                           32,
                           f,
@@ -10136,8 +10786,8 @@ var c_hasPressedCtrlRKey = false;
                           ((l.globalAlpha = v * E),
                           l.drawImage(
                             o.imgs.zombieDeathBlack,
-                            32 * D,
-                            32 * N,
+                            32 * P,
+                            32 * B,
                             32,
                             32,
                             f,
@@ -10151,8 +10801,8 @@ var c_hasPressedCtrlRKey = false;
                     this.playSpawnAnimation &&
                     this.tickOfSpawn + 30 >= e
                   ) {
-                    var B = this._game.ticksCounter - this.tickOfSpawn,
-                      O = Math.floor(Math.min((B / 30) * 8, 7)),
+                    var D = this._game.ticksCounter - this.tickOfSpawn,
+                      O = Math.floor(Math.min((D / 30) * 8, 7)),
                       R = this.isRangedZombie
                         ? c.imgCoords.zombieSpawn2
                         : c.imgCoords.zombieSpawn1;
@@ -10207,7 +10857,7 @@ var c_hasPressedCtrlRKey = false;
                           32 * h,
                         ),
                         (l.globalAlpha = 1));
-                      P = H <= 4 ? 0 : 1;
+                      N = H <= 4 ? 0 : 1;
                       ((f = g - (this.frameW / 2) * h * this.specialScale),
                         (x =
                           u -
@@ -10216,7 +10866,7 @@ var c_hasPressedCtrlRKey = false;
                             this.specialScale),
                         l.drawImage(
                           this._specialImg,
-                          P * this.frameW,
+                          N * this.frameW,
                           T * this.frameW,
                           this.frameW,
                           this.frameW,
@@ -10229,7 +10879,7 @@ var c_hasPressedCtrlRKey = false;
                           ((l.globalAlpha = S),
                           l.drawImage(
                             this._specialImgWhite,
-                            P * this.frameW,
+                            N * this.frameW,
                             T * this.frameW,
                             this.frameW,
                             this.frameW,
@@ -10239,7 +10889,30 @@ var c_hasPressedCtrlRKey = false;
                             this.frameW * h * this.specialScale,
                           ),
                           (l.globalAlpha = 1)));
-                    } else {
+                    } else if (this.isBoss)
+                      ((m = 2),
+                        l.drawImage(
+                          o.legs[this.legs],
+                          32 * m,
+                          32 * T,
+                          32,
+                          32,
+                          f,
+                          x - y,
+                          32 * h,
+                          32 * h,
+                        ),
+                        this._drawBossBody(
+                          l,
+                          Math.min(5 + H, 9),
+                          T,
+                          g,
+                          u,
+                          y,
+                          h,
+                          S,
+                        ));
+                    else {
                       O = H < 4 ? 0 : 256;
                       ((m = 2),
                         l.drawImage(
@@ -10322,7 +10995,7 @@ var c_hasPressedCtrlRKey = false;
                       l.drawImage(o.imgs.shadow, f, x + 4 * h, 32 * h, 32 * h),
                       (l.globalAlpha = 1));
                     var U = this.isBug ? 0.9 : 0.6;
-                    P = 3 === m ? 0 : Math.floor(e * U) % this.moveFrames;
+                    N = 3 === m ? 0 : Math.floor(e * U) % this.moveFrames;
                     if (
                       ((f = g - (this.frameW / 2) * h * this.specialScale),
                       (x =
@@ -10342,7 +11015,7 @@ var c_hasPressedCtrlRKey = false;
                           : l.translate(f, x - y),
                         l.drawImage(
                           this._specialImg,
-                          P * this.frameW,
+                          N * this.frameW,
                           0,
                           this.frameW,
                           this.frameW,
@@ -10355,7 +11028,7 @@ var c_hasPressedCtrlRKey = false;
                           ((l.globalAlpha = S),
                           l.drawImage(
                             this._specialImgWhite,
-                            P * this.frameW,
+                            N * this.frameW,
                             0,
                             this.frameW,
                             this.frameW,
@@ -10369,7 +11042,7 @@ var c_hasPressedCtrlRKey = false;
                     } else
                       (l.drawImage(
                         this._specialImg,
-                        P * this.frameW + this.frameOffset,
+                        N * this.frameW + this.frameOffset,
                         T * this.frameW,
                         this.frameW,
                         this.frameW,
@@ -10382,7 +11055,7 @@ var c_hasPressedCtrlRKey = false;
                           ((l.globalAlpha = S),
                           l.drawImage(
                             this._specialImgWhite,
-                            P * this.frameW + this.frameOffset,
+                            N * this.frameW + this.frameOffset,
                             T * this.frameW,
                             this.frameW,
                             this.frameW,
@@ -10393,21 +11066,9 @@ var c_hasPressedCtrlRKey = false;
                           ),
                           (l.globalAlpha = 1)));
                   } else
-                    (l.drawImage(
-                      o.legs[this.legs],
-                      32 * m,
-                      32 * T,
-                      32,
-                      32,
-                      f,
-                      x - y,
-                      32 * h,
-                      32 * h,
-                    ),
-                      this.flameDeath &&
-                        ((l.globalAlpha = v),
-                        l.drawImage(
-                          o.legsBlack[this.legs],
+                    this.isBoss
+                      ? (l.drawImage(
+                          o.legs[this.legs],
                           32 * m,
                           32 * T,
                           32,
@@ -10417,48 +11078,71 @@ var c_hasPressedCtrlRKey = false;
                           32 * h,
                           32 * h,
                         ),
-                        (l.globalAlpha = 1)),
-                      S > 0 &&
-                        ((l.globalAlpha = S),
-                        l.drawImage(
-                          o.legsWhite[this.legs],
-                          32 * m,
-                          32 * T,
-                          32,
-                          32,
-                          f,
-                          x - y,
-                          32 * h,
-                          32 * h,
-                        ),
-                        (l.globalAlpha = 1)),
-                      l.drawImage(
-                        o.heads[this.head],
-                        32 * T,
-                        0,
-                        32,
-                        32,
-                        f,
-                        x - y - ((m % 2) * h) / 2,
-                        32 * h,
-                        32 * h,
-                      ),
-                      this.hat &&
-                        l.drawImage(
-                          o.heads[this.hat.offset],
-                          32 * T,
+                        S > 0 &&
+                          ((l.globalAlpha = S),
+                          l.drawImage(
+                            o.legsWhite[this.legs],
+                            32 * m,
+                            32 * T,
+                            32,
+                            32,
+                            f,
+                            x - y,
+                            32 * h,
+                            32 * h,
+                          ),
+                          (l.globalAlpha = 1)),
+                        this._drawBossBody(
+                          l,
                           0,
+                          T,
+                          g,
+                          u,
+                          y + ((m % 2) * h) / 2,
+                          h,
+                          S,
+                        ))
+                      : (l.drawImage(
+                          o.legs[this.legs],
+                          32 * m,
+                          32 * T,
                           32,
                           32,
                           f,
-                          x - y - ((m % 2) * h) / 2,
+                          x - y,
                           32 * h,
                           32 * h,
                         ),
-                      this.flameDeath &&
-                        ((l.globalAlpha = v),
+                        this.flameDeath &&
+                          ((l.globalAlpha = v),
+                          l.drawImage(
+                            o.legsBlack[this.legs],
+                            32 * m,
+                            32 * T,
+                            32,
+                            32,
+                            f,
+                            x - y,
+                            32 * h,
+                            32 * h,
+                          ),
+                          (l.globalAlpha = 1)),
+                        S > 0 &&
+                          ((l.globalAlpha = S),
+                          l.drawImage(
+                            o.legsWhite[this.legs],
+                            32 * m,
+                            32 * T,
+                            32,
+                            32,
+                            f,
+                            x - y,
+                            32 * h,
+                            32 * h,
+                          ),
+                          (l.globalAlpha = 1)),
                         l.drawImage(
-                          o.headsBlack[this.head],
+                          o.heads[this.head],
                           32 * T,
                           0,
                           32,
@@ -10470,7 +11154,7 @@ var c_hasPressedCtrlRKey = false;
                         ),
                         this.hat &&
                           l.drawImage(
-                            o.headsBlack[this.hat.offset],
+                            o.heads[this.hat.offset],
                             32 * T,
                             0,
                             32,
@@ -10480,23 +11164,10 @@ var c_hasPressedCtrlRKey = false;
                             32 * h,
                             32 * h,
                           ),
-                        (l.globalAlpha = 1)),
-                      S > 0 &&
-                        ((l.globalAlpha = S),
-                        l.drawImage(
-                          o.headsWhite[this.head],
-                          32 * T,
-                          0,
-                          32,
-                          32,
-                          f,
-                          x - y - ((m % 2) * h) / 2,
-                          32 * h,
-                          32 * h,
-                        ),
-                        this.hat &&
+                        this.flameDeath &&
+                          ((l.globalAlpha = v),
                           l.drawImage(
-                            o.headsWhite[this.hat.offset],
+                            o.headsBlack[this.head],
                             32 * T,
                             0,
                             32,
@@ -10506,22 +11177,47 @@ var c_hasPressedCtrlRKey = false;
                             32 * h,
                             32 * h,
                           ),
-                        (l.globalAlpha = 1)),
-                      l.drawImage(
-                        o.imgs.hands,
-                        32 * m,
-                        32 * T + this.handsOffset,
-                        32,
-                        32,
-                        f,
-                        x - y,
-                        32 * h,
-                        32 * h,
-                      ),
-                      this.flameDeath &&
-                        ((l.globalAlpha = v),
+                          this.hat &&
+                            l.drawImage(
+                              o.headsBlack[this.hat.offset],
+                              32 * T,
+                              0,
+                              32,
+                              32,
+                              f,
+                              x - y - ((m % 2) * h) / 2,
+                              32 * h,
+                              32 * h,
+                            ),
+                          (l.globalAlpha = 1)),
+                        S > 0 &&
+                          ((l.globalAlpha = S),
+                          l.drawImage(
+                            o.headsWhite[this.head],
+                            32 * T,
+                            0,
+                            32,
+                            32,
+                            f,
+                            x - y - ((m % 2) * h) / 2,
+                            32 * h,
+                            32 * h,
+                          ),
+                          this.hat &&
+                            l.drawImage(
+                              o.headsWhite[this.hat.offset],
+                              32 * T,
+                              0,
+                              32,
+                              32,
+                              f,
+                              x - y - ((m % 2) * h) / 2,
+                              32 * h,
+                              32 * h,
+                            ),
+                          (l.globalAlpha = 1)),
                         l.drawImage(
-                          o.imgs.handsBlack,
+                          o.imgs.hands,
                           32 * m,
                           32 * T + this.handsOffset,
                           32,
@@ -10531,21 +11227,34 @@ var c_hasPressedCtrlRKey = false;
                           32 * h,
                           32 * h,
                         ),
-                        (l.globalAlpha = 1)),
-                      S > 0 &&
-                        ((l.globalAlpha = S),
-                        l.drawImage(
-                          o.imgs.handsWhite,
-                          32 * m,
-                          32 * T + this.handsOffset,
-                          32,
-                          32,
-                          f,
-                          x - y,
-                          32 * h,
-                          32 * h,
-                        ),
-                        (l.globalAlpha = 1)));
+                        this.flameDeath &&
+                          ((l.globalAlpha = v),
+                          l.drawImage(
+                            o.imgs.handsBlack,
+                            32 * m,
+                            32 * T + this.handsOffset,
+                            32,
+                            32,
+                            f,
+                            x - y,
+                            32 * h,
+                            32 * h,
+                          ),
+                          (l.globalAlpha = 1)),
+                        S > 0 &&
+                          ((l.globalAlpha = S),
+                          l.drawImage(
+                            o.imgs.handsWhite,
+                            32 * m,
+                            32 * T + this.handsOffset,
+                            32,
+                            32,
+                            f,
+                            x - y,
+                            32 * h,
+                            32 * h,
+                          ),
+                          (l.globalAlpha = 1)));
                   if (k < 25)
                     for (
                       var W = 0, z = this.lightPillarsBottom;
@@ -10567,7 +11276,10 @@ var c_hasPressedCtrlRKey = false;
                     var Y = 0.55 * this._game.SCALE_FACTOR,
                       q = 42;
                     ((a = g - (q * Y) / 2),
-                      (n = u - 1.85 * this._game.FIELD_SIZE - y),
+                      (n =
+                        u -
+                        (this.isBoss ? 2.85 : 1.85) * this._game.FIELD_SIZE -
+                        y),
                       l.drawImage(
                         this._nameCanvas,
                         0,
@@ -10611,17 +11323,18 @@ var c_hasPressedCtrlRKey = false;
                       (l.strokeStyle = "rgba(0, 0, 0, 1)"),
                       (l.lineWidth = Y));
                     for (
-                      var K = r.CONST.HP_SEPERATOR_AMOUNT;
-                      K < this.maxHP;
-                      K += r.CONST.HP_SEPERATOR_AMOUNT
+                      var V = r.CONST.HP_SEPERATOR_AMOUNT;
+                      V < this.maxHP &&
+                      this.maxHP < r.CONST.HP_SEPERATOR_HIDE_FROM;
+                      V += r.CONST.HP_SEPERATOR_AMOUNT
                     )
                       (l.beginPath(),
                         l.moveTo(
-                          a + 1 * Y + (K / this.maxHP) * 40 * Y,
+                          a + 1 * Y + (V / this.maxHP) * 40 * Y,
                           n + 5 * Y,
                         ),
                         l.lineTo(
-                          a + 1 * Y + (K / this.maxHP) * 40 * Y,
+                          a + 1 * Y + (V / this.maxHP) * 40 * Y,
                           n + 7 * Y,
                         ),
                         l.stroke());
@@ -10921,6 +11634,7 @@ var c_hasPressedCtrlRKey = false;
             intelligence: { x: 0, y: 211, w: 21, h: 23 },
             regeneration: { x: 4, y: 11, w: 19, h: 19 },
             lifesteal: { x: 69, y: 275, w: 28, h: 26 },
+            zap: { x: 300, y: 1556, w: 24, h: 24 },
             grenade1: { x: 62, y: 78, w: 7, h: 10 },
             grenade2: { x: 71, y: 79, w: 9, h: 9 },
             grenade3: { x: 81, y: 81, w: 10, h: 7 },
@@ -11499,7 +12213,7 @@ var c_hasPressedCtrlRKey = false;
       3599: (e, t, i) => {
         "use strict";
         (Object.defineProperty(t, "__esModule", { value: !0 }),
-          (t.MAP_TYPE_SETTINGS = t.MAP_TYPE = void 0));
+          (t.MAP_TYPE_SETTINGS = t.SURVIVAL_ENABLED = t.MAP_TYPE = void 0));
         var a,
           n = i(8890);
         (!(function (e) {
@@ -11508,8 +12222,10 @@ var c_hasPressedCtrlRKey = false;
             (e[(e.CTF = 2)] = "CTF"),
             (e[(e.TOURNAMENT = 3)] = "TOURNAMENT"),
             (e[(e.TOURNAMENT_UNRANKED = 4)] = "TOURNAMENT_UNRANKED"),
-            (e[(e.ZOMBIE_COOP = 5)] = "ZOMBIE_COOP"));
+            (e[(e.ZOMBIE_COOP = 5)] = "ZOMBIE_COOP"),
+            (e[(e.SURVIVAL = 6)] = "SURVIVAL"));
         })((a = t.MAP_TYPE || (t.MAP_TYPE = {}))),
+          (t.SURVIVAL_ENABLED = !1),
           (t.MAP_TYPE_SETTINGS = []),
           (t.MAP_TYPE_SETTINGS[a.DEATHMATCH] = {
             id: a.DEATHMATCH,
@@ -11580,6 +12296,7 @@ var c_hasPressedCtrlRKey = false;
             winningCondition: "elo",
             winningConditionLabel: "config.resource.score.name",
             ingameElo: !0,
+            deathmatchElo: !0,
             showTop3: !0,
             ressourceIconName: "star",
             langLabel: "config.mode.dm2.label",
@@ -11612,6 +12329,29 @@ var c_hasPressedCtrlRKey = false;
             zombieBossThreshold: 0.5,
             zombieBossTime: 6e3,
             defaultBotCount: 18,
+          }),
+          (t.MAP_TYPE_SETTINGS[a.SURVIVAL] = {
+            id: a.SURVIVAL,
+            zombies: !1,
+            souls: !0,
+            team: !1,
+            oneTeam: !0,
+            noRespawn: !0,
+            shrines: !0,
+            noBots: !0,
+            unlimitedTime: !0,
+            hostStarts: !0,
+            hidden: !t.SURVIVAL_ENABLED,
+            name: "Survival",
+            winningCondition: "souls",
+            winningConditionLabel: "config.resource.soul.name",
+            startMsg:
+              "Defend the shrines. Hold the revive key next to a fallen teammate to bring them back.",
+            showTop3: !0,
+            ressourceIconName: "souls",
+            langLabel: "config.mode.survival.label",
+            icon: "mode_infection.png",
+            defaultBotCount: 0,
           }));
       },
       3612: (e, t) => {
@@ -12071,7 +12811,7 @@ var c_hasPressedCtrlRKey = false;
               (S.classList.add("disabled"), (N.innerText = ""));
               for (var a = 0; a < 36; a++) {
                 var n = document.createElement("span");
-                ((n.innerText = "."), N.appendChild(n), B());
+                ((n.innerText = "."), N.appendChild(n), D());
               }
               return (
                 o.Network.send("legacyLogin$" + e + "$" + t + "$" + i),
@@ -12133,20 +12873,20 @@ var c_hasPressedCtrlRKey = false;
               return (0, a.validateMail)(e)
                 ? (n.api.recoverAccount(e, t),
                   (C.innerText = s.lang.get("account.recover.processing")),
-                  D(),
+                  B(),
                   null)
                 : ((C.innerText = s.lang.get("account.recover.email.invalid")),
                   null);
             }
           },
         };
-        var D = function () {
+        var B = function () {
           if (C.innerText.includes(s.lang.get("account.recover.processing"))) {
             var e = (C.innerText.match(/\./g) || []).length / 2;
             e = (e + 1) % 4;
             for (var t = "", i = 0; i < e; i++) t += ".";
             ((C.innerText = t + s.lang.get("account.recover.processing") + t),
-              setTimeout(D, 200));
+              setTimeout(B, 200));
           }
         };
         ((d.onkeydown = m.onkeydown =
@@ -12172,7 +12912,7 @@ var c_hasPressedCtrlRKey = false;
           (k.onclick = t.loginScreen.showRecover),
           (document.getElementById("loginCloseBtn").onclick =
             t.loginScreen.hide));
-        var B = function () {
+        var D = function () {
           var e = N.childNodes;
           if (!(e.length < 5 || null === N.offsetParent)) {
             for (var t = Date.now(), i = 0; i < e.length; i++)
@@ -12180,7 +12920,7 @@ var c_hasPressedCtrlRKey = false;
                 0.5 * Math.sin(0.004 * -t + 0.33 * i) + 0.5,
                 2,
               ).toString();
-            setTimeout(B, 100);
+            setTimeout(D, 100);
           }
         };
       },
@@ -12604,8 +13344,9 @@ var c_hasPressedCtrlRKey = false;
             t.distance =
             t.arrayContains =
               void 0));
-        var a = i(5021),
-          n = i(5273);
+        var a = i(4949),
+          n = i(5021),
+          o = i(5273);
         ((t.arrayContains = function (e, t) {
           for (var i = 0; i < e.length; i++) if (e[i] === t) return !0;
           return !1;
@@ -12623,7 +13364,7 @@ var c_hasPressedCtrlRKey = false;
         ((t.badSeededRand = function (e, t, i) {
           return t + 0.5 * (Math.sin(124.283 * e) + 1) * (i - t);
         }),
-          (t.createBounce = function (e, t, i, a, o, r, s, l, h) {
+          (t.createBounce = function (e, t, i, a, n, r, s, l, h) {
             var d = 0,
               m = 0,
               c = 0,
@@ -12651,8 +13392,8 @@ var c_hasPressedCtrlRKey = false;
                 )) && (v = 0.001),
                 (d = (e.x - e.x0) / v),
                 (m = (e.y - e.y0) / v),
-                (c = n.weapons[2].bouncePower || 0),
-                (g = 1.5 * (n.weapons[2].bounceSpeed || 0)));
+                (c = o.weapons[2].bouncePower || 0),
+                (g = 1.5 * (o.weapons[2].bounceSpeed || 0)));
             else if (t && t.weapon.aoe)
               ((d = e.x - t.x),
                 (m = e.y - t.y),
@@ -12673,9 +13414,9 @@ var c_hasPressedCtrlRKey = false;
             else if (
               void 0 === i ||
               void 0 === a ||
-              void 0 === o ||
-              !(i || a || o) ||
-              (0 === i && 0 === a && 0 === o)
+              void 0 === n ||
+              !(i || a || n) ||
+              (0 === i && 0 === a && 0 === n)
             )
               if ((!t && void 0 === r) || s)
                 ((d = Math.random() - 0.5),
@@ -12710,7 +13451,7 @@ var c_hasPressedCtrlRKey = false;
                   (c = Math.max(
                     0.2 *
                       (Math.min(
-                        Math.max(o - Math.sqrt(d * d + m * m), 1),
+                        Math.max(n - Math.sqrt(d * d + m * m), 1),
                         1.8,
                       ) +
                         0.2),
@@ -12798,27 +13539,34 @@ var c_hasPressedCtrlRKey = false;
           var i = t.getContext("2d");
           ((t.width = e.x),
             (t.height = e.y),
-            void 0 !== a.tileTypes[e.defaultTiles].avgColor &&
-              ((i.fillStyle = a.tileTypes[e.defaultTiles].avgColor),
+            void 0 !== n.tileTypes[e.defaultTiles].avgColor &&
+              ((i.fillStyle = n.tileTypes[e.defaultTiles].avgColor),
               i.fillRect(0, 0, t.width, t.height)));
-          for (var n = 0, o = e.groundTiles; n < o.length; n++) {
-            var r = o[n];
-            (h = a.tileTypes[r.id]).avgColor &&
-              ((i.fillStyle = h.avgColor),
-              i.fillRect(r.x, r.y, h.w ? h.w : 1, h.h ? h.h : 1));
+          for (var o = 0, r = e.groundTiles; o < r.length; o++) {
+            var s = r[o];
+            (c = n.tileTypes[s.id]).avgColor &&
+              ((i.fillStyle = c.avgColor),
+              i.fillRect(s.x, s.y, c.w ? c.w : 1, c.h ? c.h : 1));
           }
           ((i.fillStyle = "black"),
             (i.globalAlpha = 0.5),
             i.fillRect(0, 0, t.width, t.height),
             (i.globalAlpha = 1));
-          for (var s = 0, l = e.tiles; s < l.length; s++) {
-            var h;
-            r = l[s];
-            (h = a.tileTypes[r.id]).ground ||
-              (h.avgColor &&
-                ((i.fillStyle = h.avgColor),
-                i.fillRect(r.x, r.y, h.w ? h.w : 1, h.h ? h.h : 1)));
+          for (var l = 0, h = e.tiles; l < h.length; l++) {
+            s = h[l];
+            (c = n.tileTypes[s.id]).ground ||
+              (c.avgColor &&
+                ((i.fillStyle = c.avgColor),
+                i.fillRect(s.x, s.y, c.w ? c.w : 1, c.h ? c.h : 1)));
           }
+          if (e.buildings)
+            for (var d = 0, m = e.buildings; d < m.length; d++) {
+              var c,
+                g = m[d];
+              (c = a.buildingTypes[g.type]) &&
+                c.avgColor &&
+                ((i.fillStyle = c.avgColor), i.fillRect(g.x, g.y, c.w, c.h));
+            }
         };
       },
       4483: (e, t) => {
@@ -13170,6 +13918,12 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.hide = function () {
                 document.getElementById("minimap").style.display = "none";
               }),
+              (e.prototype.rebuildBase = function () {
+                (0, h.renderMapThumbnailToCanvas)(
+                  this._game.map,
+                  this._baseCanvas,
+                );
+              }),
               (e.prototype.draw = function (e) {
                 var t = this._game,
                   i =
@@ -13187,131 +13941,153 @@ var c_hasPressedCtrlRKey = false;
                   g = 0.8 * t.SCALE_FACTOR_BASE;
                 ((c.globalAlpha = 0.8),
                   c.drawImage(this._baseCanvas, 0, 0, i, s),
-                  this.drawMiniMapScreenBorder(i / t.map.x),
-                  (c.globalAlpha =
-                    1 -
-                    0.7 *
-                      (Math.cos(this._game.ticksCounter / 100) / Math.PI +
-                        0.5)));
-                for (var u = 0, p = t.players; u < p.length; u++) {
-                  var y = p[u],
-                    f = -1;
+                  this.drawMiniMapScreenBorder(i / t.map.x));
+                for (var u = 0, p = t.buildings; u < p.length; u++) {
+                  var y = p[u];
+                  if (y.isAlive) {
+                    var f = 1 !== y.team,
+                      x = f ? r.imgCoords.light_red : r.imgCoords.light_white,
+                      w = (i * y.cx) / t.map.x,
+                      v = (s * y.cy) / t.map.y;
+                    ((c.globalAlpha = 0.9),
+                      (c.fillStyle = f ? "#FF0000" : "#FFFFFF"),
+                      c.drawImage(
+                        a.imgs.miscSheet,
+                        x.x,
+                        x.y,
+                        x.w,
+                        x.h,
+                        w - 6 * h,
+                        v - 6 * h,
+                        12 * h,
+                        12 * h,
+                      ),
+                      c.fillRect(w - 1.5 * h, v - 1.5 * h, 3 * h, 3 * h));
+                  }
+                }
+                c.globalAlpha =
+                  1 -
+                  0.7 *
+                    (Math.cos(this._game.ticksCounter / 100) / Math.PI + 0.5);
+                for (var S = 0, b = t.players; S < b.length; S++) {
+                  var _ = b[S],
+                    C = -1;
                   if (t.type.zombies)
-                    for (var x = 0, w = t.interface_.top3; x < w.length; x++) {
-                      var v = w[x];
-                      v.name === y.name && (f = v.rank);
+                    for (var I = 0, M = t.interface_.top3; I < M.length; I++) {
+                      var T = M[I];
+                      T.name === _.name && (C = T.rank);
                     }
                   if (
-                    !y.dieAt &&
+                    !_.dieAt &&
                     (!t.playingPlayer ||
-                      y === t.playingPlayer ||
-                      f > 0 ||
-                      (y.team === t.playingPlayer.team && 0 !== y.team) ||
+                      _ === t.playingPlayer ||
+                      C > 0 ||
+                      (_.team === t.playingPlayer.team && 0 !== _.team) ||
                       t.showEnemiesOnMinimapUntil >= t.ticksCounter ||
-                      (t.playingPlayer.isHumanZombie && y.isBoss))
+                      (t.playingPlayer.isHumanZombie && _.isBoss))
                   ) {
-                    var S = void 0,
-                      b = y.x0 + e * (y.x - y.x0),
-                      _ = y.y0 + e * (y.y - y.y0),
-                      C = (i * b) / t.map.x,
-                      I = (s * _) / t.map.y,
-                      M = r.imgCoords.crownYellow,
-                      T = r.imgCoords.crosshairRed;
+                    x = void 0;
+                    var E = _.x0 + e * (_.x - _.x0),
+                      k = _.y0 + e * (_.y - _.y0),
+                      L = (i * E) / t.map.x,
+                      A = (s * k) / t.map.y,
+                      F = r.imgCoords.crownYellow,
+                      P = r.imgCoords.crosshairRed;
                     if (
-                      y !== t.playingPlayer &&
+                      _ !== t.playingPlayer &&
                       t.showEnemiesOnMinimapUntil > t.ticksCounter + 1e3
                     )
                       return;
-                    (y instanceof l.Zombie
+                    (_ instanceof l.Zombie
                       ? ((c.fillStyle = "#FFFA7D"),
-                        (S = r.imgCoords.light_yellow))
-                      : y === t.playingPlayer
+                        (x = r.imgCoords.light_yellow))
+                      : _ === t.playingPlayer
                         ? ((c.fillStyle = "#00FF06"),
-                          (S = r.imgCoords.light_green),
-                          (M = r.imgCoords.crownGreen),
-                          (T = r.imgCoords.crosshairGreen))
+                          (x = r.imgCoords.light_green),
+                          (F = r.imgCoords.crownGreen),
+                          (P = r.imgCoords.crosshairGreen))
                         : (t.playingPlayer &&
-                              y.team === t.playingPlayer.team &&
-                              0 !== y.team) ||
-                            (!t.playingPlayer && !y.isHumanZombie)
+                              _.team === t.playingPlayer.team &&
+                              0 !== _.team) ||
+                            (!t.playingPlayer && !_.isHumanZombie)
                           ? ((c.fillStyle = "#FFFFFF"),
-                            (S = r.imgCoords.light_white),
-                            (M = r.imgCoords.crownWhite),
-                            (T = r.imgCoords.crosshairWhite))
+                            (x = r.imgCoords.light_white),
+                            (F = r.imgCoords.crownWhite),
+                            (P = r.imgCoords.crosshairWhite))
                           : ((c.fillStyle = "#FF0000"),
-                            (S = r.imgCoords.light_red),
-                            (M = r.imgCoords.crownRed),
-                            (T = r.imgCoords.crosshairRed)),
-                      y.weapon &&
-                      y.weapon.isSniper &&
+                            (x = r.imgCoords.light_red),
+                            (F = r.imgCoords.crownRed),
+                            (P = r.imgCoords.crosshairRed)),
+                      _.weapon &&
+                      _.weapon.isSniper &&
                       t.showEnemiesOnMinimapUntil >= t.ticksCounter
                         ? c.drawImage(
                             a.imgs.miscSheet,
-                            T.x,
-                            T.y,
-                            T.w,
-                            T.h,
-                            C - 3 * h,
-                            I - 3 * h,
+                            P.x,
+                            P.y,
+                            P.w,
+                            P.h,
+                            L - 3 * h,
+                            A - 3 * h,
                             6 * h,
                             6 * h,
                           )
-                        : 1 === f
+                        : 1 === C
                           ? c.drawImage(
                               a.imgs.miscSheet,
-                              M.x,
-                              M.y,
-                              M.w,
-                              M.h,
-                              C - 2.5 * h,
-                              I - 2.5 * h,
+                              F.x,
+                              F.y,
+                              F.w,
+                              F.h,
+                              L - 2.5 * h,
+                              A - 2.5 * h,
                               5 * h,
                               5 * h,
                             )
-                          : f > 0
+                          : C > 0
                             ? (0, o.drawText)(
                                 c,
-                                f.toString(),
+                                C.toString(),
                                 c.fillStyle,
                                 2.5 * g,
-                                C,
-                                I + 2 * g,
+                                L,
+                                A + 2 * g,
                                 20 * g,
                                 "center",
                                 c.globalAlpha,
                               )
                             : (c.drawImage(
                                 a.imgs.miscSheet,
-                                S.x,
-                                S.y,
-                                S.w,
-                                S.h,
-                                C - 4 * h,
-                                I - 4 * h,
+                                x.x,
+                                x.y,
+                                x.w,
+                                x.h,
+                                L - 4 * h,
+                                A - 4 * h,
                                 8 * h,
                                 8 * h,
                               ),
-                              c.fillRect(C - h, I - h, 2 * h, 2 * h)));
+                              c.fillRect(L - h, A - h, 2 * h, 2 * h)));
                   }
                 }
                 if (((c.globalAlpha = 1), t.type.flag))
-                  for (var E = 0; E < 2; E++) {
-                    S = 0 === E ? r.imgCoords.redFlag : r.imgCoords.blueFlag;
-                    var k = 0 === E ? t.redFlag : t.blueFlag;
-                    if (k) {
-                      ((b = k.currentX), (_ = k.currentY));
-                      if (k.carriedBy)
-                        ((b = (y = k.carriedBy).x0 + e * (y.x - y.x0)),
-                          (_ = y.y0 + e * (y.y - y.y0)));
-                      ((C = (i * b) / t.map.x), (I = (s * _) / t.map.y));
+                  for (var N = 0; N < 2; N++) {
+                    x = 0 === N ? r.imgCoords.redFlag : r.imgCoords.blueFlag;
+                    var B = 0 === N ? t.redFlag : t.blueFlag;
+                    if (B) {
+                      ((E = B.currentX), (k = B.currentY));
+                      if (B.carriedBy)
+                        ((E = (_ = B.carriedBy).x0 + e * (_.x - _.x0)),
+                          (k = _.y0 + e * (_.y - _.y0)));
+                      ((L = (i * E) / t.map.x), (A = (s * k) / t.map.y));
                       c.drawImage(
                         a.imgs.miscSheet,
-                        S.x,
-                        S.y,
-                        S.w,
-                        S.h,
-                        C - 3 * h,
-                        I - 5 * h,
+                        x.x,
+                        x.y,
+                        x.w,
+                        x.h,
+                        L - 3 * h,
+                        A - 5 * h,
                         6 * h,
                         8 * h,
                       );
@@ -14054,6 +14830,100 @@ var c_hasPressedCtrlRKey = false;
           }),
           (t.REPLAY_VERSION = 5),
           (t.REPLAY_BINARY_PREFIX = "b:"));
+      },
+      4949: (e, t, i) => {
+        "use strict";
+        (Object.defineProperty(t, "__esModule", { value: !0 }),
+          (t.BUILDING_ID_BASE =
+            t.spawnParamsOf =
+            t.buildingTypes =
+            t.NEST_ZOMBIE_LIMIT =
+            t.NEST_LEVEL_SCALE =
+            t.NEST_LEVEL_SPEED =
+            t.NEST_LEVEL_DMG =
+            t.NEST_LEVEL_HP =
+            t.DEFAULT_UNIT_RADIUS =
+            t.spawnUnitKind =
+            t.SPAWN_UNITS =
+              void 0));
+        var a = i(710);
+        ((t.SPAWN_UNITS = [
+          { id: 0, name: "Zombie" },
+          { id: 1, name: "Ranged Zombie" },
+          { id: 2, name: "Crawler" },
+          { id: 3, name: "Dark Zombie" },
+          { id: 4, name: "Boss Zombie" },
+        ]),
+          (t.spawnUnitKind = function (e) {
+            switch (e) {
+              case 1:
+                return { ranged: !0, special: void 0 };
+              case 2:
+                return { ranged: !1, special: a.ZombieSpecialType.Crawler };
+              case 3:
+                return { ranged: !1, special: a.ZombieSpecialType.Dark };
+              case 4:
+                return { ranged: !1, special: a.ZombieSpecialType.Boss };
+              default:
+                return { ranged: !1, special: void 0 };
+            }
+          }),
+          (t.DEFAULT_UNIT_RADIUS = 10),
+          (t.NEST_LEVEL_HP = 1.12),
+          (t.NEST_LEVEL_DMG = 1.08),
+          (t.NEST_LEVEL_SPEED = 1.04),
+          (t.NEST_LEVEL_SCALE = 1.025),
+          (t.NEST_ZOMBIE_LIMIT = 60),
+          (t.buildingTypes = [
+            {
+              id: 0,
+              name: "Zombie Nest",
+              img: { x: 584, y: 1552, w: 37, h: 48 },
+              w: 2,
+              h: 2,
+              hp: 500,
+              pathing: 0,
+              team: 99,
+              souls: 100,
+              spawn: {
+                unit: 0,
+                period: 20,
+                lvl: 1,
+                delayMin: 15,
+                delayMax: 25,
+              },
+              deathEffect: "green",
+            },
+            {
+              id: 1,
+              name: "Shrine",
+              img: { x: 624, y: 1553, w: 34, h: 47 },
+              w: 2,
+              h: 2,
+              hp: 4e3,
+              pathing: 0,
+              team: 1,
+              hpRegen: 32,
+              regenDelay: 2,
+            },
+          ]),
+          (t.spawnParamsOf = function (e, i) {
+            if (!e.spawn) return null;
+            var a = function (e, t) {
+                return "number" != typeof e || isNaN(e) ? t : e;
+              },
+              n = Math.max(0, a(i.delayMin, e.spawn.delayMin));
+            return {
+              unit:
+                Math.max(0, Math.floor(a(i.unit, e.spawn.unit))) %
+                t.SPAWN_UNITS.length,
+              period: Math.max(1, a(i.period, e.spawn.period)),
+              lvl: Math.max(0, a(i.lvl, e.spawn.lvl)),
+              delayMin: n,
+              delayMax: Math.max(n, a(i.delayMax, e.spawn.delayMax)),
+            };
+          }),
+          (t.BUILDING_ID_BASE = 8e4));
       },
       5021: (e, t) => {
         "use strict";
@@ -17098,6 +17968,7 @@ var c_hasPressedCtrlRKey = false;
                     g = c > 0 ? (0.25 * d) / c : 0,
                     u = c > 0 ? (0.25 * m) / c : 0;
                   this.weapon.spawnsBug ||
+                    this.weapon.spawnsObject ||
                     new l.Sprite(this._game, {
                       x: this.x,
                       y: this.y,
@@ -17163,7 +18034,7 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.explode = function () {
                 var e;
-                if (this.weapon.spawnsBug)
+                if (this.weapon.spawnsBug || this.weapon.spawnsObject)
                   return (
                     this.weapon.impactSound &&
                       this.x + 10 >= this._game.cameraX &&
@@ -17254,7 +18125,7 @@ var c_hasPressedCtrlRKey = false;
                     p = this.weapon.projectileScale
                       ? this.weapon.projectileScale * this._game.SCALE_FACTOR
                       : this._game.SCALE_FACTOR;
-                  if (this.weapon.spawnsBug) {
+                  if (this.weapon.spawnsBug || this.weapon.spawnsObject) {
                     var y =
                         Math.round(
                           this.rotSpeed * ((e - this.tickOfStart) / 20) * 4,
@@ -17376,6 +18247,7 @@ var c_hasPressedCtrlRKey = false;
             {
               id: 2,
               name: "Flamethrower",
+              noZap: !0,
               cooldown: 2,
               dmg: 4,
               dieOnCollision: !0,
@@ -17992,6 +18864,30 @@ var c_hasPressedCtrlRKey = false;
               frame: 16,
               speedModifier: 0.975,
               img: "weapon_bl",
+            },
+            {
+              id: 19,
+              name: "Mine Launcher",
+              cooldown: 20,
+              dmg: 55,
+              projectileSpeed: 0.5,
+              range: 12,
+              aoe: 2.1,
+              collision: !1,
+              dieOnCollision: !1,
+              description: "Throws a mine.",
+              soundName: "throw",
+              projectileImg: "mine2",
+              isGrenade: !0,
+              spawnsObject: "mine",
+              impactSound: "grenade_bounce",
+              impactSoundVolume: 0.5,
+              ammoSize: 0,
+              img: "weapon_gl",
+              ammoImgSmall: "ammoGrenadeSmall",
+              noWeapon: !0,
+              disableByBot: !0,
+              hideHotkey: !0,
             },
           ]));
       },
@@ -18747,6 +19643,20 @@ var c_hasPressedCtrlRKey = false;
                 },
               ),
               l.Dom.createElement("span", c, void 0, void 0, ")"),
+              "number" == typeof i.eloDM &&
+                (l.Dom.createElement("div", e, void 0, "smallHalf", "&nbsp;"),
+                l.Dom.createElement(
+                  "div",
+                  e,
+                  void 0,
+                  "largeHalf",
+                  p.lang.get("profile.elo_dm.label", {
+                    elo:
+                      "<span class='highlightedNum'>" +
+                      Math.floor(i.eloDM) +
+                      "</span>",
+                  }),
+                )),
               l.Dom.createElement(
                 "div",
                 e,
@@ -19156,14 +20066,26 @@ var c_hasPressedCtrlRKey = false;
                 a);
           },
           initialize: function (e) {
-            var t = this;
+            var t,
+              i,
+              n = this;
             ((this.locale = this.getClosestLocale(
               this.getPreferredLocale() || this.getSystemLocale(),
             )),
               document.documentElement.setAttribute("lang", this.locale),
-              (0, a.ajax)("locales/" + this.locale + ".json", function (i) {
-                ((t.data[t.locale] = JSON.parse(i)), e());
-              }));
+              (0, a.ajax)(
+                "locales/" +
+                  this.locale +
+                  ".json" +
+                  ((t = document.querySelector(
+                    'script[src*="client-bundle.js"]',
+                  )),
+                  (i = t ? t.src.indexOf("?") : -1),
+                  t && i >= 0 ? t.src.substring(i) : ""),
+                function (t) {
+                  ((n.data[n.locale] = JSON.parse(t)), e());
+                },
+              ));
           },
           getPreferredLocale: function () {
             var e = null;
@@ -21694,16 +22616,18 @@ var c_hasPressedCtrlRKey = false;
           S = g.querySelector(".gameInfo .souls .value"),
           b = g.querySelector(".gameInfo .kills .value"),
           _ = g.querySelector(".gameInfo .deaths .value"),
-          C = g.querySelector(".levelInfo .current"),
-          I = g.querySelector(".levelInfo .next"),
-          M = g.querySelector(".increasedExp"),
-          T = g.querySelector(".gameInfo>.gold>.value"),
-          E = g.querySelector(".F-Button.keep"),
-          k = g.querySelector(".F-Button.close"),
-          L = g.querySelector(".chest.reward"),
-          A = L.querySelector(".name"),
-          F = L.querySelector("img"),
-          P = u.querySelectorAll(".indicator");
+          C = g.querySelector(".gameInfo .eloDM"),
+          I = g.querySelector(".gameInfo .eloDM .value"),
+          M = g.querySelector(".levelInfo .current"),
+          T = g.querySelector(".levelInfo .next"),
+          E = g.querySelector(".increasedExp"),
+          k = g.querySelector(".gameInfo>.gold>.value"),
+          L = g.querySelector(".F-Button.keep"),
+          A = g.querySelector(".F-Button.close"),
+          F = g.querySelector(".chest.reward"),
+          P = F.querySelector(".name"),
+          N = F.querySelector("img"),
+          B = u.querySelectorAll(".indicator");
         ((g.querySelector(".F-Button.save").onclick = function () {
           var e = new Blob(
               [
@@ -21730,66 +22654,76 @@ var c_hasPressedCtrlRKey = false;
           (t.result = {
             data: null,
             show: function (e) {
-              ((g.style.display = ""),
-                d.root.game.type.lives
-                  ? ((x.style.display = "none"),
-                    (v.style.display = "none"),
-                    (L.style.display = "none"),
-                    (f.style.display = "none"),
-                    (y.style.display = "none"),
-                    u.classList.add("ladder"))
-                  : ((L.style.display = ""),
-                    (f.style.display = ""),
-                    (y.style.display = ""),
-                    u.classList.remove("ladder"),
-                    d.root.game.ticksCounter < 0
-                      ? d.root.game.type.showTop3 &&
-                        d.root.game.type.winningCondition
-                        ? (p.innerHTML = c.lang.get("result.desc.rank", {
-                            rank: d.root.game.myRank,
-                          }))
-                        : (p.innerHTML = d.root.game.victoryMsg)
-                      : (p.innerHTML = c.lang.get("result.desc.noEnd")),
-                    d.root.game.type.souls
-                      ? ((x.style.display = "none"),
-                        (v.style.display = ""),
-                        (S.innerHTML = e.souls))
-                      : ((x.style.display = ""),
-                        (v.style.display = "none"),
-                        (w.innerHTML = e.elo)),
-                    (b.innerHTML = e.kills),
-                    (_.innerHTML = e.deaths),
-                    e.chestId < 0
-                      ? L.classList.add("noChest")
-                      : (L.classList.remove("noChest"),
-                        (F.src = "imgs/chest/chest_" + e.chestId + ".png"),
-                        (A.innerHTML = (0, s.getChestName)(e.chestId)))),
-                (T.innerHTML = e.goldGained),
-                (C.innerHTML = c.lang.get("result.label.level.short", {
+              if (((g.style.display = ""), d.root.game.type.lives))
+                ((x.style.display = "none"),
+                  (v.style.display = "none"),
+                  (F.style.display = "none"),
+                  (f.style.display = "none"),
+                  (y.style.display = "none"),
+                  u.classList.add("ladder"));
+              else {
+                if (
+                  ((F.style.display = ""),
+                  (f.style.display = ""),
+                  (y.style.display = ""),
+                  u.classList.remove("ladder"),
+                  d.root.game.ticksCounter < 0
+                    ? d.root.game.type.showTop3 &&
+                      d.root.game.type.winningCondition
+                      ? (p.innerHTML = c.lang.get("result.desc.rank", {
+                          rank: d.root.game.myRank,
+                        }))
+                      : (p.innerHTML = d.root.game.victoryMsg)
+                    : (p.innerHTML = c.lang.get("result.desc.noEnd")),
+                  d.root.game.type.souls
+                    ? ((x.style.display = "none"),
+                      (v.style.display = ""),
+                      (S.innerHTML = e.souls))
+                    : ((x.style.display = ""),
+                      (v.style.display = "none"),
+                      (w.innerHTML = e.elo)),
+                  (b.innerHTML = e.kills),
+                  (_.innerHTML = e.deaths),
+                  d.root.game.type.deathmatchElo && !isNaN(e.eloDMChange))
+                ) {
+                  var i = Math.round(10 * e.eloDMChange) / 10;
+                  ((C.style.display = ""),
+                    (I.innerText = (i > 0 ? "+" : "") + i.toFixed(1)),
+                    I.classList.toggle("up", i > 0),
+                    I.classList.toggle("down", i < 0));
+                } else C.style.display = "none";
+                e.chestId < 0
+                  ? F.classList.add("noChest")
+                  : (F.classList.remove("noChest"),
+                    (N.src = "imgs/chest/chest_" + e.chestId + ".png"),
+                    (P.innerHTML = (0, s.getChestName)(e.chestId)));
+              }
+              ((k.innerHTML = e.goldGained),
+                (M.innerHTML = c.lang.get("result.label.level.short", {
                   level: o.playerData.lvl,
                 })),
-                (I.innerHTML = c.lang.get("result.label.level.short", {
+                (T.innerHTML = c.lang.get("result.label.level.short", {
                   level: o.playerData.lvl + 1,
                 })));
-              var i =
+              var a =
                   o.playerData.xp -
                   (0, n.getTotalXPRequiredForLvl)(o.playerData.lvl),
-                a = (0, n.getXPRequiredForLvl)(o.playerData.lvl + 1);
-              ((M.innerHTML = e.xpGained),
-                (P[0].style.width = Math.floor((100 * i) / a) + "%"),
-                (P[1].style.width =
-                  Math.floor((100 * (i - e.xpGained)) / a) + "%"),
+                r = (0, n.getXPRequiredForLvl)(o.playerData.lvl + 1);
+              ((E.innerHTML = e.xpGained),
+                (B[0].style.width = Math.floor((100 * a) / r) + "%"),
+                (B[1].style.width =
+                  Math.floor((100 * (a - e.xpGained)) / r) + "%"),
                 (t.result.data = e),
-                e.exit ? (E.style.display = "none") : (E.style.display = ""));
+                e.exit ? (L.style.display = "none") : (L.style.display = ""));
             },
             hide: function () {
               g.style.display = "none";
             },
           }),
-          (E.onclick = function () {
+          (L.onclick = function () {
             (h.rankInGame.showRank(), t.result.hide());
           }),
-          (k.onclick = function () {
+          (A.onclick = function () {
             (t.result.hide(),
               t.result.data.exit
                 ? (0, s.exitGame)()
@@ -23198,7 +24132,16 @@ var c_hasPressedCtrlRKey = false;
             window.location &&
             window.location.href &&
             window.location.href.indexOf("slay.ts") >= 0
-              ? [{ name: "local", adress: "ws://localhost:62203" }]
+              ? [
+                  {
+                    name: "local",
+                    adress:
+                      "ws://localhost:" +
+                      (new URLSearchParams(window.location.search).get(
+                        "port",
+                      ) || "62203"),
+                  },
+                ]
               : [
                   { name: "EU", adress: "wss://eu.slay.one:62203" },
                   { name: "AM", adress: "wss://na.slay.one:62203" },
@@ -23333,11 +24276,11 @@ var c_hasPressedCtrlRKey = false;
           F = document.getElementById("clanMainContent"),
           P = document.getElementById("myClan"),
           N = document.getElementById("myClan_memberList"),
-          D = {},
-          B = "";
+          B = {},
+          D = "";
         ((t.clanMain = {
           show0: function () {
-            t.clanMain.show(B);
+            t.clanMain.show(D);
           },
           show: function (e) {
             n.playerData.clanTag || e
@@ -23346,7 +24289,7 @@ var c_hasPressedCtrlRKey = false;
           },
           show1: function (e) {
             void 0 !== e &&
-              ((B = e.tag),
+              ((D = e.tag),
               (w.style.display = "none"),
               (P.style.display = "none"),
               (G.style.display = "none"),
@@ -23363,7 +24306,7 @@ var c_hasPressedCtrlRKey = false;
                   ? "visible"
                   : "hidden"),
               (I.style.display = n.playerData.clanTag == e.tag ? "" : "none"),
-              (M.style.display = n.playerData.clanTag || D[e.id] ? "none" : ""),
+              (M.style.display = n.playerData.clanTag || B[e.id] ? "none" : ""),
               (A.style.visibility =
                 n.playerData.clanTag === e.tag &&
                 n.playerData.clanRole >= a.AUTH_LEVEL.MOD
@@ -23371,7 +24314,7 @@ var c_hasPressedCtrlRKey = false;
                   : "hidden"));
           },
           showMembers: function () {
-            s.Network.send("getMemberList$" + B);
+            s.Network.send("getMemberList$" + D);
           },
           showApps: function () {
             s.Network.send("getClanAppsOfPlayer");
@@ -23396,7 +24339,7 @@ var c_hasPressedCtrlRKey = false;
                 ((c.innerText = o.role),
                 (c.className = "role"),
                 l.appendChild(c),
-                B === n.playerData.clanTag &&
+                D === n.playerData.clanTag &&
                   o.id !== n.playerData.db_id &&
                   n.playerData.clanRole >= o.roleNumber &&
                   n.playerData.clanRole >= a.AUTH_LEVEL.MOD)
@@ -23413,7 +24356,7 @@ var c_hasPressedCtrlRKey = false;
                   s.appendChild(g));
               }
               if (
-                B === n.playerData.clanTag &&
+                D === n.playerData.clanTag &&
                 o.id !== n.playerData.db_id &&
                 n.playerData.clanRole >= o.roleNumber &&
                 o.roleNumber >= a.AUTH_LEVEL.MOD
@@ -23429,7 +24372,7 @@ var c_hasPressedCtrlRKey = false;
                   s.appendChild(u));
               }
               if (
-                B === n.playerData.clanTag &&
+                D === n.playerData.clanTag &&
                 o.id !== n.playerData.db_id &&
                 n.playerData.clanRole > o.roleNumber &&
                 o.roleNumber < a.AUTH_LEVEL.ADMIN
@@ -23756,6 +24699,21 @@ var c_hasPressedCtrlRKey = false;
                 else if ("hpO" === arr[0])
                   (root_1.root.game.hpUpdateObject(arr),
                     root_1.root.game.replayFile.push(msg));
+                else if ("bld" === arr[0])
+                  (root_1.root.game.hpUpdateBuilding(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("rvv" === arr[0])
+                  (root_1.root.game.reviveUpdate(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("zap" === arr[0])
+                  (root_1.root.game.zap(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("mnA" === arr[0])
+                  (root_1.root.game.armMine(arr),
+                    root_1.root.game.replayFile.push(msg));
+                else if ("rTm" === arr[0])
+                  ((root_1.root.game.roundTime = parseInt(arr[1])),
+                    root_1.root.game.replayFile.push(msg));
                 else if ("nO" === arr[0])
                   (root_1.root.game.newObject(arr),
                     root_1.root.game.replayFile.push(msg));
@@ -23808,6 +24766,10 @@ var c_hasPressedCtrlRKey = false;
                 else if ("nrsp" === arr[0])
                   (rankInGame_1.rankInGame.hide(),
                     root_1.root.game.setRespawnCounter(parseInt(arr[1])));
+                else if ("svl" === arr[0])
+                  root_1.root.game &&
+                    root_1.root.game.map !== map1_1.map1 &&
+                    root_1.root.game.survivalState(arr);
                 else if ("tGf" === arr[0])
                   for (var i = 1; i < arr.length; i += 2) {
                     var p = root_1.root.game.getPlayerFromID(parseInt(arr[i]));
@@ -23816,7 +24778,7 @@ var c_hasPressedCtrlRKey = false;
                 else if ("stats" === arr[0]) {
                   var st = {
                     xpGained: parseInt(arr[1]),
-                    eloGained: parseInt(arr[2]),
+                    eloDMChange: parseFloat(arr[2]),
                     goldGained: parseInt(arr[3]),
                     kills: parseInt(arr[4]),
                     deaths: parseInt(arr[5]),
@@ -24393,10 +25355,10 @@ var c_hasPressedCtrlRKey = false;
                 "lobby.views.create.mode_filter.tooltip",
               ),
               onSwitch: function (e) {
-                ((w = e.value),
+                ((w = parseInt(String(e.value))),
                   t.roomCreateScreen.listClear_(),
                   localStorage.setItem("defaultCreateMode", w.toString()),
-                  t.roomCreateScreen.getNumBots(),
+                  t.roomCreateScreen.refreshParamFields_(),
                   t.roomCreateScreen.refreshList_());
               },
             }),
@@ -24421,11 +25383,26 @@ var c_hasPressedCtrlRKey = false;
           },
           renderParamFields_: function (e) {
             (t.roomCreateScreen.renderBotsInput_(e),
-              t.roomCreateScreen.renderRoundTimeInput_(e));
+              t.roomCreateScreen.renderRoundTimeInput_(e),
+              t.roomCreateScreen.refreshParamFields_());
+          },
+          refreshParamFields_: function () {
+            for (
+              var e = w === n.MAP_TYPE.SURVIVAL,
+                i = 0,
+                a = ["paramRowBots", "paramRowRoundTime"];
+              i < a.length;
+              i++
+            ) {
+              var o = a[i],
+                r = document.getElementById(o);
+              r && (r.style.display = e ? "none" : "");
+            }
+            e || t.roomCreateScreen.getNumBots();
           },
           renderBotsInput_: function (e) {
             var i = document.createElement("div");
-            i.className = "roomCreateParamInput";
+            ((i.className = "roomCreateParamInput"), (i.id = "paramRowBots"));
             var a = document.createElement("span");
             ((a.className = "fieldLabel"),
               (a.innerText = g.lang.get("lobby.views.create.bots_num.prefix")),
@@ -24471,7 +25448,8 @@ var c_hasPressedCtrlRKey = false;
           },
           renderRoundTimeInput_: function (e) {
             var i = document.createElement("div");
-            i.className = "roomCreateParamInput";
+            ((i.className = "roomCreateParamInput"),
+              (i.id = "paramRowRoundTime"));
             var a = document.createElement("span");
             ((a.className = "fieldLabel"),
               (a.innerText = g.lang.get(
@@ -24951,6 +25929,188 @@ var c_hasPressedCtrlRKey = false;
               h === e && u();
             }));
         };
+      },
+      7540: (e, t) => {
+        "use strict";
+        (Object.defineProperty(t, "__esModule", { value: !0 }),
+          (t.Lightning = void 0));
+        var i = 16,
+          a = 1.4,
+          n = null,
+          o = (function () {
+            function e(e, t, i) {
+              ((this.game = e),
+                (this.from = t),
+                (this.to = i),
+                (this.seed = Math.floor(1e6 * Math.random())),
+                (this.tickOfBirth = e.ticksCounter),
+                (this.dieAt = e.ticksCounter + 9),
+                e.effects.push(this),
+                e.addToObjectsToDraw(this));
+            }
+            return (
+              (e.prototype.update = function () {
+                return this.dieAt > this.game.ticksCounter;
+              }),
+              (e.prototype.getYDrawingOffset = function () {
+                return Math.max(this.from.y, this.to.y) + 1;
+              }),
+              (e.prototype._bodyX = function (e, t) {
+                return e.x0 + t * (e.x - e.x0);
+              }),
+              (e.prototype._bodyY = function (e, t) {
+                return e.y0 + t * (e.y - e.y0) - e.z - this.game.SHOT_HEIGHT;
+              }),
+              (e.prototype.draw = function (e, t, o, r, s, l) {
+                var h = this.game,
+                  d = this._bodyX(this.from, l),
+                  m = this._bodyY(this.from, l),
+                  c = this._bodyX(this.to, l),
+                  g = this._bodyY(this.to, l);
+                if (
+                  !(d < t - 2 || d > r + 2 || m < o - 2 || m > s + 2) ||
+                  !(c < t - 2 || c > r + 2 || g < o - 2 || g > s + 2)
+                ) {
+                  var u = c - d,
+                    p = g - m,
+                    y = Math.sqrt(u * u + p * p);
+                  if (!(y < 0.01)) {
+                    for (
+                      var f,
+                        x,
+                        w = e - this.tickOfBirth,
+                        v = Math.max(0, Math.min(1, 1 - w / 9)),
+                        S =
+                          ((f = this.seed + Math.floor(2 * e)),
+                          (x = (1664525 * f + 1013904223) >>> 0),
+                          function () {
+                            return (
+                              (x = (1664525 * x + 1013904223) >>> 0) /
+                              4294967296
+                            );
+                          }),
+                        b = v * (0.75 + 0.25 * S()),
+                        _ = -p / y,
+                        C = u / y,
+                        I = Math.floor((Math.min(d, c) - a) * i) / i,
+                        M = Math.floor((Math.min(m, g) - a) * i) / i,
+                        T = Math.ceil((Math.max(d, c) + a - I) * i),
+                        E = Math.ceil((Math.max(m, g) + a - M) * i),
+                        k = (function (e, t) {
+                          (null === n && (n = document.createElement("canvas")),
+                            (n.width === e && n.height === t) ||
+                              ((n.width = e), (n.height = t)));
+                          var i = n.getContext("2d");
+                          return (i.clearRect(0, 0, e, t), i);
+                        })(T, E),
+                        L = Math.max(4, Math.min(24, Math.round(y / 0.3))),
+                        A = [],
+                        F = 0;
+                      F <= L;
+                      F++
+                    ) {
+                      var P = F / L,
+                        N = Math.sin(P * Math.PI),
+                        B = 2 * (S() - 0.5) * Math.min(0.55, 0.18 * y) * N;
+                      A.push(
+                        (d + u * P + _ * B - I) * i,
+                        (m + p * P + C * B - M) * i,
+                      );
+                    }
+                    ((k.globalCompositeOperation = "lighter"),
+                      (k.lineCap = "round"),
+                      (k.lineJoin = "round"));
+                    for (
+                      var D = 0,
+                        O = [
+                          [4.5, "rgba(90, 160, 255, " + 0.18 * b + ")"],
+                          [2, "rgba(150, 210, 255, " + 0.5 * b + ")"],
+                          [1, "rgba(255, 255, 255, " + b + ")"],
+                        ];
+                      D < O.length;
+                      D++
+                    ) {
+                      var R = O[D];
+                      ((k.strokeStyle = R[1]),
+                        (k.lineWidth = R[0]),
+                        k.beginPath(),
+                        k.moveTo(A[0], A[1]));
+                      for (F = 2; F < A.length; F += 2)
+                        k.lineTo(A[F], A[F + 1]);
+                      k.stroke();
+                    }
+                    var H = 1 + Math.floor(2 * S());
+                    ((k.lineWidth = 1),
+                      (k.strokeStyle = "rgba(190, 225, 255, " + 0.6 * b + ")"));
+                    for (var U = 0; U < H; U++) {
+                      var G = 1 + Math.floor(S() * (L - 1)),
+                        W = A[2 * G],
+                        z = A[2 * G + 1],
+                        Y = S() < 0.5 ? -1 : 1,
+                        q = (0.3 + 0.5 * S()) * i;
+                      (k.beginPath(), k.moveTo(W, z));
+                      for (var j = 0; j < 3; j++)
+                        ((W +=
+                          (((u / y) * 0.4 + _ * Y) * q) / 3 +
+                          0.15 * (S() - 0.5) * i),
+                          (z +=
+                            (((p / y) * 0.4 + C * Y) * q) / 3 +
+                            0.15 * (S() - 0.5) * i),
+                          k.lineTo(W, z));
+                      k.stroke();
+                    }
+                    for (
+                      var Z = 0,
+                        X = [
+                          [A[0], A[1]],
+                          [A[A.length - 2], A[A.length - 1]],
+                        ];
+                      Z < X.length;
+                      Z++
+                    ) {
+                      var V = X[Z],
+                        K = 7.2 * (0.8 + 0.3 * S()),
+                        $ = k.createRadialGradient(
+                          V[0],
+                          V[1],
+                          0,
+                          V[0],
+                          V[1],
+                          K,
+                        );
+                      ($.addColorStop(
+                        0,
+                        "rgba(200, 230, 255, " + 0.55 * b + ")",
+                      ),
+                        $.addColorStop(1, "rgba(90, 160, 255, 0)"),
+                        (k.fillStyle = $),
+                        k.beginPath(),
+                        k.arc(V[0], V[1], K, 0, 2 * Math.PI),
+                        k.fill());
+                    }
+                    var J = h.ctx;
+                    (J.save(),
+                      (J.globalCompositeOperation = "lighter"),
+                      (J.imageSmoothingEnabled = !1),
+                      J.drawImage(
+                        k.canvas,
+                        0,
+                        0,
+                        T,
+                        E,
+                        h.g2rx(I),
+                        h.g2ry(M),
+                        T * h.SCALE_FACTOR,
+                        E * h.SCALE_FACTOR,
+                      ),
+                      J.restore());
+                  }
+                }
+              }),
+              e
+            );
+          })();
+        t.Lightning = o;
       },
       7602: (e, t) => {
         "use strict";
@@ -26347,6 +27507,9 @@ var c_hasPressedCtrlRKey = false;
                 (this.hpGlideAmount = 0),
                 (this.hpGlideStart = 0),
                 (this._lastTickReceivedManualUpdate = -999999),
+                (this.isMine = !1),
+                (this._detonateAt = -1),
+                (this._lastBeep = -99999),
                 (this.id = t),
                 (this.game = e),
                 (this.x = s),
@@ -26359,6 +27522,7 @@ var c_hasPressedCtrlRKey = false;
                 (this.owner = i),
                 (this.ability = r),
                 (this.object = n.objects[r.object]),
+                (this.isMine = !(!this.object || !this.object.mine)),
                 (this.barYOffset =
                   this.object && this.object.barYOffset
                     ? this.object.barYOffset
@@ -26395,6 +27559,7 @@ var c_hasPressedCtrlRKey = false;
                 (this.ability.type === a.AbilityType.Place &&
                   this.createSpawnEffect(),
                 this.ability.type === a.AbilityType.Throw &&
+                  !this.isMine &&
                   this.x + 3 >= e.cameraX &&
                   this.y + 3 >= e.cameraY &&
                   this.x - 3 <= e.cameraX2 &&
@@ -26408,7 +27573,13 @@ var c_hasPressedCtrlRKey = false;
                 (this.emitsSmoke =
                   this.object && !0 === this.object.emitsSmoke),
                 (this.flash = this.object && !0 === this.object.flash),
-                r.type === a.AbilityType.Throw && void 0 !== p && void 0 !== y)
+                this.isMine && (this.hasLanded = !0),
+                r.type === a.AbilityType.Throw &&
+                  !this.isMine &&
+                  void 0 !== p &&
+                  !isNaN(p) &&
+                  void 0 !== y &&
+                  !isNaN(y))
               ) {
                 ((this.x = s),
                   (this.y = l),
@@ -26600,7 +27771,7 @@ var c_hasPressedCtrlRKey = false;
                     this.game.ticksCounter));
               }),
               (e.prototype.update = function () {
-                if (this.ability.type === a.AbilityType.Throw) {
+                if (this.ability.type === a.AbilityType.Throw && !this.isMine) {
                   if (
                     this._lastTickReceivedManualUpdate > 0 &&
                     this._lastTickReceivedManualUpdate < this.game.ticksCounter
@@ -26755,8 +27926,8 @@ var c_hasPressedCtrlRKey = false;
                   )
                     return !0;
                 }
-                return (
-                  this.hpPerTick &&
+                if (
+                  (this.hpPerTick &&
                     this.game.ticksCounter % 7 == 0 &&
                     this.x + 5 >= this.game.cameraX &&
                     this.y + 5 >= this.game.cameraY &&
@@ -26822,9 +27993,22 @@ var c_hasPressedCtrlRKey = false;
                     this.x - 3 <= this.game.cameraX2 &&
                     this.y - 3 <= this.game.cameraY2 &&
                     c.Sound.playSound("smoke_loop", this.x, this.y, 0.5),
+                  this.isMine && this.object.mine)
+                ) {
+                  var h = this._detonateAt >= 0,
+                    d = h ? 5 : this.object.mine.beepPeriod,
+                    g =
+                      this.game.ticksCounter -
+                      (h
+                        ? this._detonateAt - this.object.mine.delay
+                        : this.tickOfBirth);
+                  g > 0 && g % d == 0 && this._beep();
+                }
+                return (
                   this.ability.type === a.AbilityType.Throw &&
                     this.aoe &&
                     void 0 !== this.dmg &&
+                    (!this.isMine || this._detonateAt >= 0) &&
                     this.tickOfDeath === this.game.ticksCounter &&
                     this.x + 10 >= this.game.cameraX &&
                     this.y + 10 >= this.game.cameraY &&
@@ -26874,6 +28058,61 @@ var c_hasPressedCtrlRKey = false;
                     (this.game.createExplosion(this.x, this.y, 0.3, 0.05),
                     c.Sound.playSound("explo", this.x, this.y, 0.6),
                     c.Sound.playSound("laser", this.x, this.y, 1)));
+              }),
+              (e.prototype.arm = function (e) {
+                this._detonateAt >= 0 ||
+                  ((this._detonateAt = e),
+                  (this.tickOfDeath = e),
+                  this._beep());
+              }),
+              (e.prototype._beep = function () {
+                this._lastBeep = this.game.ticksCounter;
+                var e = this._detonateAt >= 0;
+                this.x + 8 >= this.game.cameraX &&
+                  this.y + 8 >= this.game.cameraY &&
+                  this.x - 8 <= this.game.cameraX2 &&
+                  this.y - 8 <= this.game.cameraY2 &&
+                  !this.game.fastForward &&
+                  c.Sound.playSound(
+                    e ? "beep_armed" : "beep",
+                    this.x,
+                    this.y,
+                    e ? 0.85 : 0.5,
+                  );
+              }),
+              (e.prototype._drawBlink = function (e, t, i) {
+                var a = this.game.ctx,
+                  n = this.game.SCALE_FACTOR,
+                  o = this._detonateAt >= 0,
+                  r = e - this._lastBeep,
+                  s = this._lastBeep > -9999 && r < 4,
+                  l = Math.round(t - n / 2),
+                  h = Math.round(i - 2.5 * n);
+                if (
+                  ((a.fillStyle = o
+                    ? s
+                      ? "#ffffff"
+                      : "#ff6a6a"
+                    : s
+                      ? "#ff3030"
+                      : "#8a2020"),
+                  a.fillRect(l - n, h, 3 * n, n),
+                  !(this._lastBeep <= -9999 || r >= 8))
+                ) {
+                  var d = r / 8;
+                  ((a.globalAlpha = 0.2 * (1 - d)),
+                    (a.fillStyle = o ? "#ffd0d0" : "#ff8080"),
+                    a.beginPath(),
+                    a.arc(
+                      l + n / 2,
+                      h + n / 2,
+                      d * this.game.FIELD_SIZE,
+                      0,
+                      2 * Math.PI,
+                    ),
+                    a.fill(),
+                    (a.globalAlpha = 1));
+                }
               }),
               (e.prototype.getYDrawingOffset = function () {
                 return this.y;
@@ -27011,7 +28250,8 @@ var c_hasPressedCtrlRKey = false;
                         v.w * this.game.SCALE_FACTOR,
                         v.h * this.game.SCALE_FACTOR,
                       ),
-                      void (c.globalAlpha = 1)
+                      (c.globalAlpha = 1),
+                      void (this.isMine && this._drawBlink(e, x, w))
                     );
                   }
                   var S = e - this.tickOfBirth;
@@ -27157,8 +28397,8 @@ var c_hasPressedCtrlRKey = false;
                         (c.globalAlpha = 1)),
                       this.animation.muzzleFlash && this.lastTickFire >= e - 2)
                     ) {
-                      var D = this.animation.muzzleFlash,
-                        B = Math.floor(0.5 * e) % 2;
+                      var B = this.animation.muzzleFlash,
+                        D = Math.floor(0.5 * e) % 2;
                       ((o =
                         (this.x - this.game.cameraX) * this.game.FIELD_SIZE -
                         22 * I),
@@ -27168,8 +28408,8 @@ var c_hasPressedCtrlRKey = false;
                           22 * I),
                         c.drawImage(
                           u.imgs.miscSheet,
-                          D.x + 44 * this.direction,
-                          D.y + 44 * B,
+                          B.x + 44 * this.direction,
+                          B.y + 44 * D,
                           44,
                           44,
                           o - 0 * I + L,
@@ -27261,12 +28501,12 @@ var c_hasPressedCtrlRKey = false;
                     ((T = (this.x - this.game.cameraX) * this.game.FIELD_SIZE),
                       (E =
                         (this.y - this.game.cameraY) * this.game.FIELD_SIZE));
-                    var K = 0.55 * this.game.SCALE_FACTOR,
-                      V = 1.8 * this.healthBarW;
-                    ((o = T - (V * K) / 2),
+                    var V = 0.55 * this.game.SCALE_FACTOR,
+                      K = 1.8 * this.healthBarW;
+                    ((o = T - (K * V) / 2),
                       (l = E - 1.85 * this.game.FIELD_SIZE),
                       (c.fillStyle = "black"),
-                      c.fillRect(o, l, V * K, 8 * K));
+                      c.fillRect(o, l, K * V, 8 * V));
                     var $ = Math.min(
                       this.hp -
                         (this.hpGlideEnd >= e
@@ -27281,33 +28521,34 @@ var c_hasPressedCtrlRKey = false;
                         this.owner.isAlliedWith(this.game.playingPlayer))
                         ? s.imgCoords.hpBar1
                         : s.imgCoords.hpBar3;
-                    var J = (V - 2) * K * ($ / this.maxHP);
+                    var J = (K - 2) * V * ($ / this.maxHP);
                     (c.drawImage(
                       u.imgs.miscSheet,
                       M.x,
                       M.y,
                       M.w,
                       M.h,
-                      o + 1 * K,
-                      l + 1 * K,
+                      o + 1 * V,
+                      l + 1 * V,
                       J,
-                      6 * K,
+                      6 * V,
                     ),
                       (c.strokeStyle = "rgba(0, 0, 0, 1)"),
-                      (c.lineWidth = K));
+                      (c.lineWidth = V));
                     for (
                       U = h.CONST.HP_SEPERATOR_AMOUNT;
-                      U < this.maxHP;
+                      U < this.maxHP &&
+                      this.maxHP < h.CONST.HP_SEPERATOR_HIDE_FROM;
                       U += h.CONST.HP_SEPERATOR_AMOUNT
                     )
                       (c.beginPath(),
                         c.moveTo(
-                          o + 1 * K + (U / this.maxHP) * (V - 2) * K,
-                          l + 5 * K,
+                          o + 1 * V + (U / this.maxHP) * (K - 2) * V,
+                          l + 5 * V,
                         ),
                         c.lineTo(
-                          o + 1 * K + (U / this.maxHP) * (V - 2) * K,
-                          l + 7 * K,
+                          o + 1 * V + (U / this.maxHP) * (K - 2) * V,
+                          l + 7 * V,
                         ),
                         c.stroke());
                     this.object.noBars ||
@@ -27390,7 +28631,9 @@ var c_hasPressedCtrlRKey = false;
             "config.keyname.pickupgrade"),
           (t.commandNameLabels[r.COMMAND.FIRE_2] = "2nd Fire Mode"),
           (t.commandNameLabels[r.COMMAND.SHOW_EMOTES] = "Emote"),
-          (t.commandNameLabels[r.COMMAND.DROP_FLAG] = "Drop Flag"));
+          (t.commandNameLabels[r.COMMAND.DROP_FLAG] = "Drop Flag"),
+          (t.commandNameLabels[r.COMMAND.REVIVE] = "config.keyname.revive"),
+          (t.commandNameLabels[r.COMMAND.ABILITY3] = "Use Ability 3"));
         for (var m = 0, c = n.weapons; m < c.length; m++) {
           var g = c[m];
           if (!g.noWeapon) {
@@ -27567,7 +28810,7 @@ var c_hasPressedCtrlRKey = false;
           F = null,
           P = null,
           N = null,
-          D = function (e, t) {
+          B = function (e, t) {
             null === A || A.readyState !== WebSocket.OPEN
               ? t &&
                 R(function () {
@@ -27575,8 +28818,8 @@ var c_hasPressedCtrlRKey = false;
                 })
               : A.send(JSON.stringify(e));
           },
-          B = function () {
-            D({ gcHistory: { channel: "global", limit: 25 } });
+          D = function () {
+            B({ gcHistory: { channel: "global", limit: 25 } });
           },
           O = function (e) {
             var t,
@@ -27585,7 +28828,7 @@ var c_hasPressedCtrlRKey = false;
               k.length = 0;
               for (var r = 0, s = i.friends; r < s.length; r++) {
                 var l = s[r];
-                V(l);
+                K(l);
               }
               X();
             }
@@ -27612,7 +28855,7 @@ var c_hasPressedCtrlRKey = false;
               var h = k.find(function (e) {
                 return e.chatParticipant.id === i.fUpd.id;
               });
-              if (void 0 === h) return (V(i.fUpd), void X());
+              if (void 0 === h) return (K(i.fUpd), void X());
               if (i.fUpd.status === n.FriendStatus.NotFriends)
                 return (h.div.remove(), k.splice(k.indexOf(h), 1), void X());
               (void 0 !== i.fUpd.name &&
@@ -27642,7 +28885,7 @@ var c_hasPressedCtrlRKey = false;
                   (h.onlineImg.src = h.chatParticipant.isOnline
                     ? "imgs/friend/online.png"
                     : "imgs/friend/offline.png"),
-                  (h.div.className = K(h)),
+                  (h.div.className = V(h)),
                   X()),
                 void 0 !== i.fUpd.status &&
                   h.status !== i.fUpd.status &&
@@ -27650,7 +28893,7 @@ var c_hasPressedCtrlRKey = false;
                     null !== (t = i.fUpd.status) && void 0 !== t
                       ? t
                       : n.FriendStatus.NotFriends),
-                  (h.div.className = K(h)),
+                  (h.div.className = V(h)),
                   X()));
             }
           },
@@ -27677,12 +28920,12 @@ var c_hasPressedCtrlRKey = false;
           var t = e.detail;
           if (null !== t && "object" == typeof t) {
             var i = { gc: t.message, gcChannel: t.channel };
-            D(i);
+            B(i);
           }
         }),
           window.addEventListener("globalChatHistoryRequest", function (e) {
             var t = e.detail;
-            D({ gcHistory: t }, !0);
+            B({ gcHistory: t }, !0);
           }),
           window.addEventListener("globalChatModerate", function (e) {
             var t = e.detail;
@@ -27690,7 +28933,7 @@ var c_hasPressedCtrlRKey = false;
               var i = {
                 gcMod: { channel: t.channel, id: t.id, action: t.action },
               };
-              D(i);
+              B(i);
             }
           }),
           window.addEventListener("friendChatSend", function (e) {
@@ -27704,7 +28947,7 @@ var c_hasPressedCtrlRKey = false;
               var i = (t.message || "").trim();
               if (0 !== i.length) {
                 var a = { m: i, p: t.id };
-                D(a);
+                B(a);
               }
             }
           }),
@@ -27754,7 +28997,7 @@ var c_hasPressedCtrlRKey = false;
                 t.socialService.connectGuest());
             },
             connectGuest: function () {
-              R(B);
+              R(D);
             },
             login: function (e, t, i) {
               (window.dispatchEvent(new CustomEvent("chatAuthReset")),
@@ -28071,7 +29314,7 @@ var c_hasPressedCtrlRKey = false;
               ((M.innerText = x.toString()),
               (M.style.display = x > 0 ? "" : "none"));
           },
-          K = function (e) {
+          V = function (e) {
             var t = e.chatParticipant.isOnline
               ? "friendOnline"
               : "friendOffline";
@@ -28083,7 +29326,7 @@ var c_hasPressedCtrlRKey = false;
               t
             );
           },
-          V = function (e) {
+          K = function (e) {
             var t,
               i,
               o,
@@ -28157,7 +29400,7 @@ var c_hasPressedCtrlRKey = false;
                   ? c
                   : n.FriendStatus.NotFriends,
             };
-            ((g.className = K(C)), k.push(C));
+            ((g.className = V(C)), k.push(C));
             var I = document.createElement("span");
             ((I.className = "friendButtonSpan"), g.appendChild(I));
             var M = document.createElement("button");
@@ -28289,52 +29532,56 @@ var c_hasPressedCtrlRKey = false;
           f = i(262),
           x = i(4092),
           w = i(1671),
-          v = i(6543),
-          S = i(518),
-          b = i(3625),
-          _ = i(614),
-          C = i(773),
-          I = i(2399),
-          M = i(5164),
-          T = i(259),
-          E = i(3085),
-          k = i(1626),
-          L = i(8265),
-          A = i(6409),
-          F = i(4829),
-          P = i(9319),
-          N = i(7028),
-          D = i(7899),
-          B = i(217),
-          O = i(6507),
-          R = i(1799),
-          H = i(5572),
-          U = i(5633),
-          G = i(9463),
-          W = i(9085),
-          z = i(2677),
-          Y = i(3512),
-          q = i(9178),
-          j = i(8231),
-          Z = i(7982),
-          X = i(9216),
-          K = i(4408),
-          V = i(2978),
-          $ = i(9923),
-          J = i(6466),
-          Q = i(1893),
-          ee = i(6214),
-          te = i(2750),
-          ie = document.createElement("canvas"),
-          ae = ie.getContext("2d"),
-          ne = document.getElementById("emotesTimerDiv"),
-          oe = document.createElement("canvas"),
-          re = oe.getContext("2d"),
-          se = !1,
-          le = 1 / 4,
-          he = new TextDecoder(),
-          de = [],
-          me = {
+          v = i(212),
+          S = i(4949),
+          b = i(6543),
+          _ = i(518),
+          C = i(3625),
+          I = i(614),
+          M = i(7540),
+          T = i(773),
+          E = i(2399),
+          k = i(5164),
+          L = i(259),
+          A = i(3085),
+          F = i(1626),
+          P = i(8265),
+          N = i(6409),
+          B = i(4829),
+          D = i(9319),
+          O = i(7028),
+          R = i(7899),
+          H = i(217),
+          U = i(6507),
+          G = i(1799),
+          W = i(5572),
+          z = i(5633),
+          Y = i(9463),
+          q = i(9085),
+          j = i(2677),
+          Z = i(3512),
+          X = i(9178),
+          V = i(8231),
+          K = i(7982),
+          $ = i(9216),
+          J = i(4408),
+          Q = i(2978),
+          ee = i(9923),
+          te = i(6466),
+          ie = i(1893),
+          ae = i(6214),
+          ne = i(2750),
+          oe = i(772),
+          re = document.createElement("canvas"),
+          se = re.getContext("2d"),
+          le = document.getElementById("emotesTimerDiv"),
+          he = document.createElement("canvas"),
+          de = he.getContext("2d"),
+          me = !1,
+          ce = 1 / 4,
+          ge = new TextDecoder(),
+          ue = [],
+          pe = {
             wC: 2,
             bZ: 7,
             trn: 2,
@@ -28364,7 +29611,7 @@ var c_hasPressedCtrlRKey = false;
             rl: 1,
             rl2: 4,
             att: 3,
-            abc: 3,
+            abc: 5,
             nSF: 5,
             ph: 2,
             grU: 4,
@@ -28372,7 +29619,7 @@ var c_hasPressedCtrlRKey = false;
             grD: 3,
             oPU: 4,
           },
-          ce = (function () {
+          ye = (function () {
             function e(e) {
               var t;
               ((this.FIELD_SIZE =
@@ -28423,10 +29670,11 @@ var c_hasPressedCtrlRKey = false;
                 (this._pingRandomizer = Math.floor(50 * Math.random())),
                 (this.playingPlayer = null),
                 (this.playingPlayerZombieKillStreak = 0),
-                (this.playingPlayerAbilities =
+                (this.playingPlayerAbilities = (0, n.copyBuild)(
                   f.playerData && f.playerData.authLevel >= 6
                     ? f.playerData.abilities
-                    : (0, n.getDefaultAbilityObj)(n.abilities)),
+                    : (0, n.getDefaultAbilityObj)(n.abilities),
+                )),
                 (this.turnBoss = !1),
                 (this.objectsToDraw = []),
                 (this._slowFieldDrawingObjs = []),
@@ -28472,6 +29720,10 @@ var c_hasPressedCtrlRKey = false;
                 (this.roundTime = 0),
                 (this.specPlayer = null),
                 (this.iAmSpec = !1),
+                (this.survivalWaiting = !1),
+                (this.survivalHost = !1),
+                (this.survivalDifficulty = oe.SURVIVAL_DIFFICULTY.NORMAL),
+                (this.enemyHpMod = 1),
                 (this.victoryMsg = ""),
                 (this.fastForward = !1),
                 (this._walkways = []),
@@ -28480,6 +29732,7 @@ var c_hasPressedCtrlRKey = false;
                 (this.bushArray = []),
                 (this.groundTiles = []),
                 (this.noGridTiles = []),
+                (this.buildings = []),
                 (this._nextMaps = {}),
                 (this.canvas = document.getElementById("canvas")),
                 (this.ctx = this.canvas.getContext("2d")),
@@ -28488,7 +29741,7 @@ var c_hasPressedCtrlRKey = false;
                   void 0 !== e.type && l.MAP_TYPE_SETTINGS[e.type]
                     ? l.MAP_TYPE_SETTINGS[e.type]
                     : l.MAP_TYPE_SETTINGS[l.MAP_TYPE.TOURNAMENT_UNRANKED]),
-                (this.interface_ = new L.Interface_(this, e)),
+                (this.interface_ = new P.Interface_(this, e)),
                 (this.groundMinX = 0),
                 (this.groundMaxX = e.x),
                 (this.groundMinY = 0),
@@ -28499,7 +29752,7 @@ var c_hasPressedCtrlRKey = false;
               for (var i = 0, a = this.tiles; i < a.length; i++) {
                 (h = a[i]).type.blockVision && this._createVisionTile(h);
               }
-              k.Input.activeAbility = null;
+              F.Input.activeAbility = null;
               for (var r = 0, s = this.tiles; r < s.length; r++) {
                 var h;
                 if ((h = s[r]).type.isTorch) {
@@ -28515,12 +29768,12 @@ var c_hasPressedCtrlRKey = false;
                         : "north",
                   };
                   (this._torches.push(d),
-                    new b.Flame(
+                    new C.Flame(
                       this,
                       d.x + 0.5 + d.offsetX,
                       d.y + 0.5 + d.offsetY,
                       1.83,
-                      E.imgCoords.flame1,
+                      A.imgCoords.flame1,
                       1,
                       0,
                       !0,
@@ -28533,22 +29786,28 @@ var c_hasPressedCtrlRKey = false;
                   e.x / 2 - window.innerWidth / 2 / this.FIELD_SIZE),
                 (this.specY =
                   e.y / 2 - window.innerHeight / 2 / this.FIELD_SIZE),
-                (this.miniMap = new F.Minimap(this)),
-                this.map === A.map1 && this.miniMap.hide(),
+                (this.miniMap = new B.Minimap(this)),
+                this.map === N.map1 && this.miniMap.hide(),
                 (this.SCALE_CONST = 0.06),
                 this.interface_.killAllMsgs(),
                 o.CONST.ENABLE_LIGHTMAP &&
-                  ((ie.width = 4 * (e.x + 8)), (ie.height = 4 * (e.y + 8))),
-                $.respawn.hide(),
-                (I.replaySettings.replayOptionsIndex = 3),
-                (I.replaySettings.replayOption =
-                  I.replayOptions[I.replaySettings.replayOptionsIndex]),
+                  ((re.width = 4 * (e.x + 8)), (re.height = 4 * (e.y + 8))),
+                ee.respawn.hide(),
+                (E.replaySettings.replayOptionsIndex = 3),
+                (E.replaySettings.replayOption =
+                  E.replayOptions[E.replaySettings.replayOptionsIndex]),
                 this.setNextMaps({}));
             }
             return (
+              (e.prototype.refreshTileCanvasses = function () {
+                (this._createGroundCanvas(),
+                  this._generateTilesCanvasses(),
+                  this._createLightMaps(),
+                  this.miniMap.rebuildBase());
+              }),
               (e.prototype.switchSpec = function (e) {
                 if (
-                  (W.Sound.playSound("switch", void 0, void 0, 0.7),
+                  (q.Sound.playSound("switch", void 0, void 0, 0.7),
                   0 === this.players.length)
                 )
                   this.specPlayer = null;
@@ -28569,14 +29828,14 @@ var c_hasPressedCtrlRKey = false;
                       : this.players[this.players.length - 1];
                 this.specPlayer
                   ? this.interface_.setMainKillMsg(
-                      ee.lang.get("game.msg.spectate.follow", {
+                      ae.lang.get("game.msg.spectate.follow", {
                         playerName: this.specPlayer.name,
                       }),
                       "#BEBEBE",
                       "textInGrey",
                     )
                   : this.interface_.setMainKillMsg(
-                      ee.lang.get("game.msg.spectate.free"),
+                      ae.lang.get("game.msg.spectate.free"),
                       "#BEBEBE",
                       "textInGrey",
                     );
@@ -28586,10 +29845,10 @@ var c_hasPressedCtrlRKey = false;
                   var s = a ? (4 * Math.PI) / a : 0.5;
                   ((o = null != o ? o : 0), (r = null != r ? r : 2 * Math.PI));
                   for (var l = o; l < r; l += Math.random() * s)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e,
                       y: t,
-                      img: E.imgCoords.dust1,
+                      img: A.imgCoords.dust1,
                       scaleFunction: function () {
                         return this.r1;
                       },
@@ -28618,8 +29877,8 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.createExplosionGreen = function (e, t, i) {
                 if (!this.fastForward) {
-                  (W.Sound.playSound("crawler_impact", e, t, 0.8),
-                    this.addCircle(e, t, E.imgCoords.whiteCircle));
+                  (q.Sound.playSound("crawler_impact", e, t, 0.8),
+                    this.addCircle(e, t, A.imgCoords.whiteCircle));
                   var a = Math.sqrt(
                       Math.pow(
                         e -
@@ -28646,17 +29905,17 @@ var c_hasPressedCtrlRKey = false;
                       (this.rumbleStart = r));
                   }
                   for (
-                    var s = new S.Field(e, t), l = 0;
+                    var s = new _.Field(e, t), l = 0;
                     l <
                     0.5 *
                       f.graphics[f.options.graphicSettings].exposionParticles;
                     l++
                   ) {
                     var h = s.add2(Math.random() * Math.PI * 2, Math.random());
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: h.x,
                       y: h.y,
-                      img: E.imgCoords.particleGreen,
+                      img: A.imgCoords.particleGreen,
                       scaleFunction: function () {
                         return this.r0 * this.r4;
                       },
@@ -28698,14 +29957,14 @@ var c_hasPressedCtrlRKey = false;
                     });
                   }
                   for (l = 0; l < 2 * Math.PI; l += 1 * Math.random()) {
-                    h = new S.Field(e, t).add2(
+                    h = new _.Field(e, t).add2(
                       Math.random() * Math.PI * 2,
                       0.25 * Math.random() * i,
                     );
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: h.x,
                       y: h.y,
-                      img: E.imgCoords[
+                      img: A.imgCoords[
                         "fireGreen" + (Math.floor(4 * Math.random()) + 1)
                       ],
                       scaleFunction: function (e) {
@@ -28733,10 +29992,10 @@ var c_hasPressedCtrlRKey = false;
                     });
                   }
                   for (l = 0; l < 2 * Math.PI; l += 0.5 * Math.random())
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: s.x,
                       y: s.y,
-                      img: E.imgCoords.poisonFog1,
+                      img: A.imgCoords.poisonFog1,
                       scaleFunction: function () {
                         return this.r1 * this.r4;
                       },
@@ -28758,10 +30017,10 @@ var c_hasPressedCtrlRKey = false;
                         return (-1 / (e / 4 + 0.3) + 4) * this.r3 * this.r4;
                       },
                     });
-                  (new z.Sprite(this, {
+                  (new j.Sprite(this, {
                     x: s.x,
                     y: s.y - 0.5,
-                    img: E.imgCoords.light_green,
+                    img: A.imgCoords.light_green,
                     scaleFunction: function (e) {
                       return (
                         2 * Math.max(0.9 - e / this.ticksToLive, 0) * this.r4
@@ -28773,10 +30032,10 @@ var c_hasPressedCtrlRKey = false;
                     age: 20 * (1.2 + 0.4 * Math.random()),
                     r4: 2 * i,
                   }),
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: s.x,
                       y: s.y - 1,
-                      img: E.imgCoords.light_green,
+                      img: A.imgCoords.light_green,
                       scaleFunction: function () {
                         return 2 * this.r4;
                       },
@@ -28790,7 +30049,7 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.createExplosion = function (e, t, i, n, o, r, l, h) {
                 if (!this.fastForward) {
-                  this.addCircle(e, t, E.imgCoords.whiteCircle);
+                  this.addCircle(e, t, A.imgCoords.whiteCircle);
                   var d = Math.sqrt(
                       Math.pow(
                         e -
@@ -28818,7 +30077,7 @@ var c_hasPressedCtrlRKey = false;
                       (this.rumblePower = 0.1 * i * c),
                       (this.rumbleStart = g));
                   }
-                  var u = new S.Field(e, t);
+                  var u = new _.Field(e, t);
                   if (void 0 === o)
                     for (
                       var p = 0;
@@ -28830,10 +30089,10 @@ var c_hasPressedCtrlRKey = false;
                         Math.random() * Math.PI * 2,
                         Math.random(),
                       );
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: y.x,
                         y: y.y,
-                        img: E.imgCoords.particle,
+                        img: A.imgCoords.particle,
                         scaleFunction: function () {
                           return this.r0 * this.r4;
                         },
@@ -28875,17 +30134,17 @@ var c_hasPressedCtrlRKey = false;
                       });
                     }
                   for (p = 0; p < 2 * Math.PI; p += 3.5 + 1 * Math.random()) {
-                    y = new S.Field(e, t).add2(
+                    y = new _.Field(e, t).add2(
                       p,
                       (0.5 * Math.random() + 0.1) * i,
                     );
                     void 0 === o
-                      ? (new b.Flame(
+                      ? (new C.Flame(
                           this,
                           y.x,
                           y.y,
                           2,
-                          E.imgCoords.flame2,
+                          A.imgCoords.flame2,
                           1.1 * i * (1 + 0.5 * Math.random()),
                           void 0,
                           !1,
@@ -28894,10 +30153,10 @@ var c_hasPressedCtrlRKey = false;
                         ),
                         void 0 !== h &&
                           h > 0 &&
-                          new z.Sprite(this, {
+                          new j.Sprite(this, {
                             x: y.x,
                             y: y.y,
-                            img: E.imgCoords.fire1red,
+                            img: A.imgCoords.fire1red,
                             scaleFunction: function (e) {
                               return (
                                 (-2 * (1 / (e / 4 + 0.25) + e / 4 - 4) +
@@ -28932,10 +30191,10 @@ var c_hasPressedCtrlRKey = false;
                             },
                             age: 35,
                           }))
-                      : new z.Sprite(this, {
+                      : new j.Sprite(this, {
                           x: y.x,
                           y: y.y,
-                          img: E.imgCoords[
+                          img: A.imgCoords[
                             "fire" +
                               (Math.floor(4 * Math.random()) + 1) +
                               (void 0 !== o ? o : "")
@@ -28983,10 +30242,10 @@ var c_hasPressedCtrlRKey = false;
                   }
                   if (!r)
                     for (p = 0; p < 2 * Math.PI; p += 0.5 * Math.random())
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: u.x,
                         y: u.y,
-                        img: E.imgCoords["dust1" + (void 0 !== o ? o : "")],
+                        img: A.imgCoords["dust1" + (void 0 !== o ? o : "")],
                         scaleFunction: function () {
                           return this.r1 * this.r4;
                         },
@@ -29008,11 +30267,11 @@ var c_hasPressedCtrlRKey = false;
                           return (-1 / (e / 4 + 0.3) + 4) * this.r3 * this.r4;
                         },
                       });
-                  var x = E.imgCoords.light_yellow;
+                  var x = A.imgCoords.light_yellow;
                   if (
-                    ("red" === o && (x = E.imgCoords.light_red),
-                    "blue" === o && (x = E.imgCoords.light_blue),
-                    new z.Sprite(this, {
+                    ("red" === o && (x = A.imgCoords.light_red),
+                    "blue" === o && (x = A.imgCoords.light_blue),
+                    new j.Sprite(this, {
                       x: u.x,
                       y: u.y - 0.5,
                       img: x,
@@ -29027,10 +30286,10 @@ var c_hasPressedCtrlRKey = false;
                       age: 20 * (1.2 + 0.4 * Math.random()),
                       r4: 2 * i,
                     }),
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: u.x,
                       y: u.y - 1,
-                      img: E.imgCoords.light_white,
+                      img: A.imgCoords.light_white,
                       scaleFunction: function () {
                         return 2 * this.r4;
                       },
@@ -29049,24 +30308,24 @@ var c_hasPressedCtrlRKey = false;
                       w < v.length;
                       w++
                     ) {
-                      var _ = v[w].getContext("2d");
-                      ((_.globalAlpha = n),
-                        _.drawImage(
+                      var S = v[w].getContext("2d");
+                      ((S.globalAlpha = n),
+                        S.drawImage(
                           a.imgs.miscSheet,
-                          E.imgCoords.soot.x,
-                          E.imgCoords.soot.y,
-                          E.imgCoords.soot.w,
-                          E.imgCoords.soot.h,
+                          A.imgCoords.soot.x,
+                          A.imgCoords.soot.y,
+                          A.imgCoords.soot.w,
+                          A.imgCoords.soot.h,
                           (e * this.FIELD_SIZE) / this.SCALE_FACTOR -
-                            E.imgCoords.soot.w / 2 -
+                            A.imgCoords.soot.w / 2 -
                             16 * this.groundMinX,
                           (t * this.FIELD_SIZE) / this.SCALE_FACTOR -
-                            E.imgCoords.soot.h / 2 -
+                            A.imgCoords.soot.h / 2 -
                             16 * this.groundMinY,
-                          E.imgCoords.soot.w,
-                          E.imgCoords.soot.h,
+                          A.imgCoords.soot.w,
+                          A.imgCoords.soot.h,
                         ),
-                        (_.globalAlpha = 1));
+                        (S.globalAlpha = 1));
                     }
                 }
               }),
@@ -29074,10 +30333,10 @@ var c_hasPressedCtrlRKey = false;
                 if (!this.fastForward) {
                   this.createPoundSmoke(e, t + 0.5, 0.5, 9, 0.4);
                   for (var i = 0; i < 10; i++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1.4 * Math.random() - 0.7 - 0.5,
-                      img: E.imgCoords.whiteLine,
+                      img: A.imgCoords.whiteLine,
                       scaleFunction: function () {
                         return 2.5 * Math.random();
                       },
@@ -29095,11 +30354,11 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (i = 0; i < 7; i++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1 * Math.random() - 0.5 - 0.5,
                       r4: 1 * Math.random() + 0.3,
-                      img: E.imgCoords.particleWhite,
+                      img: A.imgCoords.particleWhite,
                       alphaFunction: function () {
                         return this.ticksLeft > 10
                           ? 0.5
@@ -29114,10 +30373,10 @@ var c_hasPressedCtrlRKey = false;
                         return Math.max(-Math.pow(0.07 * e, 2), -this.r4);
                       },
                     });
-                  new z.Sprite(this, {
+                  new j.Sprite(this, {
                     x: e,
                     y: t - 0.5,
-                    img: E.imgCoords.light_white,
+                    img: A.imgCoords.light_white,
                     alphaFunction: function (e) {
                       return e <= 6
                         ? 0.66 * Math.random()
@@ -29135,10 +30394,10 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.createBlinkEffectSmall = function (e, t) {
                 if (!this.fastForward) {
                   for (var i = 0; i < 7; i++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1.4 * Math.random() - 0.7 - 0.5,
-                      img: E.imgCoords.whiteLine,
+                      img: A.imgCoords.whiteLine,
                       scaleFunction: function () {
                         return 2.5 * Math.random();
                       },
@@ -29156,11 +30415,11 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (i = 0; i < 4; i++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1 * Math.random() - 0.5 - 0.5,
                       r4: 1 * Math.random() + 0.3,
-                      img: E.imgCoords.particleWhite,
+                      img: A.imgCoords.particleWhite,
                       alphaFunction: function () {
                         return this.ticksLeft > 10
                           ? 0.5
@@ -29175,10 +30434,10 @@ var c_hasPressedCtrlRKey = false;
                         return Math.max(-Math.pow(0.07 * e, 2), -this.r4);
                       },
                     });
-                  new z.Sprite(this, {
+                  new j.Sprite(this, {
                     x: e,
                     y: t - 0.5,
-                    img: E.imgCoords.light_white,
+                    img: A.imgCoords.light_white,
                     alphaFunction: function (e) {
                       return e <= 6
                         ? 0.66 * Math.random()
@@ -29196,10 +30455,10 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.createBlinkEffectVerySmall = function (e, t) {
                 if (!this.fastForward) {
                   for (var i = 0; i < 4; i++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1.4 * Math.random() - 0.7 - 0.5,
-                      img: E.imgCoords.whiteLine,
+                      img: A.imgCoords.whiteLine,
                       scaleFunction: function () {
                         return 2.5 * Math.random();
                       },
@@ -29217,11 +30476,11 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (i = 0; i < 2; i++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: e + 1.4 * Math.random() - 0.7,
                       y: t + 1 * Math.random() - 0.5 - 0.5,
                       r4: 1 * Math.random() + 0.3,
-                      img: E.imgCoords.particleWhite,
+                      img: A.imgCoords.particleWhite,
                       alphaFunction: function () {
                         return this.ticksLeft > 10
                           ? 0.5
@@ -29236,10 +30495,10 @@ var c_hasPressedCtrlRKey = false;
                         return Math.max(-Math.pow(0.07 * e, 2), -this.r4);
                       },
                     });
-                  new z.Sprite(this, {
+                  new j.Sprite(this, {
                     x: e,
                     y: t - 0.5,
-                    img: E.imgCoords.light_white,
+                    img: A.imgCoords.light_white,
                     alphaFunction: function (e) {
                       return e <= 6
                         ? 0.66 * Math.random()
@@ -29265,6 +30524,11 @@ var c_hasPressedCtrlRKey = false;
                     "proD",
                     "hp",
                     "hpO",
+                    "bld",
+                    "rvv",
+                    "rTm",
+                    "zap",
+                    "mnA",
                     "pro",
                     "nO",
                     "proM",
@@ -29291,9 +30555,9 @@ var c_hasPressedCtrlRKey = false;
                     this._fire2Down());
               }),
               (e.prototype._mouseDown = function () {
-                ((this.targetX = (0, I.getMouseGamePlayX)()),
-                  (this.targetY = (0, I.getMouseGamePlayY)()),
-                  N.Network.send(
+                ((this.targetX = (0, E.getMouseGamePlayX)()),
+                  (this.targetY = (0, E.getMouseGamePlayY)()),
+                  O.Network.send(
                     "md$" +
                       this.targetX +
                       "$" +
@@ -29305,9 +30569,9 @@ var c_hasPressedCtrlRKey = false;
                   (this.mouseDownSent = !0));
               }),
               (e.prototype._fire2Down = function () {
-                ((this.targetX = (0, I.getMouseGamePlayX)()),
-                  (this.targetY = (0, I.getMouseGamePlayY)()),
-                  N.Network.send(
+                ((this.targetX = (0, E.getMouseGamePlayX)()),
+                  (this.targetY = (0, E.getMouseGamePlayY)()),
+                  O.Network.send(
                     "f2d$" +
                       this.targetX +
                       "$" +
@@ -29321,21 +30585,21 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.mouseUp = function () {
                 ((this.mouseDowned = !1),
                   this.mouseDownSent &&
-                    (N.Network.send("mu"), (this.mouseDownSent = !1)));
+                    (O.Network.send("mu"), (this.mouseDownSent = !1)));
               }),
               (e.prototype.fire2Up = function () {
                 ((this.fire2Downed = !1),
                   this.fire2DownSent &&
-                    (N.Network.send("f2u"), (this.fire2DownSent = !1)));
+                    (O.Network.send("f2u"), (this.fire2DownSent = !1)));
               }),
               (e.prototype.mouseUpdate = function () {
-                var e = (0, I.getMouseGamePlayX)(),
-                  t = (0, I.getMouseGamePlayY)();
+                var e = (0, E.getMouseGamePlayX)(),
+                  t = (0, E.getMouseGamePlayY)();
                 ((Math.abs(this.targetX - e) > 1e-4 ||
                   Math.abs(this.targetY - t) > 1e-4) &&
                   ((this.targetX = e),
                   (this.targetY = t),
-                  N.Network.send(
+                  O.Network.send(
                     "mp$" +
                       e +
                       "$" +
@@ -29358,7 +30622,7 @@ var c_hasPressedCtrlRKey = false;
                       ? (this.scoreTeam1 += this.players[e].souls)
                       : 2 === this.players[e].team &&
                         (this.scoreTeam2 += this.players[e].souls);
-                  R.rankInGame.refreshTeamScore();
+                  G.rankInGame.refreshTeamScore();
                 }
                 var t = this.interface_.refreshTop3();
                 t > 0 && (this.myRank = t);
@@ -29488,6 +30752,10 @@ var c_hasPressedCtrlRKey = false;
                       this.pathingArray[d.x][d.y] &&
                       (this.pathingArray[d.x][d.y] = 11));
                 }
+                for (var c = 0, g = this.buildings; c < g.length; c++) {
+                  var u = g[c];
+                  u.isAlive && u.occupy(this.pathingArray);
+                }
               }),
               (e.prototype.addCircle = function (e, t, i) {
                 this._whiteCircles.push({
@@ -29601,8 +30869,8 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.updateBotDebugHover = function () {
                 for (
-                  var e = (0, I.getMouseGamePlayX)(),
-                    t = (0, I.getMouseGamePlayY)(),
+                  var e = (0, E.getMouseGamePlayX)(),
+                    t = (0, E.getMouseGamePlayY)(),
                     i = -1,
                     a = 1.2,
                     n = 0,
@@ -29919,8 +31187,8 @@ var c_hasPressedCtrlRKey = false;
                   (m = o[n]).type.img2 && (i = 2);
                 }
                 ((this.groundCanvasses.length = 0),
-                  (oe.width = 16 * (this.groundMaxX - this.groundMinX)),
-                  (oe.height = 16 * (this.groundMaxY - this.groundMinY)));
+                  (he.width = 16 * (this.groundMaxX - this.groundMinX)),
+                  (he.height = 16 * (this.groundMaxY - this.groundMinY)));
                 for (var r = 1; r <= i; r++) {
                   var s = document.createElement("canvas"),
                     l = s.getContext("2d");
@@ -29944,7 +31212,7 @@ var c_hasPressedCtrlRKey = false;
                           16,
                           16,
                         ),
-                          re.drawImage(
+                          de.drawImage(
                             a.imgs.normalMap,
                             m.img.x,
                             m.img.y,
@@ -29980,7 +31248,7 @@ var c_hasPressedCtrlRKey = false;
                             16,
                             16,
                           ),
-                            re.drawImage(
+                            de.drawImage(
                               a.imgs.normalMap,
                               m.img.x,
                               m.img.y,
@@ -30014,7 +31282,7 @@ var c_hasPressedCtrlRKey = false;
                       u.w,
                       u.h,
                     ),
-                      re.drawImage(
+                      de.drawImage(
                         a.imgs.normalMap,
                         u.x,
                         u.y,
@@ -30096,7 +31364,7 @@ var c_hasPressedCtrlRKey = false;
                   (this.playingPlayerZombieKillStreak = 0),
                   (this.playingPlayerEnergy = o.CONST.START_ENERGY),
                   (this.playingPlayerCountActiveHeatseeking2Missiles = 0),
-                  (k.Input.activeAbility = null),
+                  (F.Input.activeAbility = null),
                   (this.showEnemiesOnMinimapUntil = -999),
                   (this.lastAbilityUses = [-9999, -9999, -9999]),
                   (this.noShootUntil = -999));
@@ -30110,15 +31378,15 @@ var c_hasPressedCtrlRKey = false;
                   a = null !== i ? i.playerStride : 28,
                   r = null !== i ? (0, m.initFieldOffset)(i.layout) : 0;
                 if (
-                  ((0, Q.hidePopup)("account"),
-                  U.Skin_.close(),
+                  ((0, ie.hidePopup)("account"),
+                  z.Skin_.close(),
                   w.CustomBuild.close(),
-                  X.homeScreen.hideWindow(),
-                  (0, Q.hideAd)(),
-                  j.bottomBar.hide(),
-                  V.resourceBar.hide(),
-                  q.UI.refreshMenuButtons(),
-                  Z.socialService.hideChatWindowAndFriendList(),
+                  $.homeScreen.hideWindow(),
+                  (0, ie.hideAd)(),
+                  V.bottomBar.hide(),
+                  Q.resourceBar.hide(),
+                  X.UI.refreshMenuButtons(),
+                  K.socialService.hideChatWindowAndFriendList(),
                   null !== i && i.layout === m.ReplayLayout.MapAtThree)
                 ) {
                   var s = parseInt(e[2]);
@@ -30135,8 +31403,8 @@ var c_hasPressedCtrlRKey = false;
                     (this.ticksCounter = parseInt(e[4 + r])),
                     (this.scoreTeam1 = parseInt(e[5 + r])),
                     (this.scoreTeam2 = parseInt(e[6 + r])));
-                (this.type.lives && W.Sound.playSound("ladder_start"),
-                  R.rankInGame.init());
+                (this.type.lives && q.Sound.playSound("ladder_start"),
+                  G.rankInGame.init());
                 var h = [];
                 if (this.map.ammo)
                   for (var d = 0; d < this.map.ammo.length; d++) {
@@ -30191,11 +31459,11 @@ var c_hasPressedCtrlRKey = false;
                     E = "1" === C[S + 23],
                     k = "1" === C[S + 24],
                     L = parseInt(C[S + 17]),
-                    F = parseInt(C[S + 27]);
+                    A = parseInt(C[S + 27]);
                   (a <= 26 &&
-                    ((F = 2), 4 === L ? (F = 100) : L >= 6 && (F = 200)),
+                    ((A = 2), 4 === L ? (A = 100) : L >= 6 && (A = 200)),
                     this.players.push(
-                      new B.Player(
+                      new H.Player(
                         this,
                         parseInt(C[S]),
                         b,
@@ -30223,89 +31491,90 @@ var c_hasPressedCtrlRKey = false;
                         E,
                         k,
                         parseInt(C[S + 25]),
-                        F,
+                        A,
                       ),
                     ));
                 }
-                var N = this._initSegment(y, f.zombies);
-                for (S = 0; S < N.length - 5; S += 11) {
-                  ((b = parseFloat(N[S + 1]) / o.CONST.TRANSMUL),
-                    (_ = parseFloat(N[S + 2]) / o.CONST.TRANSMUL),
-                    (I = parseFloat(N[S + 4]) / o.CONST.TRANSMUL),
-                    (M = parseFloat(N[S + 5]) / o.CONST.TRANSMUL));
+                var F = this._initSegment(y, f.zombies);
+                for (S = 0; S + 11 < F.length; S += 12) {
+                  ((b = parseFloat(F[S + 1]) / o.CONST.TRANSMUL),
+                    (_ = parseFloat(F[S + 2]) / o.CONST.TRANSMUL),
+                    (I = parseFloat(F[S + 4]) / o.CONST.TRANSMUL),
+                    (M = parseFloat(F[S + 5]) / o.CONST.TRANSMUL));
                   this.zombies.push(
-                    new te.Zombie(
+                    new ne.Zombie(
                       this,
-                      parseInt(N[S]),
+                      parseInt(F[S]),
                       b,
                       _,
-                      parseFloat(N[S + 3]),
+                      parseFloat(F[S + 3]),
                       I,
                       M,
-                      parseFloat(N[S + 6]),
-                      parseFloat(N[S + 7]),
-                      parseFloat(N[S + 8]),
-                      parseFloat(N[S + 9]),
+                      parseFloat(F[S + 6]),
+                      parseFloat(F[S + 7]),
+                      parseFloat(F[S + 8]),
+                      parseFloat(F[S + 9]),
                       0,
-                      N[S + 10],
+                      F[S + 10],
+                      parseInt(F[S + 11]) || 0,
                     ),
                   );
                 }
-                var O = this._initSegment(y, f.items);
-                for (S = 0; S < O.length - 1; S += 2)
+                var P = this._initSegment(y, f.items);
+                for (S = 0; S < P.length - 1; S += 2)
                   for (d = 0; d < h.length; d++)
-                    h[d].id === parseInt(O[S]) &&
+                    h[d].id === parseInt(P[S]) &&
                       ((h[d].isActive = !1),
                       (h[d].respawnAt =
-                        this.ticksCounter + parseInt(O[S + 1]) - 2),
+                        this.ticksCounter + parseInt(P[S + 1]) - 2),
                       (d = h.length));
-                var G = this._initSegment(y, f.objects);
-                for (S = 0; S < G.length - 5; S += 10) {
-                  var z = G[S + 9].split("_"),
-                    Y = parseInt(z[0]),
-                    $ = z.length > 1 ? parseInt(z[1]) : void 0;
+                var B = this._initSegment(y, f.objects);
+                for (S = 0; S < B.length - 5; S += 10) {
+                  var O = B[S + 9].split("_"),
+                    U = parseInt(O[0]),
+                    Y = O.length > 1 ? parseInt(O[1]) : void 0;
                   this.objects.push(
-                    new D.Object_(
+                    new R.Object_(
                       this,
-                      parseInt(G[S]),
-                      this.getPlayerFromID(parseInt(G[S + 4])),
-                      n.abilities[parseInt(G[S + 3])],
-                      parseFloat(G[S + 1]),
-                      parseFloat(G[S + 2]),
-                      parseFloat(G[S + 5]),
-                      parseFloat(G[S + 6]),
-                      parseInt(G[S + 7]),
-                      parseFloat(G[S + 8]),
+                      parseInt(B[S]),
+                      this.getPlayerFromID(parseInt(B[S + 4])),
+                      n.abilities[parseInt(B[S + 3])],
+                      parseFloat(B[S + 1]),
+                      parseFloat(B[S + 2]),
+                      parseFloat(B[S + 5]),
+                      parseFloat(B[S + 6]),
+                      parseInt(B[S + 7]),
+                      parseFloat(B[S + 8]),
+                      U,
+                      0,
+                      0,
                       Y,
-                      0,
-                      0,
-                      $,
                     ),
                   );
                 }
                 if (y[5]) {
-                  var J = this._initSegment(y, f.movable);
-                  for (S = 0; S < J.length - 5; S += 7) {
-                    ((b = parseFloat(J[S + 1]) / o.CONST.TRANSMUL),
-                      (_ = parseFloat(J[S + 2]) / o.CONST.TRANSMUL),
-                      (I = parseFloat(J[S + 3]) / o.CONST.TRANSMUL),
-                      (M = parseFloat(J[S + 4]) / o.CONST.TRANSMUL));
-                    var ie = parseFloat(J[S + 6]);
+                  var j = this._initSegment(y, f.movable);
+                  for (S = 0; S < j.length - 5; S += 7) {
+                    ((b = parseFloat(j[S + 1]) / o.CONST.TRANSMUL),
+                      (_ = parseFloat(j[S + 2]) / o.CONST.TRANSMUL),
+                      (I = parseFloat(j[S + 3]) / o.CONST.TRANSMUL),
+                      (M = parseFloat(j[S + 4]) / o.CONST.TRANSMUL));
+                    var Z = parseFloat(j[S + 6]);
                     this.movableObjects.push(
-                      new P.MovableObject(
+                      new D.MovableObject(
                         this,
-                        parseInt(J[S]),
+                        parseInt(j[S]),
                         b,
                         _,
                         I,
                         M,
-                        c.tileTypes[parseInt(J[S + 5])],
-                        ie,
+                        c.tileTypes[parseInt(j[S + 5])],
+                        Z,
                       ),
                     );
                   }
                 }
-                (this.replayMode || R.rankInGame.show(),
+                (this.replayMode || G.rankInGame.show(),
                   -1 !== e[11] &&
                     this.redFlag &&
                     ((this.redFlag.carriedBy = this.getHumanoidFromID(e[11])),
@@ -30315,17 +31584,17 @@ var c_hasPressedCtrlRKey = false;
                     ((this.blueFlag.carriedBy = this.getHumanoidFromID(e[12])),
                     (this.blueFlag.isActive = !1)),
                   (this.id = e[13]));
-                var ae = Date.now();
-                H.root.preStore.pid &&
-                  H.root.preStore.pid.time + 5e3 > ae &&
-                  this.setPlayingPlayerID(H.root.preStore.pid.value);
-                for (S = 0; H.root.preStore.newPlayers.length; S++)
-                  H.root.preStore.newPlayers[S].time + 5e3 > ae &&
-                    this.newPlayer(H.root.preStore.newPlayers[S].value);
-                for (S = 0; H.root.preStore.newZombies.length; S++)
-                  H.root.preStore.newZombies[S].time + 5e3 > ae &&
-                    this.newZombie(H.root.preStore.newZombies[S].value);
-                ((H.root.preStore = {
+                var ee = Date.now();
+                W.root.preStore.pid &&
+                  W.root.preStore.pid.time + 5e3 > ee &&
+                  this.setPlayingPlayerID(W.root.preStore.pid.value);
+                for (S = 0; W.root.preStore.newPlayers.length; S++)
+                  W.root.preStore.newPlayers[S].time + 5e3 > ee &&
+                    this.newPlayer(W.root.preStore.newPlayers[S].value);
+                for (S = 0; W.root.preStore.newZombies.length; S++)
+                  W.root.preStore.newZombies[S].time + 5e3 > ee &&
+                    this.newZombie(W.root.preStore.newZombies[S].value);
+                ((W.root.preStore = {
                   newPlayers: [],
                   newZombies: [],
                   pid: { time: -999, value: -999 },
@@ -30334,16 +31603,16 @@ var c_hasPressedCtrlRKey = false;
                   document.getElementById("rankTableTitle") &&
                     (document.getElementById("rankTableTitle").innerHTML =
                       this.map.name),
-                  this.map !== A.map1 &&
+                  this.map !== N.map1 &&
                     (this.interface_.addMsg(
-                      "[" + ee.lang.get("game.msg.chat.tip") + "]",
+                      "[" + ae.lang.get("game.msg.chat.tip") + "]",
                       "#8CD882",
                     ),
                     this.type.startMsg &&
                       this.interface_.addMsg(this.type.startMsg, "#8CD882")),
                   void 0 !== y[7] &&
                     y[7].search("yas") >= 0 &&
-                    K.ladderRoomsListScreen.onJoin_());
+                    J.ladderRoomsListScreen.onJoin_());
               }),
               (e.prototype.getLightEmittingObjects = function () {
                 for (var e = [], t = 0, i = this._torches; t < i.length; t++) {
@@ -30358,7 +31627,7 @@ var c_hasPressedCtrlRKey = false;
                 }
                 for (var n = 0, o = this.projectiles; n < o.length; n++) {
                   var r = o[n];
-                  r instanceof O.Projectile &&
+                  r instanceof U.Projectile &&
                     0 === r.dieAt &&
                     e.push({
                       x:
@@ -30375,27 +31644,27 @@ var c_hasPressedCtrlRKey = false;
                 return e;
               }),
               (e.prototype.updateVisionCanvas = function (e) {
-                ((ie.width = ie.width),
-                  (ae.fillStyle = "rgba(0, 0, 0, .2)"),
-                  ae.fillRect(0, 0, ie.width, ie.height),
-                  (ae.globalCompositeOperation = "lighten"),
-                  ae.beginPath());
+                ((re.width = re.width),
+                  (se.fillStyle = "rgba(0, 0, 0, .2)"),
+                  se.fillRect(0, 0, re.width, re.height),
+                  (se.globalCompositeOperation = "lighten"),
+                  se.beginPath());
                 for (var t = 0, i = e; t < i.length; t++) {
                   var a = i[t],
                     n = a.fields;
-                  ae.moveTo(4 * (n[0].x + 4), 4 * (n[0].y + 4));
+                  se.moveTo(4 * (n[0].x + 4), 4 * (n[0].y + 4));
                   for (var o = 1; o < n.length; o++)
                     n[o].m && n[o - 1].m
-                      ? ae.arc(
+                      ? se.arc(
                           4 * (a.unit.x + 4),
                           4 * (a.unit.y + 4),
                           4 * a.unit.v,
                           n[o - 1].a,
                           n[o].a,
                         )
-                      : ae.lineTo(4 * (n[o].x + 4), 4 * (n[o].y + 4));
-                  ae.closePath();
-                  var r = ae.createRadialGradient(
+                      : se.lineTo(4 * (n[o].x + 4), 4 * (n[o].y + 4));
+                  se.closePath();
+                  var r = se.createRadialGradient(
                     4 * (a.unit.x + 4),
                     4 * (a.unit.y + 4),
                     4,
@@ -30405,10 +31674,10 @@ var c_hasPressedCtrlRKey = false;
                   );
                   (r.addColorStop(0, a.unit.c1),
                     r.addColorStop(1, a.unit.c2),
-                    (ae.fillStyle = r),
-                    ae.fill());
+                    (se.fillStyle = r),
+                    se.fill());
                 }
-                ae.globalCompositeOperation = "source-over";
+                se.globalCompositeOperation = "source-over";
               }),
               (e.prototype.emote = function (e, t) {
                 var i = this.getHumanoidFromID(e),
@@ -30461,9 +31730,9 @@ var c_hasPressedCtrlRKey = false;
                 ) {
                   var r = e[n];
                   (!Number.isInteger(r) &&
-                    r in me &&
-                    (n++, (i = r), (a = me[r])),
-                    i in ge && ge[i](this, parseInt(e[n]), e, n));
+                    r in pe &&
+                    (n++, (i = r), (a = pe[r])),
+                    i in fe && fe[i](this, parseInt(e[n]), e, n));
                 }
               }),
               (e.prototype._applyUpdPositions = function (e, t) {
@@ -30485,21 +31754,21 @@ var c_hasPressedCtrlRKey = false;
                 return i;
               }),
               (e.prototype.receiveUpdateBinary = function (e) {
-                this.receiveUpdate(de, e);
+                this.receiveUpdate(ue, e);
               }),
               (e.prototype.receiveUpdate = function (e, t) {
                 var i =
                     this.ticksCounter < 0 ? this.roundTime : this.ticksCounter,
                   a = Date.now();
-                H.root.leavingGame &&
+                W.root.leavingGame &&
                   (document.getElementById("floatTipContent").innerHTML =
-                    ee.lang.get("msg.leave_game", {
+                    ae.lang.get("msg.leave_game", {
                       seconds: Math.max(
                         Math.ceil(
                           5 -
                             0.05 *
                               (this.ticksCounter -
-                                H.root.startLeavingGameTicksCounter),
+                                W.root.startLeavingGameTicksCounter),
                         ),
                         0,
                       ),
@@ -30511,7 +31780,7 @@ var c_hasPressedCtrlRKey = false;
                   var l = this._applyUpdPositions(r, r.getUint16(6, !0));
                   l < t.byteLength &&
                     this._applyUpdChannels(
-                      he.decode(t.subarray(l)).split("$"),
+                      ge.decode(t.subarray(l)).split("$"),
                       1,
                     );
                 } else this._applyUpdChannels(e, 2);
@@ -30600,15 +31869,15 @@ var c_hasPressedCtrlRKey = false;
                     this.roundEnd(),
                   -1 === this.ticksCounter || (this.lastUpdate = a),
                   this.ticksCounter % 50 === this._pingRandomizer &&
-                    (N.Network.send("ping"), (N.Network.lastTimePingSent = a)),
+                    (O.Network.send("ping"), (O.Network.lastTimePingSent = a)),
                   !this.type.lives ||
                     (40 !== this.ticksCounter &&
                       60 !== this.ticksCounter &&
                       80 !== this.ticksCounter) ||
-                    W.Sound.playSound("tick"),
+                    q.Sound.playSound("tick"),
                   this.type.lives &&
                     100 === this.ticksCounter &&
-                    W.Sound.playSound("ladder_gong"),
+                    q.Sound.playSound("ladder_gong"),
                   this.interface_.onTick(this.ticksCounter));
               }),
               (e.prototype.sortObjectsToDraw = function () {
@@ -30645,7 +31914,20 @@ var c_hasPressedCtrlRKey = false;
                 )
                   for (var s = 0, l = e.noGridTiles; s < l.length; s++) {
                     ((a = l[s]), (n = this.createTile(a)));
-                    new Y.Tile(n.x, n.y, n.type, this);
+                    new Z.Tile(n.x, n.y, n.type, this);
+                  }
+                if (((this.buildings.length = 0), e.buildings))
+                  for (var h = 0; h < e.buildings.length; h++) {
+                    var d = S.buildingTypes[e.buildings[h].type];
+                    d &&
+                      this.buildings.push(
+                        new v.Building(
+                          this,
+                          S.BUILDING_ID_BASE + h,
+                          e.buildings[h],
+                          d,
+                        ),
+                      );
                   }
               }),
               (e.prototype.torchesEmitFire = function () {
@@ -30657,7 +31939,7 @@ var c_hasPressedCtrlRKey = false;
                       i.x - 5 <= this.cameraX2 &&
                       i.y - 5 <= this.cameraY2 &&
                       (Math.random() < 0.02 &&
-                        new _.Flare(
+                        new I.Flare(
                           this,
                           i.x + 0.5 + i.offsetX,
                           i.y + i.offsetY,
@@ -30668,10 +31950,10 @@ var c_hasPressedCtrlRKey = false;
                           this.ticksCounter +
                           f.graphics[f.options.graphicSettings].torchEmitTime +
                           Math.floor(2 * Math.random())),
-                        new z.Sprite(this, {
+                        new j.Sprite(this, {
                           x: i.x + 0.5 + 0.2 * Math.random() - 0.1 + i.offsetX,
                           y: i.y + 0.2 * Math.random() + i.offsetY,
-                          img: E.imgCoords.light_yellow,
+                          img: A.imgCoords.light_yellow,
                           scaleFunction: function (e) {
                             return (
                               4.3 *
@@ -30709,7 +31991,7 @@ var c_hasPressedCtrlRKey = false;
                     this._fairies.length < i;
                   )
                     this._fairies.push(
-                      new v.Fairy(
+                      new b.Fairy(
                         this,
                         Math.random() * this.map.x,
                         Math.random() * this.map.y,
@@ -30728,10 +32010,10 @@ var c_hasPressedCtrlRKey = false;
                     ) {
                       var i = Math.random() * Math.PI * 2,
                         a = 0.7 * Math.random();
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: l.x + Math.cos(i) * a,
                         y: l.y - 0.3 + Math.sin(i) * a,
-                        img: E.imgCoords.particleWhite,
+                        img: A.imgCoords.particleWhite,
                         scaleFunction: function (e) {
                           return this.r3;
                         },
@@ -30757,10 +32039,10 @@ var c_hasPressedCtrlRKey = false;
                     ) {
                       ((i = Math.random() * Math.PI * 2),
                         (a = 0.7 * Math.random()));
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: l.x + Math.cos(i) * a * 0.3,
                         y: l.y - 0.3 + Math.sin(i) * a * 0.3,
-                        img: E.imgCoords.particlePurple,
+                        img: A.imgCoords.particlePurple,
                         scaleFunction: function (e) {
                           return this.r3;
                         },
@@ -30795,10 +32077,10 @@ var c_hasPressedCtrlRKey = false;
                     ) {
                       ((i = Math.random() * Math.PI * 2),
                         (a = 0.7 * Math.random()));
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: l.x + Math.cos(i) * a,
                         y: l.y - 1.1 + Math.sin(i) * a,
-                        img: E.imgCoords.pillar_of_light,
+                        img: A.imgCoords.pillar_of_light,
                         scaleFunction: function (e) {
                           return this.r4 + 0.04 * e;
                         },
@@ -30815,12 +32097,12 @@ var c_hasPressedCtrlRKey = false;
                   }
               }),
               (e.prototype.roundStart = function () {
-                (W.Sound.playSound("start"),
-                  (this.interface_ = new L.Interface_(this, this.map)),
+                (q.Sound.playSound("start"),
+                  (this.interface_ = new P.Interface_(this, this.map)),
                   this.type.team &&
                     ((this.scoreTeam1 = 0),
                     (this.scoreTeam2 = 0),
-                    R.rankInGame.refreshTeamScore()));
+                    G.rankInGame.refreshTeamScore()));
                 for (var e = 0; e < this.projectiles.length; e++)
                   ((0, s.deleteFromArray)(
                     this.objectsToDraw,
@@ -30891,7 +32173,7 @@ var c_hasPressedCtrlRKey = false;
                   S &&
                     S.movable &&
                     this.movableObjects.push(
-                      new P.MovableObject(
+                      new D.MovableObject(
                         this,
                         f++,
                         v.x + 0.5,
@@ -30923,73 +32205,81 @@ var c_hasPressedCtrlRKey = false;
                   (M = I[C]).lastSpawnTick && (M.lastSpawnTick = -99999);
                 }
                 (this.setNextMaps({}),
-                  R.rankInGame.hide(),
-                  J.result.hide(),
-                  (0, Q.hideAd)(),
-                  q.UI.hideDeathScreen());
+                  G.rankInGame.hide(),
+                  te.result.hide(),
+                  (0, ie.hideAd)(),
+                  X.UI.hideDeathScreen());
               }),
               (e.prototype.roundEnd = function () {
                 var e = null,
                   t = 0;
-                if (this.type.winningCondition && !this.type.team)
-                  for (var i = 0, a = this.players; i < a.length; i++) {
-                    var n = a[i];
-                    if (n[this.type.winningCondition] > t)
-                      ((t = n[this.type.winningCondition]), (e = n));
+                if (this.type.shrines) {
+                  var i = this.buildings.some(function (e) {
+                    return e.isAlive && 1 === e.team;
+                  });
+                  ((this.victoryMsg = ae.lang.get(
+                    i ? "game.msg.survival.win" : "game.msg.survival.lose",
+                  )),
+                    q.Sound.playSound(i ? "win" : "lose"));
+                } else if (this.type.winningCondition && !this.type.team)
+                  for (var a = 0, n = this.players; a < n.length; a++) {
+                    var o = n[a];
+                    if (o[this.type.winningCondition] > t)
+                      ((t = o[this.type.winningCondition]), (e = o));
                     else if (this.type.coopZombieMode) {
                       for (
-                        var o = 0, r = "", s = 0, l = this.players;
-                        s < l.length;
-                        s++
+                        var r = 0, s = "", l = 0, h = this.players;
+                        l < h.length;
+                        l++
                       ) {
-                        var h = l[s];
-                        h.isHumanZombie || h.dieAt || (o++, (r = h.name));
+                        var d = h[l];
+                        d.isHumanZombie || d.dieAt || (r++, (s = d.name));
                       }
-                      if (1 === o) this.victoryMsg = r + " wins";
-                      else if (0 === o)
-                        this.victoryMsg = ee.lang.get("game.msg.win", {
-                          winnerName: ee.lang.get("game.stats.zombies.name"),
+                      if (1 === r) this.victoryMsg = s + " wins";
+                      else if (0 === r)
+                        this.victoryMsg = ae.lang.get("game.msg.win", {
+                          winnerName: ae.lang.get("game.stats.zombies.name"),
                         });
-                      else if (o > 0) {
+                      else if (r > 0) {
                         for (
-                          var d = -999, m = null, c = 0, g = this.players;
-                          c < g.length;
-                          c++
+                          var m = -999, c = null, g = 0, u = this.players;
+                          g < u.length;
+                          g++
                         ) {
-                          var u = g[c];
-                          !u.isHumanZombie &&
-                            !u.dieAt &&
-                            u.souls > d &&
-                            (d = (m = u).souls);
+                          var p = u[g];
+                          !p.isHumanZombie &&
+                            !p.dieAt &&
+                            p.souls > m &&
+                            (m = (c = p).souls);
                         }
-                        this.victoryMsg = m.name + " wins";
+                        this.victoryMsg = c.name + " wins";
                       } else
-                        this.victoryMsg = ee.lang.get("game.msg.win", {
-                          winnerName: ee.lang.get("game.stats.zombies.name"),
+                        this.victoryMsg = ae.lang.get("game.msg.win", {
+                          winnerName: ae.lang.get("game.stats.zombies.name"),
                         });
                       !this.playingPlayer ||
-                      (1 === this.playingPlayer.team && o > 0) ||
-                      (2 === this.playingPlayer.team && 0 === o)
-                        ? W.Sound.playSound("win")
-                        : W.Sound.playSound("lose");
+                      (1 === this.playingPlayer.team && r > 0) ||
+                      (2 === this.playingPlayer.team && 0 === r)
+                        ? q.Sound.playSound("win")
+                        : q.Sound.playSound("lose");
                     } else
                       (this.type.team && this.scoreTeam1 > this.scoreTeam2
-                        ? (this.victoryMsg = ee.lang.get("game.msg.win", {
-                            winnerName: ee.lang.get("game.stats.team1.name"),
+                        ? (this.victoryMsg = ae.lang.get("game.msg.win", {
+                            winnerName: ae.lang.get("game.stats.team1.name"),
                           }))
                         : this.type.team && this.scoreTeam2 > this.scoreTeam1
-                          ? (this.victoryMsg = ee.lang.get("game.msg.win", {
-                              winnerName: ee.lang.get("game.stats.team2.name"),
+                          ? (this.victoryMsg = ae.lang.get("game.msg.win", {
+                              winnerName: ae.lang.get("game.stats.team2.name"),
                             }))
                           : this.type.team
-                            ? (this.victoryMsg = ee.lang.get("game.msg.draw"))
+                            ? (this.victoryMsg = ae.lang.get("game.msg.draw"))
                             : (this.victoryMsg = e
-                                ? ee.lang.get("game.msg.win_with_reason", {
+                                ? ae.lang.get("game.msg.win_with_reason", {
                                     winnerName: e.name,
                                     reason:
                                       t +
                                       " " +
-                                      ee.lang.get(
+                                      ae.lang.get(
                                         this.type.winningConditionLabel,
                                       ),
                                   })
@@ -30999,27 +32289,27 @@ var c_hasPressedCtrlRKey = false;
                           1 === this.playingPlayer.team &&
                           this.scoreTeam1 > this.scoreTeam2) ||
                         e === this.playingPlayer
-                          ? W.Sound.playSound("win")
+                          ? q.Sound.playSound("win")
                           : this.type.team &&
                               this.playingPlayer &&
                               1 === this.playingPlayer.team &&
                               this.scoreTeam2 > this.scoreTeam1
-                            ? W.Sound.playSound("lose")
-                            : W.Sound.playSound("end"));
+                            ? q.Sound.playSound("lose")
+                            : q.Sound.playSound("end"));
                   }
-                (R.rankInGame.show(this.playingPlayerID > 0),
+                (G.rankInGame.show(this.playingPlayerID > 0),
                   this.interface_.onRoundEnd());
               }),
               (e.prototype.setNextMaps = function (e) {
                 ((this._nextMaps = e),
-                  R.rankInGame_mapList.setMaps(Object.values(e)));
+                  G.rankInGame_mapList.setMaps(Object.values(e)));
               }),
               (e.prototype.voteNextMap = function (e, t) {
                 var i = this._nextMaps[e];
                 i &&
                   (i.votes++,
                   t === f.playerData.server_client_id && (i.voted = !0),
-                  R.rankInGame_mapList.setVoted(i));
+                  G.rankInGame_mapList.setVoted(i));
               }),
               (e.prototype.getFlagText = function () {
                 if (!this.redFlag || !this.blueFlag) return null;
@@ -31046,7 +32336,7 @@ var c_hasPressedCtrlRKey = false;
                   this.type.convertTime &&
                   this.ticksCounter < this.type.convertTime
                 )
-                  return ee.lang.get("game.msg.zombie_prep", {
+                  return ae.lang.get("game.msg.zombie_prep", {
                     sec: Math.floor(
                       (this.type.convertTime - this.ticksCounter) / 20,
                     ),
@@ -31054,9 +32344,9 @@ var c_hasPressedCtrlRKey = false;
                 if (this.playingPlayer && this.playingPlayer.isHumanZombie) {
                   var e = 2 - this.playingPlayerZombieKillStreak;
                   return this.cureTick
-                    ? ee.lang.get("game.msg.zombie_cure")
+                    ? ae.lang.get("game.msg.zombie_cure")
                     : e > 0
-                      ? ee.lang.get("game.msg.zombie_zombie", { num: e })
+                      ? ae.lang.get("game.msg.zombie_zombie", { num: e })
                       : "";
                 }
                 var t = 0,
@@ -31067,7 +32357,7 @@ var c_hasPressedCtrlRKey = false;
                       ? i++
                       : this.players[a].id && t++);
                 }
-                return ee.lang.get("game.msg.zombie_human", {
+                return ae.lang.get("game.msg.zombie_human", {
                   human: t,
                   zombie: i,
                 });
@@ -31110,7 +32400,7 @@ var c_hasPressedCtrlRKey = false;
                     var r = o[n];
                     if (
                       !(
-                        r instanceof te.Zombie &&
+                        r instanceof ne.Zombie &&
                         r.masterId === this.playingPlayer.id
                       ) &&
                       !(
@@ -31168,10 +32458,10 @@ var c_hasPressedCtrlRKey = false;
                       t.x - 3 <= this.cameraX2 &&
                       t.y - 3 <= this.cameraY2 &&
                       !this.fastForward &&
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: t.x + 0.5 * Math.random() - 0.25,
                         y: t.y + 0.5 + 0.5 * Math.random(),
-                        img: E.imgCoords.heal,
+                        img: A.imgCoords.heal,
                         scaleFunction: function (e) {
                           return (
                             -1 * (1 / ((0.9 * e - 125) / 500 + 0.31) + e / 4) +
@@ -31193,10 +32483,10 @@ var c_hasPressedCtrlRKey = false;
                       i.x - 3 <= this.cameraX2 &&
                       i.y - 3 <= this.cameraY2 &&
                       !this.fastForward &&
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: i.x + 0.5 * Math.random() - 0.25,
                         y: i.y + 0.5 + 0.5 * Math.random(),
-                        img: E.imgCoords.heal,
+                        img: A.imgCoords.heal,
                         scaleFunction: function (e) {
                           return (
                             -1 * (1 / ((0.9 * e - 125) / 500 + 0.31) + e / 4) +
@@ -31221,7 +32511,7 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.playerShoots = function (e, t, i) {
                 var a = g.weapons[t];
                 (a.dummyFor && (t = (a = g.weapons[a.dummyFor]).id),
-                  e instanceof te.Zombie ||
+                  e instanceof ne.Zombie ||
                     ((e.lastTickFire = this.ticksCounter),
                     (e.noInvisUntil = this.ticksCounter + 40),
                     (e.invincibleUntil = -99999)),
@@ -31238,7 +32528,7 @@ var c_hasPressedCtrlRKey = false;
                   a += 5
                 )
                   this.projectiles.push(
-                    new O.Projectile(
+                    new U.Projectile(
                       this,
                       parseFloat(e[a + 1]),
                       parseFloat(e[a + 2]),
@@ -31270,7 +32560,7 @@ var c_hasPressedCtrlRKey = false;
                   !this.fastForward
                 ) {
                   (t.soundName &&
-                    W.Sound.playSound(
+                    q.Sound.playSound(
                       t.soundName,
                       n,
                       o,
@@ -31280,10 +32570,10 @@ var c_hasPressedCtrlRKey = false;
                       f.graphics[f.options.graphicSettings].spawnBullets &&
                       new y.Bullet(this, n, o));
                   for (a = 1; a < 5; a++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: n + 0.3 * Math.random() - 0.15,
                       y: o - this.SHOT_HEIGHT + 0.3 * Math.random() - 0.15,
-                      img: E.imgCoords.dust1,
+                      img: A.imgCoords.dust1,
                       scaleFunction: function (e) {
                         return this.r4 - 0.01 * e;
                       },
@@ -31313,10 +32603,10 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (a = 1; a < 3; a++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: n + r + 0.3 * Math.random() - 0.15,
                       y: o + s - this.SHOT_HEIGHT + 0.3 * Math.random() - 0.15,
-                      img: E.imgCoords.dust1,
+                      img: A.imgCoords.dust1,
                       scaleFunction: function (e) {
                         return this.r4 - 0.01 * e;
                       },
@@ -31346,10 +32636,10 @@ var c_hasPressedCtrlRKey = false;
                       },
                     });
                   for (a = 1; a < 3; a++)
-                    new z.Sprite(this, {
+                    new j.Sprite(this, {
                       x: n + r + 0.3 * Math.random() - 0.15,
                       y: o + s - this.SHOT_HEIGHT + 0.3 * Math.random() - 0.15,
-                      img: E.imgCoords.dust1,
+                      img: A.imgCoords.dust1,
                       scaleFunction: function (e) {
                         return this.r4 - 0.01 * e;
                       },
@@ -31381,16 +32671,15 @@ var c_hasPressedCtrlRKey = false;
                 }
               }),
               (e.prototype.newObject = function (e) {
-                var t,
-                  i = this.getPlayerFromID(parseInt(e[5])),
-                  a = n.abilities[parseInt(e[4])];
+                var t = this.getPlayerFromID(parseInt(e[5])),
+                  i = n.abilities[parseInt(e[4])];
                 if (
                   (this.objects.push(
-                    new D.Object_(
+                    new R.Object_(
                       this,
                       parseInt(e[1]),
+                      t,
                       i,
-                      a,
                       parseFloat(e[2]),
                       parseFloat(e[3]),
                       parseFloat(e[8]),
@@ -31403,28 +32692,30 @@ var c_hasPressedCtrlRKey = false;
                       parseInt(e[12]),
                     ),
                   ),
-                  i === this.playingPlayer &&
-                    ((this.playingPlayerEnergy -=
-                      null !== (t = a.energy) && void 0 !== t ? t : 0),
-                    (this.lastAbilityUses[
-                      this.pl_active_abilities[0] === a ? 0 : 1
-                    ] = this.ticksCounter)),
-                  a.type === n.AbilityType.Throw &&
-                    (i.lastThrow = this.ticksCounter),
-                  a.type !== n.AbilityType.Throw &&
-                    i.x + 2 >= this.cameraX &&
-                    i.y + 2 >= this.cameraY &&
-                    i.x - 2 <= this.cameraX2 &&
-                    i.y - 2 <= this.cameraY2 &&
+                  t === this.playingPlayer &&
+                    void 0 === i.launches &&
+                    ((this.playingPlayerEnergy -= this.getAbilityFieldValue(
+                      i,
+                      "energy",
+                    )),
+                    (this.lastAbilityUses[this.abilitySlot(i)] =
+                      this.ticksCounter)),
+                  i.type === n.AbilityType.Throw &&
+                    (t.lastThrow = this.ticksCounter),
+                  i.type !== n.AbilityType.Throw &&
+                    t.x + 2 >= this.cameraX &&
+                    t.y + 2 >= this.cameraY &&
+                    t.x - 2 <= this.cameraX2 &&
+                    t.y - 2 <= this.cameraY2 &&
                     !this.fastForward)
                 )
-                  for (var o = 0; o < 9; o++) {
-                    var r = Math.random() * Math.PI * 2,
-                      s = 0.7 * Math.random();
-                    new z.Sprite(this, {
-                      x: i.x + Math.cos(r) * s,
-                      y: i.y - this.SHOT_HEIGHT + Math.sin(r) * s,
-                      img: E.imgCoords.particleWhite,
+                  for (var a = 0; a < 9; a++) {
+                    var o = Math.random() * Math.PI * 2,
+                      r = 0.7 * Math.random();
+                    new j.Sprite(this, {
+                      x: t.x + Math.cos(o) * r,
+                      y: t.y - this.SHOT_HEIGHT + Math.sin(o) * r,
+                      img: A.imgCoords.particleWhite,
                       scaleFunction: function (e) {
                         return this.r4;
                       },
@@ -31455,10 +32746,10 @@ var c_hasPressedCtrlRKey = false;
                       s = Math.sqrt(o * o + r * r);
                     ((o *= g.weapons[2].projectileSpeed / s),
                       (r *= g.weapons[2].projectileSpeed / s),
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: a,
                         y: n,
-                        img: E.imgCoords[
+                        img: A.imgCoords[
                           "fire" + (Math.floor(3 * Math.random()) + 2)
                         ],
                         scaleFunction: function (e) {
@@ -31479,10 +32770,10 @@ var c_hasPressedCtrlRKey = false;
                         dieOnCollision: !0,
                       }),
                       f.graphics[f.options.graphicSettings].additionalFTFire &&
-                        new z.Sprite(this, {
+                        new j.Sprite(this, {
                           x: a,
                           y: n,
-                          img: E.imgCoords[
+                          img: A.imgCoords[
                             "fire" + (Math.floor(3 * Math.random()) + 2)
                           ],
                           scaleFunction: function (e) {
@@ -31502,10 +32793,10 @@ var c_hasPressedCtrlRKey = false;
                           },
                           dieOnCollision: !0,
                         }),
-                      new z.Sprite(this, {
+                      new j.Sprite(this, {
                         x: a,
                         y: n + this.SHOT_HEIGHT,
-                        img: E.imgCoords.light_yellow,
+                        img: A.imgCoords.light_yellow,
                         scaleFunction: function (e) {
                           return 4;
                         },
@@ -31527,10 +32818,10 @@ var c_hasPressedCtrlRKey = false;
                         dieOnCollision: !0,
                       }),
                       f.graphics[f.options.graphicSettings].additionalFTFire &&
-                        new z.Sprite(this, {
+                        new j.Sprite(this, {
                           x: a,
                           y: n,
-                          img: E.imgCoords.dust1,
+                          img: A.imgCoords.dust1,
                           scaleFunction: function (e) {
                             return 1 + 0.2 * e;
                           },
@@ -31554,7 +32845,7 @@ var c_hasPressedCtrlRKey = false;
                   }
                 } else
                   (this.projectiles.push(
-                    new O.Projectile(
+                    new U.Projectile(
                       this,
                       parseFloat(e[1]),
                       parseFloat(e[2]),
@@ -31594,7 +32885,7 @@ var c_hasPressedCtrlRKey = false;
                 var t = this.getHumanoidFromID(parseFloat(e[8]));
                 if (
                   (this.grenades.push(
-                    new M.Grenade(
+                    new k.Grenade(
                       this,
                       parseFloat(e[1]),
                       parseFloat(e[2]),
@@ -31617,7 +32908,23 @@ var c_hasPressedCtrlRKey = false;
                         parseFloat(e[4]),
                       ),
                       (i = this.objects.length));
-                else t && this.playerShoots(t, parseInt(e[9]));
+                else if (t) {
+                  var a = g.weapons[parseInt(e[9])];
+                  if (void 0 !== a.spawnsObject) {
+                    t.lastThrow = this.ticksCounter;
+                    var o = n.abilities.find(function (e) {
+                      return e.launches === a.id;
+                    });
+                    void 0 !== o &&
+                      t === this.playingPlayer &&
+                      ((this.playingPlayerEnergy -= this.getAbilityFieldValue(
+                        o,
+                        "energy",
+                      )),
+                      (this.lastAbilityUses[this.abilitySlot(o)] =
+                        this.ticksCounter));
+                  } else this.playerShoots(t, parseInt(e[9]));
+                }
               }),
               (e.prototype.newPlayer = function (e) {
                 var t = parseFloat(e[2]) / o.CONST.TRANSMUL,
@@ -31627,7 +32934,7 @@ var c_hasPressedCtrlRKey = false;
                   r = parseInt(e[18]);
                 e.length < 19 &&
                   ((r = 2), 4 === n ? (r = 100) : n >= 6 && (r = 200));
-                var s = new B.Player(
+                var s = new H.Player(
                   this,
                   parseInt(e[1]),
                   t,
@@ -31659,7 +32966,7 @@ var c_hasPressedCtrlRKey = false;
                 );
                 (s.authLevel > o.AUTH_LEVEL.BOT &&
                   this.interface_.addMsg(
-                    ee.lang.get("game.msg.player_join", { playerName: s.name }),
+                    ae.lang.get("game.msg.player_join", { playerName: s.name }),
                     "#ACACAC",
                   ),
                   this.players.push(s),
@@ -31673,7 +32980,7 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.newZombie = function (e) {
                 var t = parseFloat(e[2]) / o.CONST.TRANSMUL,
                   i = parseFloat(e[3]) / o.CONST.TRANSMUL,
-                  a = new te.Zombie(
+                  a = new ne.Zombie(
                     this,
                     parseInt(e[1]),
                     t,
@@ -31687,13 +32994,14 @@ var c_hasPressedCtrlRKey = false;
                     parseFloat(e[8]),
                     parseInt(e[9]),
                     e[10],
+                    parseInt(e[11]) || 0,
                   );
                 (this.zombies.push(a), a.createSpawnEffect());
               }),
               (e.prototype.setPlayingPlayerID = function (e) {
                 ((this.playingPlayerID = e),
                   this.checkPlayingPlayer(),
-                  R.rankInGame.refreshPlaying());
+                  G.rankInGame.refreshPlaying());
               }),
               (e.prototype.checkPlayingPlayer = function () {
                 if (!this.iAmSpec)
@@ -31715,12 +33023,13 @@ var c_hasPressedCtrlRKey = false;
                                 : (0, n.getDefaultAbilityObj)(n.abilities),
                               n.abilities,
                             ))
-                          : (this.playingPlayerAbilities =
+                          : (this.playingPlayerAbilities = (0, n.copyBuild)(
                               f.playerData && f.playerData.authLevel >= 6
                                 ? f.playerData.abilities
-                                : (0, n.getDefaultAbilityObj)(n.abilities)),
-                        R.rankInGame.hide(),
-                        R.rankInGame.setPlayingPlayer(i),
+                                : (0, n.getDefaultAbilityObj)(n.abilities),
+                            )),
+                        G.rankInGame.hide(),
+                        G.rankInGame.setPlayingPlayer(i),
                         this.setActiveAbilities());
                       break;
                     }
@@ -31734,10 +33043,14 @@ var c_hasPressedCtrlRKey = false;
                     a.type !== n.AbilityType.Passive &&
                     this.playingPlayerAbilities[a.id] &&
                     this.playingPlayerAbilities[a.id].lvl > 0 &&
-                    ((this.pl_active_abilities[e] = a), ++e > 1)
+                    ((this.pl_active_abilities[e] = a), ++e > 2)
                   )
                     return;
                 }
+              }),
+              (e.prototype.abilitySlot = function (e) {
+                var t = null === e ? -1 : this.pl_active_abilities.indexOf(e);
+                return t < 0 ? 0 : t;
               }),
               (e.prototype.corpseBounce = function (e, t, i) {
                 for (
@@ -31792,13 +33105,13 @@ var c_hasPressedCtrlRKey = false;
                   if (a.id === parseInt(e[1])) {
                     (a.authLevel > o.AUTH_LEVEL.BOT &&
                       this.interface_.addMsg(
-                        ee.lang.get("game.msg.player_leave", {
+                        ae.lang.get("game.msg.player_leave", {
                           playerName: a.name,
                         }),
                         "#ACACAC",
                       ),
                       a.die(),
-                      R.rankInGame.removePlayer(a),
+                      G.rankInGame.removePlayer(a),
                       (a.removeAt = this.ticksCounter + 60));
                     break;
                   }
@@ -31833,11 +33146,11 @@ var c_hasPressedCtrlRKey = false;
                     a.id === parseInt(e[1]) &&
                     ((a.hp = parseFloat(e[2])),
                     (a.hitUntil = this.ticksCounter + 2),
-                    t && t instanceof te.Zombie && t.performHit(a),
+                    t && t instanceof ne.Zombie && t.performHit(a),
                     t &&
-                      (t instanceof te.Zombie ||
-                        (t instanceof B.Player && t.isHumanZombie)) &&
-                      W.Sound.playSound("mech_impact", a.x, a.y, 0.7),
+                      (t instanceof ne.Zombie ||
+                        (t instanceof H.Player && t.isHumanZombie)) &&
+                      q.Sound.playSound("mech_impact", a.x, a.y, 0.7),
                     a.hp <= 0 && (a.die(), this.objects.splice(i, 1)),
                     "1" === e[3])
                   )
@@ -31847,16 +33160,103 @@ var c_hasPressedCtrlRKey = false;
                     }
                 }
               }),
+              (e.prototype.reviveUpdate = function (e) {
+                var t = this.getPlayerFromID(parseInt(e[2]));
+                if (t) {
+                  var i = parseFloat(e[3]);
+                  t.reviveProgress = i >= 1 ? 0 : i;
+                }
+              }),
+              (e.prototype.survivalState = function (e) {
+                var t = this.survivalWaiting;
+                ((this.survivalWaiting = "1" === e[1]),
+                  (this.survivalDifficulty = parseInt(e[2])),
+                  (this.survivalHost = "1" === e[3]),
+                  (this.enemyHpMod = parseFloat(e[5]) || 1));
+                for (var i = 0, a = this.buildings; i < a.length; i++) {
+                  var n = a[i];
+                  1 !== n.team &&
+                    (n.maxHP = Math.round(n.type.hp * this.enemyHpMod));
+                }
+                if (
+                  (G.rankInGame.setSurvivalState(
+                    this.survivalWaiting,
+                    this.survivalDifficulty,
+                    this.survivalHost,
+                    e[4],
+                    e.slice(6),
+                  ),
+                  this.survivalWaiting && !t)
+                )
+                  G.rankInGame.show(!1);
+                else if (t) {
+                  G.rankInGame.hide();
+                  var o = oe.SURVIVAL_DIFFICULTIES[this.survivalDifficulty];
+                  this.interface_.addMsg(
+                    ae.lang.get("game.msg.survival.started", {
+                      hostName: e[4],
+                      difficulty: ae.lang.get(
+                        o ? o.langLabel : "rankInGame.survival.normal",
+                      ),
+                    }),
+                    "white",
+                  );
+                }
+              }),
+              (e.prototype.hpUpdateBuilding = function (e) {
+                for (
+                  var t = parseInt(e[1]), i = 0, a = this.buildings;
+                  i < a.length;
+                  i++
+                ) {
+                  var n = a[i];
+                  if (n.id === t) {
+                    if (
+                      (n.hpUpdate(parseFloat(e[2]), "-1" !== e[5]),
+                      "1" === e[3])
+                    )
+                      for (var o = 0, r = this.projectiles; o < r.length; o++) {
+                        var s = r[o];
+                        s.id === parseInt(e[4]) &&
+                          s.createHitEffect({ x: n.cx, y: n.cy });
+                      }
+                    if (void 0 !== e[6] && "-1" !== e[6]) {
+                      var l = this.getPlayerFromID(parseInt(e[5]));
+                      l && l.setSouls(parseInt(e[6]), n.cx, n.cy);
+                    }
+                    return;
+                  }
+                }
+              }),
+              (e.prototype.armMine = function (e) {
+                for (
+                  var t = parseInt(e[1]), i = 0, a = this.objects;
+                  i < a.length;
+                  i++
+                ) {
+                  var n = a[i];
+                  if (n.id === t) return void n.arm(parseInt(e[2]));
+                }
+              }),
+              (e.prototype.zap = function (e) {
+                var t = this.getHumanoidFromID(parseInt(e[2])),
+                  i = this.getHumanoidFromID(parseInt(e[3]));
+                null === t ||
+                  null === i ||
+                  this.fastForward ||
+                  (new M.Lightning(this, t, i),
+                  q.Sound.playSound("sizzle2", t.x, t.y, 0.6));
+              }),
               (e.prototype.hpUpdate = function (e) {
                 var t = this.getAnyFromID(parseInt(e[1])),
                   i = this.getHumanoidFromID(parseInt(e[7]));
                 if (
                   (null !== t &&
-                    (t instanceof P.MovableObject ||
+                    (t instanceof D.MovableObject ||
                       null === i ||
                       !(
-                        i instanceof te.Zombie ||
-                        (i instanceof B.Player && i.isHumanZombie)
+                        i instanceof ne.Zombie ||
+                        (i instanceof H.Player && i.isHumanZombie)
                       ) ||
                       i.performHit(t),
                     t.hpUpdate(
@@ -31864,7 +33264,7 @@ var c_hasPressedCtrlRKey = false;
                       parseFloat(e[3]),
                       "1" === e[19],
                     ),
-                    t instanceof T.Humanoid &&
+                    t instanceof L.Humanoid &&
                       t.invincibleUntil < this.ticksCounter &&
                       ((t.hitUntil = this.ticksCounter + 2),
                       (t.lastHit = this.ticksCounter)),
@@ -31896,7 +33296,7 @@ var c_hasPressedCtrlRKey = false;
                       ),
                     parseFloat(e[8]) > 0 &&
                       i &&
-                      i instanceof B.Player &&
+                      i instanceof H.Player &&
                       i.performLifesteal(parseFloat(e[8]))),
                   "true" === e[4])
                 )
@@ -31928,45 +33328,45 @@ var c_hasPressedCtrlRKey = false;
                 S,
                 b,
                 _,
+                C,
                 I,
-                M,
               ) {
                 u &&
-                  (new G.Splash(this, e.x, e.y, E.imgCoords.splash, 2),
-                  e instanceof B.Player && (e.noDraw = !0));
-                var T = this.getGrenadeOrProjectileById(i),
-                  k = null;
+                  (new Y.Splash(this, e.x, e.y, A.imgCoords.splash, 2),
+                  e instanceof H.Player && (e.noDraw = !0));
+                var M = this.getGrenadeOrProjectileById(i),
+                  E = null;
                 if (v && v >= 0)
-                  for (var L = 0; L < this.objects.length; L++)
-                    this.objects[L].id === v &&
-                      ((k = this.objects[L]), (L = this.objects.length));
+                  for (var k = 0; k < this.objects.length; k++)
+                    this.objects[k].id === v &&
+                      ((E = this.objects[k]), (k = this.objects.length));
                 if (
-                  (T instanceof p.Beam ||
+                  (M instanceof p.Beam ||
                     e.die(
-                      null != T ? T : void 0,
+                      null != M ? M : void 0,
                       n,
                       y,
                       x,
                       w,
                       t,
-                      null != k ? k : void 0,
+                      null != E ? E : void 0,
                       S,
                       b,
                       _,
+                      C,
                       I,
-                      M,
                     ),
                   t)
                 ) {
-                  if (e instanceof te.Zombie) {
-                    if (t instanceof te.Zombie) return;
+                  if (e instanceof ne.Zombie) {
+                    if (t instanceof ne.Zombie) return;
                     return (
-                      t instanceof B.Player &&
+                      t instanceof H.Player &&
                         (t.setSouls(d, e.x, e.y),
                         t === this.playingPlayer &&
                           e.masterId !== f.playerData.db_id &&
                           (this.interface_.setMainKillMsg(
-                            ee.lang.get("game.msg.killed_zombie"),
+                            ae.lang.get("game.msg.killed_zombie"),
                             "#36FF36",
                             "textInGreen",
                           ),
@@ -31974,28 +33374,28 @@ var c_hasPressedCtrlRKey = false;
                       void this.refreshUIs()
                     );
                   }
-                  var A = 0,
+                  var L = 0,
                     F = 0;
                   (void 0 !== t.masterId &&
                     (t = this.getHumanoidFromID(t.masterId)),
                     this.type.ingameElo &&
-                      (t instanceof B.Player && (A = t.setElo(c, e.x, e.y)),
-                      e instanceof B.Player && (F = e.setElo(g, e.x, e.y))));
-                  var P = e instanceof B.Player ? e.souls : 0;
-                  (t instanceof B.Player && t.setKills(a),
-                    e instanceof B.Player && e.setDeaths(r),
-                    t instanceof B.Player && t.setSouls(d, e.x, e.y),
-                    e instanceof B.Player && e.setSouls(m));
-                  var N = P - (e instanceof B.Player ? e.souls : 0);
+                      (t instanceof H.Player && (L = t.setElo(c, e.x, e.y)),
+                      e instanceof H.Player && (F = e.setElo(g, e.x, e.y))));
+                  var P = e instanceof H.Player ? e.souls : 0;
+                  (t instanceof H.Player && t.setKills(a),
+                    e instanceof H.Player && e.setDeaths(r),
+                    t instanceof H.Player && t.setSouls(d, e.x, e.y),
+                    e instanceof H.Player && e.setSouls(m));
+                  var N = P - (e instanceof H.Player ? e.souls : 0);
                   if ((this.refreshUIs(), e === t))
                     e === this.playingPlayer &&
                       (this.interface_.setMainKillMsg(
-                        ee.lang.get("game.msg.killed_self") +
-                          (A
+                        ae.lang.get("game.msg.killed_self") +
+                          (L
                             ? " (" +
-                              A +
+                              L +
                               " " +
-                              ee.lang.get("config.resource.score.name") +
+                              ae.lang.get("config.resource.score.name") +
                               ")"
                             : ""),
                         "#FF3232",
@@ -32004,7 +33404,7 @@ var c_hasPressedCtrlRKey = false;
                       N > 0 &&
                         this.playingPlayer &&
                         this.floatingTexts.push(
-                          new C.FloatingText(
+                          new T.FloatingText(
                             this,
                             "-" + N,
                             this.playingPlayer.x,
@@ -32013,7 +33413,7 @@ var c_hasPressedCtrlRKey = false;
                             1,
                             "#FF3232",
                             6 * this.SCALE_FACTOR,
-                            E.imgCoords.souls,
+                            A.imgCoords.souls,
                           ),
                         ));
                   else if (
@@ -32021,7 +33421,7 @@ var c_hasPressedCtrlRKey = false;
                       ? (N > 0 &&
                           this.playingPlayer &&
                           this.floatingTexts.push(
-                            new C.FloatingText(
+                            new T.FloatingText(
                               this,
                               "-" + N,
                               this.playingPlayer.x,
@@ -32030,51 +33430,51 @@ var c_hasPressedCtrlRKey = false;
                               1,
                               "#FF3232",
                               6 * this.SCALE_FACTOR,
-                              E.imgCoords.souls,
+                              A.imgCoords.souls,
                             ),
                           ),
-                        t instanceof te.Zombie
+                        t instanceof ne.Zombie
                           ? this.interface_.setMainKillMsg(
-                              ee.lang.get("game.msg.killed_by_zombie"),
+                              ae.lang.get("game.msg.killed_by_zombie"),
                               "#FF3232",
                               "textInRed",
                             )
-                          : t instanceof B.Player &&
+                          : t instanceof H.Player &&
                             this.interface_.setMainKillMsg(
-                              ee.lang.get("game.msg.killed_by_player", {
+                              ae.lang.get("game.msg.killed_by_player", {
                                 playerName: t.name,
                               }) +
                                 (F
                                   ? " (" +
                                     F +
                                     " " +
-                                    ee.lang.get("config.resource.score.name") +
+                                    ae.lang.get("config.resource.score.name") +
                                     ")"
                                   : ""),
                               "#FF3232",
                               "textInRed",
                             ))
                       : t === this.playingPlayer &&
-                        t instanceof B.Player &&
-                        e instanceof B.Player &&
+                        t instanceof H.Player &&
+                        e instanceof H.Player &&
                         (0 !== t.team && t.team === e.team
                           ? (this.interface_.setMainKillMsg(
-                              ee.lang.get("game.msg.killed_teammate", {
+                              ae.lang.get("game.msg.killed_teammate", {
                                 playerName: e.name,
                               }),
                               "#FF3232",
                               "textInRed",
                             ),
-                            W.Sound.playSound("teamkill"))
+                            q.Sound.playSound("teamkill"))
                           : (this.interface_.setMainKillMsg(
-                              ee.lang.get("game.msg.killed_player", {
+                              ae.lang.get("game.msg.killed_player", {
                                 playerName: e.name,
                               }) +
-                                (A
+                                (L
                                   ? " (+" +
-                                    A +
+                                    L +
                                     " " +
-                                    ee.lang.get("config.resource.score.name") +
+                                    ae.lang.get("config.resource.score.name") +
                                     ")"
                                   : ""),
                               "#36FF36",
@@ -32084,36 +33484,36 @@ var c_hasPressedCtrlRKey = false;
                     o.killStreaks[l])
                   ) {
                     t === this.playingPlayer
-                      ? (W.Sound.playSound(
+                      ? (q.Sound.playSound(
                           o.killStreaks[l].sound,
                           void 0,
                           void 0,
                           0.9,
                         ),
                         this.interface_.setMainKillMsg(
-                          ee.lang.get(o.killStreaks[l].msg_start_self) +
+                          ae.lang.get(o.killStreaks[l].msg_start_self) +
                             (f.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
                               ? " (+ " +
                                 o.killStreaks[l].xp +
                                 " " +
-                                ee.lang.get("config.resource.exp.name") +
+                                ae.lang.get("config.resource.exp.name") +
                                 ")"
                               : ""),
                           "#95A6F0",
                           "textInBlue",
                           !0,
                         ))
-                      : t instanceof B.Player &&
-                        (W.Sound.playSound("frag1", void 0, void 0, 0.5),
+                      : t instanceof H.Player &&
+                        (q.Sound.playSound("frag1", void 0, void 0, 0.5),
                         this.interface_.setMainKillMsg(
-                          ee.lang.get(o.killStreaks[l].msg_start_others, {
+                          ae.lang.get(o.killStreaks[l].msg_start_others, {
                             playerName: t.name,
                           }),
                           "#95A6F0",
                           "textInBlue",
                           !0,
                         ));
-                    var D = (function (e) {
+                    var B = (function (e) {
                       var t = 999;
                       for (; e > 0; ) {
                         if (o.killStreaks[e]) return o.killStreaks[e];
@@ -32121,19 +33521,19 @@ var c_hasPressedCtrlRKey = false;
                       }
                       return null;
                     })(h);
-                    D &&
-                      e instanceof B.Player &&
-                      t instanceof B.Player &&
+                    B &&
+                      e instanceof H.Player &&
+                      t instanceof H.Player &&
                       (t === this.playingPlayer
                         ? this.interface_.setMainKillMsg(
-                            ee.lang.get(o.killStreaks[l].msg_ended_self, {
+                            ae.lang.get(o.killStreaks[l].msg_ended_self, {
                               victimName: e.name,
                             }) +
                               (f.playerData.authLevel >= o.AUTH_LEVEL.PLAYER
                                 ? " (+ " +
-                                  D.xp +
+                                  B.xp +
                                   " " +
-                                  ee.lang.get("config.resource.exp.name") +
+                                  ae.lang.get("config.resource.exp.name") +
                                   ")"
                                 : ""),
                             "#95A6F0",
@@ -32141,7 +33541,7 @@ var c_hasPressedCtrlRKey = false;
                             !0,
                           )
                         : this.interface_.setMainKillMsg(
-                            ee.lang.get(o.killStreaks[l].msg_ended_others, {
+                            ae.lang.get(o.killStreaks[l].msg_ended_others, {
                               victimName: e.name,
                               killerName: t.name,
                             }),
@@ -32150,15 +33550,15 @@ var c_hasPressedCtrlRKey = false;
                             !0,
                           ));
                   }
-                  t instanceof B.Player &&
+                  t instanceof H.Player &&
                     e &&
-                    e instanceof B.Player &&
+                    e instanceof H.Player &&
                     this.interface_.addKillMsg(
                       t,
                       e,
-                      T,
+                      M,
                       n,
-                      null != k ? k : void 0,
+                      null != E ? E : void 0,
                       u,
                     );
                 }
@@ -32173,19 +33573,19 @@ var c_hasPressedCtrlRKey = false;
                 (this.playingPlayer &&
                   (parseInt(e[5]) === this.playingPlayer.id
                     ? ((t = "You win!"),
-                      W.Sound.playSound("ladder_loss"),
+                      q.Sound.playSound("ladder_loss"),
                       (r =
                         "+ " +
                         Math.round(10 * parseFloat(e[6])) / 10 +
                         " points"))
                     : parseInt(e[5]) > 0
                       ? ((t = "You lose!"),
-                        W.Sound.playSound("ladder_win"),
+                        q.Sound.playSound("ladder_win"),
                         (r =
                           "- " +
                           Math.round(10 * parseFloat(e[6])) / 10 +
                           " points"))
-                      : ((t = "Draw!"), W.Sound.playSound("ladder_loss"))),
+                      : ((t = "Draw!"), q.Sound.playSound("ladder_loss"))),
                   (this.interface_.ladderEndAt = Date.now()),
                   (this.interface_.ladderEndMsg = t),
                   (this.interface_.ladderMsgArr = [
@@ -32210,7 +33610,7 @@ var c_hasPressedCtrlRKey = false;
                       (this.switchWeaponSound.pause(),
                       (this.switchWeaponSound.currentTime = 0),
                       (this.switchWeaponSound = null)),
-                    N.Network.send("sW$" + e)));
+                    O.Network.send("sW$" + e)));
               }),
               (e.prototype.getPathForPos = function (e, t) {
                 var i = 10,
@@ -32243,8 +33643,8 @@ var c_hasPressedCtrlRKey = false;
                 );
               }),
               (e.prototype.getPotentialPlaceTarget = function (e) {
-                var t = Math.floor((0, I.getMouseGamePlayX)()) + 0.5,
-                  i = Math.floor((0, I.getMouseGamePlayY)()) + 0.5;
+                var t = Math.floor((0, E.getMouseGamePlayX)()) + 0.5,
+                  i = Math.floor((0, E.getMouseGamePlayY)()) + 0.5;
                 return Math.sqrt(
                   Math.pow(this.playingPlayer.x - t, 2) +
                     Math.pow(this.playingPlayer.y - i, 2),
@@ -32268,7 +33668,9 @@ var c_hasPressedCtrlRKey = false;
                       e.levelUpFields &&
                       e.levelUpFields[n] &&
                       e.levelUpFields[n] === t &&
-                      (i += e.levelUpValues[n] * a.attributes[n]);
+                      (e.levelUpFactor && e.levelUpFactor[n]
+                        ? (i *= Math.pow(e.levelUpFactor[n], a.attributes[n]))
+                        : (i += e.levelUpValues[n] * a.attributes[n]));
                 return i;
               }),
               (e.prototype.addCorpses = function (e) {
@@ -32297,9 +33699,9 @@ var c_hasPressedCtrlRKey = false;
                 var e =
                   30 - (Date.now() - this._timeOfLastPlayingPlayerEmote) / 1e3;
                 e > 0
-                  ? ((ne.innerText = Math.ceil(e).toString()),
-                    se || ((ne.style.display = ""), (se = !0)))
-                  : se && ((ne.style.display = "none"), (se = !1));
+                  ? ((le.innerText = Math.ceil(e).toString()),
+                    me || ((le.style.display = ""), (me = !0)))
+                  : me && ((le.style.display = "none"), (me = !1));
               }),
               (e.prototype.draw = function () {
                 var e = Date.now(),
@@ -32316,7 +33718,7 @@ var c_hasPressedCtrlRKey = false;
                     this.mouseUpdate(),
                   this.playingPlayer &&
                     !this.playingPlayer.dieAt &&
-                    k.Input.leftMouse &&
+                    F.Input.leftMouse &&
                     this.playingPlayer.weapon &&
                     this.lastTimeMousePosSent + 65 < e)
                 ) {
@@ -32329,7 +33731,7 @@ var c_hasPressedCtrlRKey = false;
                             this.ticksCounter,
                           0,
                         ));
-                  (r - N.Network.lastPing - 150 < 0 && this.mouseUpdate(),
+                  (r - O.Network.lastPing - 150 < 0 && this.mouseUpdate(),
                     r <= 0 &&
                       this.lastEmptyClipSound + 500 < e &&
                       !this.playingPlayerClips[i.id] &&
@@ -32339,11 +33741,11 @@ var c_hasPressedCtrlRKey = false;
                         this.playingPlayer.weaponCooldowns2[i.id] >=
                           (i.cooldown2 || 0)) &&
                       (this.interface_.setMainKillMsg(
-                        ee.lang.get("game.msg.no_ammo"),
+                        ae.lang.get("game.msg.no_ammo"),
                         "grey",
                         "textInGrey",
                       ),
-                      W.Sound.playSound(
+                      q.Sound.playSound(
                         "empty_clip",
                         this.playingPlayer.x,
                         this.playingPlayer.y,
@@ -32356,7 +33758,7 @@ var c_hasPressedCtrlRKey = false;
                     this.mouseUpdate();
                 this._percentageOfCurrentTickPassed = Math.min(
                   (e - this.lastUpdate) /
-                    I.replaySettings.replayOption.tickTime,
+                    E.replaySettings.replayOption.tickTime,
                   1,
                 );
                 var s =
@@ -32403,7 +33805,7 @@ var c_hasPressedCtrlRKey = false;
                         this.cameraX) *
                         this.FIELD_SIZE *
                         2 +
-                        k.Input.x * c) /
+                        F.Input.x * c) /
                         (2 + c) /
                         this.FIELD_SIZE +
                       this.cameraX),
@@ -32414,7 +33816,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                           this.FIELD_SIZE *
                           2 +
-                          k.Input.y * c) /
+                          F.Input.y * c) /
                           (2 + c) /
                           this.FIELD_SIZE +
                         this.cameraY));
@@ -32432,7 +33834,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraX) *
                           this.FIELD_SIZE *
                           2 +
-                          k.Input.x) /
+                          F.Input.x) /
                           3 /
                           this.FIELD_SIZE +
                         this.cameraX),
@@ -32442,7 +33844,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                           this.FIELD_SIZE *
                           2 +
-                          k.Input.y) /
+                          F.Input.y) /
                           3 /
                           this.FIELD_SIZE +
                         this.cameraY));
@@ -32453,13 +33855,13 @@ var c_hasPressedCtrlRKey = false;
                       -window.innerHeight / 2 / this.FIELD_SIZE + d)),
                     this.iAmSpec &&
                       !m &&
-                      (k.Input.keys[k.commandKeys[k.COMMAND.UP]] &&
+                      (F.Input.keys[F.commandKeys[F.COMMAND.UP]] &&
                         (this.specY -= 0.019 * this.timeDiff),
-                      k.Input.keys[k.commandKeys[k.COMMAND.DOWN]] &&
+                      F.Input.keys[F.commandKeys[F.COMMAND.DOWN]] &&
                         (this.specY += 0.019 * this.timeDiff),
-                      k.Input.keys[k.commandKeys[k.COMMAND.LEFT]] &&
+                      F.Input.keys[F.commandKeys[F.COMMAND.LEFT]] &&
                         (this.specX -= 0.019 * this.timeDiff),
-                      k.Input.keys[k.commandKeys[k.COMMAND.RIGHT]] &&
+                      F.Input.keys[F.commandKeys[F.COMMAND.RIGHT]] &&
                         (this.specX += 0.019 * this.timeDiff),
                       (this.cameraX = this.specX),
                       (this.cameraY = this.specY)));
@@ -32538,7 +33940,7 @@ var c_hasPressedCtrlRKey = false;
                             8 * Math.sign(b.shiftX) -
                             ((16 * b.shiftX * s) % 16)
                           : _.img.x,
-                        M = b.shiftY
+                        I = b.shiftY
                           ? _.img.y +
                             8 * Math.sign(b.shiftY) -
                             ((16 * b.shiftY * s) % 16)
@@ -32548,7 +33950,7 @@ var c_hasPressedCtrlRKey = false;
                       t.drawImage(
                         a.imgs.tileSheet,
                         C,
-                        M,
+                        I,
                         _.img.w,
                         _.img.h,
                         l,
@@ -32560,48 +33962,48 @@ var c_hasPressedCtrlRKey = false;
                   }
                   o.CONST.ENABLE_LIGHTMAP &&
                     t.drawImage(
-                      ie,
+                      re,
                       4 * this.cameraX + 16,
                       4 * this.cameraY + 16,
-                      (y / this.SCALE_FACTOR) * le,
-                      (x / this.SCALE_FACTOR) * le,
+                      (y / this.SCALE_FACTOR) * ce,
+                      (x / this.SCALE_FACTOR) * ce,
                       0,
                       0,
                       y,
                       x,
                     );
-                  for (var T = 0; T < this._whiteCircles.length; T++) {
-                    var L = this._whiteCircles[T];
-                    if (L.time + 30 > this.ticksCounter) {
-                      var F = s - L.time,
-                        P = L.img,
-                        D = 6 * F,
-                        O = this.g2rx(L.x) - (P.w / 2) * D,
-                        R = this.g2ry(L.y) - (P.h / 2) * D;
-                      ((t.globalAlpha = Math.max(0.4 - F / 20, 0)),
+                  for (var M = 0; M < this._whiteCircles.length; M++) {
+                    var T = this._whiteCircles[M];
+                    if (T.time + 30 > this.ticksCounter) {
+                      var k = s - T.time,
+                        L = T.img,
+                        P = 6 * k,
+                        B = this.g2rx(T.x) - (L.w / 2) * P,
+                        D = this.g2ry(T.y) - (L.h / 2) * P;
+                      ((t.globalAlpha = Math.max(0.4 - k / 20, 0)),
                         t.drawImage(
                           a.imgs.miscSheet,
-                          P.x,
-                          P.y,
-                          P.w,
-                          P.h,
-                          O,
-                          R,
-                          P.w * D,
-                          P.h * D,
+                          L.x,
+                          L.y,
+                          L.w,
+                          L.h,
+                          B,
+                          D,
+                          L.w * P,
+                          L.h * P,
                         ),
                         (t.globalAlpha = 1));
-                    } else (this._whiteCircles.splice(T, 1), T--);
+                    } else (this._whiteCircles.splice(M, 1), M--);
                   }
-                  var H = E.imgCoords.fog.w / 16;
-                  this.drawFog(s, H);
+                  var R = A.imgCoords.fog.w / 16;
+                  this.drawFog(s, R);
                   for (
                     var U = 0, G = this.objectsToDraw.slice();
                     U < G.length;
                     U++
                   ) {
-                    var z = G[U];
-                    (z.draw(
+                    var W = G[U];
+                    (W.draw(
                       s,
                       this.cameraX,
                       this.cameraY,
@@ -32609,52 +34011,52 @@ var c_hasPressedCtrlRKey = false;
                       this.cameraY2,
                       this._percentageOfCurrentTickPassed,
                     ),
-                      z instanceof B.Player &&
-                        z !== this.playingPlayer &&
-                        z.weapon &&
-                        z.weapon.hasLine &&
-                        z.standTime >= z.weapon.requiredStandTime &&
-                        !z.dieAt &&
-                        z.drawSniperLine(s));
+                      W instanceof H.Player &&
+                        W !== this.playingPlayer &&
+                        W.weapon &&
+                        W.weapon.hasLine &&
+                        W.standTime >= W.weapon.requiredStandTime &&
+                        !W.dieAt &&
+                        W.drawSniperLine(s));
                   }
                   if (
                     this.playingPlayer &&
                     ((this.playingPlayer.weapon &&
                       this.playingPlayer.weapon.isHeatSeeking) ||
-                      (k.Input.activeAbility && k.Input.activeAbility.locks))
+                      (F.Input.activeAbility && F.Input.activeAbility.locks))
                   ) {
                     if (
                       (this.refreshLockedPlayer(
-                        (0, I.getMouseGamePlayX)(),
-                        (0, I.getMouseGamePlayY)(),
+                        (0, E.getMouseGamePlayX)(),
+                        (0, E.getMouseGamePlayY)(),
                       ),
                       this.targetLockedPlayer)
                     ) {
-                      D =
+                      P =
                         this.SCALE_FACTOR *
                         (1.7 - (Math.floor(0.4 * this.ticksCounter) % 4) * 0.1);
-                      var Y =
+                      var z =
                           ((m = this.targetLockedPlayer).x0 +
                             this._percentageOfCurrentTickPassed * (m.x - m.x0) -
                             this.cameraX) *
                             this.FIELD_SIZE -
-                          (E.imgCoords.aimLock.w / 2) * D,
-                        q =
+                          (A.imgCoords.aimLock.w / 2) * P,
+                        Y =
                           (m.y0 +
                             this._percentageOfCurrentTickPassed * (m.y - m.y0) -
                             this.cameraY) *
                             this.FIELD_SIZE -
-                          0.75 * E.imgCoords.aimLock.h * D;
+                          0.75 * A.imgCoords.aimLock.h * P;
                       t.drawImage(
                         a.imgs.miscSheet,
-                        E.imgCoords.aimLock.x,
-                        E.imgCoords.aimLock.y,
-                        E.imgCoords.aimLock.w,
-                        E.imgCoords.aimLock.h,
+                        A.imgCoords.aimLock.x,
+                        A.imgCoords.aimLock.y,
+                        A.imgCoords.aimLock.w,
+                        A.imgCoords.aimLock.h,
+                        z,
                         Y,
-                        q,
-                        D * E.imgCoords.aimLock.w,
-                        D * E.imgCoords.aimLock.h,
+                        P * A.imgCoords.aimLock.w,
+                        P * A.imgCoords.aimLock.h,
                       );
                     }
                   } else this.targetLockedPlayer = null;
@@ -32665,37 +34067,37 @@ var c_hasPressedCtrlRKey = false;
                   )
                     if (
                       (m = this.getClosestAlly(
-                        (0, I.getMouseGamePlayX)(),
-                        (0, I.getMouseGamePlayY)(),
+                        (0, E.getMouseGamePlayX)(),
+                        (0, E.getMouseGamePlayY)(),
                         this.playingPlayer.weapon.autoAimRange,
                       ))
                     ) {
-                      ((D =
+                      ((P =
                         this.SCALE_FACTOR *
                         (1.7 -
                           (Math.floor(0.4 * this.ticksCounter) % 4) * 0.1)),
-                        (Y =
+                        (z =
                           (m.x0 +
                             this._percentageOfCurrentTickPassed * (m.x - m.x0) -
                             this.cameraX) *
                             this.FIELD_SIZE -
-                          (E.imgCoords.aimLockGreen.w / 2) * D),
-                        (q =
+                          (A.imgCoords.aimLockGreen.w / 2) * P),
+                        (Y =
                           (m.y0 +
                             this._percentageOfCurrentTickPassed * (m.y - m.y0) -
                             this.cameraY) *
                             this.FIELD_SIZE -
-                          0.75 * E.imgCoords.aimLockGreen.h * D));
+                          0.75 * A.imgCoords.aimLockGreen.h * P));
                       t.drawImage(
                         a.imgs.miscSheet,
-                        E.imgCoords.aimLockGreen.x,
-                        E.imgCoords.aimLockGreen.y,
-                        E.imgCoords.aimLockGreen.w,
-                        E.imgCoords.aimLockGreen.h,
+                        A.imgCoords.aimLockGreen.x,
+                        A.imgCoords.aimLockGreen.y,
+                        A.imgCoords.aimLockGreen.w,
+                        A.imgCoords.aimLockGreen.h,
+                        z,
                         Y,
-                        q,
-                        D * E.imgCoords.aimLockGreen.w,
-                        D * E.imgCoords.aimLockGreen.h,
+                        P * A.imgCoords.aimLockGreen.w,
+                        P * A.imgCoords.aimLockGreen.h,
                       );
                     }
                   for (var j = 0, Z = this.floatingTexts; j < Z.length; j++) {
@@ -32705,38 +34107,38 @@ var c_hasPressedCtrlRKey = false;
                   if (f.options.graphicSettings > 1) {
                     t.globalAlpha = 0.05;
                     for (
-                      l = 0 - H - ((s / 73.27) % H);
-                      l < this.map.x + H;
-                      l += H
+                      l = 0 - R - ((s / 73.27) % R);
+                      l < this.map.x + R;
+                      l += R
                     )
                       for (
-                        d = 0 - H - ((s / 77.41) % H);
-                        d < this.map.y + H;
-                        d += H
+                        d = 0 - R - ((s / 77.41) % R);
+                        d < this.map.y + R;
+                        d += R
                       ) {
-                        ((Y =
+                        ((z =
                           (X + 1.5 * (l - X) - this.cameraX) * this.FIELD_SIZE),
-                          (q =
+                          (Y =
                             (this.cameraY2 +
                               1.5 * (d - this.cameraY2) -
                               this.cameraY) *
                             this.FIELD_SIZE));
-                        Y <= window.innerWidth &&
-                          q <= window.innerHeight &&
-                          Y + E.imgCoords.fog.w * this.SCALE_FACTOR * 1.5 >=
+                        z <= window.innerWidth &&
+                          Y <= window.innerHeight &&
+                          z + A.imgCoords.fog.w * this.SCALE_FACTOR * 1.5 >=
                             0 &&
-                          q + E.imgCoords.fog.h * this.SCALE_FACTOR * 1.5 >=
+                          Y + A.imgCoords.fog.h * this.SCALE_FACTOR * 1.5 >=
                             0 &&
                           t.drawImage(
                             a.imgs.tileSheet,
-                            E.imgCoords.fog.x,
-                            E.imgCoords.fog.y,
-                            E.imgCoords.fog.w,
-                            E.imgCoords.fog.h,
+                            A.imgCoords.fog.x,
+                            A.imgCoords.fog.y,
+                            A.imgCoords.fog.w,
+                            A.imgCoords.fog.h,
+                            z,
                             Y,
-                            q,
-                            1.5 * this.SCALE_FACTOR * E.imgCoords.fog.w,
-                            1.5 * this.SCALE_FACTOR * E.imgCoords.fog.h,
+                            1.5 * this.SCALE_FACTOR * A.imgCoords.fog.w,
+                            1.5 * this.SCALE_FACTOR * A.imgCoords.fog.h,
                           );
                       }
                     t.globalAlpha = 1;
@@ -32760,7 +34162,7 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                         this.FIELD_SIZE));
                     ((t.globalAlpha = 0.2),
-                      (0, I.drawCircle)(
+                      (0, E.drawCircle)(
                         t,
                         l,
                         d,
@@ -32773,8 +34175,8 @@ var c_hasPressedCtrlRKey = false;
                   }
                   if (
                     this.playingPlayer &&
-                    k.Input.activeAbility &&
-                    k.Input.activeAbility.range
+                    F.Input.activeAbility &&
+                    F.Input.activeAbility.range
                   ) {
                     ((l =
                       (this.playingPlayer.x0 +
@@ -32789,13 +34191,13 @@ var c_hasPressedCtrlRKey = false;
                           this.cameraY) *
                         this.FIELD_SIZE));
                     ((t.globalAlpha = 0.2),
-                      (0, I.drawCircle)(
+                      (0, E.drawCircle)(
                         t,
                         l,
                         d,
                         this.FIELD_SIZE *
                           this.getAbilityFieldValue(
-                            k.Input.activeAbility,
+                            F.Input.activeAbility,
                             "range",
                           ),
                         "white",
@@ -32804,80 +34206,80 @@ var c_hasPressedCtrlRKey = false;
                   }
                   if (
                     this.playingPlayer &&
-                    k.Input.activeAbility &&
-                    k.Input.activeAbility.type === n.AbilityType.Place &&
-                    k.Input.activeAbility.object
+                    F.Input.activeAbility &&
+                    F.Input.activeAbility.type === n.AbilityType.Place &&
+                    F.Input.activeAbility.object
                   ) {
-                    var K = this.getPotentialPlaceTarget(k.Input.activeAbility);
-                    if (K) {
-                      var V = h.objects[k.Input.activeAbility.object],
-                        $ = h.animationData[V.animation];
-                      ((D = this.SCALE_FACTOR * (V.imgScale ? V.imgScale : 1)),
-                        (P = E.imgCoords[V.img[0]]),
+                    var V = this.getPotentialPlaceTarget(F.Input.activeAbility);
+                    if (V) {
+                      var K = h.objects[F.Input.activeAbility.object],
+                        $ = h.animationData[K.animation];
+                      ((P = this.SCALE_FACTOR * (K.imgScale ? K.imgScale : 1)),
+                        (L = A.imgCoords[K.img[0]]),
                         (l =
-                          (K.x - this.cameraX) * this.FIELD_SIZE +
-                          (-P.w / 2) * D),
+                          (V.x - this.cameraX) * this.FIELD_SIZE +
+                          (-L.w / 2) * P),
                         (d =
-                          (K.y +
-                            (V.yOffset ? V.yOffset : 0) / 16 -
+                          (V.y +
+                            (K.yOffset ? K.yOffset : 0) / 16 -
                             0.2 -
                             this.cameraY) *
                             this.FIELD_SIZE +
-                          (8 - P.h) * D));
+                          (8 - L.h) * P));
                       if (
                         (t.drawImage(
                           a.imgs.miscSheet,
-                          P.x,
-                          P.y,
-                          P.w,
-                          P.h,
+                          L.x,
+                          L.y,
+                          L.w,
+                          L.h,
                           l,
                           d,
-                          P.w * D,
-                          P.h * D,
+                          L.w * P,
+                          L.h * P,
                         ),
                         $ && $.imgTurret01)
                       ) {
-                        P = $.imgTurret01;
+                        L = $.imgTurret01;
                         var J =
-                            (K.x - this.cameraX) * this.FIELD_SIZE +
-                            (-P.w / 2) * D,
+                            (V.x - this.cameraX) * this.FIELD_SIZE +
+                            (-L.w / 2) * P,
                           Q =
-                            (K.y - 0.2 - this.cameraY) * this.FIELD_SIZE +
-                            (8 - P.h) * D;
+                            (V.y - 0.2 - this.cameraY) * this.FIELD_SIZE +
+                            (8 - L.h) * P;
                         t.drawImage(
                           a.imgs.miscSheet,
-                          P.x,
-                          P.y,
-                          P.w,
-                          P.h,
+                          L.x,
+                          L.y,
+                          L.w,
+                          L.h,
                           J,
                           Q,
-                          P.w * D,
-                          P.h * D,
+                          L.w * P,
+                          L.h * P,
                         );
                       }
                     }
                   }
                   if (f.options.graphicSettings > 1)
                     for (
-                      var te =
+                      var ee =
                           this.cameraX + (this.cameraX2 - this.cameraX) / 2,
-                        ae = 0,
-                        ne = this._fairies;
-                      ae < ne.length;
-                      ae++
+                        te = 0,
+                        ie = this._fairies;
+                      te < ie.length;
+                      te++
                     ) {
-                      ne[ae].draw(s, te, this.cameraY2);
+                      ie[te].draw(s, ee, this.cameraY2);
                     }
                   (f.options.graphicSettings > 1 &&
                     ((t.globalAlpha = 0.6),
                     t.drawImage(
                       a.imgs.miscSheet,
-                      E.imgCoords.filter.x,
-                      E.imgCoords.filter.y,
-                      E.imgCoords.filter.w,
-                      E.imgCoords.filter.h,
+                      A.imgCoords.filter.x,
+                      A.imgCoords.filter.y,
+                      A.imgCoords.filter.w,
+                      A.imgCoords.filter.h,
                       0,
                       0,
                       window.innerWidth,
@@ -32901,7 +34303,7 @@ var c_hasPressedCtrlRKey = false;
                         ")"),
                       t.fillRect(0, 0, window.innerWidth, window.innerHeight)));
                 }
-                var oe = "";
+                var ne = "";
                 if (
                   this.interface_.hoverWeapon >= 0 ||
                   this.interface_.hoverAbility >= 0 ||
@@ -32910,33 +34312,31 @@ var c_hasPressedCtrlRKey = false;
                   this.interface_.skipButtonHover ||
                   this.interface_.unskipButtonHover
                 )
-                  oe = 'url("imgs/cursor.cur"), auto';
+                  ne = 'url("imgs/cursor.cur"), auto';
                 else if (
                   this.playingPlayer &&
-                  k.Input.activeAbility &&
-                  ((k.Input.activeAbility.type === n.AbilityType.Blink &&
+                  F.Input.activeAbility &&
+                  ((F.Input.activeAbility.type === n.AbilityType.Blink &&
                     this.playingPlayer.carriesFlag()) ||
-                    k.Input.activeAbility.energy > this.playingPlayerEnergy ||
+                    F.Input.activeAbility.energy > this.playingPlayerEnergy ||
                     this.lastAbilityUses[
-                      this.pl_active_abilities[0] === k.Input.activeAbility
-                        ? 0
-                        : 1
+                      this.abilitySlot(F.Input.activeAbility)
                     ] +
-                      k.Input.activeAbility.cooldown >
+                      F.Input.activeAbility.cooldown >
                       this.ticksCounter)
                 )
-                  oe = 'url("imgs/cx.cur"), auto';
+                  ne = 'url("imgs/cx.cur"), auto';
                 else if (
                   this.playingPlayer &&
-                  k.Input.activeAbility &&
-                  k.Input.activeAbility.type === n.AbilityType.Blink
+                  F.Input.activeAbility &&
+                  F.Input.activeAbility.type === n.AbilityType.Blink
                 )
-                  oe = 'url("imgs/cb.cur"), auto';
+                  ne = 'url("imgs/cb.cur"), auto';
                 else if (
                   this.playingPlayerCountActiveHeatseeking2Missiles > 0 &&
                   !this.replayMode
                 )
-                  oe =
+                  ne =
                     'url("imgs/crosshair' +
                     (this.ticksCounter % 10 < 5 ? "2" : "") +
                     '.png") 26 26, auto';
@@ -32946,38 +34346,38 @@ var c_hasPressedCtrlRKey = false;
                   this.playingPlayer.weapon.aoeCursor &&
                   !this.playingPlayer.dieAt
                 )
-                  ((0, I.drawCircle)(
+                  ((0, E.drawCircle)(
                     this.ctx,
-                    k.Input.x,
-                    k.Input.y,
+                    F.Input.x,
+                    F.Input.y,
                     this.playingPlayer.weapon.aoe * this.FIELD_SIZE,
                     void 0,
                     "rgba(255, 150, 150, 0.2)",
                     0.9,
                   ),
-                    (0, I.drawCircle)(
+                    (0, E.drawCircle)(
                       this.ctx,
-                      k.Input.x,
-                      k.Input.y,
+                      F.Input.x,
+                      F.Input.y,
                       0.066 * this.FIELD_SIZE,
                       void 0,
                       "rgba(255, 255, 255, 0.15)",
                       0.9,
                     ),
-                    (oe = "none"));
+                    (ne = "none"));
                 else if (
                   this.playingPlayer &&
                   this.playingPlayer.weapon &&
                   !this.playingPlayer.weapon.aoeCursor &&
                   !this.playingPlayer.dieAt
                 ) {
-                  var re = 0;
-                  (k.Input.leftMouse && (re = 6),
-                    (oe = 'url("imgs/c' + re + '.cur"), auto'));
-                } else oe = 'url("imgs/cursor.cur"), auto';
-                (this._lastCursorStr !== oe &&
-                  ((this._lastCursorStr = oe), (this.canvas.style.cursor = oe)),
-                  this.map !== A.map1 && this.interface_.draw(s),
+                  var oe = 0;
+                  (F.Input.leftMouse && (oe = 6),
+                    (ne = 'url("imgs/c' + oe + '.cur"), auto'));
+                } else ne = 'url("imgs/cursor.cur"), auto';
+                (this._lastCursorStr !== ne &&
+                  ((this._lastCursorStr = ne), (this.canvas.style.cursor = ne)),
+                  this.map !== N.map1 && this.interface_.draw(s),
                   (this.previousFramesTick = this.ticksCounter));
               }),
               (e.prototype.drawFog = function (e, t) {
@@ -32999,10 +34399,10 @@ var c_hasPressedCtrlRKey = false;
                       n + t > this.map.y && (l = n + t - this.map.y);
                       var h = (i + o - this.cameraX) * this.FIELD_SIZE,
                         d = (n + r - this.cameraY) * this.FIELD_SIZE,
-                        m = E.imgCoords.fog.x + 16 * o,
-                        c = E.imgCoords.fog.y + 16 * r,
-                        g = E.imgCoords.fog.w - 16 * (o + s),
-                        u = E.imgCoords.fog.h - 16 * (r + l),
+                        m = A.imgCoords.fog.x + 16 * o,
+                        c = A.imgCoords.fog.y + 16 * r,
+                        g = A.imgCoords.fog.w - 16 * (o + s),
+                        u = A.imgCoords.fog.h - 16 * (r + l),
                         p = g * this.SCALE_FACTOR,
                         y = u * this.SCALE_FACTOR;
                       h <= window.innerWidth &&
@@ -33033,8 +34433,8 @@ var c_hasPressedCtrlRKey = false;
               e
             );
           })();
-        t.Game = ce;
-        var ge = {
+        t.Game = ye;
+        var fe = {
           normal: function (e, t, i, a) {
             var n = e.getAnyFromID(t);
             null !== n &&
@@ -33056,7 +34456,7 @@ var c_hasPressedCtrlRKey = false;
               (n.switchWeaponUntil = e.ticksCounter + o.CONST.WPN_SWITCH_TICKS),
               n.resetCooldowns(),
               n === e.playingPlayer &&
-                ((e.switchWeaponSound = W.Sound.playSound(
+                ((e.switchWeaponSound = q.Sound.playSound(
                   "switch_weapon",
                   void 0,
                   void 0,
@@ -33147,7 +34547,7 @@ var c_hasPressedCtrlRKey = false;
                       i[a + 1] +
                       " because of auto team balance"),
                   e.interface_.setMainKillMsg(r, "#36FF36", "textInGreen"),
-                  W.Sound.playSound("switch", void 0, void 0, 0.8));
+                  q.Sound.playSound("switch", void 0, void 0, 0.8));
               }
           },
           o2u: function (e, t, i, a) {
@@ -33157,11 +34557,18 @@ var c_hasPressedCtrlRKey = false;
                 (n = e.objects.length));
           },
           zph: function (e, t, i, a) {
-            var n = e.getZombieFromID(t),
-              o = parseInt(i[a + 1]),
-              r =
-                "1" === i[a + 2] ? e.getObjectFromID(o) : e.getPlayerFromID(o);
-            n && r && n.performPreHit(r);
+            var n,
+              o = e.getZombieFromID(t),
+              r = parseInt(i[a + 1]);
+            if ("2" === i[a + 2]) {
+              var s = e.buildings.find(function (e) {
+                return e.id === r;
+              });
+              n = s ? { x: s.cx, y: s.cy } : null;
+            } else
+              n =
+                "1" === i[a + 2] ? e.getObjectFromID(r) : e.getPlayerFromID(r);
+            o && n && o.performPreHit(n);
           },
           stu: function (e, t, i, a) {
             for (var n = 0, o = e.players.length; n < o; n++) {
@@ -33171,7 +34578,7 @@ var c_hasPressedCtrlRKey = false;
                 ((r.standTime = s),
                   1 === s &&
                     e.playingPlayer === r &&
-                    W.Sound.playSound("zoom", r.x, r.y, 1));
+                    q.Sound.playSound("zoom", r.x, r.y, 1));
                 break;
               }
             }
@@ -33190,7 +34597,7 @@ var c_hasPressedCtrlRKey = false;
                 r = parseFloat(i[a + 1]);
               ((n.hp = Math.min(n.hp + r, n.maxHP)),
                 !(n.hp <= o) &&
-                  n instanceof T.Humanoid &&
+                  n instanceof L.Humanoid &&
                   ((n.hpGlideAmount = n.hp - o),
                   (n.hpGlideStart = e.ticksCounter),
                   (n.hpGlideEnd = e.ticksCounter + (n.hpGlideAmount / r) * 4),
@@ -33199,10 +34606,10 @@ var c_hasPressedCtrlRKey = false;
                     n.x - 3 <= e.cameraX2 &&
                     n.y - 3 <= e.cameraY2 &&
                     !e.fastForward &&
-                    new z.Sprite(e, {
+                    new j.Sprite(e, {
                       x: n.x + 0.5 * Math.random() - 0.25,
                       y: n.y + 0.5 + 0.5 * Math.random(),
-                      img: E.imgCoords.heal,
+                      img: A.imgCoords.heal,
                       scaleFunction: function (e) {
                         return (
                           -1 * (1 / ((0.9 * e - 125) / 500 + 0.31) + e / 4) +
@@ -33231,8 +34638,8 @@ var c_hasPressedCtrlRKey = false;
               if (n.isHumanZombie)
                 o =
                   e.playingPlayer === n
-                    ? ee.lang.get("game.msg.turn_boss.zombie_boss")
-                    : ee.lang.get("game.msg.turn_boss.zombie", {
+                    ? ae.lang.get("game.msg.turn_boss.zombie_boss")
+                    : ae.lang.get("game.msg.turn_boss.zombie", {
                         boss: n.name,
                       });
               else {
@@ -33240,7 +34647,7 @@ var c_hasPressedCtrlRKey = false;
                   var h = l[s];
                   h.isHumanZombie || h.hp <= 0 || r++;
                 }
-                o = ee.lang.get("game.msg.turn_boss.human", { human: r });
+                o = ae.lang.get("game.msg.turn_boss.human", { human: r });
               }
               e.interface_.setMainKillMsg(o, "#FF3232", "textInRed");
             }
@@ -33248,7 +34655,7 @@ var c_hasPressedCtrlRKey = false;
           nF: function (e, t, i, a) {
             if (!e.fastForward) {
               for (var n = 0; n < 2 * Math.PI; n += 0.3 + 0.3 * Math.random())
-                new z.Sprite(e, {
+                new j.Sprite(e, {
                   x:
                     parseFloat(i[a]) +
                     Math.cos(n) *
@@ -33258,7 +34665,7 @@ var c_hasPressedCtrlRKey = false;
                     0 +
                     Math.sin(n) *
                       (parseFloat(i[a + 3]) - 0.9 + 0.4 * Math.random()),
-                  img: E.imgCoords.poisonFog1,
+                  img: A.imgCoords.poisonFog1,
                   r4: 0.01 * (Math.random() - 0.5),
                   r5: parseFloat(i[a + 3]) / 2.9,
                   scaleFunction: function (e) {
@@ -33287,7 +34694,7 @@ var c_hasPressedCtrlRKey = false;
                   },
                 });
               for (n = 0; n < 2 * Math.PI; n += 0.3 + 0.3 * Math.random())
-                new z.Sprite(e, {
+                new j.Sprite(e, {
                   x:
                     parseInt(i[a]) +
                     Math.cos(n) * (parseFloat(i[a + 3]) - 0.8) * Math.random(),
@@ -33295,7 +34702,7 @@ var c_hasPressedCtrlRKey = false;
                     parseInt(i[a + 1]) -
                     0 +
                     Math.sin(n) * (parseFloat(i[a + 3]) - 0.8) * Math.random(),
-                  img: E.imgCoords.poisonFog2,
+                  img: A.imgCoords.poisonFog2,
                   r4: 0.01 * (Math.random() - 0.5),
                   r5: parseFloat(i[a + 3]) / 3,
                   scaleFunction: function (e) {
@@ -33349,7 +34756,7 @@ var c_hasPressedCtrlRKey = false;
           grU: function (e, t, i, a) {
             var n = e.getGrenadeOrProjectileById(t);
             null !== n &&
-              n instanceof M.Grenade &&
+              n instanceof k.Grenade &&
               n.updatePos(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -33359,7 +34766,7 @@ var c_hasPressedCtrlRKey = false;
           oPU: function (e, t, i, a) {
             var n = e.getObjectFromID(t);
             null !== n &&
-              n instanceof D.Object_ &&
+              n instanceof R.Object_ &&
               n.updatePos(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -33369,7 +34776,7 @@ var c_hasPressedCtrlRKey = false;
           grD: function (e, t, i, a) {
             var n = e.getGrenadeOrProjectileById(t);
             null !== n &&
-              n instanceof M.Grenade &&
+              n instanceof k.Grenade &&
               n.serverDeath(
                 parseInt(i[a + 1]) / o.CONST.TRANSMUL,
                 parseInt(i[a + 2]) / o.CONST.TRANSMUL,
@@ -33378,7 +34785,7 @@ var c_hasPressedCtrlRKey = false;
           grCU: function (e, t, i, a) {
             var n = e.getGrenadeOrProjectileById(t);
             null !== n &&
-              n instanceof M.Grenade &&
+              n instanceof k.Grenade &&
               n.updateCharge(
                 parseFloat(i[a + 1]),
                 parseFloat(i[a + 2]),
@@ -33397,20 +34804,18 @@ var c_hasPressedCtrlRKey = false;
                     o.x - 3 <= e.cameraX2 &&
                     o.y - 3 <= e.cameraY2 &&
                     (e.createPoundSmoke(o.x, o.y + 0.5, 0.5, 9, 0.4),
-                    W.Sound.playSound("invis", o.x, o.y)))
+                    q.Sound.playSound("invis", o.x, o.y)))
                 : r.type === n.AbilityType.Playdead
                   ? ((o.turnCorpseTill = e.ticksCounter + r.duration),
                     (o.isFakeCorpse = !0))
                   : r.type === n.AbilityType.Scan
                     ? (o === e.playingPlayer &&
-                        ((e.lastAbilityUses[
-                          e.pl_active_abilities[0] === r ? 0 : 1
-                        ] = e.ticksCounter),
+                        ((e.lastAbilityUses[e.abilitySlot(r)] = e.ticksCounter),
                         (e.showEnemiesOnMinimapUntil =
                           e.ticksCounter +
                           e.getAbilityFieldValue(r, "duration")),
                         e.interface_.setMainKillMsg(
-                          ee.lang.get("game.skills.scan.tip"),
+                          ae.lang.get("game.skills.scan.tip"),
                           "rgba(0, 255, 6, 0.7)",
                           "textInGreen",
                           !0,
@@ -33419,8 +34824,8 @@ var c_hasPressedCtrlRKey = false;
                         o.y + 5 >= e.cameraY &&
                         o.x - 5 <= e.cameraX2 &&
                         o.y - 5 <= e.cameraY2 &&
-                        (e.addCircle(o.x, o.y, E.imgCoords.greenCircle),
-                        W.Sound.playSound(
+                        (e.addCircle(o.x, o.y, A.imgCoords.greenCircle),
+                        q.Sound.playSound(
                           "scan",
                           o.x,
                           o.y,
@@ -33431,14 +34836,12 @@ var c_hasPressedCtrlRKey = false;
                         ? (o.lastShieldActivated2 = e.ticksCounter)
                         : (o.lastShieldActivated = e.ticksCounter),
                       o === e.playingPlayer &&
-                        (e.lastAbilityUses[
-                          e.pl_active_abilities[0] === r ? 0 : 1
-                        ] = e.ticksCounter),
+                        (e.lastAbilityUses[e.abilitySlot(r)] = e.ticksCounter),
                       o.x + 5 >= e.cameraX &&
                         o.y + 5 >= e.cameraY &&
                         o.x - 5 <= e.cameraX2 &&
                         o.y - 5 <= e.cameraY2 &&
-                        W.Sound.playSound(
+                        q.Sound.playSound(
                           "shield",
                           o.x,
                           o.y,
@@ -33459,9 +34862,8 @@ var c_hasPressedCtrlRKey = false;
               r === e.playingPlayer &&
                 "1" === i[a + 3] &&
                 ((e.playingPlayerEnergy -= n.abilities[3].energy),
-                (e.lastAbilityUses[
-                  e.pl_active_abilities[0] === n.abilities[3] ? 0 : 1
-                ] = e.ticksCounter),
+                (e.lastAbilityUses[e.abilitySlot(n.abilities[3])] =
+                  e.ticksCounter),
                 (e.noShootUntil =
                   e.ticksCounter + o.CONST.NO_SHOOT_AFTER_BLINK_TICKS)));
           },
@@ -33532,7 +34934,7 @@ var c_hasPressedCtrlRKey = false;
               (n.weaponCooldowns2[n.weapon.id] = n.weapon.cooldown2),
               n.weapon.reload2Sound &&
                 n === e.playingPlayer &&
-                (n.reloadSound2 = W.Sound.playSound(
+                (n.reloadSound2 = q.Sound.playSound(
                   n.weapon.reload2Sound,
                   n.x,
                   n.y,
@@ -33544,11 +34946,18 @@ var c_hasPressedCtrlRKey = false;
             n && n.updateField(i[a + 1], parseFloat(i[a + 2]));
           },
           abc: function (e, t, i, a) {
-            e.getPlayerFromID(t) === e.playingPlayer &&
-              ((e.playingPlayerAbilities[parseInt(i[a + 1])].lvl = parseInt(
-                i[a + 2],
-              )),
-              e.setActiveAbilities());
+            if (e.getPlayerFromID(t) === e.playingPlayer) {
+              var n = parseInt(i[a + 1]),
+                o = parseInt(i[a + 3]);
+              e.playingPlayerAbilities[n] ||
+                (e.playingPlayerAbilities[n] = { lvl: 0 });
+              var r = e.playingPlayerAbilities[n];
+              ((r.lvl = parseInt(i[a + 2])),
+                o >= 0 &&
+                  (r.attributes || (r.attributes = []),
+                  (r.attributes[o] = parseInt(i[a + 4]))),
+                e.setActiveAbilities());
+            }
           },
         };
       },
@@ -33586,30 +34995,32 @@ var c_hasPressedCtrlRKey = false;
         var n = i(9994),
           o = i(710),
           r = i(8890),
-          s = i(5273),
-          l = i(262),
-          h = a(i(9554)),
-          d = a(i(4891)),
-          m = i(2399),
-          c = i(4902),
-          g = i(3085),
-          u = i(1626),
-          p = i(9622),
-          y = i(7028),
-          f = i(1799),
-          x = i(5572),
-          w = i(9085),
-          v = i(6214),
-          S = document.createElement("canvas"),
-          b = S.getContext("2d"),
-          _ = document.getElementById("canvas"),
+          s = i(3599),
+          l = i(772),
+          h = i(5273),
+          d = i(262),
+          m = a(i(9554)),
+          c = a(i(4891)),
+          g = i(2399),
+          u = i(4902),
+          p = i(3085),
+          y = i(1626),
+          f = i(9622),
+          x = i(7028),
+          w = i(1799),
+          v = i(5572),
+          S = i(9085),
+          b = i(6214),
+          _ = document.createElement("canvas"),
           C = _.getContext("2d"),
-          I = document.getElementById("chatDisplayDiv"),
-          M = document.getElementById("chatloginner"),
-          T = document.getElementById("killsDisplayDiv"),
-          E = [],
-          k = 0,
-          L = (function () {
+          I = document.getElementById("canvas"),
+          M = I.getContext("2d"),
+          T = document.getElementById("chatDisplayDiv"),
+          E = document.getElementById("chatloginner"),
+          k = document.getElementById("killsDisplayDiv"),
+          L = [],
+          A = 0,
+          F = (function () {
             function e(e, t) {
               if (
                 ((this.messages = []),
@@ -33654,7 +35065,7 @@ var c_hasPressedCtrlRKey = false;
                 (this.gifProcessing = !1),
                 (this._respawnCounter = 0),
                 (this.game = e),
-                (M.innerHTML = ""),
+                (E.innerHTML = ""),
                 t && t.tutorialMessages)
               )
                 for (var i = 0; i < t.tutorialMessages.length; i++)
@@ -33667,10 +35078,10 @@ var c_hasPressedCtrlRKey = false;
                   var n = a[i];
                   ("string" == typeof n
                     ? "upd" === n.split("$")[0]
-                    : (0, c.isBinaryUpd)(n)) && t++;
+                    : (0, u.isBinaryUpd)(n)) && t++;
                 }
                 ((this.replayLength = t),
-                  (this.replayLengthStr = (0, m.ticks2TimeStr)(
+                  (this.replayLengthStr = (0, g.ticks2TimeStr)(
                     this.replayLength,
                   )));
               }),
@@ -33727,11 +35138,11 @@ var c_hasPressedCtrlRKey = false;
                   e.clanTag.length > 0 &&
                   (t =
                     "[<span style='color: white;'>" +
-                    (0, m.escapeHtml)(e.clanTag) +
+                    (0, g.escapeHtml)(e.clanTag) +
                     "</span>] ");
                 var i =
                   t +
-                  p.NameColorUI.getHTMLCodeFromColorIndex(
+                  f.NameColorUI.getHTMLCodeFromColorIndex(
                     e.name,
                     "span",
                     e.nameColor,
@@ -33746,49 +35157,49 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.addKillMsg = function (e, t, i, a, o, r) {
                 if (!this.game.fastForward) {
-                  var l = Date.now(),
-                    h = document.createElement("div"),
+                  var s = Date.now(),
+                    l = document.createElement("div"),
                     d = this.getFormattedPlayerName(e),
                     m = this.getFormattedPlayerName(t),
                     c = document.createElement("canvas"),
-                    u = c.getContext("2d"),
-                    p =
+                    g = c.getContext("2d"),
+                    u =
                       i && i.weapon
-                        ? g.imgCoords[i.weapon.img]
-                        : g.imgCoords.grenade1,
-                    y = void 0 !== a ? s.weapons[a] : null;
-                  (y && (p = g.imgCoords[y.img]),
-                    o && (p = g.imgCoords[o.ability.icon]),
-                    r && (p = g.imgCoords.splashSingle));
+                        ? p.imgCoords[i.weapon.img]
+                        : p.imgCoords.grenade1,
+                    y = void 0 !== a ? h.weapons[a] : null;
+                  (y && (u = p.imgCoords[y.img]),
+                    o && (u = p.imgCoords[o.ability.icon]),
+                    r && (u = p.imgCoords.splashSingle));
                   var f =
                     (i && i.weapon) || y
                       ? 0.3 * this.game.SCALE_FACTOR_BASE
                       : 0.6 * this.game.SCALE_FACTOR_BASE;
-                  ((c.width = Math.floor(f * p.w)),
-                    (c.height = Math.floor(f * p.h)),
-                    (u.mozImageSmoothingEnabled = !1),
-                    (u.msImageSmoothingEnabled = !1),
-                    (u.imageSmoothingEnabled = !1),
-                    u.drawImage(
+                  ((c.width = Math.floor(f * u.w)),
+                    (c.height = Math.floor(f * u.h)),
+                    (g.mozImageSmoothingEnabled = !1),
+                    (g.msImageSmoothingEnabled = !1),
+                    (g.imageSmoothingEnabled = !1),
+                    g.drawImage(
                       n.imgs.miscSheet,
-                      p.x,
-                      p.y,
-                      p.w,
-                      p.h,
+                      u.x,
+                      u.y,
+                      u.w,
+                      u.h,
                       0,
                       0,
                       c.width,
                       c.height,
                     ),
-                    (h.innerHTML =
+                    (l.innerHTML =
                       e === t
-                        ? v.lang.get("game.msg.killed_self_broadcast", {
+                        ? b.lang.get("game.msg.killed_self_broadcast", {
                             playerName: d,
                           })
                         : d + " <img src='" + c.toDataURL() + "' /> " + m),
-                    (h.className = "chatMsg noSelect killMsg"),
-                    h.setAttribute("data-time", l.toString()),
-                    T.appendChild(h));
+                    (l.className = "chatMsg noSelect killMsg"),
+                    l.setAttribute("data-time", s.toString()),
+                    k.appendChild(l));
                 }
               }),
               (e.prototype.chatMsg = function (e, t) {
@@ -33801,7 +35212,7 @@ var c_hasPressedCtrlRKey = false;
                       "<span style='text-decoration: underline; color: red;'>Server</span>";
                   else {
                     var o = this.game.getPlayerFromID(a);
-                    if (o && o.name && (0, m.playerIsBeeingIgnored)(o.name))
+                    if (o && o.name && (0, g.playerIsBeeingIgnored)(o.name))
                       return;
                     n = this.getFormattedPlayerName(o);
                   }
@@ -33809,7 +35220,7 @@ var c_hasPressedCtrlRKey = false;
                     e =
                       n +
                       ": " +
-                      (0, m.escapeHtml)(e.split("$").slice(1).join("$"));
+                      (0, g.escapeHtml)(e.split("$").slice(1).join("$"));
                     var r = document.createElement("div"),
                       s = document.createElement("div");
                     ((r.innerHTML = e),
@@ -33817,10 +35228,10 @@ var c_hasPressedCtrlRKey = false;
                       (r.className = "chatMsg noSelect"),
                       (s.className = "noSelect"),
                       r.setAttribute("data-time", i.toString()),
-                      I.appendChild(r),
-                      M.appendChild(s),
-                      "none" !== I.style.display &&
-                        w.Sound.playSound("chat", void 0, void 0, 0.5));
+                      T.appendChild(r),
+                      E.appendChild(s),
+                      "none" !== T.style.display &&
+                        S.Sound.playSound("chat", void 0, void 0, 0.5));
                   }
                 }
               }),
@@ -33832,16 +35243,16 @@ var c_hasPressedCtrlRKey = false;
                     "<span style='color: " + t + ";'>" + e + "</span>"),
                     (a.className = "chatMsg noSelect"),
                     a.setAttribute("data-time", i.toString()),
-                    I.appendChild(a));
+                    T.appendChild(a));
                 }
               }),
               (e.prototype.click = function () {
                 var e = Date.now();
-                return this.hoverWeapon >= 0 && !l.options.weaponsUnclickable
+                return this.hoverWeapon >= 0 && !d.options.weaponsUnclickable
                   ? (this.game.switchWeapon(this.hoverWeapon), !0)
                   : this.cureButtonHovered
-                    ? ((this.game.cureTick = 0), y.Network.send("cure"), !0)
-                    : this.hoverAbility >= 0 && !l.options.weaponsUnclickable
+                    ? ((this.game.cureTick = 0), x.Network.send("cure"), !0)
+                    : this.hoverAbility >= 0 && !d.options.weaponsUnclickable
                       ? (this.initAbility(
                           this.game.pl_active_abilities[this.hoverAbility],
                           this.hoverAbility,
@@ -33850,7 +35261,7 @@ var c_hasPressedCtrlRKey = false;
                       : this.hoverChoice && this.game.playingPlayer
                         ? (this.showOldUpgChoicesUntil < e &&
                             ((this.currentUpgChoicesEnd = e + 200),
-                            y.Network.send(
+                            x.Network.send(
                               "upg$" +
                                 this.hoverChoice.index +
                                 "$" +
@@ -33860,7 +35271,7 @@ var c_hasPressedCtrlRKey = false;
                             (this.selectedChoiceUntil = e + 500),
                             (this.upgradeChoicesAvailable = !1),
                             (this.abilityPoints -= this.hoverChoice.cost),
-                            w.Sound.playSound("beebeep"),
+                            S.Sound.playSound("beebeep"),
                             this.game.playingPlayer.createAtributeEffect()),
                           !0)
                         : this.upgNotificationStart > 0 &&
@@ -33871,22 +35282,22 @@ var c_hasPressedCtrlRKey = false;
                             : this.unskipButtonHover
                               ? (this.shopUpgrades(), !0)
                               : this.provisionalReplayPos >= 0
-                                ? (w.Sound.playSound("click"),
+                                ? (S.Sound.playSound("click"),
                                   this.replayJumpTo(),
                                   !0)
                                 : this.gifButtonIsHovered
-                                  ? (w.Sound.playSound("click"),
+                                  ? (S.Sound.playSound("click"),
                                     this.recordGIF
                                       ? this.endGIF()
                                       : this.startGIF(),
                                     !0)
                                   : this.replayPlusHover
-                                    ? (w.Sound.playSound("click"),
-                                      (0, m.changeReplaySpeed)(1),
+                                    ? (S.Sound.playSound("click"),
+                                      (0, g.changeReplaySpeed)(1),
                                       !0)
                                     : !!this.replayMinusHover &&
-                                      (w.Sound.playSound("click"),
-                                      (0, m.changeReplaySpeed)(-1),
+                                      (S.Sound.playSound("click"),
+                                      (0, g.changeReplaySpeed)(-1),
                                       !0);
               }),
               (e.prototype.shopUpgrades = function () {
@@ -33894,11 +35305,11 @@ var c_hasPressedCtrlRKey = false;
                   (this.currentUpgChoicesEnd =
                     this.currentUpgChoicesStart + 9999999),
                   (this.upgNotificationStart = -9999),
-                  w.Sound.playSound("beebeep"));
+                  S.Sound.playSound("beebeep"));
               }),
               (e.prototype.hideUpgrades = function () {
                 ((this.currentUpgChoicesEnd = Date.now() + 200),
-                  w.Sound.playSound("beebeep"),
+                  S.Sound.playSound("beebeep"),
                   (this.hoverChoice = null));
               }),
               (e.prototype.setRespawnCounter = function (e) {
@@ -33906,45 +35317,46 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.initAbility = function (e, t) {
                 if (void 0 !== e)
-                  if (u.Input.activeAbility === e)
-                    ((u.Input.activeAbility = null),
-                      w.Sound.playSound("switch"));
+                  if (y.Input.activeAbility === e)
+                    ((y.Input.activeAbility = null),
+                      S.Sound.playSound("switch"));
                   else {
                     var i = !1;
-                    ((e.energy || 0) > this.game.playingPlayerEnergy
+                    (this.game.getAbilityFieldValue(e, "energy") >
+                    this.game.playingPlayerEnergy
                       ? ((i = !0),
-                        this.addMsg(v.lang.get("game.msg.no_energy"), "red"),
-                        w.Sound.playSound("negative", 0.8))
+                        this.addMsg(b.lang.get("game.msg.no_energy"), "red"),
+                        S.Sound.playSound("negative", 0.8))
                       : this.game.lastAbilityUses[t] + e.cooldown >
                           this.game.ticksCounter
                         ? ((i = !0),
                           this.addMsg(
-                            v.lang.get("game.msg.no_cooldown"),
+                            b.lang.get("game.msg.no_cooldown"),
                             "red",
                           ),
-                          w.Sound.playSound("negative", 0.8))
+                          S.Sound.playSound("negative", 0.8))
                         : e.type === o.AbilityType.Blink &&
                           this.game.playingPlayer &&
                           this.game.playingPlayer.carriesFlag() &&
                           ((i = !0),
                           this.addMsg(
-                            v.lang.get("game.skills.teleport.disabled_in_ctf"),
+                            b.lang.get("game.skills.teleport.disabled_in_ctf"),
                             "red",
                           ),
-                          w.Sound.playSound("negative", 0.8)),
+                          S.Sound.playSound("negative", 0.8)),
                       e.isInstant
                         ? i ||
-                          (y.Network.send("ab$" + e.id),
-                          (u.Input.activeAbility = null))
-                        : (i || w.Sound.playSound("switch"),
-                          (u.Input.activeAbility = e)));
+                          (x.Network.send("ab$" + e.id),
+                          (y.Input.activeAbility = null))
+                        : (i || S.Sound.playSound("switch"),
+                          (y.Input.activeAbility = e)));
                   }
               }),
               (e.prototype.killAllMsgs = function () {
-                for (; I.childNodes.length > 0; )
-                  I.removeChild(I.childNodes[0]);
                 for (; T.childNodes.length > 0; )
                   T.removeChild(T.childNodes[0]);
+                for (; k.childNodes.length > 0; )
+                  k.removeChild(k.childNodes[0]);
               }),
               (e.prototype.refreshTop3 = function () {
                 var e = this.game.type.winningCondition;
@@ -33999,17 +35411,23 @@ var c_hasPressedCtrlRKey = false;
                     ))));
                 for (var i = 0, a = 3; a < e.length; a += 3) {
                   var n = o.abilities[parseInt(e[a])],
-                    s = "-1" !== e[a + 1] ? 5 : 10;
-                  ("-1" === e[a + 1] && n.maxLvl
-                    ? (s = n.maxLvl)
+                    h = "-1" !== e[a + 1] ? 5 : 10;
+                  "-1" === e[a + 1] && n.maxLvl
+                    ? (h = n.maxLvl)
                     : "-1" !== e[a + 1] &&
                       n.levelUpMaxUpgLvl &&
                       n.levelUpMaxUpgLvl[parseInt(e[a + 1])] &&
-                      (s = n.levelUpMaxUpgLvl[parseInt(e[a + 1])]),
+                      (h = n.levelUpMaxUpgLvl[parseInt(e[a + 1])]);
+                  var d =
+                    "-1" === e[a + 1] &&
+                    this.game.type.id === s.MAP_TYPE.SURVIVAL &&
+                    (0, l.isSurvivalAttribute)(parseInt(e[a]));
+                  (d && (h = l.SURVIVAL_ATTRIBUTE_PIPS),
                     this.currentUpgChoices.push({
-                      img: g.imgCoords[n.icon],
+                      img: p.imgCoords[n.icon],
                       text:
                         n.name +
+                        (d ? " " + e[a + 2] : "") +
                         ("-1" !== e[a + 1]
                           ? " - " + n.levelUpFieldsName[parseInt(e[a + 1])]
                           : ""),
@@ -34020,7 +35438,7 @@ var c_hasPressedCtrlRKey = false;
                       index: parseInt(e[a]),
                       sub: parseInt(e[a + 1]),
                       lvl: parseInt(e[a + 2]),
-                      maxLvl: s,
+                      maxLvl: h,
                       i,
                     }),
                     i++);
@@ -34047,123 +35465,123 @@ var c_hasPressedCtrlRKey = false;
                   i,
                   a = Date.now(),
                   o = 98;
-                if (l.options.showFPS) {
-                  for (E.push(1e3 / (a - k)), k = a; E.length > 10; )
-                    E.splice(0, 1);
+                if (d.options.showFPS) {
+                  for (L.push(1e3 / (a - A)), A = a; L.length > 10; )
+                    L.splice(0, 1);
                   var r = Math.round(
-                    E.reduce(function (e, t) {
+                    L.reduce(function (e, t) {
                       return e + t;
-                    }) / E.length,
+                    }) / L.length,
                   );
-                  ((0, m.drawText)(C, "FPS: " + r, "white", 18, 10, o),
+                  ((0, g.drawText)(M, "FPS: " + r, "white", 18, 10, o),
                     (o += 28));
                 }
-                l.options.showPing &&
-                  (0, m.drawText)(
-                    C,
-                    "Ping: " + y.Network.lastPing,
+                d.options.showPing &&
+                  (0, g.drawText)(
+                    M,
+                    "Ping: " + x.Network.lastPing,
                     "white",
                     18,
                     10,
                     o,
                   );
-                for (var h = I.childNodes, d = 0; d < h.length; d++)
-                  (h[d].getAttribute("data-time") < a - 1e4 ||
-                    d < h.length - 10) &&
-                    I.removeChild(h[d]);
-                h = T.childNodes;
-                for (d = 0; d < h.length; d++)
-                  (h[d].getAttribute("data-time") < a - 1e4 ||
-                    d < h.length - 10) &&
-                    T.removeChild(h[d]);
-                var c = 0.8 * this.game.SCALE_FACTOR_BASE,
-                  p = 0.5 * c,
-                  x = 0.4 * c,
-                  w = l.options.weaponsUnclickable ? 0.7 : 1,
-                  M = this.game.playingPlayerIsZombie
-                    ? [s.weapons[12]]
-                    : s.weapons;
+                for (var s = T.childNodes, l = 0; l < s.length; l++)
+                  (s[l].getAttribute("data-time") < a - 1e4 ||
+                    l < s.length - 10) &&
+                    T.removeChild(s[l]);
+                s = k.childNodes;
+                for (l = 0; l < s.length; l++)
+                  (s[l].getAttribute("data-time") < a - 1e4 ||
+                    l < s.length - 10) &&
+                    k.removeChild(s[l]);
+                var m = 0.8 * this.game.SCALE_FACTOR_BASE,
+                  c = 0.5 * m,
+                  u = 0.4 * m,
+                  f = d.options.weaponsUnclickable ? 0.7 : 1,
+                  v = this.game.playingPlayerIsZombie
+                    ? [h.weapons[12]]
+                    : h.weapons;
                 if (
                   this.game.playingPlayer &&
                   (this.game.playingPlayer.weapon ||
                     this.game.playingPlayerIsZombie) &&
                   !this.game.playingPlayer.dieAt
                 ) {
-                  var L = g.imgCoords.weaponFrame2,
-                    A = window.innerWidth - (L.w + 1) * x,
-                    F = window.innerHeight - (L.h + 1) * x;
+                  var S = p.imgCoords.weaponFrame2,
+                    E = window.innerWidth - (S.w + 1) * u,
+                    F = window.innerHeight - (S.h + 1) * u;
                   this.hoverWeapon = -1;
-                  var P = g.imgCoords.weaponFrameCurrent;
-                  for (d = 0; d < M.length; d++) {
-                    var N = M[M.length - d - 1],
-                      D =
+                  var P = p.imgCoords.weaponFrameCurrent;
+                  for (l = 0; l < v.length; l++) {
+                    var N = v[v.length - l - 1],
+                      B =
                         this.game.playingPlayerClips[N.id] +
                         this.game.playingPlayerAmmo[N.id];
                     if (
-                      ((D > 0 || this.game.playingPlayer.weapon === N) &&
+                      ((B > 0 || this.game.playingPlayer.weapon === N) &&
                         !N.noWeapon) ||
-                      (N === s.weapons[12] && this.game.playingPlayerIsZombie)
+                      (N === h.weapons[12] && this.game.playingPlayerIsZombie)
                     ) {
-                      L =
-                        D > 0 || N === s.weapons[12]
-                          ? g.imgCoords.weaponFrame2Green
-                          : g.imgCoords.weaponFrame2;
-                      var B =
-                        D > 0 || N === s.weapons[12]
+                      S =
+                        B > 0 || N === h.weapons[12]
+                          ? p.imgCoords.weaponFrame2Green
+                          : p.imgCoords.weaponFrame2;
+                      var D =
+                        B > 0 || N === h.weapons[12]
                           ? n.imgs.miscSheet
                           : n.imgs.miscSheetGrey;
-                      ((C.globalAlpha = w),
-                        C.drawImage(
-                          B,
-                          L.x,
-                          L.y,
-                          L.w,
-                          L.h,
-                          A,
+                      ((M.globalAlpha = f),
+                        M.drawImage(
+                          D,
+                          S.x,
+                          S.y,
+                          S.w,
+                          S.h,
+                          E,
                           F,
-                          L.w * x,
-                          L.h * x,
+                          S.w * u,
+                          S.h * u,
                         ),
                         (this.game.playingPlayer.weapon !== N &&
-                          N !== s.weapons[12]) ||
-                          C.drawImage(
+                          N !== h.weapons[12]) ||
+                          M.drawImage(
                             n.imgs.miscSheet,
                             P.x,
                             P.y,
                             P.w,
                             P.h,
-                            A - 3 * x,
-                            F - 3 * x,
-                            P.w * x,
-                            P.h * x,
+                            E - 3 * u,
+                            F - 3 * u,
+                            P.w * u,
+                            P.h * u,
                           ));
-                      var O = g.imgCoords[N.img];
-                      C.drawImage(
-                        B,
+                      var O = p.imgCoords[N.img];
+                      M.drawImage(
+                        D,
                         O.x,
                         O.y,
                         O.w,
                         O.h,
-                        A + L.w * x * 0.4 - 0.5 * O.w * x * 1.3,
-                        F + (L.h - 3) * x - O.h * x * 1.3,
-                        O.w * x * 1.3,
-                        O.h * x * 1.3,
+                        E + S.w * u * 0.4 - 0.5 * O.w * u * 1.3,
+                        F + (S.h - 3) * u - O.h * u * 1.3,
+                        O.w * u * 1.3,
+                        O.h * u * 1.3,
                       );
-                      var R = g.imgCoords[N.ammoImgSmall],
+                      var R = p.imgCoords[N.ammoImgSmall],
                         H =
                           1.2 *
-                          x *
+                          u *
                           (null !== (t = N.ammoImgSmallScale) && void 0 !== t
                             ? t
                             : 1);
-                      C.drawImage(
-                        B,
+                      M.drawImage(
+                        D,
                         R.x,
                         R.y,
                         R.w,
                         R.h,
-                        A + L.w * x * 0.25 - R.w * H,
-                        F + L.h * x * 0.2 - 0.5 * R.h * H,
+                        E + S.w * u * 0.25 - R.w * H,
+                        F + S.h * u * 0.2 - 0.5 * R.h * H,
                         R.w * H,
                         R.h * H,
                       );
@@ -34174,208 +35592,208 @@ var c_hasPressedCtrlRKey = false;
                           this.game.playingPlayerAmmo[N.id] +
                           ")";
                       if (
-                        ((0, m.drawText)(
-                          C,
+                        ((0, g.drawText)(
+                          M,
                           U,
-                          D > 0
+                          B > 0
                             ? "#4FAC43"
-                            : "rgba(255, 255, 255, " + 0.7 * w + ")",
-                          7.5 * x,
-                          A + L.w * x * 0.35,
-                          F + 0.55 * L.h,
+                            : "rgba(255, 255, 255, " + 0.7 * f + ")",
+                          7.5 * u,
+                          E + S.w * u * 0.35,
+                          F + 0.55 * S.h,
                         ),
                         !N.hideHotkey)
                       ) {
-                        var G = u.commandKeys[u.COMMAND["WPN" + (N.id + 1)]],
-                          W = u.Input.keys[G]
-                            ? "rgba(100, 170, 110, " + 0.8 * w + ")"
-                            : "rgba(255, 255, 255, " + 0.8 * w + ")";
-                        (0, m.drawText)(
-                          C,
-                          "[" + u.keyNames[G] + "]",
+                        var G = y.commandKeys[y.COMMAND["WPN" + (N.id + 1)]],
+                          W = y.Input.keys[G]
+                            ? "rgba(100, 170, 110, " + 0.8 * f + ")"
+                            : "rgba(255, 255, 255, " + 0.8 * f + ")";
+                        (0, g.drawText)(
+                          M,
+                          "[" + y.keyNames[G] + "]",
                           W,
-                          6 * x,
-                          A + L.w * x * 0.8,
-                          F + L.h * x * 0.8,
-                          10 * x,
+                          6 * u,
+                          E + S.w * u * 0.8,
+                          F + S.h * u * 0.8,
+                          10 * u,
                           "right",
                         );
                       }
-                      ((C.globalAlpha = 1),
-                        !l.options.weaponsUnclickable &&
-                          u.Input.x >= A &&
-                          u.Input.y >= F &&
-                          u.Input.y <= F + L.h * x &&
+                      ((M.globalAlpha = 1),
+                        !d.options.weaponsUnclickable &&
+                          y.Input.x >= E &&
+                          y.Input.y >= F &&
+                          y.Input.y <= F + S.h * u &&
                           ((this.hoverWeapon = N.id),
-                          (C.fillStyle = "rgba(0, 0, 0, 0.8)"),
-                          C.fillRect(
-                            window.innerWidth - 100 * c,
-                            window.innerHeight - 80 * c,
-                            60 * c,
-                            50 * c,
+                          (M.fillStyle = "rgba(0, 0, 0, 0.8)"),
+                          M.fillRect(
+                            window.innerWidth - 100 * m,
+                            window.innerHeight - 80 * m,
+                            60 * m,
+                            50 * m,
                           ),
-                          (0, m.drawText)(
-                            C,
+                          (0, g.drawText)(
+                            M,
                             N.name,
                             "white",
-                            4 * c,
-                            window.innerWidth - 95 * c,
-                            window.innerHeight - 74 * c,
-                            200 * c,
+                            4 * m,
+                            window.innerWidth - 95 * m,
+                            window.innerHeight - 74 * m,
+                            200 * m,
                             "left",
                             1,
                             void 0,
                             void 0,
-                            50 * c,
+                            50 * m,
                           ),
-                          (0, m.drawText)(
-                            C,
+                          (0, g.drawText)(
+                            M,
                             N.description,
                             "#D4D4D4",
-                            3 * c,
-                            window.innerWidth - 95 * c,
-                            window.innerHeight - 64 * c,
-                            50 * c,
+                            3 * m,
+                            window.innerWidth - 95 * m,
+                            window.innerHeight - 64 * m,
+                            50 * m,
                             "left",
                             1,
                             void 0,
-                            3.5 * c,
+                            3.5 * m,
                           ),
-                          (C.globalAlpha = 0.5),
-                          C.drawImage(
+                          (M.globalAlpha = 0.5),
+                          M.drawImage(
                             n.imgs.miscSheet,
                             P.x,
                             P.y,
                             P.w,
                             P.h,
-                            A - 3 * x,
-                            F - 3 * x,
-                            P.w * x,
-                            P.h * x,
+                            E - 3 * u,
+                            F - 3 * u,
+                            P.w * u,
+                            P.h * u,
                           ),
-                          (C.globalAlpha = 1)),
-                        (F -= (L.h + 2) * x));
+                          (M.globalAlpha = 1)),
+                        (F -= (S.h + 2) * u));
                     }
                   }
                 }
                 this.game.updateBotDebugHover();
                 var z = this.game.botDebugShown();
                 if (null !== z) {
-                  var Y = g.imgCoords.weaponFrame2,
-                    q = g.imgCoords.weaponFrameCurrent,
-                    j = 1 * x,
-                    Z = window.innerHeight - (Y.h + 1) * x;
-                  for (d = 0; d < s.weapons.length; d++) {
-                    if (!(N = s.weapons[s.weapons.length - d - 1]).noWeapon) {
+                  var Y = p.imgCoords.weaponFrame2,
+                    q = p.imgCoords.weaponFrameCurrent,
+                    j = 1 * u,
+                    Z = window.innerHeight - (Y.h + 1) * u;
+                  for (l = 0; l < h.weapons.length; l++) {
+                    if (!(N = h.weapons[h.weapons.length - l - 1]).noWeapon) {
                       var X = z.clips[N.id] || 0,
-                        K = z.ammo[N.id] || 0,
-                        V = z.weapon === N.id;
-                      if (!(X <= 0 && K <= 0) || V) {
-                        var $ = X + K > 0;
-                        ((B = $ ? n.imgs.miscSheet : n.imgs.miscSheetGrey),
-                          (L = $
-                            ? g.imgCoords.weaponFrame2Green
-                            : g.imgCoords.weaponFrame2));
-                        (C.drawImage(
-                          B,
-                          L.x,
-                          L.y,
-                          L.w,
-                          L.h,
+                        V = z.ammo[N.id] || 0,
+                        K = z.weapon === N.id;
+                      if (!(X <= 0 && V <= 0) || K) {
+                        var $ = X + V > 0;
+                        ((D = $ ? n.imgs.miscSheet : n.imgs.miscSheetGrey),
+                          (S = $
+                            ? p.imgCoords.weaponFrame2Green
+                            : p.imgCoords.weaponFrame2));
+                        (M.drawImage(
+                          D,
+                          S.x,
+                          S.y,
+                          S.w,
+                          S.h,
                           j,
                           Z,
-                          L.w * x,
-                          L.h * x,
+                          S.w * u,
+                          S.h * u,
                         ),
-                          V &&
-                            C.drawImage(
+                          K &&
+                            M.drawImage(
                               n.imgs.miscSheet,
                               q.x,
                               q.y,
                               q.w,
                               q.h,
-                              j - 3 * x,
-                              Z - 3 * x,
-                              q.w * x,
-                              q.h * x,
+                              j - 3 * u,
+                              Z - 3 * u,
+                              q.w * u,
+                              q.h * u,
                             ));
-                        O = g.imgCoords[N.img];
-                        C.drawImage(
-                          B,
+                        O = p.imgCoords[N.img];
+                        M.drawImage(
+                          D,
                           O.x,
                           O.y,
                           O.w,
                           O.h,
-                          j + L.w * x * 0.4 - 0.5 * O.w * x * 1.3,
-                          Z + (L.h - 3) * x - O.h * x * 1.3,
-                          O.w * x * 1.3,
-                          O.h * x * 1.3,
+                          j + S.w * u * 0.4 - 0.5 * O.w * u * 1.3,
+                          Z + (S.h - 3) * u - O.h * u * 1.3,
+                          O.w * u * 1.3,
+                          O.h * u * 1.3,
                         );
-                        ((R = g.imgCoords[N.ammoImgSmall]),
+                        ((R = p.imgCoords[N.ammoImgSmall]),
                           (H =
                             1.2 *
-                            x *
+                            u *
                             (null !== (i = N.ammoImgSmallScale) && void 0 !== i
                               ? i
                               : 1)));
-                        C.drawImage(
-                          B,
+                        M.drawImage(
+                          D,
                           R.x,
                           R.y,
                           R.w,
                           R.h,
-                          j + L.w * x * 0.25 - R.w * H,
-                          Z + L.h * x * 0.2 - 0.5 * R.h * H,
+                          j + S.w * u * 0.25 - R.w * H,
+                          Z + S.h * u * 0.2 - 0.5 * R.h * H,
                           R.w * H,
                           R.h * H,
                         );
-                        var J = N.startAmmoSize ? "INF" : X + " (" + K + ")";
-                        ((0, m.drawText)(
-                          C,
+                        var J = N.startAmmoSize ? "INF" : X + " (" + V + ")";
+                        ((0, g.drawText)(
+                          M,
                           J,
                           $ ? "#4FAC43" : "rgba(255, 255, 255, 0.7)",
-                          7.5 * x,
-                          j + L.w * x * 0.35,
-                          Z + 0.55 * L.h,
+                          7.5 * u,
+                          j + S.w * u * 0.35,
+                          Z + 0.55 * S.h,
                         ),
-                          (Z -= (L.h + 2) * x));
+                          (Z -= (S.h + 2) * u));
                       }
                     }
                   }
-                  ((0, m.drawText)(
-                    C,
+                  ((0, g.drawText)(
+                    M,
                     z.name +
                       "   " +
                       z.hp +
                       " hp" +
                       (z.armor > 0 ? " + " + z.armor + " armor" : ""),
                     "#FFD155",
-                    3.6 * c,
+                    3.6 * m,
                     j,
-                    Z - 9 * c,
+                    Z - 9 * m,
                   ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       z.state,
                       "#D4D4D4",
-                      3.2 * c,
+                      3.2 * m,
                       j,
-                      Z - 4 * c,
-                      120 * c,
+                      Z - 4 * m,
+                      120 * m,
                       "left",
                       1,
                       void 0,
-                      4 * c,
+                      4 * m,
                     ));
                 }
-                if (m.replaySettings.lastReplaySpeedChange + 2e3 > a) {
+                if (g.replaySettings.lastReplaySpeedChange + 2e3 > a) {
                   var Q = Math.min(
-                    (m.replaySettings.lastReplaySpeedChange + 2e3 - a) / 750,
+                    (g.replaySettings.lastReplaySpeedChange + 2e3 - a) / 750,
                     1,
                   );
-                  (0, m.drawText)(
-                    C,
-                    "Speed x" + m.replaySettings.replayOption.display,
+                  (0, g.drawText)(
+                    M,
+                    "Speed x" + g.replaySettings.replayOption.display,
                     "#FFD155",
                     0.35 * this.game.FIELD_SIZE_BASE,
                     window.innerWidth - 7 * this.game.SCALE_FACTOR_BASE,
@@ -34387,11 +35805,11 @@ var c_hasPressedCtrlRKey = false;
                 }
                 if (
                   (this.game.playingPlayer &&
-                    u.Input.activeAbility &&
-                    u.Input.activeAbility.activeMsg &&
-                    (0, m.drawText)(
-                      C,
-                      u.Input.activeAbility.activeMsg,
+                    y.Input.activeAbility &&
+                    y.Input.activeAbility.activeMsg &&
+                    (0, g.drawText)(
+                      M,
+                      y.Input.activeAbility.activeMsg,
                       "#C0EDBA",
                       0.4 * this.game.FIELD_SIZE_BASE,
                       0.5 * window.innerWidth,
@@ -34403,8 +35821,8 @@ var c_hasPressedCtrlRKey = false;
                       0.45 * this.game.FIELD_SIZE_BASE,
                     ),
                   this._respawnCounter > 0 &&
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       "Spawning in " +
                         Math.round((10 * this._respawnCounter) / 20) / 10 +
                         "s",
@@ -34418,153 +35836,152 @@ var c_hasPressedCtrlRKey = false;
                   (this.hoverAbility = -1),
                   this.game.playingPlayer && !this.game.playingPlayer.dieAt)
                 )
-                  for (d = 0; d < this.game.pl_active_abilities.length; d++)
-                    if (this.game.pl_active_abilities[d]) {
-                      C.globalAlpha = w;
-                      var ee = this.game.pl_active_abilities[d];
-                      ((L =
-                        this.game.playingPlayerEnergy >= ee.energy
-                          ? g.imgCoords.abilityFrameGreen
-                          : g.imgCoords.abilityFrame),
-                        (A =
+                  for (l = 0; l < this.game.pl_active_abilities.length; l++)
+                    if (this.game.pl_active_abilities[l]) {
+                      M.globalAlpha = f;
+                      var ee = this.game.pl_active_abilities[l],
+                        te = this.game.getAbilityFieldValue(ee, "energy");
+                      ((S =
+                        this.game.playingPlayerEnergy >= te
+                          ? p.imgCoords.abilityFrameGreen
+                          : p.imgCoords.abilityFrame),
+                        (E =
                           window.innerWidth -
-                          p *
-                            (L.w + 1) *
-                            (this.game.pl_active_abilities.length - d) -
-                          (g.imgCoords.weaponFrame.w + 6) * x),
-                        (F = window.innerHeight - (L.h + 1) * p),
-                        (B =
-                          ee.energy <= this.game.playingPlayerEnergy &&
-                          this.game.lastAbilityUses[d] + ee.cooldown <=
+                          c *
+                            (S.w + 1) *
+                            (this.game.pl_active_abilities.length - l) -
+                          (p.imgCoords.weaponFrame.w + 6) * u),
+                        (F = window.innerHeight - (S.h + 1) * c),
+                        (D =
+                          te <= this.game.playingPlayerEnergy &&
+                          this.game.lastAbilityUses[l] + ee.cooldown <=
                             this.game.ticksCounter
                             ? n.imgs.miscSheet
                             : n.imgs.miscSheetGrey));
-                      C.drawImage(
-                        B,
-                        L.x,
-                        L.y,
-                        L.w,
-                        L.h,
-                        A,
+                      M.drawImage(
+                        D,
+                        S.x,
+                        S.y,
+                        S.w,
+                        S.h,
+                        E,
                         F,
-                        L.w * p,
-                        L.h * p,
+                        S.w * c,
+                        S.h * c,
                       );
-                      var te = g.imgCoords[ee.icon],
-                        ie = ((L.w - 6) * p) / Math.max(te.w, te.h),
-                        ae = A + (L.w * p - te.w * ie) / 2,
-                        ne = F + 0.2 * (L.h * p - te.h * ie);
-                      C.drawImage(
-                        B,
-                        te.x,
-                        te.y,
-                        te.w,
-                        te.h,
-                        ae,
+                      var ie = p.imgCoords[ee.icon],
+                        ae = ((S.w - 6) * c) / Math.max(ie.w, ie.h),
+                        ne = E + (S.w * c - ie.w * ae) / 2,
+                        oe = F + 0.2 * (S.h * c - ie.h * ae);
+                      M.drawImage(
+                        D,
+                        ie.x,
+                        ie.y,
+                        ie.w,
+                        ie.h,
                         ne,
-                        te.w * ie,
-                        te.h * ie,
+                        oe,
+                        ie.w * ae,
+                        ie.h * ae,
                       );
-                      ((G = u.commandKeys[u.COMMAND["ABILITY" + (d + 1)]]),
-                        (W = u.Input.keys[G]
-                          ? "rgba(100, 170, 110, " + 0.8 * w + ")"
-                          : "rgba(255, 255, 255, " + 0.7 * w + ")"));
-                      ((0, m.drawText)(
-                        C,
-                        (0, u.getKeyName)(G),
+                      ((G = y.commandKeys[y.COMMAND["ABILITY" + (l + 1)]]),
+                        (W = y.Input.keys[G]
+                          ? "rgba(100, 170, 110, " + 0.8 * f + ")"
+                          : "rgba(255, 255, 255, " + 0.7 * f + ")"));
+                      ((0, g.drawText)(
+                        M,
+                        (0, y.getKeyName)(G),
                         W,
-                        3.5 * c,
-                        A + L.w * p * 0.5,
-                        F + 38 * p,
-                        L.w,
+                        3.5 * m,
+                        E + S.w * c * 0.5,
+                        F + 38 * c,
+                        S.w,
                         "center",
                       ),
-                        !l.options.weaponsUnclickable &&
-                          u.Input.x > A &&
-                          u.Input.x < A + L.w * p &&
-                          u.Input.y > window.innerHeight - (L.h + 1) * p &&
-                          ((this.hoverAbility = d),
-                          (C.globalAlpha = 0.3),
-                          C.drawImage(
+                        !d.options.weaponsUnclickable &&
+                          y.Input.x > E &&
+                          y.Input.x < E + S.w * c &&
+                          y.Input.y > window.innerHeight - (S.h + 1) * c &&
+                          ((this.hoverAbility = l),
+                          (M.globalAlpha = 0.3),
+                          M.drawImage(
                             n.imgs.miscSheetWhite,
-                            L.x,
-                            L.y,
-                            L.w,
-                            L.h,
-                            A,
+                            S.x,
+                            S.y,
+                            S.w,
+                            S.h,
+                            E,
                             F,
-                            L.w * p,
-                            L.h * p,
+                            S.w * c,
+                            S.h * c,
                           ),
-                          (C.globalAlpha = 1),
-                          (C.fillStyle = "rgba(0, 0, 0, 0.8)"),
-                          C.fillRect(
-                            window.innerWidth - 100 * c,
-                            window.innerHeight - 65 * c,
-                            65 * c,
-                            35 * c,
+                          (M.globalAlpha = 1),
+                          (M.fillStyle = "rgba(0, 0, 0, 0.8)"),
+                          M.fillRect(
+                            window.innerWidth - 100 * m,
+                            window.innerHeight - 65 * m,
+                            65 * m,
+                            35 * m,
                           ),
-                          (0, m.drawText)(
-                            C,
+                          (0, g.drawText)(
+                            M,
                             ee.name,
                             "white",
-                            4 * c,
-                            window.innerWidth - 96 * c,
-                            window.innerHeight - 58 * c,
+                            4 * m,
+                            window.innerWidth - 96 * m,
+                            window.innerHeight - 58 * m,
                           ),
-                          (0, m.drawText)(
-                            C,
-                            v.lang.get("game.skills.misc.energy_cost", {
-                              energy: ee.energy,
+                          (0, g.drawText)(
+                            M,
+                            b.lang.get("game.skills.misc.energy_cost", {
+                              energy: Math.round(te),
                             }),
                             "#DD52CE",
-                            3 * c,
-                            window.innerWidth - 96 * c,
-                            window.innerHeight - 52 * c,
-                            90 * c,
+                            3 * m,
+                            window.innerWidth - 96 * m,
+                            window.innerHeight - 52 * m,
+                            90 * m,
                             "left",
                           ),
-                          (0, m.drawText)(
-                            C,
+                          (0, g.drawText)(
+                            M,
                             ee.description,
                             "#D4D4D4",
-                            3 * c,
-                            window.innerWidth - 96 * c,
-                            window.innerHeight - 45 * c,
-                            55 * c,
+                            3 * m,
+                            window.innerWidth - 96 * m,
+                            window.innerHeight - 45 * m,
+                            55 * m,
                             "left",
                             1,
                             void 0,
-                            3.5 * c,
+                            3.5 * m,
                           )));
-                      var oe =
-                        this.game.lastAbilityUses[
-                          this.game.pl_active_abilities[0] === ee ? 0 : 1
-                        ] +
+                      var re =
+                        this.game.lastAbilityUses[l] +
                         ee.cooldown -
                         this.game.ticksCounter;
-                      oe > 0 &&
-                        (0, m.drawText)(
-                          C,
-                          Math.floor(oe / 20).toString(),
+                      re > 0 &&
+                        (0, g.drawText)(
+                          M,
+                          Math.floor(re / 20).toString(),
                           "red",
-                          9 * c,
-                          A + L.w * p * 0.5,
-                          F + 25 * p,
-                          L.w,
+                          9 * m,
+                          E + S.w * c * 0.5,
+                          F + 25 * c,
+                          S.w,
                           "center",
                           1,
                           "rgba(0, 0, 0, 0.65)",
-                          L.h,
+                          S.h,
                         );
                     }
                 this.game.playingPlayer &&
                   this.game.playingPlayer.invincibleUntil >
                     this.game.ticksCounter &&
                   this.game.ticksCounter > 0 &&
-                  (0, m.drawText)(
-                    C,
-                    v.lang.get("game.msg.invincible", {
+                  (0, g.drawText)(
+                    M,
+                    b.lang.get("game.msg.invincible", {
                       seconds: Math.ceil(
                         (this.game.playingPlayer.invincibleUntil -
                           this.game.ticksCounter) /
@@ -34581,92 +35998,95 @@ var c_hasPressedCtrlRKey = false;
                     "rgba(255, 255, 255, 0.2)",
                     0.3 * this.game.FIELD_SIZE_BASE,
                   );
-                var re = 7.5 * c;
+                var se = 7.5 * m;
                 if (this.game.type.team && this.game.type.souls) {
-                  var se = 0.9 * c,
-                    le = g.imgCoords.souls;
-                  (C.drawImage(
+                  var le = 0.9 * m,
+                    he = p.imgCoords.souls;
+                  (M.drawImage(
                     n.imgs.miscSheet,
-                    le.x,
-                    le.y,
-                    le.w,
-                    le.h,
-                    0.5 * window.innerWidth - 0.5 * le.w * se,
-                    1 * se,
-                    le.w * se,
-                    le.h * se,
+                    he.x,
+                    he.y,
+                    he.w,
+                    he.h,
+                    0.5 * window.innerWidth - 0.5 * he.w * le,
+                    1 * le,
+                    he.w * le,
+                    he.h * le,
                   ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.game.scoreTeam1.toString(),
                       "#A13232",
-                      6 * c,
-                      0.5 * window.innerWidth - (0.5 * le.w + 3) * se,
-                      re + 2 * c,
-                      70 * c,
+                      6 * m,
+                      0.5 * window.innerWidth - (0.5 * he.w + 3) * le,
+                      se + 2 * m,
+                      70 * m,
                       "right",
                       1,
                       "rgba(0, 0, 0, 0.3)",
-                      7 * c,
+                      7 * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.game.scoreTeam2.toString(),
                       "#1B698E",
-                      6 * c,
-                      0.5 * window.innerWidth + (0.5 * le.w + 3) * se,
-                      re + 2 * c,
-                      70 * c,
+                      6 * m,
+                      0.5 * window.innerWidth + (0.5 * he.w + 3) * le,
+                      se + 2 * m,
+                      70 * m,
                       "left",
                       1,
                       "rgba(0, 0, 0, 0.3)",
-                      7 * c,
+                      7 * m,
                     ),
-                    (re += 11 * c));
+                    (se += 11 * m));
                 }
+                var de = this.game.roundTime <= 0;
                 if (
-                  this.game.roundTime > 0 &&
+                  (!de || this.game.type.unlimitedTime) &&
                   ("tutorial1" !== this.game.map.special ||
                     this.game.ticksCounter >= this.game.roundTime - 1200)
                 ) {
-                  var he = "",
-                    de = void 0;
+                  var me = "",
+                    ce = void 0;
                   (this.game.ticksCounter < 0
-                    ? ((he = Math.floor(
+                    ? ((me = Math.floor(
                         -this.game.ticksCounter / 20,
                       ).toString()),
-                      (de = !1))
-                    : ((he = (0, m.ticks2TimeStr)(
-                        this.game.roundTime - this.game.ticksCounter,
+                      (ce = !1))
+                    : ((me = (0, g.ticks2TimeStr)(
+                        de
+                          ? this.game.ticksCounter
+                          : this.game.roundTime - this.game.ticksCounter,
                       )),
-                      (de = !0)),
-                    f.rankInGame.refreshTime(de, he),
-                    (0, m.drawText)(
-                      C,
-                      he,
+                      (ce = !0)),
+                    w.rankInGame.refreshTime(ce, me),
+                    (0, g.drawText)(
+                      M,
+                      me,
                       "rgba(255, 255, 255, 0.7)",
-                      5.5 * c,
+                      5.5 * m,
                       window.innerWidth / 2,
-                      re,
+                      se,
                       0.9 * window.innerWidth,
                       "center",
                     ),
-                    (re += 6 * c));
+                    (se += 6 * m));
                 }
                 if (this.game.type.coopZombieMode) {
                   for (
-                    var me = 0, ce = this.game.players;
-                    me < ce.length;
-                    me++
+                    var ge = 0, ue = this.game.players;
+                    ge < ue.length;
+                    ge++
                   ) {
-                    var ge = ce[me];
-                    ge && ge.isHumanZombie;
+                    var pe = ue[ge];
+                    pe && pe.isHumanZombie;
                   }
-                  (0, m.drawText)(
-                    C,
+                  (0, g.drawText)(
+                    M,
                     "Alive: 1 / " + this.game.players.length,
                     "white",
-                    4.5 * c,
+                    4.5 * m,
                     10,
                     130,
                     2 * window.innerWidth,
@@ -34677,7 +36097,7 @@ var c_hasPressedCtrlRKey = false;
                 !this.game.playingPlayer.dieAt &&
                 this.game.showEnemiesOnMinimapUntil >= this.game.ticksCounter
                   ? this.scanMsg(
-                      v.lang.get("game.skills.scan.countdown", {
+                      b.lang.get("game.skills.scan.countdown", {
                         seconds: Math.floor(
                           (this.game.showEnemiesOnMinimapUntil -
                             this.game.ticksCounter) /
@@ -34685,15 +36105,15 @@ var c_hasPressedCtrlRKey = false;
                         ),
                       }),
                       "rgba(0, 255, 6, 0.7)",
-                      re + 2 * c,
+                      se + 2 * m,
                     )
                   : this.game.type.flag
                     ? this.scanMsg(
-                        v.lang.get(this.game.getFlagText()),
+                        b.lang.get(this.game.getFlagText()),
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
-                        re + 2 * c,
+                        se + 2 * m,
                       )
                     : this.game.type.coopZombieMode &&
                       this.scanMsg(
@@ -34701,30 +36121,30 @@ var c_hasPressedCtrlRKey = false;
                         "rgba(255, 246, 173, " +
                           (0.55 + 0.15 * Math.sin(0.4 * e)) +
                           ")",
-                        re + 2 * c,
+                        se + 2 * m,
                       ),
                   this.game.ticksCounter < 0 &&
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.game.victoryMsg,
                       "rgba(255, 255, 255, 0.7)",
-                      7 * c,
+                      7 * m,
                       window.innerWidth / 2,
                       17 * this.game.SCALE_FACTOR_BASE,
                       0.9 * window.innerWidth,
                       "center",
                     ),
                   this.game.ticksCounter < 0
-                    ? f.rankInGame.setVictoryMessage(this.game.victoryMsg)
-                    : f.rankInGame.setVictoryMessage(""),
-                  (c *= 0.7));
-                var ue = 0,
-                  pe = 0;
+                    ? w.rankInGame.setVictoryMessage(this.game.victoryMsg)
+                    : w.rankInGame.setVictoryMessage(""),
+                  (m *= 0.7));
+                var ye = 0,
+                  fe = 0;
                 ((this.hoverChoice = null),
                   (this.upgNotificationHovered = !1),
                   (this.skipButtonHover = !1),
                   (this.unskipButtonHover = !1));
-                var ye =
+                var xe =
                   this.showOldUpgChoicesUntil >= a
                     ? this.oldUpgChoices
                     : this.currentUpgChoices;
@@ -34733,125 +36153,125 @@ var c_hasPressedCtrlRKey = false;
                   this.game.type.souls &&
                   this.game.ticksCounter > 0
                 ) {
-                  ((te = g.imgCoords.newStatsFrame),
-                    (P = g.imgCoords.soulsBar));
-                  var fe = g.imgCoords.hpBar1,
-                    xe = g.imgCoords.energyBar;
+                  ((ie = p.imgCoords.newStatsFrame),
+                    (P = p.imgCoords.soulsBar));
+                  var we = p.imgCoords.hpBar1,
+                    ve = p.imgCoords.energyBar;
                   if (
-                    ((ue = window.innerHeight - (te.h + 1) * c),
-                    (pe = 1 * c),
-                    C.drawImage(
+                    ((ye = window.innerHeight - (ie.h + 1) * m),
+                    (fe = 1 * m),
+                    M.drawImage(
                       n.imgs.miscSheet,
-                      te.x,
-                      te.y,
-                      te.w,
-                      te.h,
-                      pe,
-                      ue,
-                      te.w * c,
-                      te.h * c,
+                      ie.x,
+                      ie.y,
+                      ie.w,
+                      ie.h,
+                      fe,
+                      ye,
+                      ie.w * m,
+                      ie.h * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.soulLvl.toString(),
                       "#e1f063",
-                      8 * c,
-                      pe + 16 * c,
-                      ue + 14 * c,
-                      24 * c,
+                      8 * m,
+                      fe + 16 * m,
+                      ye + 14 * m,
+                      24 * m,
                       "right",
                       1,
                       void 0,
                       void 0,
-                      10 * c,
+                      10 * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.game.playingPlayer.name,
                       "#b9cc8d",
-                      8 * c,
-                      pe + 20 * c,
-                      ue + 14 * c,
-                      100 * c,
+                      8 * m,
+                      fe + 20 * m,
+                      ye + 14 * m,
+                      100 * m,
                       "left",
                       1,
                       void 0,
                       void 0,
-                      42 * c,
+                      42 * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.game.playingPlayer.souls.toString(),
                       "#b4b7b8",
-                      7 * c,
-                      pe + 18 * c,
-                      ue + 29 * c,
-                      100 * c,
+                      7 * m,
+                      fe + 18 * m,
+                      ye + 29 * m,
+                      100 * m,
                       "left",
                       1,
                       void 0,
                       void 0,
-                      16 * c,
+                      16 * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.abilityPoints.toString(),
                       "#5cc3ef",
-                      7 * c,
-                      pe + 46 * c,
-                      ue + 29 * c,
-                      100 * c,
+                      7 * m,
+                      fe + 46 * m,
+                      ye + 29 * m,
+                      100 * m,
                       "left",
                       1,
                       void 0,
                       void 0,
-                      16 * c,
+                      16 * m,
                     ),
-                    C.drawImage(
+                    M.drawImage(
                       n.imgs.miscSheet,
                       P.x,
                       P.y,
                       P.w,
                       P.h,
-                      pe + 69 * c,
-                      ue + 5 * c,
-                      73 * c * (this.soulsGot / this.soulsNeeded),
-                      10 * c,
+                      fe + 69 * m,
+                      ye + 5 * m,
+                      73 * m * (this.soulsGot / this.soulsNeeded),
+                      10 * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.soulsGot + " / " + this.soulsNeeded,
                       "#d0e661",
-                      8 * c,
-                      pe + 106 * c,
-                      ue + 14 * c,
-                      84 * c,
+                      8 * m,
+                      fe + 106 * m,
+                      ye + 14 * m,
+                      84 * m,
                       "center",
                     ),
-                    C.drawImage(
+                    M.drawImage(
                       n.imgs.miscSheet,
-                      fe.x,
-                      fe.y,
-                      fe.w,
-                      fe.h,
-                      pe + 69 * c,
-                      ue + 20 * c,
+                      we.x,
+                      we.y,
+                      we.w,
+                      we.h,
+                      fe + 69 * m,
+                      ye + 20 * m,
                       73 *
-                        c *
+                        m *
                         (this.game.playingPlayer.hp /
                           this.game.playingPlayer.maxHP),
-                      5 * c,
+                      5 * m,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       Math.ceil(this.game.playingPlayer.hp) +
                         " / " +
                         Math.ceil(this.game.playingPlayer.maxHP),
                       "white",
-                      6 * c,
-                      pe + 106 * c,
-                      ue + 25 * c,
-                      84 * c,
+                      6 * m,
+                      fe + 106 * m,
+                      ye + 25 * m,
+                      84 * m,
                       "center",
                       1,
                       void 0,
@@ -34859,358 +36279,358 @@ var c_hasPressedCtrlRKey = false;
                       void 0,
                       "black",
                     ),
-                    C.drawImage(
+                    M.drawImage(
                       n.imgs.miscSheet,
-                      xe.x,
-                      xe.y,
-                      xe.w,
-                      xe.h,
-                      pe + 69 * c,
-                      ue + 28 * c,
-                      73 * c * (this.game.playingPlayerEnergy / 100),
-                      2 * c,
+                      ve.x,
+                      ve.y,
+                      ve.w,
+                      ve.h,
+                      fe + 69 * m,
+                      ye + 28 * m,
+                      73 * m * (this.game.playingPlayerEnergy / 100),
+                      2 * m,
                     ),
-                    (te = g.imgCoords.newUpgFrame),
-                    (P = g.imgCoords.newUpgFrameWhite),
-                    (fe = g.imgCoords.newUpgFrameYellow),
-                    (ue -= (te.h + 1) * c),
+                    (ie = p.imgCoords.newUpgFrame),
+                    (P = p.imgCoords.newUpgFrameWhite),
+                    (we = p.imgCoords.newUpgFrameYellow),
+                    (ye -= (ie.h + 1) * m),
                     this.game.playingPlayer.dieAt)
                   )
                     return;
                   if (this.upgNotificationStart > 0) {
-                    var we = ((this.game.ticksCounter / 3) % 3) + 1;
-                    te = g.imgCoords["newUps" + Math.floor(we)];
-                    var ve = a - this.upgNotificationStart,
-                      Se = Math.min(te.h, (ve / 400) * te.h);
-                    ((C.globalAlpha = 1 - (we % 1)),
-                      C.drawImage(
+                    var Se = ((this.game.ticksCounter / 3) % 3) + 1;
+                    ie = p.imgCoords["newUps" + Math.floor(Se)];
+                    var be = a - this.upgNotificationStart,
+                      _e = Math.min(ie.h, (be / 400) * ie.h);
+                    ((M.globalAlpha = 1 - (Se % 1)),
+                      M.drawImage(
                         n.imgs.miscSheet,
-                        te.x,
-                        te.y,
-                        te.w,
-                        Se,
-                        pe,
-                        ue,
-                        te.w * c,
-                        Se * c,
+                        ie.x,
+                        ie.y,
+                        ie.w,
+                        _e,
+                        fe,
+                        ye,
+                        ie.w * m,
+                        _e * m,
                       ),
-                      (te = g.imgCoords["newUps" + ((Math.floor(we) % 3) + 1)]),
-                      (C.globalAlpha = we % 1),
-                      C.drawImage(
+                      (ie = p.imgCoords["newUps" + ((Math.floor(Se) % 3) + 1)]),
+                      (M.globalAlpha = Se % 1),
+                      M.drawImage(
                         n.imgs.miscSheet,
-                        te.x,
-                        te.y,
-                        te.w,
-                        Se,
-                        pe,
-                        ue,
-                        te.w * c,
-                        Se * c,
+                        ie.x,
+                        ie.y,
+                        ie.w,
+                        _e,
+                        fe,
+                        ye,
+                        ie.w * m,
+                        _e * m,
                       ),
-                      (C.globalAlpha = 1),
-                      (0, m.drawText)(
-                        C,
-                        v.lang.get("game.msg.choose_upgrade"),
+                      (M.globalAlpha = 1),
+                      (0, g.drawText)(
+                        M,
+                        b.lang.get("game.msg.choose_upgrade"),
                         "#4BA6FA",
-                        8 * c,
-                        pe + 5 * c,
-                        ue + 10 * c,
-                        200 * c,
+                        8 * m,
+                        fe + 5 * m,
+                        ye + 10 * m,
+                        200 * m,
                         "left",
                         1,
                         void 0,
                         void 0,
-                        100 * c,
+                        100 * m,
                       ),
-                      (0, m.drawText)(
-                        C,
-                        v.lang.get("game.msg.upgrade_shortcut", {
-                          key: u.keyNames[
-                            u.commandKeys[u.COMMAND.PICK_UPGRADE]
+                      (0, g.drawText)(
+                        M,
+                        b.lang.get("game.msg.upgrade_shortcut", {
+                          key: y.keyNames[
+                            y.commandKeys[y.COMMAND.PICK_UPGRADE]
                           ],
                         }),
                         "#4BA6FA",
-                        6 * c,
-                        pe + 6 * c,
-                        ue + 21 * c,
-                        200 * c,
+                        6 * m,
+                        fe + 6 * m,
+                        ye + 21 * m,
+                        200 * m,
                         "left",
                         1,
                         void 0,
                         void 0,
-                        100 * c,
+                        100 * m,
                       ),
-                      u.Input.x <= te.w * c &&
-                        u.Input.y >= ue &&
+                      y.Input.x <= ie.w * m &&
+                        y.Input.y >= ye &&
                         ((this.upgNotificationHovered = !0),
-                        (we = ((this.game.ticksCounter / 5) % 4) + 1),
-                        (te = g.imgCoords["newUpsFrame" + Math.floor(we)]),
-                        (C.globalAlpha = 1 - (we % 1)),
-                        C.drawImage(
+                        (Se = ((this.game.ticksCounter / 5) % 4) + 1),
+                        (ie = p.imgCoords["newUpsFrame" + Math.floor(Se)]),
+                        (M.globalAlpha = 1 - (Se % 1)),
+                        M.drawImage(
                           n.imgs.miscSheet,
-                          te.x,
-                          te.y,
-                          te.w,
-                          te.h,
-                          pe - 1 * c,
-                          ue - 2 * c,
-                          te.w * c,
-                          te.h * c,
+                          ie.x,
+                          ie.y,
+                          ie.w,
+                          ie.h,
+                          fe - 1 * m,
+                          ye - 2 * m,
+                          ie.w * m,
+                          ie.h * m,
                         ),
-                        (te =
-                          g.imgCoords[
-                            "newUpsFrame" + ((Math.floor(we) % 4) + 1)
+                        (ie =
+                          p.imgCoords[
+                            "newUpsFrame" + ((Math.floor(Se) % 4) + 1)
                           ]),
-                        (C.globalAlpha = we % 1),
-                        C.drawImage(
+                        (M.globalAlpha = Se % 1),
+                        M.drawImage(
                           n.imgs.miscSheet,
-                          te.x,
-                          te.y,
-                          te.w,
-                          te.h,
-                          pe - 1 * c,
-                          ue - 2 * c,
-                          te.w * c,
-                          te.h * c,
+                          ie.x,
+                          ie.y,
+                          ie.w,
+                          ie.h,
+                          fe - 1 * m,
+                          ye - 2 * m,
+                          ie.w * m,
+                          ie.h * m,
                         ),
-                        (C.globalAlpha = 1)));
-                  } else if (ye.length > 0) {
+                        (M.globalAlpha = 1)));
+                  } else if (xe.length > 0) {
                     (this.currentUpgChoicesStart + 350 > a &&
-                      (pe -=
-                        (c * te.w * (this.currentUpgChoicesStart + 350 - a)) /
+                      (fe -=
+                        (m * ie.w * (this.currentUpgChoicesStart + 350 - a)) /
                         350),
                       this.currentUpgChoicesEnd < a &&
-                        (pe -=
-                          (c * te.w * (a - this.currentUpgChoicesEnd)) / 350));
-                    for (d = 0; ye && d < ye.length; d++) {
-                      var be = ye[d],
-                        _e = be.img,
-                        Ce = (16 * c) / Math.max(_e.w, _e.h);
-                      (C.drawImage(
+                        (fe -=
+                          (m * ie.w * (a - this.currentUpgChoicesEnd)) / 350));
+                    for (l = 0; xe && l < xe.length; l++) {
+                      var Ce = xe[l],
+                        Ie = Ce.img,
+                        Me = (16 * m) / Math.max(Ie.w, Ie.h);
+                      (M.drawImage(
                         n.imgs.miscSheet,
-                        te.x,
-                        te.y,
-                        te.w,
-                        te.h,
-                        pe,
-                        ue,
-                        te.w * c,
-                        te.h * c,
+                        ie.x,
+                        ie.y,
+                        ie.w,
+                        ie.h,
+                        fe,
+                        ye,
+                        ie.w * m,
+                        ie.h * m,
                       ),
-                        C.drawImage(
+                        M.drawImage(
                           n.imgs.miscSheet,
-                          _e.x,
-                          _e.y,
-                          _e.w,
-                          _e.h,
-                          pe + (te.h * c) / 2 - (_e.w * Ce) / 2 - 1 * c,
-                          ue + (te.h * c) / 2 - (_e.h * Ce) / 2,
-                          _e.w * Ce,
-                          _e.h * Ce,
+                          Ie.x,
+                          Ie.y,
+                          Ie.w,
+                          Ie.h,
+                          fe + (ie.h * m) / 2 - (Ie.w * Me) / 2 - 1 * m,
+                          ye + (ie.h * m) / 2 - (Ie.h * Me) / 2,
+                          Ie.w * Me,
+                          Ie.h * Me,
                         ),
-                        (0, m.drawText)(
-                          C,
-                          be.cost.toString(),
+                        (0, g.drawText)(
+                          M,
+                          Ce.cost.toString(),
                           "#5cc3ef",
-                          7.5 * c,
-                          pe + 108 * c,
-                          ue + 18 * c,
+                          7.5 * m,
+                          fe + 108 * m,
+                          ye + 18 * m,
                         ),
-                        (0, m.drawText)(
-                          C,
-                          be.text,
+                        (0, g.drawText)(
+                          M,
+                          Ce.text,
                           "#FFFDC0",
-                          6.5 * c,
-                          pe + 24 * c,
-                          ue + 22 * c,
-                          150 * c,
+                          6.5 * m,
+                          fe + 24 * m,
+                          ye + 22 * m,
+                          150 * m,
                           "left",
                           1,
                           void 0,
                           void 0,
-                          70 * c,
+                          70 * m,
                         ));
-                      for (var Ie = 0; Ie < be.maxLvl; Ie++)
-                        ((C.fillStyle =
-                          Ie < be.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
-                          C.fillRect(
-                            pe + 24 * c + 11 * Ie * c,
-                            ue + 4 * c,
-                            10 * c,
-                            2 * c,
+                      for (var Te = 0; Te < Ce.maxLvl; Te++)
+                        ((M.fillStyle =
+                          Te < Ce.lvl ? "#65E054" : "rgba(0, 0, 0, 0.8)"),
+                          M.fillRect(
+                            fe + 24 * m + 11 * Te * m,
+                            ye + 4 * m,
+                            10 * m,
+                            2 * m,
                           ));
-                      (this.lastChoiceIndex === d &&
+                      (this.lastChoiceIndex === l &&
                       this.selectedChoiceUntil > a
                         ? this.game.ticksCounter % 2 == 1 &&
-                          ((C.globalAlpha = 0.75),
-                          C.drawImage(
+                          ((M.globalAlpha = 0.75),
+                          M.drawImage(
                             n.imgs.miscSheet,
-                            fe.x,
-                            fe.y,
-                            fe.w,
-                            fe.h,
-                            pe,
-                            ue,
-                            fe.w * c,
-                            fe.h * c,
+                            we.x,
+                            we.y,
+                            we.w,
+                            we.h,
+                            fe,
+                            ye,
+                            we.w * m,
+                            we.h * m,
                           ),
-                          (C.globalAlpha = 1))
-                        : u.Input.x <= pe + te.w * c &&
-                          u.Input.y >= ue &&
-                          u.Input.y <= ue + te.h * c &&
-                          ((this.hoverChoice = be),
-                          (C.globalAlpha = 0.4),
-                          C.drawImage(
+                          (M.globalAlpha = 1))
+                        : y.Input.x <= fe + ie.w * m &&
+                          y.Input.y >= ye &&
+                          y.Input.y <= ye + ie.h * m &&
+                          ((this.hoverChoice = Ce),
+                          (M.globalAlpha = 0.4),
+                          M.drawImage(
                             n.imgs.miscSheetWhite,
-                            te.x,
-                            te.y,
-                            te.w,
-                            te.h,
-                            pe,
-                            ue,
-                            te.w * c,
-                            te.h * c,
+                            ie.x,
+                            ie.y,
+                            ie.w,
+                            ie.h,
+                            fe,
+                            ye,
+                            ie.w * m,
+                            ie.h * m,
                           ),
-                          (C.globalAlpha = 1)),
-                        (ue -= (te.h + 1) * c));
+                          (M.globalAlpha = 1)),
+                        (ye -= (ie.h + 1) * m));
                     }
-                    ((P = g.imgCoords.upgSkip),
-                      (pe += 5 * c),
-                      (ue += (te.h + 1) * c - P.h * c),
-                      C.drawImage(
+                    ((P = p.imgCoords.upgSkip),
+                      (fe += 5 * m),
+                      (ye += (ie.h + 1) * m - P.h * m),
+                      M.drawImage(
                         n.imgs.miscSheet,
                         P.x,
                         P.y,
                         P.w,
                         P.h,
-                        pe,
-                        ue,
-                        P.w * c,
-                        P.h * c,
+                        fe,
+                        ye,
+                        P.w * m,
+                        P.h * m,
                       ),
-                      (0, m.drawText)(
-                        C,
-                        v.lang.get("game.msg.hideskip_shortcut", {
-                          key: u.keyNames[
-                            u.commandKeys[u.COMMAND.PICK_UPGRADE]
+                      (0, g.drawText)(
+                        M,
+                        b.lang.get("game.msg.hideskip_shortcut", {
+                          key: y.keyNames[
+                            y.commandKeys[y.COMMAND.PICK_UPGRADE]
                           ],
                         }),
                         "#304420",
-                        6.5 * c,
-                        pe + 17 * c,
-                        ue + 12 * c,
-                        100 * c,
+                        6.5 * m,
+                        fe + 17 * m,
+                        ye + 12 * m,
+                        100 * m,
                         "left",
                         1,
                         void 0,
                         void 0,
-                        62 * c,
+                        62 * m,
                         "#688551",
                       ),
-                      ((u.Input.x <= pe + P.w * c &&
-                        u.Input.y >= ue &&
-                        u.Input.y <= ue + P.h * c) ||
-                        u.Input.keys[u.commandKeys[u.COMMAND.PICK_UPGRADE]]) &&
-                        ((C.globalAlpha = 0.3),
-                        C.drawImage(
+                      ((y.Input.x <= fe + P.w * m &&
+                        y.Input.y >= ye &&
+                        y.Input.y <= ye + P.h * m) ||
+                        y.Input.keys[y.commandKeys[y.COMMAND.PICK_UPGRADE]]) &&
+                        ((M.globalAlpha = 0.3),
+                        M.drawImage(
                           n.imgs.miscSheetWhite,
                           P.x,
                           P.y,
                           P.w,
                           P.h,
-                          pe,
-                          ue,
-                          P.w * c,
-                          P.h * c,
+                          fe,
+                          ye,
+                          P.w * m,
+                          P.h * m,
                         ),
-                        (C.globalAlpha = 1),
+                        (M.globalAlpha = 1),
                         (this.skipButtonHover = !0)),
                       this.currentUpgChoicesEnd + 200 < a &&
                         this.upgradeChoicesAvailable &&
-                        ((P = g.imgCoords.upgUnskip),
-                        (pe = 5 * c),
-                        (ue =
+                        ((P = p.imgCoords.upgUnskip),
+                        (fe = 5 * m),
+                        (ye =
                           window.innerHeight -
-                          (g.imgCoords.newStatsFrame.h + 1) * c -
-                          P.h * c),
-                        C.drawImage(
+                          (p.imgCoords.newStatsFrame.h + 1) * m -
+                          P.h * m),
+                        M.drawImage(
                           n.imgs.miscSheet,
                           P.x,
                           P.y,
                           P.w,
                           P.h,
-                          pe,
-                          ue,
-                          P.w * c,
-                          P.h * c,
+                          fe,
+                          ye,
+                          P.w * m,
+                          P.h * m,
                         ),
-                        (0, m.drawText)(
-                          C,
-                          v.lang.get("game.msg.show_upgrades_shortcut", {
-                            key: u.keyNames[
-                              u.commandKeys[u.COMMAND.PICK_UPGRADE]
+                        (0, g.drawText)(
+                          M,
+                          b.lang.get("game.msg.show_upgrades_shortcut", {
+                            key: y.keyNames[
+                              y.commandKeys[y.COMMAND.PICK_UPGRADE]
                             ],
                           }),
                           "#304420",
-                          6.5 * c,
-                          pe + 17 * c,
-                          ue + 12 * c,
-                          200 * c,
+                          6.5 * m,
+                          fe + 17 * m,
+                          ye + 12 * m,
+                          200 * m,
                           "left",
                           1,
                           void 0,
                           void 0,
-                          64 * c,
+                          64 * m,
                           "#688551",
                         ),
-                        ((u.Input.x <= pe + P.w * c &&
-                          u.Input.y >= ue &&
-                          u.Input.y <= ue + P.h * c) ||
-                          u.Input.keys[
-                            u.commandKeys[u.COMMAND.PICK_UPGRADE]
+                        ((y.Input.x <= fe + P.w * m &&
+                          y.Input.y >= ye &&
+                          y.Input.y <= ye + P.h * m) ||
+                          y.Input.keys[
+                            y.commandKeys[y.COMMAND.PICK_UPGRADE]
                           ]) &&
-                          ((C.globalAlpha = 0.3),
-                          C.drawImage(
+                          ((M.globalAlpha = 0.3),
+                          M.drawImage(
                             n.imgs.miscSheetWhite,
                             P.x,
                             P.y,
                             P.w,
                             P.h,
-                            pe,
-                            ue,
-                            P.w * c,
-                            P.h * c,
+                            fe,
+                            ye,
+                            P.w * m,
+                            P.h * m,
                           ),
-                          (C.globalAlpha = 1),
+                          (M.globalAlpha = 1),
                           (this.unskipButtonHover = !0))));
                   }
                 }
                 if (this.game.tickDiff > 0 && this.recordGIF) {
-                  ((S.width = S.width),
-                    b.drawImage(
-                      _,
+                  ((_.width = _.width),
+                    C.drawImage(
+                      I,
+                      0,
+                      0,
+                      I.width,
+                      I.height,
                       0,
                       0,
                       _.width,
                       _.height,
-                      0,
-                      0,
-                      S.width,
-                      S.height,
                     ));
-                  te = g.imgCoords.main_logo;
-                  (b.drawImage(
+                  ie = p.imgCoords.main_logo;
+                  (C.drawImage(
                     n.imgs.miscSheet,
-                    te.x,
-                    te.y,
-                    te.w,
-                    te.h,
+                    ie.x,
+                    ie.y,
+                    ie.w,
+                    ie.h,
                     2,
-                    S.height - 2 - te.h,
-                    te.w,
-                    te.h,
+                    _.height - 2 - ie.h,
+                    ie.w,
+                    ie.h,
                   ),
-                    this.gif.addFrame(b, { delay: 50, copy: !0 }));
+                    this.gif.addFrame(C, { delay: 50, copy: !0 }));
                 }
                 if (
                   ((this.cureButtonHovered = !1),
@@ -35220,299 +36640,299 @@ var c_hasPressedCtrlRKey = false;
                     (this.game.cureTick = 0),
                   this.game.cureTick)
                 ) {
-                  te = g.imgCoords.cureButton;
-                  var Me = 2.08;
-                  C.drawImage(
+                  ie = p.imgCoords.cureButton;
+                  var Ee = 2.08;
+                  M.drawImage(
                     n.imgs.miscSheet,
-                    te.x,
-                    te.y,
-                    te.w,
-                    te.h,
+                    ie.x,
+                    ie.y,
+                    ie.w,
+                    ie.h,
                     208,
                     6.24,
-                    te.w * Me,
-                    te.h * Me,
+                    ie.w * Ee,
+                    ie.h * Ee,
                   );
-                  var Te = v.lang.get("game.buttons.cure");
-                  ((Te +=
+                  var ke = b.lang.get("game.buttons.cure");
+                  ((ke +=
                     " ( " +
                     Math.floor(
                       (this.game.cureTick - this.game.ticksCounter) / 20,
                     ) +
                     " )"),
-                    (0, m.drawText)(
-                      C,
-                      Te,
+                    (0, g.drawText)(
+                      M,
+                      ke,
                       "white",
-                      8 * c,
-                      Me * (100 + 0.5 * te.w),
+                      8 * m,
+                      Ee * (100 + 0.5 * ie.w),
                       49.92,
-                      200 * c,
+                      200 * m,
                       "center",
                     ),
-                    u.Input.x >= 208 &&
-                      u.Input.x <= (te.w + 100) * Me &&
-                      u.Input.y <= te.h * Me &&
+                    y.Input.x >= 208 &&
+                      y.Input.x <= (ie.w + 100) * Ee &&
+                      y.Input.y <= ie.h * Ee &&
                       ((this.cureButtonHovered = !0),
-                      (C.globalAlpha = 0.5),
-                      C.drawImage(
+                      (M.globalAlpha = 0.5),
+                      M.drawImage(
                         n.imgs.miscSheetWhite,
-                        te.x,
-                        te.y,
-                        te.w,
-                        te.h,
+                        ie.x,
+                        ie.y,
+                        ie.w,
+                        ie.h,
                         208,
                         6.24,
-                        te.w * Me,
-                        te.h * Me,
+                        ie.w * Ee,
+                        ie.h * Ee,
                       ),
-                      (C.globalAlpha = 1)));
+                      (M.globalAlpha = 1)));
                 }
                 if (
                   ((this.replayPlusHover = !1),
                   (this.replayMinusHover = !1),
                   this.game.replayMode && this.replayLength)
                 ) {
-                  c = 0.8 * this.game.SCALE_FACTOR_BASE;
-                  ((te = g.imgCoords.replayBar), (P = g.imgCoords.replayPos));
-                  var Ee = this.replayTimer / this.replayLength;
-                  he =
+                  m = 0.8 * this.game.SCALE_FACTOR_BASE;
+                  ((ie = p.imgCoords.replayBar), (P = p.imgCoords.replayPos));
+                  var Le = this.replayTimer / this.replayLength;
+                  me =
                     " " +
-                    (0, m.ticks2TimeStr)(this.replayTimer) +
+                    (0, g.ticks2TimeStr)(this.replayTimer) +
                     " / " +
                     this.replayLengthStr;
                   (this.game.fastForward && this.fastForwardTo > 0
-                    ? (he +=
-                        " (" + (0, m.ticks2TimeStr)(this.fastForwardTo) + ")")
+                    ? (me +=
+                        " (" + (0, g.ticks2TimeStr)(this.fastForwardTo) + ")")
                     : ((this.provisionalReplayPos = -1),
                       (this.provisionalReplayPerc = -1),
-                      u.Input.x <= 90 * c &&
-                        u.Input.y >= window.innerHeight - (te.h + 2) * c &&
+                      y.Input.x <= 90 * m &&
+                        y.Input.y >= window.innerHeight - (ie.h + 2) * m &&
                         ((this.provisionalReplayPerc = Math.min(
-                          Math.max((u.Input.x / c - 5) / 78, 0),
+                          Math.max((y.Input.x / m - 5) / 78, 0),
                           1,
                         )),
                         (this.provisionalReplayPos = Math.floor(
                           this.provisionalReplayPerc * this.replayLength,
                         )),
-                        (he +=
+                        (me +=
                           " (" +
-                          (0, m.ticks2TimeStr)(this.provisionalReplayPos) +
+                          (0, g.ticks2TimeStr)(this.provisionalReplayPos) +
                           ")"))),
-                    (0, m.drawText)(
-                      C,
-                      he,
+                    (0, g.drawText)(
+                      M,
+                      me,
                       "white",
-                      6 * c,
-                      4 * c,
-                      window.innerHeight - (te.h + 6) * c,
-                      200 * c,
+                      6 * m,
+                      4 * m,
+                      window.innerHeight - (ie.h + 6) * m,
+                      200 * m,
                       "left",
                       1,
                       "rgba(0, 0, 0, 0.5)",
-                      10 * c,
+                      10 * m,
                     ),
-                    C.drawImage(
+                    M.drawImage(
                       n.imgs.miscSheet,
-                      te.x,
-                      te.y,
-                      te.w,
-                      te.h,
-                      2 * c,
-                      window.innerHeight - (te.h + 2) * c,
-                      te.w * c,
-                      te.h * c,
+                      ie.x,
+                      ie.y,
+                      ie.w,
+                      ie.h,
+                      2 * m,
+                      window.innerHeight - (ie.h + 2) * m,
+                      ie.w * m,
+                      ie.h * m,
                     ),
-                    C.drawImage(
+                    M.drawImage(
                       n.imgs.miscSheet,
                       P.x,
                       P.y,
                       P.w,
                       P.h,
-                      c * (5 + 78 * Ee),
-                      window.innerHeight - (P.h + 2) * c,
-                      P.w * c,
-                      P.h * c,
+                      m * (5 + 78 * Le),
+                      window.innerHeight - (P.h + 2) * m,
+                      P.w * m,
+                      P.h * m,
                     ),
                     this.game.fastForward && this.fastForwardTo > 0
-                      ? ((C.globalAlpha = 0.5),
-                        C.drawImage(
+                      ? ((M.globalAlpha = 0.5),
+                        M.drawImage(
                           n.imgs.miscSheet,
                           P.x,
                           P.y,
                           P.w,
                           P.h,
-                          c *
+                          m *
                             (5 + (this.fastForwardTo / this.replayLength) * 78),
-                          window.innerHeight - (P.h + 2) * c,
-                          P.w * c,
-                          P.h * c,
+                          window.innerHeight - (P.h + 2) * m,
+                          P.w * m,
+                          P.h * m,
                         ),
-                        (C.globalAlpha = 1))
+                        (M.globalAlpha = 1))
                       : this.provisionalReplayPerc >= 0 &&
-                        ((C.globalAlpha = 0.5),
-                        C.drawImage(
+                        ((M.globalAlpha = 0.5),
+                        M.drawImage(
                           n.imgs.miscSheet,
                           P.x,
                           P.y,
                           P.w,
                           P.h,
-                          c * (5 + 78 * this.provisionalReplayPerc),
-                          window.innerHeight - (P.h + 2) * c,
-                          P.w * c,
-                          P.h * c,
+                          m * (5 + 78 * this.provisionalReplayPerc),
+                          window.innerHeight - (P.h + 2) * m,
+                          P.w * m,
+                          P.h * m,
                         ),
-                        (C.globalAlpha = 1)),
-                    (te = g.imgCoords.replayPlusMinus),
-                    C.drawImage(
+                        (M.globalAlpha = 1)),
+                    (ie = p.imgCoords.replayPlusMinus),
+                    M.drawImage(
                       n.imgs.miscSheet,
-                      te.x,
-                      te.y,
-                      te.w,
-                      te.h,
-                      90 * c,
-                      window.innerHeight - (te.h + 2) * c,
-                      te.w * c,
-                      te.h * c,
+                      ie.x,
+                      ie.y,
+                      ie.w,
+                      ie.h,
+                      90 * m,
+                      window.innerHeight - (ie.h + 2) * m,
+                      ie.w * m,
+                      ie.h * m,
                     ),
-                    u.Input.x >= 90 * c &&
-                      u.Input.x <= (90 + te.w) * c &&
-                      u.Input.y >= window.innerHeight - (te.h + 2) * c &&
-                      u.Input.y <= window.innerHeight - (te.h + 2 - 9) * c &&
+                    y.Input.x >= 90 * m &&
+                      y.Input.x <= (90 + ie.w) * m &&
+                      y.Input.y >= window.innerHeight - (ie.h + 2) * m &&
+                      y.Input.y <= window.innerHeight - (ie.h + 2 - 9) * m &&
                       ((this.replayPlusHover = !0),
-                      (P = g.imgCoords.replayWhite),
-                      (C.globalAlpha = 0.2),
-                      C.drawImage(
+                      (P = p.imgCoords.replayWhite),
+                      (M.globalAlpha = 0.2),
+                      M.drawImage(
                         n.imgs.miscSheet,
                         P.x,
                         P.y,
                         P.w,
                         P.h,
-                        90 * c,
-                        window.innerHeight - (te.h + 2) * c,
-                        P.w * c,
-                        P.h * c,
+                        90 * m,
+                        window.innerHeight - (ie.h + 2) * m,
+                        P.w * m,
+                        P.h * m,
                       ),
-                      (C.globalAlpha = 1)),
-                    u.Input.x >= 90 * c &&
-                      u.Input.x <= (90 + te.w) * c &&
-                      u.Input.y >= window.innerHeight - (te.h + 2 - 9) * c &&
+                      (M.globalAlpha = 1)),
+                    y.Input.x >= 90 * m &&
+                      y.Input.x <= (90 + ie.w) * m &&
+                      y.Input.y >= window.innerHeight - (ie.h + 2 - 9) * m &&
                       ((this.replayMinusHover = !0),
-                      (P = g.imgCoords.replayWhite),
-                      (C.globalAlpha = 0.2),
-                      C.drawImage(
+                      (P = p.imgCoords.replayWhite),
+                      (M.globalAlpha = 0.2),
+                      M.drawImage(
                         n.imgs.miscSheet,
                         P.x,
                         P.y,
                         P.w,
                         P.h,
-                        90 * c,
-                        window.innerHeight - (te.h + 2 - 9) * c,
-                        P.w * c,
-                        P.h * c,
+                        90 * m,
+                        window.innerHeight - (ie.h + 2 - 9) * m,
+                        P.w * m,
+                        P.h * m,
                       ),
-                      (C.globalAlpha = 1)),
+                      (M.globalAlpha = 1)),
                     (this.gifButtonIsHovered = !1),
                     this.game.fastForward ||
                       (this.gifProcessing
-                        ? (0, m.drawText)(
-                            C,
+                        ? (0, g.drawText)(
+                            M,
                             " gif is being processed ...",
                             "white",
-                            6 * c,
-                            4 * c,
-                            window.innerHeight - 38 * c,
-                            200 * c,
+                            6 * m,
+                            4 * m,
+                            window.innerHeight - 38 * m,
+                            200 * m,
                             "left",
                             1,
                             "rgba(0, 0, 0, 0.5)",
-                            10 * c,
+                            10 * m,
                           )
-                        : ((te = this.recordGIF
-                            ? g.imgCoords.stopGif
-                            : g.imgCoords.startGif),
-                          C.drawImage(
+                        : ((ie = this.recordGIF
+                            ? p.imgCoords.stopGif
+                            : p.imgCoords.startGif),
+                          M.drawImage(
                             n.imgs.miscSheet,
-                            te.x,
-                            te.y,
-                            te.w,
-                            te.h,
-                            2 * c,
-                            window.innerHeight - (34 + te.h) * c,
-                            te.w * c,
-                            te.h * c,
+                            ie.x,
+                            ie.y,
+                            ie.w,
+                            ie.h,
+                            2 * m,
+                            window.innerHeight - (34 + ie.h) * m,
+                            ie.w * m,
+                            ie.h * m,
                           ),
-                          u.Input.x <= (te.w + 2) * c &&
-                            u.Input.y >= window.innerHeight - (te.h + 34) * c &&
-                            u.Input.y <= window.innerHeight - 34 * c &&
+                          y.Input.x <= (ie.w + 2) * m &&
+                            y.Input.y >= window.innerHeight - (ie.h + 34) * m &&
+                            y.Input.y <= window.innerHeight - 34 * m &&
                             ((this.gifButtonIsHovered = !0),
-                            (te = g.imgCoords.whiteGif),
-                            (C.globalAlpha = 0.2),
-                            C.drawImage(
+                            (ie = p.imgCoords.whiteGif),
+                            (M.globalAlpha = 0.2),
+                            M.drawImage(
                               n.imgs.miscSheet,
-                              te.x,
-                              te.y,
-                              te.w,
-                              te.h,
-                              2 * c,
-                              window.innerHeight - (34 + te.h) * c,
-                              te.w * c,
-                              te.h * c,
+                              ie.x,
+                              ie.y,
+                              ie.w,
+                              ie.h,
+                              2 * m,
+                              window.innerHeight - (34 + ie.h) * m,
+                              ie.w * m,
+                              ie.h * m,
                             ),
-                            (C.globalAlpha = 1)),
+                            (M.globalAlpha = 1)),
                           this.recordGIF &&
-                            (0, m.drawText)(
-                              C,
+                            (0, g.drawText)(
+                              M,
                               " recording ...",
                               "white",
-                              6 * c,
-                              (4 + te.w) * c,
-                              window.innerHeight - 38 * c,
-                              200 * c,
+                              6 * m,
+                              (4 + ie.w) * m,
+                              window.innerHeight - 38 * m,
+                              200 * m,
                               "left",
                               1,
                               "rgba(0, 0, 0, 0.5)",
-                              10 * c,
+                              10 * m,
                             ))));
                 }
                 if (this.ladderEndAt > 0) {
-                  ve = (Date.now() - this.ladderEndAt) / 1e3;
-                  var ke = Math.min(20.8 * ve, 500),
-                    Le = C.createLinearGradient(
+                  be = (Date.now() - this.ladderEndAt) / 1e3;
+                  var Ae = Math.min(20.8 * be, 500),
+                    Fe = M.createLinearGradient(
                       0,
                       0.2 * window.innerHeight,
                       0,
                       0.8 * window.innerHeight,
                     );
-                  (Le.addColorStop(0, "rgba(0, 0, 0, 0)"),
-                    Le.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
-                    Le.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
-                    Le.addColorStop(1, "rgba(0, 0, 0, 0)"),
-                    (C.fillStyle = Le),
-                    C.fillRect(
+                  (Fe.addColorStop(0, "rgba(0, 0, 0, 0)"),
+                    Fe.addColorStop(0.4, "rgba(0, 0, 0, 0.5)"),
+                    Fe.addColorStop(0.6, "rgba(0, 0, 0, 0.5)"),
+                    Fe.addColorStop(1, "rgba(0, 0, 0, 0)"),
+                    (M.fillStyle = Fe),
+                    M.fillRect(
                       0,
                       0.5 * window.innerHeight -
-                        15 * this.game.SCALE_FACTOR_BASE * ke,
+                        15 * this.game.SCALE_FACTOR_BASE * Ae,
                       window.innerWidth,
-                      30 * this.game.SCALE_FACTOR_BASE * ke,
+                      30 * this.game.SCALE_FACTOR_BASE * Ae,
                     ));
-                  W = "rgba(100, 255, 100, " + Math.min(1, 2 * ve) + ")";
+                  W = "rgba(100, 255, 100, " + Math.min(1, 2 * be) + ")";
                   ("You lose!" === this.ladderEndMsg &&
-                    (W = "rgba(255, 100, 100, " + Math.min(1, 2 * ve) + ")"),
+                    (W = "rgba(255, 100, 100, " + Math.min(1, 2 * be) + ")"),
                     "Draw!" === this.ladderEndMsg &&
-                      (W = "rgba(255, 255, 100, " + Math.min(1, 2 * ve) + ")"));
-                  var Ae =
-                    "rgba(100, 255, 100, " + 0.6 * Math.min(1, 2 * ve) + ")";
+                      (W = "rgba(255, 255, 100, " + Math.min(1, 2 * be) + ")"));
+                  var Pe =
+                    "rgba(100, 255, 100, " + 0.6 * Math.min(1, 2 * be) + ")";
                   ("You lose!" === this.ladderEndMsg &&
-                    (Ae =
-                      "rgba(255, 100, 100, " + 0.6 * Math.min(1, 2 * ve) + ")"),
+                    (Pe =
+                      "rgba(255, 100, 100, " + 0.6 * Math.min(1, 2 * be) + ")"),
                     "Draw!" === this.ladderEndMsg &&
-                      (Ae =
+                      (Pe =
                         "rgba(255, 255, 100, " +
-                        0.6 * Math.min(1, 2 * ve) +
+                        0.6 * Math.min(1, 2 * be) +
                         ")"),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.ladderEndMsg,
                       W,
                       11 * this.game.SCALE_FACTOR_BASE,
@@ -35522,10 +36942,10 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                       "center",
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.ladderMsgArr[0],
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * ve) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * be) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth -
                         14 * this.game.SCALE_FACTOR_BASE,
@@ -35534,10 +36954,10 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                       "right",
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.ladderMsgArr[2],
-                      "rgba(255, 255, 100, " + Math.min(1, 2 * ve) + ")",
+                      "rgba(255, 255, 100, " + Math.min(1, 2 * be) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth -
                         1.9 * this.game.SCALE_FACTOR_BASE,
@@ -35546,10 +36966,10 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                       "right",
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       ":",
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * ve) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * be) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35557,10 +36977,10 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                       "center",
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.ladderMsgArr[1],
-                      "rgba(255, 255, 255, " + Math.min(1, 2 * ve) + ")",
+                      "rgba(255, 255, 255, " + Math.min(1, 2 * be) + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth +
                         14 * this.game.SCALE_FACTOR_BASE,
@@ -35568,10 +36988,10 @@ var c_hasPressedCtrlRKey = false;
                         9.6 * this.game.SCALE_FACTOR_BASE,
                       window.innerWidth,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.ladderMsgArr[3],
-                      "rgba(255, 255, 100, " + Math.min(1, 2 * ve) + ")",
+                      "rgba(255, 255, 100, " + Math.min(1, 2 * be) + ")",
                       8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth +
                         2.9 * this.game.SCALE_FACTOR_BASE,
@@ -35580,10 +37000,10 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                     ),
                     this.ladderMsgArr[4] &&
-                      (0, m.drawText)(
-                        C,
+                      (0, g.drawText)(
+                        M,
                         this.ladderMsgArr[4],
-                        Ae,
+                        Pe,
                         3.5 * this.game.SCALE_FACTOR_BASE,
                         0.5 * window.innerWidth,
                         0.5 * window.innerHeight +
@@ -35591,86 +37011,86 @@ var c_hasPressedCtrlRKey = false;
                         window.innerWidth,
                         "center",
                       ));
-                  var Fe = this.game.SCALE_FACTOR_BASE,
-                    Pe = 0.4 * this.game.SCALE_FACTOR_BASE;
-                  C.fillStyle = "white";
-                  te =
+                  var Ne = this.game.SCALE_FACTOR_BASE,
+                    Be = 0.4 * this.game.SCALE_FACTOR_BASE;
+                  M.fillStyle = "white";
+                  ie =
                     "You lose!" === this.ladderEndMsg
-                      ? g.imgCoords.light_red
-                      : g.imgCoords.light_green;
-                  for (var Ne = 0.5 * window.innerWidth; Ne > 0; Ne -= 7 * Fe) {
-                    C.globalAlpha = Math.max(
+                      ? p.imgCoords.light_red
+                      : p.imgCoords.light_green;
+                  for (var De = 0.5 * window.innerWidth; De > 0; De -= 7 * Ne) {
+                    M.globalAlpha = Math.max(
                       1 -
                         5 *
                           Math.abs(
-                            1 - (ve - 0.4) - Ne / (0.5 * window.innerWidth),
+                            1 - (be - 0.4) - De / (0.5 * window.innerWidth),
                           ),
                       0,
                     );
-                    var De =
+                    var Oe =
                       Math.pow(
                         Math.max(
                           1 -
                             5 *
                               Math.abs(
-                                1 - (ve - 0.4) - Ne / (0.5 * window.innerWidth),
+                                1 - (be - 0.4) - De / (0.5 * window.innerWidth),
                               ),
                           0,
                         ),
                         2,
                       ) *
-                      Fe *
+                      Ne *
                       2;
-                    (C.drawImage(
+                    (M.drawImage(
                       n.imgs.miscSheet,
-                      te.x,
-                      te.y,
-                      te.w,
-                      te.h,
-                      Ne - 0.5 * te.w * Pe,
-                      0.5 * window.innerHeight - 0.5 * te.w * Pe,
-                      te.w * Pe,
-                      te.h * Pe,
+                      ie.x,
+                      ie.y,
+                      ie.w,
+                      ie.h,
+                      De - 0.5 * ie.w * Be,
+                      0.5 * window.innerHeight - 0.5 * ie.w * Be,
+                      ie.w * Be,
+                      ie.h * Be,
                     ),
-                      C.drawImage(
+                      M.drawImage(
                         n.imgs.miscSheet,
-                        te.x,
-                        te.y,
-                        te.w,
-                        te.h,
-                        window.innerWidth - Ne - 0.5 * te.w * Pe,
-                        0.5 * window.innerHeight - 0.5 * te.w * Pe,
-                        te.w * Pe,
-                        te.h * Pe,
+                        ie.x,
+                        ie.y,
+                        ie.w,
+                        ie.h,
+                        window.innerWidth - De - 0.5 * ie.w * Be,
+                        0.5 * window.innerHeight - 0.5 * ie.w * Be,
+                        ie.w * Be,
+                        ie.h * Be,
                       ),
-                      C.fillRect(
-                        Ne - Fe,
-                        0.5 * window.innerHeight - De,
-                        2 * Fe,
-                        2 * De,
+                      M.fillRect(
+                        De - Ne,
+                        0.5 * window.innerHeight - Oe,
+                        2 * Ne,
+                        2 * Oe,
                       ),
-                      C.fillRect(
-                        window.innerWidth - Ne - Fe,
-                        0.5 * window.innerHeight - De,
-                        2 * Fe,
-                        2 * De,
+                      M.fillRect(
+                        window.innerWidth - De - Ne,
+                        0.5 * window.innerHeight - Oe,
+                        2 * Ne,
+                        2 * Oe,
                       ));
                   }
-                  C.globalAlpha = 1;
+                  M.globalAlpha = 1;
                 }
                 if (
                   this.game.type.lives &&
                   this.game.ticksCounter < 139 &&
                   this.ladderEndAt <= 0
                 ) {
-                  var Be = 0;
+                  var Re = 0;
                   if (
-                    (he = ["5", "4", "3", "2", "1", "Go!"][
+                    (me = ["5", "4", "3", "2", "1", "Go!"][
                       Math.floor(this.game.ticksCounter / 20)
                     ])
                   ) {
-                    ((C.fillStyle = "rgba(0, 0, 0, 0.5)"),
-                      C.fillRect(
+                    ((M.fillStyle = "rgba(0, 0, 0, 0.5)"),
+                      M.fillRect(
                         0,
                         0.5 * window.innerHeight -
                           20 * this.game.SCALE_FACTOR_BASE,
@@ -35678,16 +37098,16 @@ var c_hasPressedCtrlRKey = false;
                         40 * this.game.SCALE_FACTOR_BASE +
                           this.game.SCALE_FACTOR_BASE,
                       ),
-                      (Be = 1));
+                      (Re = 1));
                     W =
                       "rgba(100, 255, 100, " +
-                      (1 - 0.3 * (ve = (this.game.ticksCounter / 20) % 1)) +
+                      (1 - 0.3 * (be = (this.game.ticksCounter / 20) % 1)) +
                       ")";
-                    (0, m.drawText)(
-                      C,
-                      he,
+                    (0, g.drawText)(
+                      M,
+                      me,
                       W,
-                      this.game.SCALE_FACTOR_BASE * (11 + 4 * ve),
+                      this.game.SCALE_FACTOR_BASE * (11 + 4 * be),
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight -
                         2 * this.game.SCALE_FACTOR_BASE,
@@ -35695,11 +37115,11 @@ var c_hasPressedCtrlRKey = false;
                       "center",
                     );
                   } else {
-                    ve = 1 - (this.game.ticksCounter % 20) / 20;
-                    ((Be = Math.max(0.5 * ve, 0)),
-                      (C.fillStyle =
-                        "rgba(0, 0, 0, " + Math.max(0.5 * ve, 0) + ")"),
-                      C.fillRect(
+                    be = 1 - (this.game.ticksCounter % 20) / 20;
+                    ((Re = Math.max(0.5 * be, 0)),
+                      (M.fillStyle =
+                        "rgba(0, 0, 0, " + Math.max(0.5 * be, 0) + ")"),
+                      M.fillRect(
                         0,
                         0.5 * window.innerHeight -
                           20 * this.game.SCALE_FACTOR_BASE,
@@ -35709,10 +37129,10 @@ var c_hasPressedCtrlRKey = false;
                       ));
                   }
                   this.game.players.length >= 2 &&
-                    ((0, m.drawText)(
-                      C,
+                    ((0, g.drawText)(
+                      M,
                       this.game.players[0].name,
-                      "rgba(255, 255, 255, " + Be + ")",
+                      "rgba(255, 255, 255, " + Re + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth - 8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerHeight +
@@ -35720,10 +37140,10 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                       "right",
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       "vs",
-                      "rgba(255, 255, 100, " + Be + ")",
+                      "rgba(255, 255, 100, " + Re + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35731,20 +37151,20 @@ var c_hasPressedCtrlRKey = false;
                       window.innerWidth,
                       "center",
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       this.game.players[1].name,
-                      "rgba(255, 255, 255, " + Be + ")",
+                      "rgba(255, 255, 255, " + Re + ")",
                       7 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth + 8 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerHeight +
                         9.6 * this.game.SCALE_FACTOR_BASE,
                       window.innerWidth,
                     ),
-                    (0, m.drawText)(
-                      C,
+                    (0, g.drawText)(
+                      M,
                       "First player who dies 5 times, loses.",
-                      "rgba(180, 180, 180, " + Be + ")",
+                      "rgba(180, 180, 180, " + Re + ")",
                       3 * this.game.SCALE_FACTOR_BASE,
                       0.5 * window.innerWidth,
                       0.5 * window.innerHeight +
@@ -35756,14 +37176,14 @@ var c_hasPressedCtrlRKey = false;
               }),
               (e.prototype.startGIF = function () {
                 var e = 700 / window.innerWidth;
-                ((S.width = window.innerWidth * e),
-                  (S.height = window.innerHeight * e),
-                  (b.imageSmoothingEnabled = !1),
-                  (this.gif = new d.default({
+                ((_.width = window.innerWidth * e),
+                  (_.height = window.innerHeight * e),
+                  (C.imageSmoothingEnabled = !1),
+                  (this.gif = new c.default({
                     workers: 3,
                     quality: 10,
-                    width: S.width,
-                    height: S.height,
+                    width: _.width,
+                    height: _.height,
                   })),
                   (this.recordGIF = !0));
               }),
@@ -35772,7 +37192,7 @@ var c_hasPressedCtrlRKey = false;
                 var e = this.game.interface_;
                 (this.gif.on("finished", function (t) {
                   var i = new Date();
-                  ((0, h.default)(
+                  ((0, m.default)(
                     t,
                     "slay-one-gif-" +
                       i.getFullYear() +
@@ -35790,20 +37210,20 @@ var c_hasPressedCtrlRKey = false;
               (e.prototype.replayJumpTo = function () {
                 this.provisionalReplayPos !== this.replayTimer &&
                   (this.provisionalReplayPos < this.replayTimer &&
-                    (0, m.startReplay)(),
-                  (x.root.game.interface_.fastForwardTo =
+                    (0, g.startReplay)(),
+                  (v.root.game.interface_.fastForwardTo =
                     this.provisionalReplayPos),
-                  (x.root.game.fastForward = !0),
-                  (m.replaySettings.oldReplayOptionsIndex =
-                    m.replaySettings.replayOptionsIndex),
-                  (m.replaySettings.replayOptionsIndex =
-                    m.replayOptions.length - 1),
-                  (m.replaySettings.replayOption =
-                    m.replayOptions[m.replaySettings.replayOptionsIndex]));
+                  (v.root.game.fastForward = !0),
+                  (g.replaySettings.oldReplayOptionsIndex =
+                    g.replaySettings.replayOptionsIndex),
+                  (g.replaySettings.replayOptionsIndex =
+                    g.replayOptions.length - 1),
+                  (g.replaySettings.replayOption =
+                    g.replayOptions[g.replaySettings.replayOptionsIndex]));
               }),
               (e.prototype.scanMsg = function (e, t, i) {
-                (0, m.drawText)(
-                  C,
+                (0, g.drawText)(
+                  M,
                   e,
                   t,
                   0.3 * this.game.FIELD_SIZE_BASE,
@@ -35816,7 +37236,7 @@ var c_hasPressedCtrlRKey = false;
               e
             );
           })();
-        t.Interface_ = L;
+        t.Interface_ = F;
       },
       8287: (e, t, i) => {
         "use strict";
@@ -35922,6 +37342,7 @@ var c_hasPressedCtrlRKey = false;
             CRYSTALS_PER_SOULS_LVL: 100,
             UPG_OPTIONS_PRESENTED: 5,
             HP_SEPERATOR_AMOUNT: 50,
+            HP_SEPERATOR_HIDE_FROM: 500,
             MAX_ABILITY_POINTS: 14,
             FLAME_DMG_PERIOD: 5,
             PLAYER_RESPAWN_DELAY: 140,
@@ -36468,6 +37889,8 @@ var c_hasPressedCtrlRKey = false;
             flame_explode: ["sounds/flame_explo.ogg", "sounds/flame_explo.ogg"],
             sniper: ["sounds/sniper3.ogg", "sounds/sniper4.ogg"],
             rocket_beep: ["sounds/rocket-beep.ogg", "sounds/rocket-beep.ogg"],
+            beep: ["sounds/beep.wav", "sounds/beep.wav"],
+            beep_armed: ["sounds/beep2.wav", "sounds/beep2.wav"],
             heal: ["sounds/heal.ogg", "sounds/heal.ogg"],
             armor: ["sounds/armor.ogg", "sounds/armor.ogg"],
             ammo_spawn: [
@@ -36976,6 +38399,18 @@ var c_hasPressedCtrlRKey = false;
             explosionSoundName: "impulse",
             spawns: o.ZombieSpecialType.None,
           },
+          mine: {
+            name: "Mine",
+            lifetime: 3600,
+            hp: 50,
+            img: ["mine2"],
+            pathing: 10,
+            noBars: !0,
+            aoe: 2.1,
+            dmg: 55,
+            turretsDontShootMe: !0,
+            mine: { triggerRadius: 1.25, delay: 14, beepPeriod: 40 },
+          },
         }),
         t.objects))
           t.objects[s].id = s;
@@ -37203,10 +38638,14 @@ var c_hasPressedCtrlRKey = false;
           r = i(5572),
           s = i(9178),
           l = i(6214),
-          h = document.getElementById("newGame"),
-          d = document.getElementById("customDiv"),
+          h = document.getElementById("newGame");
+        a.SURVIVAL_ENABLED ||
+          h.querySelectorAll(".survival").forEach(function (e) {
+            return e.remove();
+          });
+        var d = document.getElementById("customDiv"),
           m = h.querySelectorAll(".row.fourth .F-Button"),
-          c = ["ranked", "ffa", "zombie", "team"],
+          c = ["ranked", "ffa", "zombie", "team", "survival"],
           g = h.querySelector(".close");
         function u(e) {
           var t = e.currentTarget,
@@ -37328,8 +38767,8 @@ var c_hasPressedCtrlRKey = false;
           F = i(1893),
           P = i(6968),
           N = i(8117),
-          D = i(4180),
-          B = i(9038),
+          B = i(4180),
+          D = i(9038),
           O = i(6214),
           R = i(5306),
           H = document.getElementById("lpd"),
@@ -37341,7 +38780,12 @@ var c_hasPressedCtrlRKey = false;
           q = document.getElementById("unlockDiv"),
           j = document.getElementById("menuButtonContainer"),
           Z = document.getElementById("friendsContainer"),
-          X = { term: "" };
+          X = { term: "" },
+          V = [
+            { list: "0", label: "ranking.tabs.players_xp" },
+            { list: "1", label: "ranking.tabs.players_elo" },
+            { list: "2", label: "ranking.tabs.players_elo_dm" },
+          ];
         ((t.authLevelNames = []),
           (t.authLevelNames[o.AUTH_LEVEL.NONE] = "Member"),
           (t.authLevelNames[o.AUTH_LEVEL.GUEST] = ""),
@@ -37361,7 +38805,7 @@ var c_hasPressedCtrlRKey = false;
             cssId: "btnExitGame",
             iconClass: "iconButtonExitGame",
             onClick: function () {
-              return J();
+              return Q();
             },
             methodShouldShow: function () {
               return (0, g.isInGame)();
@@ -37507,7 +38951,7 @@ var c_hasPressedCtrlRKey = false;
             for (var i in K) {
               var a = K[i];
               ("iconButton" === a.widget
-                ? ((a.instance = (0, D.iconButton)(
+                ? ((a.instance = (0, B.iconButton)(
                     null !== (e = a.parent) && void 0 !== e ? e : j,
                     {
                       cssId: a.cssId,
@@ -37519,7 +38963,7 @@ var c_hasPressedCtrlRKey = false;
                   a.additionalClass &&
                     a.instance.classList.add(a.additionalClass))
                 : "labelButton" === a.widget &&
-                  (a.instance = (0, B.labelButton)(
+                  (a.instance = (0, D.labelButton)(
                     null !== (t = a.parent) && void 0 !== t ? t : j,
                     {
                       cssId: a.cssId,
@@ -37583,16 +39027,15 @@ var c_hasPressedCtrlRKey = false;
               t.UI.requestMyClanInfo(e.target.getAttribute("data-clanTag"));
           },
           togglePlayerList: function (e, t) {
-            ((X.term = ""),
+            (void 0 === t && (t = "0"),
+              (X.term = ""),
               (Y.style.display = "inline"),
-              x.Network.send(
-                "playerList$" + (e || "0") + "$" + (t ? "1" : "0"),
-              ));
+              x.Network.send("playerList$" + (e || "0") + "$" + t));
           },
           togglePlayerList0: function (e) {
             var i;
             if (null !== e.target) {
-              var a = "true" === e.target.getAttribute("data-elo");
+              var a = e.target.getAttribute("data-list") || "0";
               X.term.length > 0
                 ? t.UI.searchPlayerList(X.term, a)
                 : t.UI.togglePlayerList(
@@ -37606,12 +39049,13 @@ var c_hasPressedCtrlRKey = false;
             }
           },
           searchPlayerList: function (e, i) {
+            void 0 === i && (i = "0");
             var a = e.trim();
             a.length <= 0
               ? t.UI.togglePlayerList(0, i)
               : ((X.term = a),
                 (Y.style.display = "inline"),
-                x.Network.send("playerSearch$" + (i ? "1" : "0") + "$" + a));
+                x.Network.send("playerSearch$" + i + "$" + a));
           },
           toggleClanList: function (e) {
             ((Y.style.display = "inline"),
@@ -37734,39 +39178,35 @@ var c_hasPressedCtrlRKey = false;
             var e = document.createElement("span");
             return ((e.innerText = O.lang.get("ranking.tabs.clans")), e);
           },
-          getPlayersXPLink: function () {
-            var e = document.createElement("a");
-            return (
-              (e.className = "pseudoLink withClickSound"),
-              (e.onclick = t.UI.togglePlayerList0),
-              e.setAttribute("data-page", "-1"),
-              e.setAttribute("data-elo", "false"),
-              (e.innerText = O.lang.get("ranking.tabs.players_xp")),
-              e
-            );
-          },
-          getPlayersXPText: function () {
-            var e = document.createElement("span");
-            return ((e.innerText = O.lang.get("ranking.tabs.players_xp")), e);
-          },
           getSeperartinDash: function () {
             var e = document.createElement("span");
             return ((e.innerText = " | "), e);
           },
-          getPlayersEloLink: function () {
-            var e = document.createElement("a");
-            return (
-              (e.className = "pseudoLink withClickSound"),
-              (e.onclick = t.UI.togglePlayerList0),
-              e.setAttribute("data-page", "-1"),
-              e.setAttribute("data-elo", "true"),
-              (e.innerText = O.lang.get("ranking.tabs.players_elo")),
-              e
-            );
-          },
-          getPlayersEloText: function () {
-            var e = document.createElement("span");
-            return ((e.innerText = O.lang.get("ranking.tabs.players_elo")), e);
+          appendRankingTabs: function (e, i) {
+            for (var a = [], n = 0, o = V; n < o.length; n++) {
+              var r = o[n];
+              if (r.list === i) {
+                var s = document.createElement("span");
+                ((s.innerText = O.lang.get(r.label)), a.push(s));
+              } else {
+                var l = document.createElement("a");
+                ((l.className = "pseudoLink withClickSound"),
+                  (l.onclick = t.UI.togglePlayerList0),
+                  l.setAttribute("data-page", "-1"),
+                  l.setAttribute("data-list", r.list),
+                  (l.innerText = O.lang.get(r.label)),
+                  a.push(l));
+              }
+            }
+            a.push(null === i ? t.UI.getClansText() : t.UI.getClansLink());
+            for (var h = 0; h < a.length; h++)
+              (h > 0 &&
+                e.appendChild(
+                  h % 2 == 0
+                    ? document.createElement("br")
+                    : t.UI.getSeperartinDash(),
+                ),
+                e.appendChild(a[h]));
           },
           getRankingSearchBar: function (e) {
             var i = document.createElement("div");
@@ -37784,7 +39224,7 @@ var c_hasPressedCtrlRKey = false;
             return (
               (a.maxLength = 20),
               (a.value = X.term),
-              (0, D.iconButton)(i, {
+              (0, B.iconButton)(i, {
                 customClassName: "rankingSearchBtn",
                 iconClassName: "nameFilterSearchBtnIcon",
                 theme: "small",
@@ -37797,17 +39237,7 @@ var c_hasPressedCtrlRKey = false;
           },
           createPlayerListFrame: function (e) {
             var i = document.createElement("div");
-            (e
-              ? (i.appendChild(t.UI.getPlayersXPLink()),
-                i.appendChild(t.UI.getSeperartinDash()),
-                i.appendChild(t.UI.getPlayersEloText()),
-                i.appendChild(t.UI.getSeperartinDash()),
-                i.appendChild(t.UI.getClansLink()))
-              : (i.appendChild(t.UI.getPlayersXPText()),
-                i.appendChild(t.UI.getSeperartinDash()),
-                i.appendChild(t.UI.getPlayersEloLink()),
-                i.appendChild(t.UI.getSeperartinDash()),
-                i.appendChild(t.UI.getClansLink())),
+            (t.UI.appendRankingTabs(i, e),
               i.appendChild(t.UI.getRankingSearchBar(e)));
             var a = document.createElement("table");
             ((a.id = "playerListTable"), i.appendChild(a));
@@ -37825,9 +39255,10 @@ var c_hasPressedCtrlRKey = false;
                 "ranking.header.clan",
               )),
               n.appendChild(o),
-              ((o = document.createElement("td")).innerText = e
-                ? O.lang.get("ranking.header.elo")
-                : O.lang.get("ranking.header.level")),
+              ((o = document.createElement("td")).innerText =
+                "0" === e
+                  ? O.lang.get("ranking.header.level")
+                  : O.lang.get("ranking.header.elo")),
               n.appendChild(o),
               { mainDiv: i, table: a }
             );
@@ -37858,13 +39289,13 @@ var c_hasPressedCtrlRKey = false;
                 (m.appendChild(g), m.appendChild(c), m.appendChild(u)),
               d.appendChild(m),
               ((m = document.createElement("td")).innerText = (
-                h ? r : (0, o.getLvlFromXp)(r)
+                "0" === h ? (0, o.getLvlFromXp)(r) : r
               ).toString()),
               d.appendChild(m));
           },
           showPlayerSearchResult: function (e) {
             for (
-              var i = "1" === e[1],
+              var i = e[1],
                 a = t.UI.createPlayerListFrame(i),
                 n = a.mainDiv,
                 o = a.table,
@@ -37902,7 +39333,7 @@ var c_hasPressedCtrlRKey = false;
               var i = parseInt(e[2]),
                 a = 0,
                 n = Math.ceil(parseInt(e[1]) / 10),
-                o = "1" === e[3],
+                o = e[3],
                 r = t.UI.createPlayerListFrame(o),
                 s = r.mainDiv,
                 l = r.table,
@@ -37947,7 +39378,7 @@ var c_hasPressedCtrlRKey = false;
                     ((u.className = "withClickSound"),
                       (u.onclick = t.UI.togglePlayerList0),
                       u.setAttribute("data-page", d.toString()),
-                      u.setAttribute("data-elo", o ? "true" : "false"),
+                      u.setAttribute("data-list", o),
                       (u.innerText = (d + 1).toString()),
                       c.appendChild(u));
                   }
@@ -37960,11 +39391,7 @@ var c_hasPressedCtrlRKey = false;
             var n = 0,
               o = Math.ceil(i / 10),
               r = document.createElement("div");
-            (r.appendChild(t.UI.getPlayersXPLink()),
-              r.appendChild(t.UI.getSeperartinDash()),
-              r.appendChild(t.UI.getPlayersEloLink()),
-              r.appendChild(t.UI.getSeperartinDash()),
-              r.appendChild(t.UI.getClansText()));
+            t.UI.appendRankingTabs(r, null);
             var s = document.createElement("table");
             ((s.id = "playerListTable"), r.appendChild(s));
             var l = document.createElement("tr");
@@ -38241,8 +39668,8 @@ var c_hasPressedCtrlRKey = false;
           setXP: function (e) {
             ((c.playerData.xp = e), T.homeScreen.refreshExp());
           },
-          showDeathScreen: function (e) {
-            (A.respawn.show(e), (0, F.showAd)());
+          showDeathScreen: function (e, t) {
+            (A.respawn.show(e, t), (0, F.showAd)());
           },
           hideDeathScreen: function () {
             A.respawn.hide();
@@ -38456,10 +39883,10 @@ var c_hasPressedCtrlRKey = false;
         };
         t.toggleEmotesQuickUseWindow = function (e, t) {
           "none" === W.style.display
-            ? V(null != e ? e : 5, null != t ? t : 75)
+            ? $(null != e ? e : 5, null != t ? t : 75)
             : (W.style.display = "none");
         };
-        var V = function (e, t) {
+        var $ = function (e, t) {
             z.innerHTML = "";
             for (var i = !1, a = 0; a < r.emotes.length; a++)
               if ((0, s.arrayContains)(c.playerData.emotes, a)) {
@@ -38467,7 +39894,7 @@ var c_hasPressedCtrlRKey = false;
                   l = document.createElement("div");
                 ((l.className = "inGameEmoteButton"),
                   l.setAttribute("data-emote-id", a.toString()),
-                  (l.onclick = $));
+                  (l.onclick = J));
                 var h = document.createElement("canvas"),
                   d = h.getContext("2d");
                 ((h.width = 50),
@@ -38497,12 +39924,12 @@ var c_hasPressedCtrlRKey = false;
               (W.style.top =
                 Math.min(t, window.innerHeight - W.offsetHeight) + "px"));
           },
-          $ = function (e) {
+          J = function (e) {
             var t = e.currentTarget.getAttribute("data-emote-id");
             (x.Network.send(h.NetworkCmd.Emote + "$" + t),
               (W.style.display = "none"));
           };
-        function J() {
+        function Q() {
           if (v.root.game.replayMode)
             !(function () {
               (S.Sound.playSound("click"),
@@ -38540,7 +39967,7 @@ var c_hasPressedCtrlRKey = false;
               ));
           }
         }
-        ((t.attemptExitGame = J),
+        ((t.attemptExitGame = Q),
           (document.getElementById("slayTV").onclick = t.UI.loadLatestReplays),
           (G.onclick = function () {
             (S.Sound.playSound("click"), (H.style.display = "none"));
@@ -38585,8 +40012,8 @@ var c_hasPressedCtrlRKey = false;
           F = document.getElementById("globalChatTabGlobal"),
           P = document.getElementById("globalChatTabClan"),
           N = document.getElementById("friendChatTabs"),
-          D = document.getElementById("globalChatCollapse"),
-          B = document.getElementById("slayTVCollapse");
+          B = document.getElementById("globalChatCollapse"),
+          D = document.getElementById("slayTVCollapse");
         ((window.globalChatRiderButton = F),
           (A.maxLength = n.CHAT_MESSAGE_MAX_LENGTH),
           (A.name = "slay_chat_" + Math.random().toString(36).substr(2)),
@@ -38614,11 +40041,11 @@ var c_hasPressedCtrlRKey = false;
         var j = "1" === localStorage.getItem("collapseHomeChat"),
           Z = "1" === localStorage.getItem("collapseSlayTV"),
           X = "&laquo;",
-          K = "&raquo;",
-          V = function (e, t, i, a, n) {
+          V = "&raquo;",
+          K = function (e, t, i, a, n) {
             (n || T.classList.add("noPanelAnim"),
               T.classList.toggle(e, t),
-              (i.innerHTML = t ? (a === X ? K : X) : a),
+              (i.innerHTML = t ? (a === X ? V : X) : a),
               n || (T.offsetWidth, T.classList.remove("noPanelAnim")));
           },
           $ = function () {
@@ -38628,11 +40055,11 @@ var c_hasPressedCtrlRKey = false;
             e !== j &&
               ((j = e),
               localStorage.setItem("collapseHomeChat", e ? "1" : "0"),
-              V("chatCollapsed", e, D, X, !0),
+              K("chatCollapsed", e, B, X, !0),
               $(),
               e && document.activeElement === A && A.blur());
           };
-        (V("chatCollapsed", j, D, X, !1), V("tvCollapsed", Z, B, K, !1));
+        (K("chatCollapsed", j, B, X, !1), K("tvCollapsed", Z, D, V, !1));
         var Q = function (e) {
             ((q.innerText = e), (q.style.display = ""));
           },
@@ -39358,16 +40785,16 @@ var c_hasPressedCtrlRKey = false;
             (g.Sound.playSound("click"),
               t.homeScreen.setActiveChatChannel("clan"));
           }),
-          (D.onclick = function () {
+          (B.onclick = function () {
             J(!j);
           }),
-          (B.onclick = function (e) {
+          (D.onclick = function (e) {
             var t;
             (e.stopPropagation(),
               (t = !Z) !== Z &&
                 ((Z = t),
                 localStorage.setItem("collapseSlayTV", t ? "1" : "0"),
-                V("tvCollapsed", t, B, K, !0),
+                K("tvCollapsed", t, D, V, !0),
                 $()));
           }),
           window.addEventListener("globalChatHistory", function (e) {
@@ -41464,19 +42891,24 @@ var c_hasPressedCtrlRKey = false;
           h = l.querySelector(".inviteLink"),
           d = l.querySelector(".killer>.name"),
           m = l.querySelector(".F-Button.respawn"),
-          c = l.querySelector(".counter");
-        function g() {
+          c = l.querySelector(".counter"),
+          g = l.querySelector(".ready.statusDesc");
+        function u() {
           (n.Network.send("respawn"), o.UI.hideDeathScreen(), (0, s.hideAd)());
         }
         ((t.respawn = {
-          show: function (e) {
+          show: function (e, t) {
             ((h.value = (0, a.getCurrentGameLink)()),
               e || (e = "zombie"),
               (d.innerHTML = e),
               (l.style.display = ""),
-              (m.onclick = g),
-              l.classList.add("waiting"),
-              l.classList.remove("ready"));
+              (m.onclick = u),
+              (m.style.display = t ? "none" : ""),
+              (g.innerHTML = r.lang.get(
+                t ? "respawn.survival.wait" : "respawn.countdown.ready",
+              )),
+              l.classList.toggle("waiting", !t),
+              l.classList.toggle("ready", !!t));
           },
           copyLink: function () {
             (0, a.copyInput)(h);
@@ -41500,7 +42932,8 @@ var c_hasPressedCtrlRKey = false;
       9994: (e, t, i) => {
         "use strict";
         (Object.defineProperty(t, "__esModule", { value: !0 }),
-          (t.imageTransforms =
+          (t.rebuildTileSheetDerivatives =
+            t.imageTransforms =
             t.headsWhite =
             t.headsBlink =
             t.headsBlack =
@@ -41516,29 +42949,31 @@ var c_hasPressedCtrlRKey = false;
         var a = i(8890),
           n = i(7602),
           o = i(5021),
-          r = i(262),
-          s = i(2399),
-          l = i(8166),
-          h = i(1554),
-          d = i(6409),
-          m = i(7028),
-          c = i(5572),
-          g = i(9178),
-          u = i(9216),
-          p = i(6214),
-          y = document.getElementById("canvas").getContext("2d"),
-          f = null,
-          x = Date.now(),
-          w = 0,
-          v = 0,
-          S =
+          r = i(4949),
+          s = i(262),
+          l = i(2399),
+          h = i(8166),
+          d = i(1554),
+          m = i(6409),
+          c = i(7028),
+          g = i(5572),
+          u = i(9178),
+          p = i(9216),
+          y = i(6214),
+          f = i(306),
+          x = document.getElementById("canvas").getContext("2d"),
+          w = null,
+          v = Date.now(),
+          S = 0,
+          b = 0,
+          _ =
             window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             function (e) {
               window.setTimeout(e, 16);
             };
-        function b(e, i, a) {
+        function C(e, i, a) {
           var n = null !== a && void 0 !== a.frame ? a.frame : 0;
           ((e.width = e.offsetWidth), (e.height = e.offsetHeight));
           var o = "yes" === e.getAttribute("data-no-animate"),
@@ -41600,131 +43035,137 @@ var c_hasPressedCtrlRKey = false;
               h,
             ));
         }
-        function _() {
-          if ((S(_), null !== c.root.game)) {
+        function I() {
+          if ((_(I), null !== g.root.game)) {
             var e = Date.now();
             if (
-              ((c.root.game.timeDiff = e - x),
-              (x = e),
-              (c.root.game.tickDiff = c.root.game.ticksCounter - w),
-              (w = c.root.game.ticksCounter),
-              (c.root.game.exactTickDiff =
-                c.root.game.ticksCounter +
+              ((g.root.game.timeDiff = e - v),
+              (v = e),
+              (g.root.game.tickDiff = g.root.game.ticksCounter - S),
+              (S = g.root.game.ticksCounter),
+              (g.root.game.exactTickDiff =
+                g.root.game.ticksCounter +
                 Math.min(
-                  (Date.now() - c.root.game.lastUpdate) /
-                    s.replaySettings.replayOption.tickTime,
+                  (Date.now() - g.root.game.lastUpdate) /
+                    l.replaySettings.replayOption.tickTime,
                   1,
                 ) -
-                v),
-              (v =
-                c.root.game.ticksCounter +
+                b),
+              (b =
+                g.root.game.ticksCounter +
                 Math.min(
-                  (Date.now() - c.root.game.lastUpdate) /
-                    s.replaySettings.replayOption.tickTime,
+                  (Date.now() - g.root.game.lastUpdate) /
+                    l.replaySettings.replayOption.tickTime,
                   1,
                 )),
-              c.root.game.map === d.map1)
+              g.root.game.map === m.map1)
             )
               if (
                 (Math.floor(e / 50) >
-                  Math.floor((e - c.root.game.timeDiff) / 50) &&
-                  c.root.game.receiveUpdate([]),
-                c.root.game.cameraX < 0 ||
-                  c.root.game.cameraY < 0 ||
-                  c.root.game.cameraX2 > c.root.game.map.x ||
-                  c.root.game.cameraY2 > c.root.game.map.y ||
-                  (0 === c.root.game.camFlyX && 0 === c.root.game.camFlyY))
+                  Math.floor((e - g.root.game.timeDiff) / 50) &&
+                  g.root.game.receiveUpdate([]),
+                g.root.game.cameraX < 0 ||
+                  g.root.game.cameraY < 0 ||
+                  g.root.game.cameraX2 > g.root.game.map.x ||
+                  g.root.game.cameraY2 > g.root.game.map.y ||
+                  (0 === g.root.game.camFlyX && 0 === g.root.game.camFlyY))
               ) {
                 var t = Math.random() * Math.PI * 2;
-                ((c.root.game.camFlyX = 0.001 * Math.cos(t)),
-                  (c.root.game.camFlyY = 0.001 * Math.sin(t)),
-                  (c.root.game.cameraX =
+                ((g.root.game.camFlyX = 0.001 * Math.cos(t)),
+                  (g.root.game.camFlyY = 0.001 * Math.sin(t)),
+                  (g.root.game.cameraX =
                     Math.random() *
-                    (c.root.game.map.x -
-                      window.innerWidth / c.root.game.FIELD_SIZE)),
-                  (c.root.game.cameraY =
+                    (g.root.game.map.x -
+                      window.innerWidth / g.root.game.FIELD_SIZE)),
+                  (g.root.game.cameraY =
                     Math.random() *
-                    (c.root.game.map.y -
-                      window.innerHeight / c.root.game.FIELD_SIZE)));
+                    (g.root.game.map.y -
+                      window.innerHeight / g.root.game.FIELD_SIZE)));
               } else
-                ((c.root.game.cameraX +=
-                  c.root.game.camFlyX * c.root.game.timeDiff),
-                  (c.root.game.cameraY +=
-                    c.root.game.camFlyY * c.root.game.timeDiff));
+                ((g.root.game.cameraX +=
+                  g.root.game.camFlyX * g.root.game.timeDiff),
+                  (g.root.game.cameraY +=
+                    g.root.game.camFlyY * g.root.game.timeDiff));
           } else
-            ((y.fillStyle = "black"),
-              y.fillRect(0, 0, window.innerWidth, window.innerHeight));
+            ((x.fillStyle = "black"),
+              x.fillRect(0, 0, window.innerWidth, window.innerHeight));
           if (
-            (null !== c.root.game &&
-              c.root.game.map === d.map1 &&
-              null !== g.UI.canvasChangeSkinsButton &&
-              b(
-                g.UI.canvasChangeSkinsButton,
-                r.playerData.skin,
-                r.playerData.favGun,
+            (null !== g.root.game &&
+              g.root.game.map === m.map1 &&
+              null !== u.UI.canvasChangeSkinsButton &&
+              C(
+                u.UI.canvasChangeSkinsButton,
+                s.playerData.skin,
+                s.playerData.favGun,
               ),
-            null !== g.UI.canvasProfileSkin &&
-              null !== g.UI.profileSkin &&
+            null !== u.UI.canvasProfileSkin &&
+              null !== u.UI.profileSkin &&
               null !== document.getElementById("profile_skin_div") &&
-              b(g.UI.canvasProfileSkin, g.UI.profileSkin, g.UI.profileWeapon),
-            null !== c.root.game &&
-              (f !== c.root.game &&
+              C(u.UI.canvasProfileSkin, u.UI.profileSkin, u.UI.profileWeapon),
+            null !== g.root.game &&
+              (w !== g.root.game &&
                 a.CONST.ENABLE_LIGHTMAP &&
-                ((f = c.root.game), (0, h.sendInitGrid)(c.root.game)),
-              c.root.game.draw(),
-              a.CONST.ENABLE_LIGHTMAP && (0, h.sendVisionRequest)(c.root.game)),
-            c.root.searchingLadder && null !== c.root.game)
+                ((w = g.root.game), (0, d.sendInitGrid)(g.root.game)),
+              g.root.game.draw(),
+              a.CONST.ENABLE_LIGHTMAP && (0, d.sendVisionRequest)(g.root.game)),
+            g.root.searchingLadder && null !== g.root.game)
           ) {
             for (
               var i = document.getElementById("ladderDivInner2"),
-                n = (x % 1e3) / 251,
+                n = (v % 1e3) / 251,
                 o = "",
-                l = 0;
-              l < n;
-              l++
+                r = 0;
+              r < n;
+              r++
             )
               o += ".";
-            i.innerHTML = o + " " + p.lang.get("ladder.searching") + " " + o;
+            i.innerHTML = o + " " + y.lang.get("ladder.searching") + " " + o;
           }
         }
-        ((t.refreshHatCanvas = b), (t.mainLoop = _));
-        var C = 1;
-        function I(e) {
-          C++;
-          var t = new Image();
+        ((t.refreshHatCanvas = C), (t.mainLoop = I));
+        var M = 1;
+        function T(e, t) {
+          M++;
+          var i = new Image();
           return (
-            (t.onload = function () {
-              M(t);
+            (i.onload = function () {
+              E(i);
             }),
-            (t.crossOrigin = "Anonymous"),
-            (t.src = e),
-            (t.srcCpy = e),
-            t
+            void 0 !== t &&
+              t !== e &&
+              (i.onerror = function () {
+                ((i.onerror = null), (i.srcCpy = t), (i.src = t));
+              }),
+            (i.crossOrigin = "Anonymous"),
+            (i.src = e),
+            (i.srcCpy = e),
+            i
           );
         }
-        function M(e) {
+        function E(e) {
           if (e && (!e.complete || !(e.width > 0)))
             return ((e.src = ""), void (e.src = e.srcCpy));
-          0 === --C &&
+          0 === --M &&
             (console.log("assets loaded"),
-            p.lang.initialize(function () {
-              ((c.root.langAndImgsLoaded = !0), p.lang.applyLocale(), T());
+            y.lang.initialize(function () {
+              ((g.root.langAndImgsLoaded = !0), y.lang.applyLocale(), k());
             }));
         }
-        function T() {
-          !c.root.gameHasBeenInited &&
-            c.root.langAndImgsLoaded &&
-            ((c.root.gameHasBeenInited = !0),
-            E(),
-            g.UI.renderMainMenu_(),
-            g.UI.refreshMenuButtons(),
-            u.homeScreen.render(),
-            (c.root.game = new l.Game(d.map1)),
-            (0, s.resize)(),
-            S(_),
-            (0, m.networkInit)());
+        function k() {
+          !g.root.gameHasBeenInited &&
+            g.root.langAndImgsLoaded &&
+            ((g.root.gameHasBeenInited = !0),
+            (0, f.registerStartupSheet)(),
+            L(),
+            u.UI.renderMainMenu_(),
+            u.UI.refreshMenuButtons(),
+            p.homeScreen.render(),
+            (g.root.game = new h.Game(m.map1)),
+            (0, l.resize)(),
+            _(I),
+            (0, c.networkInit)());
         }
-        function E() {
+        function L() {
           var e = document.createElement("canvas");
           ((e.height = t.imgs.miscSheet.height),
             (e.width = t.imgs.miscSheet.width));
@@ -41735,8 +43176,8 @@ var c_hasPressedCtrlRKey = false;
             n < a.data.length;
             n += 4
           ) {
-            var r = (a.data[n] + a.data[n + 1] + a.data[n + 2]) / 3;
-            ((a.data[n] = r), (a.data[n + 1] = r), (a.data[n + 2] = r));
+            var o = (a.data[n] + a.data[n + 1] + a.data[n + 2]) / 3;
+            ((a.data[n] = o), (a.data[n + 1] = o), (a.data[n + 2] = o));
           }
           (i.putImageData(a, 0, 0),
             (t.imgs.miscSheetGrey = e),
@@ -41747,106 +43188,95 @@ var c_hasPressedCtrlRKey = false;
             (a = i.getImageData(0, 0, e.width, e.height)));
           for (n = 0; n < a.data.length; n += 4)
             ((a.data[n] = 255), (a.data[n + 1] = 255), (a.data[n + 2] = 255));
-          (i.putImageData(a, 0, 0), (t.imgs.miscSheetWhite = e));
+          (i.putImageData(a, 0, 0), (t.imgs.miscSheetWhite = e), F());
           for (
-            var s = [
+            var r = 0,
+              s = [
                 "heads",
                 "hands",
                 "legs",
                 "zombieDeath",
-                "tileSheet",
                 "rangedZombie",
                 "crawler",
                 "bug",
-              ],
-              l = 0;
-            l < s.length;
-            l++
+              ];
+            r < s.length;
+            r++
           ) {
-            var h = t.imgs[s[l]];
-            ((i = (e = document.createElement("canvas")).getContext("2d")),
-              (e.height = h.height),
-              (e.width = h.width),
-              i.drawImage(h, 0, 0),
-              (a = i.getImageData(0, 0, e.width, e.height)));
-            for (n = 0; n < a.data.length; n += 4)
-              a.data[n + 3] > 0 &&
-                ((a.data[n] = 0), (a.data[n + 1] = 0), (a.data[n + 2] = 0));
-            (i.putImageData(a, 0, 0),
-              (t.imgs[s[l] + "Black"] = e),
-              (i = (e = document.createElement("canvas")).getContext("2d")),
-              (e.height = h.height),
-              (e.width = h.width));
-            for (n = 0; n < a.data.length; n += 4)
-              a.data[n + 3] > 0 &&
-                ((a.data[n] = 255),
-                (a.data[n + 1] = 255),
-                (a.data[n + 2] = 255));
-            (i.putImageData(a, 0, 0), (t.imgs[s[l] + "White"] = e));
+            P(s[r]);
           }
-          for (var d = 0, m = o.tileTypes; d < m.length; d++) {
-            var c = m[d];
-            if (!c.isTorch) {
-              h = c.img;
-              ((i = (e = document.createElement("canvas")).getContext("2d")),
-                (e.width = h.w),
-                (e.height = h.h),
-                i.drawImage(
+          (A(), N(), B(), O());
+        }
+        function A() {
+          P("tileSheet");
+          for (var e = 0, i = o.tileTypes; e < i.length; e++) {
+            var a = i[e];
+            if (!a.isTorch) {
+              var n = a.img,
+                r = document.createElement("canvas"),
+                s = r.getContext("2d");
+              ((r.width = n.w),
+                (r.height = n.h),
+                s.drawImage(
                   t.imgs.tileSheet,
-                  h.x,
-                  h.y,
-                  h.w,
-                  h.h,
+                  n.x,
+                  n.y,
+                  n.w,
+                  n.h,
                   0,
                   0,
-                  h.w,
-                  h.h,
-                ),
-                (a = i.getImageData(0, 0, e.width, e.height)));
-              var g = 0,
-                u = 0,
-                p = 0,
-                y = 0;
-              for (l = 0; l < a.data.length; l += 8)
-                a.data[l + 3] > 0 &&
-                  ((g += a.data[l]),
-                  (u += a.data[l + 1]),
-                  (p += a.data[l + 2]),
-                  y++);
-              y > 0 &&
-                (c.avgColor =
-                  "rgb(" +
-                  Math.floor(g / y) +
-                  ", " +
-                  Math.floor(u / y) +
-                  ", " +
-                  Math.floor(p / y) +
-                  ")");
+                  n.w,
+                  n.h,
+                ));
+              for (
+                var l = s.getImageData(0, 0, r.width, r.height),
+                  h = 0,
+                  d = 0,
+                  m = 0,
+                  c = 0,
+                  g = 0;
+                g < l.data.length;
+                g += 8
+              )
+                l.data[g + 3] > 0 &&
+                  ((h += l.data[g]),
+                  (d += l.data[g + 1]),
+                  (m += l.data[g + 2]),
+                  c++);
+              a.avgColor =
+                c > 0
+                  ? "rgb(" +
+                    Math.floor(h / c) +
+                    ", " +
+                    Math.floor(d / c) +
+                    ", " +
+                    Math.floor(m / c) +
+                    ")"
+                  : void 0;
             }
           }
-          (k(), L(), F());
         }
-        ((t.initGame = T),
+        ((t.initGame = k),
           (t.imgs = {
-            legs: I("imgs/legs.png"),
-            heads: I("imgs/heads.png"),
-            hands: I("imgs/hands.png"),
-            throwHands: I("imgs/throw_hands.png"),
-            shadow: I("imgs/shadow.png"),
-            miscSheet: I("imgs/miscSheet.png"),
-            tileSheet: I("imgs/tileSheet.png"),
-            normalMap: I("imgs/normalMap.png"),
-            weaponsPlus: I("imgs/weaponsPlus.png"),
-            weaponsMinus: I("imgs/weaponsMinus.png"),
-            weaponsBodyPlus: I("imgs/weaponsBodyPlus.png"),
-            weaponsBodyMinus: I("imgs/weaponsBodyMinus.png"),
-            zombieDeath: I("imgs/zombie-death.png"),
-            turnZombie: I("imgs/turn-zombie.png"),
-            rangedZombie: I("imgs/rangedZombie.png"),
-            crawler: I("imgs/spider.png"),
-            bug: I("imgs/bug.png"),
-            humanBoss: I("imgs/human_boss.png"),
-            zombieBoss: I("imgs/zombie_boss.png"),
+            legs: T("imgs/legs.png"),
+            heads: T("imgs/heads.png"),
+            hands: T("imgs/hands.png"),
+            throwHands: T("imgs/throw_hands.png"),
+            shadow: T("imgs/shadow.png"),
+            miscSheet: T("imgs/miscSheet.png"),
+            tileSheet: T((0, f.currentTheme)().file, f.STOCK_TILE_SHEET),
+            normalMap: T("imgs/normalMap.png"),
+            weaponsPlus: T("imgs/weaponsPlus.png"),
+            weaponsMinus: T("imgs/weaponsMinus.png"),
+            weaponsBodyPlus: T("imgs/weaponsBodyPlus.png"),
+            weaponsBodyMinus: T("imgs/weaponsBodyMinus.png"),
+            zombieDeath: T("imgs/zombie-death.png"),
+            turnZombie: T("imgs/turn-zombie.png"),
+            rangedZombie: T("imgs/rangedZombie.png"),
+            crawler: T("imgs/spider.png"),
+            bug: T("imgs/bug.png"),
+            humanBoss: T("imgs/human_boss.png"),
+            zombieBoss: T("imgs/zombie_boss.png"),
           }),
           (t.legs = []),
           (t.legsBlack = []),
@@ -41855,9 +43285,82 @@ var c_hasPressedCtrlRKey = false;
           (t.headsBlack = []),
           (t.headsBlink = []),
           (t.headsWhite = []),
-          M(),
-          (t.imageTransforms = E));
-        var k = function () {
+          E(),
+          (t.imageTransforms = L),
+          (t.rebuildTileSheetDerivatives = A));
+        var F = function () {
+            for (
+              var e = document.createElement("canvas"),
+                i = e.getContext("2d", { willReadFrequently: !0 }),
+                a = 0,
+                n = r.buildingTypes;
+              a < n.length;
+              a++
+            ) {
+              var o = n[a],
+                s = o.img;
+              ((e.width = s.w),
+                (e.height = s.h),
+                i.drawImage(
+                  t.imgs.miscSheet,
+                  s.x,
+                  s.y,
+                  s.w,
+                  s.h,
+                  0,
+                  0,
+                  s.w,
+                  s.h,
+                ));
+              for (
+                var l = i.getImageData(0, 0, e.width, e.height).data,
+                  h = 0,
+                  d = 0,
+                  m = 0,
+                  c = 0,
+                  g = 0;
+                g < l.length;
+                g += 8
+              )
+                l[g + 3] > 0 &&
+                  ((h += l[g]), (d += l[g + 1]), (m += l[g + 2]), c++);
+              o.avgColor =
+                c > 0
+                  ? "rgb(" +
+                    Math.floor(h / c) +
+                    ", " +
+                    Math.floor(d / c) +
+                    ", " +
+                    Math.floor(m / c) +
+                    ")"
+                  : void 0;
+            }
+          },
+          P = function (e) {
+            var i = t.imgs[e],
+              a = document.createElement("canvas"),
+              n = a.getContext("2d");
+            ((a.height = i.height), (a.width = i.width), n.drawImage(i, 0, 0));
+            for (
+              var o = n.getImageData(0, 0, a.width, a.height), r = 0;
+              r < o.data.length;
+              r += 4
+            )
+              o.data[r + 3] > 0 &&
+                ((o.data[r] = 0), (o.data[r + 1] = 0), (o.data[r + 2] = 0));
+            (n.putImageData(o, 0, 0),
+              (t.imgs[e + "Black"] = a),
+              (n = (a = document.createElement("canvas")).getContext("2d")),
+              (a.height = i.height),
+              (a.width = i.width));
+            for (r = 0; r < o.data.length; r += 4)
+              o.data[r + 3] > 0 &&
+                ((o.data[r] = 255),
+                (o.data[r + 1] = 255),
+                (o.data[r + 2] = 255));
+            (n.putImageData(o, 0, 0), (t.imgs[e + "White"] = a));
+          },
+          N = function () {
             ((t.legs.length = 0),
               (t.legsWhite.length = 0),
               (t.legsBlack.length = 0));
@@ -41915,7 +43418,7 @@ var c_hasPressedCtrlRKey = false;
                 t.legsBlack.push(n));
             }
           },
-          L = function () {
+          B = function () {
             ((t.heads.length = 0),
               (t.headsWhite.length = 0),
               (t.headsBlack.length = 0));
@@ -41973,11 +43476,11 @@ var c_hasPressedCtrlRKey = false;
                 t.headsBlack.push(n));
             }
           },
-          A = [
+          D = [
             [255, 31, 0],
             [176, 52, 34],
           ],
-          F = function () {
+          O = function () {
             t.headsBlink.length = 0;
             var e = n.hats.find(function (e) {
               return "Cyborg" === e.name;
@@ -41996,7 +43499,7 @@ var c_hasPressedCtrlRKey = false;
               }
               for (var s = o.data, l = 0; l < s.length; l += 4)
                 if (0 !== s[l + 3])
-                  for (var h = 0, d = A; h < d.length; h++) {
+                  for (var h = 0, d = D; h < d.length; h++) {
                     var m = d[h];
                     if (
                       Math.abs(s[l] - m[0]) <= 24 &&
